@@ -174,7 +174,6 @@ class Edit extends Component {
                         "guid" in post.getMedia_ &&
                         thumbnail_.enable && (
                           <div className="featured-image">
-                            {/* <img src={post.getMedia_.media_details.sizes.medium_large.source_url} /> */}
                             <img
                               style={{
                                 borderRadius: thumbnail_.borderRadius + "px",
