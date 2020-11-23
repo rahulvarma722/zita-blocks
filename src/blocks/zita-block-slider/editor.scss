@@ -1,0 +1,273 @@
+.block-editor-block-list__block[data-type="zita-blocks/slide"]{
+  margin: auto;
+}
+.zita-block-slide-wrapper {
+    border: 1px solid #c5c5c5;
+    .zita-slider-bullet {
+      border-bottom: 1px solid #c5c5c5;
+    }
+    .zita-slider-container {
+      position: relative;
+      height: 100%;
+      .zita-slider-bullet-next-prev {
+        position: absolute;
+        z-index: 1000;
+        top: 50%;
+        transform: translateY(-50%);
+        span {
+          color: white;
+          padding: 3px 12px;
+          background: #ff500d;
+          display: block;
+        }
+        cursor: pointer;
+        &.next {
+          right: 0;
+        }
+        &.prev {
+          left: 0;
+        }
+      }
+  
+      .zita-remove-slide {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        color: white;
+        right: 10px;
+        top: 10px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        font-size: 16px;
+        background: red;
+        cursor: pointer;
+        z-index: 10;
+      }
+    }
+    ul {
+      &.zita-slider-ul-slides,
+      &.zita-slider-ul-bullet,
+      &.zita-slider-bullet-trigger {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+      }
+      &.zita-slider-bullet-trigger {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        width: 100%;
+        bottom: 18px;
+        z-index: 100;
+        li {
+          display: block;
+          margin: 10px;
+          cursor: pointer;
+          span {
+            width: 22px;
+            height: 22px;
+            display: block;
+            background-color: #f39a3e;
+            border-radius: 50%;
+          }
+          &.selected_ {
+            span {
+              background-color: red;
+            }
+          }
+        }
+      }
+      &.zita-slider-ul-bullet {
+        margin: 10px auto;
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        & > li {
+          width: fit-content;
+          margin: 0px 9px;
+          &.selected_ {
+            span {
+              background: #6f6e6e;
+            }
+          }
+          &.add-item {
+            span {
+              color: #757474;
+              font-size: 12px;
+              border: 3px solid;
+              height: 27px;
+              width: 27px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              cursor: pointer;
+            }
+          }
+          span {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 5px solid #cccccc;
+            display: block;
+            position: relative;
+            cursor: pointer;
+          }
+        }
+      }
+      &.zita-slider-ul-slides {
+        min-height: 360px;
+        position: relative;
+      }
+      &.zita-slider-ul-slides li {
+        min-height: 360px;
+        background-color: white;
+        z-index: 1;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        &.selected_ {
+          z-index: 2;
+        }
+      }
+    }
+  }
+  
+  .zita-slider-wrapper {
+    position: relative;
+    height: 100%;
+  }
+  .zita-slider-content-wrapper {
+    height: 100%;
+    position: relative;
+    .zita-slider-image-container {
+      position: absolute;
+      background-color: green;
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .zita-slider-text {
+      position: relative;
+      background: #717167c7;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      &.left {
+        justify-content: left;
+      }
+      &.center {
+        justify-content: center;
+        div {
+          text-align: center;
+        }
+      }
+      &.right {
+        justify-content: flex-end;
+        div {
+          text-align: right;
+        }
+      }
+      > div {
+        padding: 20px;
+        margin: 0;
+        h1,
+        h2 {
+          margin: inherit;
+        }
+        .button-container {
+          margin: inherit;
+          display: flex;
+          align-items: center;
+          a {
+            margin-right: 10px;
+            display: block;
+            background: #fd9a34;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: white;
+            letter-spacing: 1px;
+          }
+        }
+      }
+    }
+  }
+  .zita-block-image-uploader {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    text-align: -webkit-center;
+    & > img {
+      max-width: 100%;
+      display: block;
+      max-height: 210px;
+    }
+    & > div {
+      position: absolute;
+      background: #a09d9d94;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      height: 100%;
+      align-items: center;
+      opacity: 0;
+      transition: 0.3s all linear;
+      & > i {
+        background-color: #060606;
+        width: 40px;
+        text-align: center;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+      }
+    }
+    &:hover div {
+      opacity: 1;
+    }
+  }
+  .zita-switcher-button-section {
+    display: flex;
+    margin: 12px 0;
+    span {
+      flex: 1;
+      background: #f39a3e;
+      text-align: center;
+      padding: 10px;
+      color: white;
+      cursor: pointer;
+      &.selected {
+        background-color: #8a551e;
+      }
+    }
+  }
+  .zita-alignment {
+    display: flex;
+    border: 1px solid #bfbfbf;
+    > div {
+      flex: 1;
+      border-right: 1px solid #bfbfbf;
+      &:last-child {
+        border: none;
+      }
+      span {
+        color: grey;
+        padding: 20px 0;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        cursor: pointer;
+        width: 100%;
+        &.active {
+          background: black;
+          color: white;
+        }
+      }
+    }
+  }
+  

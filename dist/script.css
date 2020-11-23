@@ -1,0 +1,462 @@
+.wppgt-block-2-icon i {
+  display: block;
+}
+
+/* full */
+.themehunk-icon-block {
+  display: flex;
+}
+.themehunk-icon-block > div {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+}
+.themehunk-icon-block > div .icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.themehunk-icon-block .text-container h1,
+.themehunk-icon-block .text-container h2,
+.themehunk-icon-block .text-container h3,
+.themehunk-icon-block .text-container p {
+  margin: 0;
+  word-break: break-all;
+  line-height: 1;
+}
+/* pricing table section */
+.pricing-table-top {
+  background-color: #22bbf6;
+  /* color: white; */
+  padding: 16px;
+  /* border-radius: 12px 12px 0 0; */
+}
+
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper {
+  text-align: center;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper p,
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper h3 {
+  margin: 0;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .pricing-table-top p {
+  font-size: 18px;
+  margin: 10px 0 0 0;
+  color: white;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .pricing-table-top h3 {
+  font-size: 23px;
+  color: white;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .pricing-table-middle {
+  text-align: left;
+  padding: 15px;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .pricing-table-middle > div {
+  font-size: 19px;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .pricing-table-middle > div > p {
+  margin: 10px 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .price_ {
+  font-size: 19px;
+  display: flex;
+  margin: 12px auto;
+  box-sizing: content-box;
+  align-items: center;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .price_ p {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1;
+  color: inherit;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .price_ > p {
+  padding: 6px;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .price_ > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .price_ > div > p {
+  margin: 0;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .price_ > div.rasied {
+  align-items: unset;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .price_ > div.rasied > p {
+  margin-left: 2px;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .price_ > div.rasied > p:first-child {
+  margin: 0;
+  font-size: 8px;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .price_.inline_ {
+  width: fit-content;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .price_.inline_ > p {
+  padding: 0;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .price_.box_ {
+  height: 100px;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 50%;
+  background-color: green;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .link_button a {
+  line-height: 1;
+  display: block;
+  margin: 10px auto;
+  width: fit-content;
+  padding: 8px 15px;
+  background-color: #49bbf6;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .bottom-text {
+  font-size: 13px;
+}
+.wp-block-zita-blocks-pricing-table-section .pricing-table-wrapper .pricing-table-bottom {
+  padding: 20px 0;
+}
+
+.wp-block-zita-blocks-pricing-table-section:not(.column-count-1) {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.wp-block-zita-blocks-pricing-table-section.column-count-2 .wp-block-zita-blocks-pricing-table-table {
+  width: calc(50% - 20px);
+  margin: 10px;
+}
+
+.wp-block-zita-blocks-pricing-table-section.column-count-3 .wp-block-zita-blocks-pricing-table-table {
+  width: calc(100% / 3 - 30px);
+  margin: 10px;
+}
+
+.wp-block-zita-blocks-pricing-table-section.column-count-4 .wp-block-zita-blocks-pricing-table-table {
+  width: calc(100% / 4 - 40px);
+  margin: 10px;
+}
+
+/* full width */
+.wp-block-zita-blocks-pricing-table-section.full-width.column-count-2 .wp-block-zita-blocks-pricing-table-table {
+  width: calc(50%);
+  margin: 0;
+}
+
+.wp-block-zita-blocks-pricing-table-section.full-width.column-count-3 .wp-block-zita-blocks-pricing-table-table {
+  width: calc(100% / 3);
+  margin: 0;
+}
+
+.wp-block-zita-blocks-pricing-table-section.full-width.column-count-4 .wp-block-zita-blocks-pricing-table-table {
+  width: calc(100% / 4);
+  margin: 0;
+}
+
+/* full width */
+/* for align left and right  */
+.wp-block-zita-blocks-block-column-parent.alignleft,
+.wp-block-zita-blocks-pricing-table-section.alignleft,
+.wp-block-zita-blocks-block-column-parent.alignright,
+.wp-block-zita-blocks-pricing-table-section.alignright {
+  position: unset !important;
+  margin: unset !important;
+  min-width: 700px;
+}
+/* service section */
+.service-section-wrapper {
+  text-align: center;
+}
+.service-section-wrapper .service-image-icon.icon_ {
+  padding-top: 12px;
+}
+.service-section-wrapper .service-image-icon .icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: fit-content;
+  padding: 18px 0 10px 0;
+}
+.service-section-wrapper .service-image-icon .service-image-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.service-section-wrapper .service-image-icon img {
+  width: 30%;
+}
+.service-section-wrapper .service-title-description > div h1,
+.service-section-wrapper .service-title-description > div p {
+  margin: 0;
+  line-height: 1;
+  letter-spacing: 1px;
+  margin-top: 12px;
+}
+.service-section-wrapper .service-title-description > div h1 {
+  font-size: 20px;
+}
+.service-section-wrapper .service-title-description > div p {
+  font-size: 16px;
+  padding-bottom: 18px;
+}
+
+.wp-block-zita-blocks-block-column-parent:not(.column-count-1) {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.wp-block-zita-blocks-block-column-parent.column-count-2 .wp-block-zita-blocks-icon-image-content {
+  width: calc(50% - 20px);
+  margin: 10px;
+}
+
+.wp-block-zita-blocks-block-column-parent.column-count-3 .wp-block-zita-blocks-icon-image-content {
+  width: calc(100% / 3 - 30px);
+  margin: 10px;
+}
+
+.wp-block-zita-blocks-block-column-parent.column-count-4 .wp-block-zita-blocks-icon-image-content {
+  width: calc(100% / 4 - 40px);
+  margin: 10px;
+}
+
+/* full */
+.wp-block-zita-blocks-block-column-parent.full-width.column-count-2 .wp-block-zita-blocks-icon-image-content {
+  width: 50%;
+  margin: 0;
+}
+
+.wp-block-zita-blocks-block-column-parent.full-width.column-count-3 .wp-block-zita-blocks-icon-image-content {
+  width: calc(100% / 3);
+  margin: 0;
+}
+
+.wp-block-zita-blocks-block-column-parent.full-width.column-count-4 .wp-block-zita-blocks-icon-image-content {
+  width: calc(100% / 4);
+  margin: 0;
+}
+.thk-progress-bar-wrapper .zita-linear-progress-bar .txt-section {
+  display: flex;
+  align-items: center;
+}
+.thk-progress-bar-wrapper .zita-linear-progress-bar .txt-section p {
+  margin: 0 !important;
+  width: 80%;
+}
+.thk-progress-bar-wrapper .zita-linear-progress-bar .txt-section span {
+  text-align: right;
+  width: 20%;
+}
+.thk-progress-bar-wrapper .line_ {
+  width: 100%;
+  background: red;
+  height: 29px;
+  border-radius: 73px;
+}
+.thk-progress-bar-wrapper .line_ .line-inner_ {
+  height: 100%;
+  border-radius: inherit;
+  display: flex;
+  align-items: center;
+  width: 0;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+.thk-progress-bar-wrapper .line_ .line-inner_ .percent_ {
+  padding: 0 10px;
+}
+
+.wp-block-zita-blocks-progress-block {
+  margin: 28px 0;
+}
+.zita-block-pie-circle {
+  text-align: -webkit-center;
+}
+.zita-block-pie-circle .pie-circle_ {
+  position: relative;
+}
+.zita-block-pie-circle .pie-circle_ svg {
+  display: block;
+  transform: rotate(-90deg);
+}
+.zita-block-pie-circle .pie-circle_ .text-sction {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.zita-block-pie-circle .pie-circle_ .text-sction span.title_ {
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: black;
+}
+
+.wp-block-zita-blocks-progress-bar-pie {
+  margin: 28px 0;
+}
+.zita-block-slide-wrapper {
+  margin: 0 auto 30px;
+}
+.zita-block-slide-wrapper .zita-slider-container {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+.zita-block-slide-wrapper .zita-slider-bullet-next-prev {
+  position: absolute;
+  z-index: 1000;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.zita-block-slide-wrapper .zita-slider-bullet-next-prev span {
+  color: white;
+  padding: 12px;
+  background: #ff500d;
+  display: flex;
+  align-items: center;
+}
+.zita-block-slide-wrapper .zita-slider-bullet-next-prev.next {
+  right: 0;
+}
+.zita-block-slide-wrapper .zita-slider-bullet-next-prev.prev {
+  left: 0;
+}
+.zita-block-slide-wrapper ul.zita-slider-ul-slides, .zita-block-slide-wrapper ul.zita-slider-bullet-trigger {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.zita-block-slide-wrapper ul.zita-slider-bullet-trigger {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  bottom: 18px;
+  z-index: 100;
+}
+.zita-block-slide-wrapper ul.zita-slider-bullet-trigger li {
+  display: block;
+  margin: 10px;
+  cursor: pointer;
+}
+.zita-block-slide-wrapper ul.zita-slider-bullet-trigger li span {
+  width: 22px;
+  height: 22px;
+  display: block;
+  background-color: #f39a3e;
+  border-radius: 50%;
+}
+.zita-block-slide-wrapper ul.zita-slider-bullet-trigger li.selected_ span {
+  background-color: red;
+}
+.zita-block-slide-wrapper ul.zita-slider-ul-slides.fadeEffect {
+  min-height: 360px;
+  position: relative;
+}
+.zita-block-slide-wrapper ul.zita-slider-ul-slides.fadeEffect li {
+  min-height: 360px;
+  background-color: white;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.7s opacity linear;
+}
+.zita-block-slide-wrapper ul.zita-slider-ul-slides.fadeEffect li.selected_ {
+  opacity: 1;
+}
+.zita-block-slide-wrapper ul.zita-slider-ul-slides.slideEffect {
+  display: flex;
+  opacity: 0;
+}
+.zita-block-slide-wrapper ul.zita-slider-ul-slides.slideEffect li {
+  min-height: 360px;
+  flex: 1;
+  margin: 0 !important;
+}
+
+.zita-slider-wrapper {
+  position: relative;
+  height: 100%;
+}
+
+.zita-slider-content-wrapper {
+  height: 100%;
+  position: relative;
+}
+.zita-slider-content-wrapper .zita-slider-image-container {
+  position: absolute;
+  background-color: green;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.zita-slider-content-wrapper .zita-slider-text {
+  position: relative;
+  background: #717167c7;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.zita-slider-content-wrapper .zita-slider-text.left {
+  justify-content: left;
+}
+.zita-slider-content-wrapper .zita-slider-text.center {
+  justify-content: center;
+}
+.zita-slider-content-wrapper .zita-slider-text.center div {
+  text-align: center;
+}
+.zita-slider-content-wrapper .zita-slider-text.right {
+  justify-content: flex-end;
+}
+.zita-slider-content-wrapper .zita-slider-text.right div {
+  text-align: right;
+}
+.zita-slider-content-wrapper .zita-slider-text > div {
+  padding: 20px;
+  margin: 0;
+}
+.zita-slider-content-wrapper .zita-slider-text > div h1,
+.zita-slider-content-wrapper .zita-slider-text > div h2 {
+  margin: inherit;
+}
+.zita-slider-content-wrapper .zita-slider-text > div .button-container {
+  margin: inherit;
+  display: flex;
+  align-items: center;
+}
+.zita-slider-content-wrapper .zita-slider-text > div .button-container a {
+  margin-right: 10px;
+  display: block;
+  background: #fd9a34;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: white;
+  letter-spacing: 1px;
+}
+
+/*# sourceMappingURL=script.css.map*/
