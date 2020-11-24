@@ -29,10 +29,21 @@ wpgt_register_block_fn('zita-post',  [
                 "color" => 'green',
             ]]
         ],
+        "author" => [
+            "type" => "array",
+            "default" => [["enable" => false]]
+        ],
+        'date' => [
+            "type" => "array",
+            "default" => [[
+                "enable" => true
+            ]]
+        ],
         'excerpt' => [
             'type' => "array",
             "default" => [[
                 "enable" => true,
+                "words" => 50
             ]]
         ],
         "thumbnail" => [
@@ -43,7 +54,8 @@ wpgt_register_block_fn('zita-post',  [
             ]]
         ],
         "postCategories" => [
-            "type" => "string"
+            "type" => "array",
+            "default" => []
         ]
     ]
 ]);

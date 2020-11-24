@@ -5073,6 +5073,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -5084,78 +5086,173 @@ var Edit = /*#__PURE__*/function (_Component) {
   var _super = _createSuper(Edit);
 
   function Edit() {
+    var _this;
+
     _classCallCheck(this, Edit);
 
-    return _super.apply(this, arguments);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty(_assertThisInitialized(_this), "updateObj", function (parent_key, child_key, initialValue, value_) {
+      var newNewValue = _toConsumableArray(initialValue);
+
+      newNewValue[0][child_key] = value_;
+      var setAttr_ = {};
+      setAttr_[parent_key] = newNewValue;
+
+      _this.props.setAttributes(setAttr_);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "dateFormate", function (date) {
+      var date_ = date.split("T")[0];
+      var dateObj = new Date(date_);
+      var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      var dateArr = monthNames[dateObj.getMonth()] + " " + dateObj.getDate() + ", " + dateObj.getFullYear();
+      return wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
+        tag: "span",
+        value: dateArr
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "excerptWords", function (words, words_) {
+      words_ = words_.replace(/<\/?[^>]+(>|$)/g, "");
+      words_ = words_.split(" ");
+      words_ = words_.slice(0, words);
+      return words_.join(" ");
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "authorFn", function (author) {
+      var retur = {};
+
+      if ("authors" in _this.props) {
+        _this.props.authors.map(function (authorDetail) {
+          if (authorDetail.id == author) {
+            retur = authorDetail;
+            return;
+          }
+        });
+      }
+
+      return retur;
+    });
+
+    return _this;
   }
 
   _createClass(Edit, [{
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       var _this$props = this.props,
           posts = _this$props.posts,
           attributes = _this$props.attributes,
-          setAttributes = _this$props.setAttributes;
+          setAttributes = _this$props.setAttributes,
+          category = _this$props.category;
       console.log("this.props", this.props);
       var heading = attributes.heading,
+          author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
           thumbnail = attributes.thumbnail,
           numberOfColumn = attributes.numberOfColumn,
-          excerpt = attributes.excerpt;
+          date = attributes.date,
+          excerpt = attributes.excerpt,
+          postCategories = attributes.postCategories;
       var heading_ = heading[0];
       var thumbnail_ = thumbnail[0];
       var excerpt_ = excerpt[0];
+      var date_ = date[0];
+      var author_ = author[0]; // category init
+
+      var cateGory = [{
+        value: "all",
+        label: "All"
+      }];
+
+      if (category && category.length) {
+        category.map(function (catt) {
+          cateGory.push({
+            value: catt.id,
+            label: catt.name
+          });
+        });
+      }
+
       return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Post Layout",
         initialOpen: false
       }, wp.element.createElement("p", {
         className: "block-inside"
+      }, "Category"), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Choose Category")), wp.element.createElement("div", {
+        className: "zita-multiple-select"
+      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+        multiple: true,
+        value: postCategories.length ? postCategories : ["all"],
+        onChange: function onChange(choosen) {
+          var chooseAll = choosen.filter(function (choose) {
+            if (choose == "all") return true;
+          });
+          if (chooseAll.length) choosen = [];
+          setAttributes({
+            postCategories: choosen
+          });
+        },
+        options: cateGory
+      })), wp.element.createElement("p", {
+        className: "block-inside"
+      }, "Author"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: author_.enable ? "Hide" : "Show",
+        checked: author_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("author", "enable", author, e);
+        }
+      }), wp.element.createElement("p", {
+        className: "block-inside"
       }, "Featured Image"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
         label: thumbnail_.enable ? "Hide" : "Show",
         checked: thumbnail_.enable,
         onChange: function onChange(e) {
-          var newThumbnail = _toConsumableArray(thumbnail);
-
-          newThumbnail[0]["enable"] = e;
-
-          _this.props.setAttributes({
-            thumbnail: newThumbnail
-          });
+          return _this2.updateObj("thumbnail", "enable", thumbnail, e);
         }
       }), thumbnail_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Border Radius")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: thumbnail_.borderRadius,
         min: 0,
         max: 80,
         onChange: function onChange(e) {
-          var newThumbnail = _toConsumableArray(thumbnail);
-
-          newThumbnail[0]["borderRadius"] = e;
-
-          _this.props.setAttributes({
-            thumbnail: newThumbnail
-          });
+          return _this2.updateObj("thumbnail", "borderRadius", thumbnail, e);
         }
-      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Excerpt")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+      })), wp.element.createElement("p", {
+        className: "block-inside"
+      }, "Date"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: date_.enable ? "Hide" : "Show",
+        checked: date_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("date", "enable", date, e);
+        }
+      }), wp.element.createElement("p", {
+        className: "block-inside"
+      }, "Excerpt"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
         label: excerpt_.enable ? "Hide" : "Show",
         checked: excerpt_.enable,
         onChange: function onChange(e) {
-          var newexcerpt_ = _toConsumableArray(excerpt);
-
-          newexcerpt_[0]["enable"] = e;
-
-          _this.props.setAttributes({
-            excerpt: newexcerpt_
-          });
+          return _this2.updateObj("excerpt", "enable", excerpt, e);
         }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Layout")), wp.element.createElement("select", {
+      }), excerpt_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Number of words")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: excerpt_.words,
+        min: 1,
+        max: 100,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt", "words", excerpt, e);
+        }
+      })), wp.element.createElement("h1", null, "********"), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Layout")), wp.element.createElement("select", {
         value: numberOfColumn < 2 ? "list" : "grid",
         className: "zita-block-select",
         onChange: function onChange(e) {
           var value_ = e.target.value == "grid" ? 2 : 1;
-
-          _this.props.setAttributes({
+          setAttributes({
             numberOfColumn: value_
           });
         }
@@ -5168,7 +5265,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         min: 2,
         max: 4,
         onChange: function onChange(e) {
-          _this.props.setAttributes({
+          setAttributes({
             numberOfColumn: e
           });
         }
@@ -5177,7 +5274,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         min: 1,
         max: 20,
         onChange: function onChange(e) {
-          _this.props.setAttributes({
+          setAttributes({
             numberOfPosts: e
           });
         }
@@ -5197,8 +5294,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           newHeading[0]["tag"] = value_;
           newHeading[0]["fontSize"] = font_;
-
-          _this.props.setAttributes({
+          setAttributes({
             heading: newHeading
           });
         }
@@ -5215,30 +5311,19 @@ var Edit = /*#__PURE__*/function (_Component) {
         min: 1,
         max: 50,
         onChange: function onChange(e) {
-          var newHeading = _toConsumableArray(heading);
-
-          newHeading[0]["fontSize"] = e;
-
-          _this.props.setAttributes({
-            heading: newHeading
-          });
+          return _this2.updateObj("heading", "fontSize", heading, e);
         }
       }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
         value: heading_.color,
         onChange: function onChange(color) {
-          var newHeading = _toConsumableArray(heading);
-
-          newHeading[0]["color"] = color;
-
-          _this.props.setAttributes({
-            heading: newHeading
-          });
+          return _this2.updateObj("heading", "color", heading, color);
         }
       }))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
         className: "zita-block-post"
       }, wp.element.createElement("div", {
         className: "column-count column-count-".concat(numberOfColumn)
       }, posts.map(function (post) {
+        var postAuthor = author_.enable && "name" in _this2.authorFn(post.author) ? _this2.authorFn(post.author).name : false;
         return wp.element.createElement("article", {
           key: post.id
         }, wp.element.createElement("div", {
@@ -5260,13 +5345,14 @@ var Edit = /*#__PURE__*/function (_Component) {
             fontSize: heading_.fontSize,
             color: heading_.color
           }
-        }), excerpt_.enable && wp.element.createElement("p", {
-          className: "post-excerpt",
-          dangerouslySetInnerHTML: {
-            __html: post.excerpt.rendered
-          }
-        }))));
-      }))) : wp.element.createElement("div", null, posts ? "No Post Found" : "Loding..."));
+        }), postAuthor && wp.element.createElement("p", {
+          className: "post-author"
+        }, postAuthor), date_.enable && wp.element.createElement("p", {
+          className: "post-date"
+        }, _this2.dateFormate(post.date)), excerpt_.enable && wp.element.createElement("p", {
+          className: "post-excerpt"
+        }, _this2.excerptWords(excerpt_.words, post.excerpt.rendered)))));
+      }))) : wp.element.createElement("div", null, !posts ? "No Post Found" : "Loding..."));
     }
   }]);
 
@@ -5276,19 +5362,34 @@ var Edit = /*#__PURE__*/function (_Component) {
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["withSelect"])(function (select, props) {
   var attributes = props.attributes;
-  var numberOfPosts = attributes.numberOfPosts;
+  var numberOfPosts = attributes.numberOfPosts,
+      postCategories = attributes.postCategories;
   var query = {
     per_page: numberOfPosts
   };
 
+  if (postCategories && postCategories.length) {
+    query["categories"] = postCategories.join(",");
+  }
+
   var _select = select("core"),
       getMedia = _select.getMedia,
-      getEntityRecords = _select.getEntityRecords;
+      getEntityRecords = _select.getEntityRecords,
+      getAuthors = _select.getAuthors; // console.log("getAuthors()", getAuthors());
+  // console.log("getAuthors()", getAuthors(1));
+
 
   var getAllPost = getEntityRecords("postType", "post", query);
-  var returnArray = [];
+  var cate_ = getEntityRecords("taxonomy", "category", {
+    per_page: -1
+  });
+  var arrayCatePost = {
+    posts: true,
+    category: cate_
+  };
 
   if (getAllPost && getAllPost.length) {
+    var returnArray = [];
     getAllPost.map(function (v, index_) {
       if (v.featured_media) {
         getAllPost[index_]["getMedia_"] = getMedia(v.featured_media);
@@ -5298,12 +5399,27 @@ var Edit = /*#__PURE__*/function (_Component) {
 
       returnArray.push(getAllPost[index_]);
     });
-    return {
-      posts: returnArray
-    };
+    arrayCatePost["posts"] = returnArray;
+  } else if (getAllPost instanceof Array && getAllPost.length == 0) {
+    arrayCatePost["posts"] = false;
+  } // autohrs
+
+
+  var authors = getAuthors();
+
+  if (authors && authors.length) {
+    var authors_ = [];
+    authors.map(function (v) {
+      authors_.push({
+        id: v.id,
+        name: v.name
+      });
+    });
+    arrayCatePost["authors"] = authors_;
   }
-})(Edit)); // "2020-11-17T06:57:40"
-//November 17, 2020
+
+  return arrayCatePost;
+})(Edit));
 
 /***/ }),
 

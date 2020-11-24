@@ -737,6 +737,19 @@
   width: 100%;
 }
 
+.zita-multiple-select select[multiple] {
+  padding: 0 !important;
+}
+.zita-multiple-select select[multiple] option {
+  display: block;
+  padding: 10px;
+  border-bottom: 1px solid #dedede;
+  background: #efefef;
+}
+.zita-multiple-select select[multiple] option:checked {
+  background: #efefef !important;
+}
+
 .zita-block-post .column-count:not(.column-count-1) {
   display: flex;
   width: 100%;

@@ -2,6 +2,27 @@
   margin-bottom: 10px;
   width: 100%;
 }
+.zita-multiple-select {
+  // display: block;
+  // .components-base-control {
+  //   display: block;
+  // }
+  // .components-base-control__field {
+  //   display: block;
+  // }
+  select[multiple] {
+    padding: 0 !important;
+    option {
+      display: block;
+      padding: 10px;
+      border-bottom: 1px solid #dedede;
+      background: #efefef;
+      &:checked {
+        background: #efefef !important;
+      }
+    }
+  }
+}
 .zita-block-post {
   .column-count:not(.column-count-1) {
     display: flex;
