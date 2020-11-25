@@ -75,12 +75,14 @@ class Edit extends Component {
       date,
       excerpt,
       postCategories,
+      meta_style,
     } = attributes;
     let heading_ = heading[0];
     let thumbnail_ = thumbnail[0];
     let excerpt_ = excerpt[0];
     let date_ = date[0];
     let author_ = author[0];
+    let meta_style_ = meta_style[0];
     // category init
     let cateGory = [{ value: "all", label: "All" }];
     if (category && category.length) {
@@ -95,87 +97,13 @@ class Edit extends Component {
       <>
         <InspectorControls>
           <PanelBody title="Post Layout" initialOpen={false}>
-            {/* category */}
-            <p className="block-inside">Category</p>
-            <p>
-              <strong>Choose Category</strong>
-            </p>
-            <div className="zita-multiple-select">
-              <SelectControl
-                multiple
-                value={postCategories.length ? postCategories : ["all"]}
-                onChange={(choosen) => {
-                  let chooseAll = choosen.filter((choose) => {
-                    if (choose == "all") return true;
-                  });
-                  if (chooseAll.length) choosen = [];
-                  setAttributes({ postCategories: choosen });
-                }}
-                options={cateGory}
-              />
-            </div>
-            {/* category */}
-            {/* show author */}
-            <p className="block-inside">Author</p>
-            <ToggleControl
-              label={author_.enable ? "Hide" : "Show"}
-              checked={author_.enable}
-              onChange={(e) => this.updateObj("author", "enable", author, e)}
-            />
-            {/* show author */}
-            {/* featured image */}
-            <p className="block-inside">Featured Image</p>
-            <ToggleControl
+            {/* <ToggleControl
               label={thumbnail_.enable ? "Hide" : "Show"}
               checked={thumbnail_.enable}
               onChange={(e) =>
                 this.updateObj("thumbnail", "enable", thumbnail, e)
               }
-            />
-            {thumbnail_.enable && (
-              <>
-                <p>
-                  <strong>Border Radius</strong>
-                </p>
-                <RangeControl
-                  value={thumbnail_.borderRadius}
-                  min={0}
-                  max={80}
-                  onChange={(e) =>
-                    this.updateObj("thumbnail", "borderRadius", thumbnail, e)
-                  }
-                />
-              </>
-            )}
-            <p className="block-inside">Date</p>
-            <ToggleControl
-              label={date_.enable ? "Hide" : "Show"}
-              checked={date_.enable}
-              onChange={(e) => this.updateObj("date", "enable", date, e)}
-            />
-            <p className="block-inside">Excerpt</p>
-            <ToggleControl
-              label={excerpt_.enable ? "Hide" : "Show"}
-              checked={excerpt_.enable}
-              onChange={(e) => this.updateObj("excerpt", "enable", excerpt, e)}
-            />
-            {excerpt_.enable && (
-              <>
-                <p>
-                  <strong>Number of words</strong>
-                </p>
-                <RangeControl
-                  value={excerpt_.words}
-                  min={1}
-                  max={100}
-                  onChange={(e) =>
-                    this.updateObj("excerpt", "words", excerpt, e)
-                  }
-                />
-              </>
-            )}
-            {/* featured image */}
-            <h1>********</h1>
+            /> */}
             <p>
               <strong>Layout</strong>
             </p>
@@ -217,9 +145,106 @@ class Edit extends Component {
                 setAttributes({ numberOfPosts: e });
               }}
             />
+            {/* featured image */}
+            <p className="block-inside">Featured Image</p>
+            <ToggleControl
+              label={thumbnail_.enable ? "Hide" : "Show"}
+              checked={thumbnail_.enable}
+              onChange={(e) =>
+                this.updateObj("thumbnail", "enable", thumbnail, e)
+              }
+            />
+            {thumbnail_.enable && (
+              <>
+                <p>
+                  <strong>Border Radius</strong>
+                </p>
+                <RangeControl
+                  value={thumbnail_.borderRadius}
+                  min={0}
+                  max={80}
+                  onChange={(e) =>
+                    this.updateObj("thumbnail", "borderRadius", thumbnail, e)
+                  }
+                />
+              </>
+            )}
+            {/* featured image */}
           </PanelBody>
-          <PanelBody title="Setting" initialOpen={false}>
-            <p className="block-inside">Heading</p>
+          <PanelBody title="Post Meta" initialOpen={false}>
+            {/* category */}
+            <p>
+              <strong>Choose Category</strong>
+            </p>
+            <div className="zita-multiple-select">
+              <SelectControl
+                multiple
+                value={postCategories.length ? postCategories : ["all"]}
+                onChange={(choosen) => {
+                  let chooseAll = choosen.filter((choose) => {
+                    if (choose == "all") return true;
+                  });
+                  if (chooseAll.length) choosen = [];
+                  setAttributes({ postCategories: choosen });
+                }}
+                options={cateGory}
+              />
+            </div>
+            {/* category */}
+            {/* show author */}
+            <ToggleControl
+              label="Author"
+              checked={author_.enable}
+              onChange={(e) => this.updateObj("author", "enable", author, e)}
+            />
+            {/* show author */}
+            <ToggleControl
+              label="Date"
+              checked={date_.enable}
+              onChange={(e) => this.updateObj("date", "enable", date, e)}
+            />
+            <p>
+              <strong>Color</strong>
+            </p>
+            <ColorPalette
+              value={"color" in meta_style_ ? meta_style_.color : ""}
+              onChange={(color) =>
+                this.updateObj("meta_style", "color", meta_style, color)
+              }
+            />
+          </PanelBody>
+          <PanelBody title="Excerpt" initialOpen={false}>
+            <ToggleControl
+              label={excerpt_.enable ? "Hide" : "Show"}
+              checked={excerpt_.enable}
+              onChange={(e) => this.updateObj("excerpt", "enable", excerpt, e)}
+            />
+            {excerpt_.enable && (
+              <>
+                <p>
+                  <strong>Number of words</strong>
+                </p>
+                <RangeControl
+                  value={excerpt_.words}
+                  min={1}
+                  max={200}
+                  onChange={(e) =>
+                    this.updateObj("excerpt", "words", excerpt, e)
+                  }
+                />
+              </>
+            )}
+            <p>
+              <strong>Color</strong>
+            </p>
+            <ColorPalette
+              value={excerpt_.color}
+              onChange={(color) =>
+                this.updateObj("excerpt", "color", excerpt, color)
+              }
+            />
+          </PanelBody>
+          <PanelBody title="Heading" initialOpen={false}>
             <p>
               <strong>Heading Tag</strong>
             </p>
@@ -304,15 +329,26 @@ class Edit extends Component {
                           }}
                         />
                         {postAuthor && (
-                          <p className="post-author">{postAuthor}</p>
+                          <p
+                            style={{ color: meta_style_.color }}
+                            className="post-author"
+                          >
+                            {postAuthor}
+                          </p>
                         )}
                         {date_.enable && (
-                          <p className="post-date">
+                          <p
+                            style={{ color: meta_style_.color }}
+                            className="post-date"
+                          >
                             {this.dateFormate(post.date)}
                           </p>
                         )}
                         {excerpt_.enable && (
-                          <p className="post-excerpt">
+                          <p
+                            style={{ color: excerpt_.color }}
+                            className="post-excerpt"
+                          >
                             {this.excerptWords(
                               excerpt_.words,
                               post.excerpt.rendered

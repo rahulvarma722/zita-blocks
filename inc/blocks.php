@@ -29,6 +29,7 @@ wpgt_register_block_fn('zita-post',  [
                 "color" => 'green',
             ]]
         ],
+        "meta_style" => ["type" => "array", "default" => [["color" => ""]]],
         "author" => [
             "type" => "array",
             "default" => [["enable" => false]]
@@ -43,7 +44,8 @@ wpgt_register_block_fn('zita-post',  [
             'type' => "array",
             "default" => [[
                 "enable" => true,
-                "words" => 50
+                "words" => 50,
+                "color" => '',
             ]]
         ],
         "thumbnail" => [

@@ -604,6 +604,32 @@ var stateCheck = setInterval(function () {
 
 /***/ }),
 
+/***/ "./src/blocks/zita-post/script.js":
+/*!****************************************!*\
+  !*** ./src/blocks/zita-post/script.js ***!
+  \****************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/zita-post/style.scss");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/***/ }),
+
+/***/ "./src/blocks/zita-post/style.scss":
+/*!*****************************************!*\
+  !*** ./src/blocks/zita-post/style.scss ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "./src/script.js":
 /*!***********************!*\
   !*** ./src/script.js ***!
@@ -619,6 +645,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_progress_bar_script__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./blocks/progress-bar/script */ "./src/blocks/progress-bar/script.js");
 /* harmony import */ var _blocks_progress_bar_pie_script__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blocks/progress-bar-pie/script */ "./src/blocks/progress-bar-pie/script.js");
 /* harmony import */ var _blocks_zita_block_slider_script__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./blocks/zita-block-slider/script */ "./src/blocks/zita-block-slider/script.js");
+/* harmony import */ var _blocks_zita_post_script__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./blocks/zita-post/script */ "./src/blocks/zita-post/script.js");
+
 
 
 

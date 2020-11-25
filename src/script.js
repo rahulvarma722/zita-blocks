@@ -4,3 +4,4 @@ import './blocks/service-section/script';
 import './blocks/progress-bar/script';
 import './blocks/progress-bar-pie/script';
 import './blocks/zita-block-slider/script';
+import './blocks/zita-post/script';
