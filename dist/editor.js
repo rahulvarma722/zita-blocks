@@ -5161,13 +5161,15 @@ var Edit = /*#__PURE__*/function (_Component) {
           date = attributes.date,
           excerpt = attributes.excerpt,
           postCategories = attributes.postCategories,
-          meta_style = attributes.meta_style;
+          meta_style = attributes.meta_style,
+          title = attributes.title;
       var heading_ = heading[0];
       var thumbnail_ = thumbnail[0];
       var excerpt_ = excerpt[0];
       var date_ = date[0];
       var author_ = author[0];
-      var meta_style_ = meta_style[0]; // category init
+      var meta_style_ = meta_style[0];
+      var title_ = title[0]; // category init
 
       var cateGory = [{
         value: "all",
@@ -5186,7 +5188,28 @@ var Edit = /*#__PURE__*/function (_Component) {
       return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Post Layout",
         initialOpen: false
-      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Layout")), wp.element.createElement("select", {
+      }, wp.element.createElement("p", {
+        className: "block-inside"
+      }, "Block Title"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: title_.enable ? "Hide" : "Show",
+        checked: title_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("title", "enable", title, e);
+        }
+      }), title_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        label: "Font Size",
+        value: title_.fontSize,
+        min: 5,
+        max: 50,
+        onChange: function onChange(e) {
+          _this2.updateObj("title", "fontSize", title, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: title_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("title", "color", title, color);
+        }
+      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Layout")), wp.element.createElement("select", {
         value: numberOfColumn < 2 ? "list" : "grid",
         className: "zita-block-select",
         onChange: function onChange(e) {
@@ -5328,7 +5351,20 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
         className: "zita-block-post"
-      }, wp.element.createElement("div", {
+      }, title_.enable && wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+        className: "zita-block-post-title",
+        key: "editable",
+        tagName: "h1",
+        placeholder: "My block title",
+        value: title_.value,
+        style: {
+          fontSize: title_.fontSize + "px",
+          color: title_.color
+        },
+        onChange: function onChange(e) {
+          return _this2.updateObj("title", "value", title, e);
+        }
+      }), wp.element.createElement("div", {
         className: "column-count column-count-".concat(numberOfColumn)
       }, posts.map(function (post) {
         var postAuthor = author_.enable && "name" in _this2.authorFn(post.author) ? _this2.authorFn(post.author).name : false;

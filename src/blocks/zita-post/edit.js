@@ -76,6 +76,7 @@ class Edit extends Component {
       excerpt,
       postCategories,
       meta_style,
+      title,
     } = attributes;
     let heading_ = heading[0];
     let thumbnail_ = thumbnail[0];
@@ -83,6 +84,7 @@ class Edit extends Component {
     let date_ = date[0];
     let author_ = author[0];
     let meta_style_ = meta_style[0];
+    let title_ = title[0];
     // category init
     let cateGory = [{ value: "all", label: "All" }];
     if (category && category.length) {
@@ -97,13 +99,34 @@ class Edit extends Component {
       <>
         <InspectorControls>
           <PanelBody title="Post Layout" initialOpen={false}>
-            {/* <ToggleControl
-              label={thumbnail_.enable ? "Hide" : "Show"}
-              checked={thumbnail_.enable}
-              onChange={(e) =>
-                this.updateObj("thumbnail", "enable", thumbnail, e)
-              }
-            /> */}
+            <p className="block-inside">Block Title</p>
+            <ToggleControl
+              label={title_.enable ? "Hide" : "Show"}
+              checked={title_.enable}
+              onChange={(e) => this.updateObj("title", "enable", title, e)}
+            />
+            {title_.enable && (
+              <>
+                <RangeControl
+                  label="Font Size"
+                  value={title_.fontSize}
+                  min={5}
+                  max={50}
+                  onChange={(e) => {
+                    this.updateObj("title", "fontSize", title, e);
+                  }}
+                />
+                <p>
+                  <strong>Color</strong>
+                </p>
+                <ColorPalette
+                  value={title_.color}
+                  onChange={(color) =>
+                    this.updateObj("title", "color", title, color)
+                  }
+                />
+              </>
+            )}
             <p>
               <strong>Layout</strong>
             </p>
@@ -296,6 +319,20 @@ class Edit extends Component {
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
           <div className="zita-block-post">
+            {title_.enable && (
+              <RichText
+                className="zita-block-post-title"
+                key="editable"
+                tagName="h1"
+                placeholder="My block title"
+                value={title_.value}
+                style={{
+                  fontSize: title_.fontSize + "px",
+                  color: title_.color,
+                }}
+                onChange={(e) => this.updateObj("title", "value", title, e)}
+              />
+            )}
             <div className={`column-count column-count-${numberOfColumn}`}>
               {posts.map((post) => {
                 let postAuthor =

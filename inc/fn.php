@@ -30,15 +30,19 @@ function wpgt_register_block_fn($blockName, $extraFeature = [])
 // zita post callback function
 function mytheme_blocks_render_latest_post_block($attr)
 {
-    // echo "<pre>";
-    // print_r($attr);
     $args = [
         "post_per_page" => $attr['numberOfPosts']
     ];
     $query = new WP_Query($args);
     $postHtml = '';
     if ($query->have_posts()) {
-        $postHtml .= '<div class="zita-block-post">';
+        $postHtml .= '<div class="zita-block-post" id="zita-block-post">';
+        // post title
+        if (isset($attr['title'][0]['enable']) && $attr['title'][0]['enable']) {
+            $postHtml .= '<h1 style="color:' . $attr['title'][0]['color'] . ';font-size:' . $attr['title'][0]['fontSize'] . 'px;" class="zita-block-post-title" id="zita-block-post-title">';
+            $postHtml .= $attr['title'][0]['value'];
+            $postHtml .= '</h1>';
+        }
         $postHtml .= "<div class='column-count column-count-" . $attr['numberOfColumn'] . "'>";
         $postAuthor = isset($attr['author'][0]['enable']) && $attr['author'][0]['enable']  ? true : false;
         $postDate = isset($attr['date'][0]['enable']) && $attr['date'][0]['enable']  ? true : false;
@@ -49,7 +53,7 @@ function mytheme_blocks_render_latest_post_block($attr)
         while ($query->have_posts()) {
             $query->the_post();
             $postHtml .= "<article>";
-            $postHtml .= "<div class='post-wrapper'>";
+            $postHtml .= "<div class='post-wrapper' id='post-wrapper'>";
             if ($postThumbnail) {
                 if (get_the_post_thumbnail_url()) {
                     $postThumbRadius = isset($attr['thumbnail'][0]['borderRadius']) && $attr['thumbnail'][0]['borderRadius']  ? $attr['thumbnail'][0]['borderRadius'] : false;

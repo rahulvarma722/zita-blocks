@@ -21,15 +21,24 @@ wpgt_register_block_fn('zita-post',  [
             "type" => "number",
             "default" => 2
         ],
+        "title" => [
+            "type" => "array",
+            "default" => [[
+                'enable' => true,
+                "value" => "My block title",
+                "color" => "black",
+                "fontSize" => 30
+            ]]
+        ],
         'heading' => [
             'type' => "array",
             "default" => [[
-                "tag" => 'p',
-                "fontSize" => 15,
-                "color" => 'green',
+                "tag" => 'h1',
+                "fontSize" => 30,
+                "color" => '#616161',
             ]]
         ],
-        "meta_style" => ["type" => "array", "default" => [["color" => ""]]],
+        "meta_style" => ["type" => "array", "default" => [["color" => "#8e8c8d"]]],
         "author" => [
             "type" => "array",
             "default" => [["enable" => false]]
@@ -44,15 +53,15 @@ wpgt_register_block_fn('zita-post',  [
             'type' => "array",
             "default" => [[
                 "enable" => true,
-                "words" => 50,
-                "color" => '',
+                "words" => 17,
+                "color" => '#7d7d7d',
             ]]
         ],
         "thumbnail" => [
             "type" => "array",
             "default" => [[
                 "enable" => true,
-                "borderRadius" => 0
+                "borderRadius" => 10
             ]]
         ],
         "postCategories" => [

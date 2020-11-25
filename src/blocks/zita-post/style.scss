@@ -1,4 +1,7 @@
-.zita-block-post {
+#zita-block-post {
+  * {
+    font-family: "Catamaran-Regular", sans-serif;
+  }
   .column-count:not(.column-count-1) {
     display: flex;
     width: 100%;
@@ -33,15 +36,48 @@
       width: 100%;
     }
   }
-  .post-content {
-    a {
-      font-size: inherit;
-      color: inherit;
-      text-decoration: none;
-      display: block;
-    }
+  #zita-block-post-title {
+    line-height: 1.5;
+    margin: 6px 0;
+    letter-spacing: 1px;
+    font-weight: 600;
   }
-  .post-heading {
-    margin: 5px 0;
+  #post-wrapper {
+    .post-content {
+      a {
+        font-size: inherit;
+        color: inherit;
+        text-decoration: none;
+        display: block;
+        border-bottom: 1px dotted transparent;
+        transition: 0.5s border ease;
+        &:hover {
+          border-color: #a7a3a3;
+        }
+      }
+      .post-heading {
+        margin: 5px 0;
+        line-height: 1.2;
+        font-weight: 600;
+      }
+      p,
+      h1,
+      h2,
+      h3 {
+        line-height: 1.5;
+        margin: 6px 0;
+        letter-spacing: 1px;
+      }
+      p {
+        &.post-author {
+          font-size: 13px;
+          letter-spacing: 1.2px;
+        }
+        &.post-date {
+          letter-spacing: 1.2px;
+          font-size: 14px;
+        }
+      }
+    }
   }
 }

@@ -53,6 +53,7 @@ function zita_blocks_script()
 {
 	wp_enqueue_style('fontawesom-css', WPPB_PLUGIN_URL . 'assets/fontawesome/css/all.css', false);
 	// wp_enqueue_style('google-font', FONT_FAMILY_LINK, false);
+	wp_enqueue_style('google-font', 'https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;700&display=swap', false);
 }
 add_action('admin_enqueue_scripts', 'zita_blocks_script');
 add_action('wp_enqueue_scripts', 'zita_blocks_script');
