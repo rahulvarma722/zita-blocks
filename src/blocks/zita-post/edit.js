@@ -50,6 +50,38 @@ class Edit extends Component {
     words_ = words_.slice(0, words);
     return words_.join(" ");
   };
+  showCateFn = (categories) => {
+    let returR = [];
+    if ("category" in this.props && this.props.category && categories.length) {
+      categories.forEach((cate) => {
+        this.props.category.forEach((searchCate) => {
+          if (cate == searchCate.id) {
+            returR.push(searchCate.name);
+            return;
+          }
+        });
+      });
+    }
+    if (returR.length) {
+      return returR.map((returnH) => <span>{returnH}</span>);
+    }
+  };
+  showTagsFn = (tags_) => {
+    let returR = [];
+    if ("tags" in this.props && this.props.tags && tags_.length) {
+      tags_.forEach((tag) => {
+        this.props.tags.forEach((searchtag) => {
+          if (tag == searchtag.id) {
+            returR.push(searchtag.name);
+            return;
+          }
+        });
+      });
+    }
+    if (returR.length) {
+      return returR.map((returnH) => <span>{returnH}</span>);
+    }
+  };
   // autor
   authorFn = (author) => {
     let retur = {};
@@ -73,6 +105,8 @@ class Edit extends Component {
       thumbnail,
       numberOfColumn,
       date,
+      showTag,
+      showCate,
       excerpt,
       postCategories,
       meta_style,
@@ -85,6 +119,8 @@ class Edit extends Component {
     let author_ = author[0];
     let meta_style_ = meta_style[0];
     let title_ = title[0];
+    let showTag_ = showTag[0];
+    let showCate_ = showCate[0];
     // category init
     let cateGory = [{ value: "all", label: "All" }];
     if (category && category.length) {
@@ -168,6 +204,13 @@ class Edit extends Component {
                 setAttributes({ numberOfPosts: e });
               }}
             />
+            <ToggleControl
+              label="Left Border"
+              checked={meta_style_.left_border}
+              onChange={(e) =>
+                this.updateObj("meta_style", "left_border", meta_style, e)
+              }
+            />
             {/* featured image */}
             <p className="block-inside">Featured Image</p>
             <ToggleControl
@@ -220,11 +263,29 @@ class Edit extends Component {
               checked={author_.enable}
               onChange={(e) => this.updateObj("author", "enable", author, e)}
             />
-            {/* show author */}
+            {/* show date */}
             <ToggleControl
               label="Date"
               checked={date_.enable}
               onChange={(e) => this.updateObj("date", "enable", date, e)}
+            />
+            {/* show last date */}
+            <ToggleControl
+              label="Categories"
+              checked={showCate_.enable}
+              onChange={(e) =>
+                this.updateObj("showCate", "enable", showCate, e)
+              }
+            />
+            <ToggleControl
+              label="Last Modified Date"
+              checked={date_.last_modified}
+              onChange={(e) => this.updateObj("date", "last_modified", date, e)}
+            />
+            <ToggleControl
+              label="Tag"
+              checked={showTag_.enable}
+              onChange={(e) => this.updateObj("showTag", "enable", showTag, e)}
             />
             <p>
               <strong>Color</strong>
@@ -333,7 +394,11 @@ class Edit extends Component {
                 onChange={(e) => this.updateObj("title", "value", title, e)}
               />
             )}
-            <div className={`column-count column-count-${numberOfColumn}`}>
+            <div
+              className={`column-count column-count-${numberOfColumn} ${
+                meta_style_.left_border && "left-border"
+              }`}
+            >
               {posts.map((post) => {
                 let postAuthor =
                   author_.enable && "name" in this.authorFn(post.author)
@@ -356,6 +421,11 @@ class Edit extends Component {
                           </div>
                         )}
                       <div className="post-content">
+                        {showCate_.enable && (
+                          <p className="post-category">
+                            {this.showCateFn(post.categories)}
+                          </p>
+                        )}
                         <RichText.Content
                           className="post-heading"
                           tagName={heading_.tag}
@@ -365,22 +435,39 @@ class Edit extends Component {
                             color: heading_.color,
                           }}
                         />
-                        {postAuthor && (
-                          <p
-                            style={{ color: meta_style_.color }}
-                            className="post-author"
-                          >
-                            {postAuthor}
-                          </p>
-                        )}
-                        {date_.enable && (
-                          <p
-                            style={{ color: meta_style_.color }}
-                            className="post-date"
-                          >
-                            {this.dateFormate(post.date)}
-                          </p>
-                        )}
+                        <div className="post-meta-all">
+                          {postAuthor && (
+                            <p
+                              style={{ color: meta_style_.color }}
+                              className="post-author"
+                            >
+                              {postAuthor}
+                            </p>
+                          )}
+                          {date_.enable && (
+                            <>
+                              <span className="slash">/</span>
+                              <p
+                                style={{ color: meta_style_.color }}
+                                className="post-date"
+                              >
+                                {this.dateFormate(post.date)}
+                              </p>
+                            </>
+                          )}
+                          {date_.last_modified && (
+                            <>
+                              <span className="slash">/</span>
+                              <p
+                                style={{ color: meta_style_.color }}
+                                className="post-date-last-modified"
+                              >
+                                <span>Modified: </span>
+                                {this.dateFormate(post.modified)}
+                              </p>
+                            </>
+                          )}
+                        </div>
                         {excerpt_.enable && (
                           <p
                             style={{ color: excerpt_.color }}
@@ -390,6 +477,14 @@ class Edit extends Component {
                               excerpt_.words,
                               post.excerpt.rendered
                             )}
+                          </p>
+                        )}
+                        {showTag_.enable && (
+                          <p
+                            style={{ color: meta_style_.color }}
+                            className="post-tags"
+                          >
+                            {this.showTagsFn(post.tags)}
                           </p>
                         )}
                       </div>
@@ -415,11 +510,10 @@ export default withSelect((select, props) => {
     query["categories"] = postCategories.join(",");
   }
   const { getMedia, getEntityRecords, getAuthors } = select("core");
-  // console.log("getAuthors()", getAuthors());
-  // console.log("getAuthors()", getAuthors(1));
   let getAllPost = getEntityRecords("postType", "post", query);
   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
-  let arrayCatePost = { posts: true, category: cate_ };
+  let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
+  let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
   if (getAllPost && getAllPost.length) {
     let returnArray = [];
     getAllPost.map((v, index_) => {

@@ -21,6 +21,30 @@
     font-family: "Catamaran-Regular", sans-serif;
   }
   .column-count:not(.column-count-1) {
+    &.left-border {
+      article {
+        border-left: 4px solid;
+        margin: 18px 0;
+      }
+      article:nth-child(6n + 1) {
+        border-color: #eb952a;
+      }
+      article:nth-child(6n + 2) {
+        border-color: #959595;
+      }
+      article:nth-child(6n + 3) {
+        border-color: #1e73be;
+      }
+      article:nth-child(6n + 4) {
+        border-color: #e6543d;
+      }
+      article:nth-child(6n + 5) {
+        border-color: #8bd623;
+      }
+      article:nth-child(6n + 6) {
+        border-color: #dc51a0;
+      }
+    }
     display: flex;
     width: 100%;
     flex-wrap: wrap;
@@ -66,6 +90,15 @@
       line-height: 1.2;
       font-weight: 600;
     }
+    .post-meta-all {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      .slash {
+        color: #cec4c4;
+        margin: 1px 5px;
+      }
+    }
     p,
     h1,
     h2,
@@ -79,9 +112,47 @@
         font-size: 13px;
         letter-spacing: 1.2px;
       }
-      &.post-date {
+      &.post-date,
+      &.post-date-last-modified {
         letter-spacing: 1.2px;
         font-size: 14px;
+        display: flex;
+      }
+      &.post-category {
+        display: block;
+        span {
+          margin: 1px 5px;
+          padding: 3px 4px;
+          color: white;
+          background: #ff5e00;
+          font-size: 13px;
+          text-transform: capitalize;
+          &:nth-child(2) {
+            background: #1a609c;
+          }
+          &:nth-child(3) {
+            background: #9e710c;
+          }
+          &:nth-child(4) {
+            background: #6a7f6a;
+          }
+          &:first-child {
+            margin: 1px 0;
+          }
+        }
+      }
+      &.post-tags {
+        display: flex;
+        flex-wrap: wrap;
+        span {
+          border: 1px solid;
+          margin: 1px 7px;
+          font-size: 13px;
+          padding: 1px 11px;
+          &:first-child {
+            margin: 1px 0;
+          }
+        }
       }
     }
   }

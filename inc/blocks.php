@@ -30,6 +30,13 @@ wpgt_register_block_fn('zita-post',  [
                 "fontSize" => 30
             ]]
         ],
+        "thumbnail" => [
+            "type" => "array",
+            "default" => [[
+                "enable" => true,
+                "borderRadius" => 10
+            ]]
+        ],
         'heading' => [
             'type' => "array",
             "default" => [[
@@ -38,12 +45,31 @@ wpgt_register_block_fn('zita-post',  [
                 "color" => '#616161',
             ]]
         ],
-        "meta_style" => ["type" => "array", "default" => [["color" => "#8e8c8d"]]],
+        "meta_style" => [
+            "type" => "array",
+            "default" => [[
+                "color" => "#8e8c8d",
+                "left_border" => true
+            ]]
+        ],
         "author" => [
             "type" => "array",
             "default" => [["enable" => false]]
         ],
         'date' => [
+            "type" => "array",
+            "default" => [[
+                "enable" => true,
+                "last_modified" => true
+            ]]
+        ],
+        'showCate' => [
+            "type" => "array",
+            "default" => [[
+                "enable" => true
+            ]]
+        ],
+        'showTag' => [
             "type" => "array",
             "default" => [[
                 "enable" => true
@@ -55,13 +81,6 @@ wpgt_register_block_fn('zita-post',  [
                 "enable" => true,
                 "words" => 17,
                 "color" => '#7d7d7d',
-            ]]
-        ],
-        "thumbnail" => [
-            "type" => "array",
-            "default" => [[
-                "enable" => true,
-                "borderRadius" => 10
             ]]
         ],
         "postCategories" => [

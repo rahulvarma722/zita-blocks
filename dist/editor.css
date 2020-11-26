@@ -758,6 +758,28 @@
   width: 100%;
   flex-wrap: wrap;
 }
+.zita-block-post .column-count:not(.column-count-1).left-border article {
+  border-left: 4px solid;
+  margin: 18px 0;
+}
+.zita-block-post .column-count:not(.column-count-1).left-border article:nth-child(6n+1) {
+  border-color: #eb952a;
+}
+.zita-block-post .column-count:not(.column-count-1).left-border article:nth-child(6n+2) {
+  border-color: #959595;
+}
+.zita-block-post .column-count:not(.column-count-1).left-border article:nth-child(6n+3) {
+  border-color: #1e73be;
+}
+.zita-block-post .column-count:not(.column-count-1).left-border article:nth-child(6n+4) {
+  border-color: #e6543d;
+}
+.zita-block-post .column-count:not(.column-count-1).left-border article:nth-child(6n+5) {
+  border-color: #8bd623;
+}
+.zita-block-post .column-count:not(.column-count-1).left-border article:nth-child(6n+6) {
+  border-color: #dc51a0;
+}
 .zita-block-post .column-count:not(.column-count-1) .featured-image {
   width: 100%;
   position: relative;
@@ -799,6 +821,15 @@
   line-height: 1.2;
   font-weight: 600;
 }
+.zita-block-post .post-content .post-meta-all {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.zita-block-post .post-content .post-meta-all .slash {
+  color: #cec4c4;
+  margin: 1px 5px;
+}
 .zita-block-post .post-content p,
 .zita-block-post .post-content h1,
 .zita-block-post .post-content h2,
@@ -811,9 +842,46 @@
   font-size: 13px;
   letter-spacing: 1.2px;
 }
-.zita-block-post .post-content p.post-date {
+.zita-block-post .post-content p.post-date, .zita-block-post .post-content p.post-date-last-modified {
   letter-spacing: 1.2px;
   font-size: 14px;
+  display: flex;
+}
+.zita-block-post .post-content p.post-category {
+  display: block;
+}
+.zita-block-post .post-content p.post-category span {
+  margin: 1px 5px;
+  padding: 3px 4px;
+  color: white;
+  background: #ff5e00;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+.zita-block-post .post-content p.post-category span:nth-child(2) {
+  background: #1a609c;
+}
+.zita-block-post .post-content p.post-category span:nth-child(3) {
+  background: #9e710c;
+}
+.zita-block-post .post-content p.post-category span:nth-child(4) {
+  background: #6a7f6a;
+}
+.zita-block-post .post-content p.post-category span:first-child {
+  margin: 1px 0;
+}
+.zita-block-post .post-content p.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+.zita-block-post .post-content p.post-tags span {
+  border: 1px solid;
+  margin: 1px 7px;
+  font-size: 13px;
+  padding: 1px 11px;
+}
+.zita-block-post .post-content p.post-tags span:first-child {
+  margin: 1px 0;
 }
 
 /*# sourceMappingURL=editor.css.map*/

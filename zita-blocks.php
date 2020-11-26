@@ -21,8 +21,6 @@ function zita_register_block()
 		'my-custom-block-script',
 		WPPB_PLUGIN_URL . 'dist/script.js'
 	);
-
-
 	// Register editor style src/editor.css
 	wp_register_style(
 		'my-custom-block-editor-style',
@@ -36,7 +34,6 @@ function zita_register_block()
 			WPPB_PLUGIN_URL . 'dist/script.css',
 		);
 	}
-
 	wp_localize_script(
 		'my-custom-block',
 		'plugin_url',
@@ -47,7 +44,6 @@ function zita_register_block()
 	include "inc/blocks.php";
 }
 add_action('init', 'zita_register_block');
-
 // enque css icon file
 function zita_blocks_script()
 {

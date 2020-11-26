@@ -5124,6 +5124,48 @@ var Edit = /*#__PURE__*/function (_Component) {
       return words_.join(" ");
     });
 
+    _defineProperty(_assertThisInitialized(_this), "showCateFn", function (categories) {
+      var returR = [];
+
+      if ("category" in _this.props && _this.props.category && categories.length) {
+        categories.forEach(function (cate) {
+          _this.props.category.forEach(function (searchCate) {
+            if (cate == searchCate.id) {
+              returR.push(searchCate.name);
+              return;
+            }
+          });
+        });
+      }
+
+      if (returR.length) {
+        return returR.map(function (returnH) {
+          return wp.element.createElement("span", null, returnH);
+        });
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showTagsFn", function (tags_) {
+      var returR = [];
+
+      if ("tags" in _this.props && _this.props.tags && tags_.length) {
+        tags_.forEach(function (tag) {
+          _this.props.tags.forEach(function (searchtag) {
+            if (tag == searchtag.id) {
+              returR.push(searchtag.name);
+              return;
+            }
+          });
+        });
+      }
+
+      if (returR.length) {
+        return returR.map(function (returnH) {
+          return wp.element.createElement("span", null, returnH);
+        });
+      }
+    });
+
     _defineProperty(_assertThisInitialized(_this), "authorFn", function (author) {
       var retur = {};
 
@@ -5159,6 +5201,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           thumbnail = attributes.thumbnail,
           numberOfColumn = attributes.numberOfColumn,
           date = attributes.date,
+          showTag = attributes.showTag,
+          showCate = attributes.showCate,
           excerpt = attributes.excerpt,
           postCategories = attributes.postCategories,
           meta_style = attributes.meta_style,
@@ -5169,7 +5213,9 @@ var Edit = /*#__PURE__*/function (_Component) {
       var date_ = date[0];
       var author_ = author[0];
       var meta_style_ = meta_style[0];
-      var title_ = title[0]; // category init
+      var title_ = title[0];
+      var showTag_ = showTag[0];
+      var showCate_ = showCate[0]; // category init
 
       var cateGory = [{
         value: "all",
@@ -5240,6 +5286,12 @@ var Edit = /*#__PURE__*/function (_Component) {
             numberOfPosts: e
           });
         }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Left Border",
+        checked: meta_style_.left_border,
+        onChange: function onChange(e) {
+          return _this2.updateObj("meta_style", "left_border", meta_style, e);
+        }
       }), wp.element.createElement("p", {
         className: "block-inside"
       }, "Featured Image"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
@@ -5284,6 +5336,24 @@ var Edit = /*#__PURE__*/function (_Component) {
         checked: date_.enable,
         onChange: function onChange(e) {
           return _this2.updateObj("date", "enable", date, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Categories",
+        checked: showCate_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("showCate", "enable", showCate, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Last Modified Date",
+        checked: date_.last_modified,
+        onChange: function onChange(e) {
+          return _this2.updateObj("date", "last_modified", date, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Tag",
+        checked: showTag_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("showTag", "enable", showTag, e);
         }
       }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
         value: "color" in meta_style_ ? meta_style_.color : "",
@@ -5365,7 +5435,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           return _this2.updateObj("title", "value", title, e);
         }
       }), wp.element.createElement("div", {
-        className: "column-count column-count-".concat(numberOfColumn)
+        className: "column-count column-count-".concat(numberOfColumn, " ").concat(meta_style_.left_border && "left-border")
       }, posts.map(function (post) {
         var postAuthor = author_.enable && "name" in _this2.authorFn(post.author) ? _this2.authorFn(post.author).name : false;
         return wp.element.createElement("article", {
@@ -5381,7 +5451,9 @@ var Edit = /*#__PURE__*/function (_Component) {
           src: post.getMedia_.guid.rendered
         })), wp.element.createElement("div", {
           className: "post-content"
-        }, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
+        }, showCate_.enable && wp.element.createElement("p", {
+          className: "post-category"
+        }, _this2.showCateFn(post.categories)), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
           className: "post-heading",
           tagName: heading_.tag,
           value: post.title.rendered,
@@ -5389,22 +5461,38 @@ var Edit = /*#__PURE__*/function (_Component) {
             fontSize: heading_.fontSize,
             color: heading_.color
           }
-        }), postAuthor && wp.element.createElement("p", {
+        }), wp.element.createElement("div", {
+          className: "post-meta-all"
+        }, postAuthor && wp.element.createElement("p", {
           style: {
             color: meta_style_.color
           },
           className: "post-author"
-        }, postAuthor), date_.enable && wp.element.createElement("p", {
+        }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("span", {
+          className: "slash"
+        }, "/"), wp.element.createElement("p", {
           style: {
             color: meta_style_.color
           },
           className: "post-date"
-        }, _this2.dateFormate(post.date)), excerpt_.enable && wp.element.createElement("p", {
+        }, _this2.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("span", {
+          className: "slash"
+        }, "/"), wp.element.createElement("p", {
+          style: {
+            color: meta_style_.color
+          },
+          className: "post-date-last-modified"
+        }, wp.element.createElement("span", null, "Modified: "), _this2.dateFormate(post.modified)))), excerpt_.enable && wp.element.createElement("p", {
           style: {
             color: excerpt_.color
           },
           className: "post-excerpt"
-        }, _this2.excerptWords(excerpt_.words, post.excerpt.rendered)))));
+        }, _this2.excerptWords(excerpt_.words, post.excerpt.rendered)), showTag_.enable && wp.element.createElement("p", {
+          style: {
+            color: meta_style_.color
+          },
+          className: "post-tags"
+        }, _this2.showTagsFn(post.tags)))));
       }))) : wp.element.createElement("div", null, !posts ? "No Post Found" : "Loding..."));
     }
   }]);
@@ -5428,17 +5516,19 @@ var Edit = /*#__PURE__*/function (_Component) {
   var _select = select("core"),
       getMedia = _select.getMedia,
       getEntityRecords = _select.getEntityRecords,
-      getAuthors = _select.getAuthors; // console.log("getAuthors()", getAuthors());
-  // console.log("getAuthors()", getAuthors(1));
-
+      getAuthors = _select.getAuthors;
 
   var getAllPost = getEntityRecords("postType", "post", query);
   var cate_ = getEntityRecords("taxonomy", "category", {
     per_page: -1
   });
+  var tags_ = getEntityRecords("taxonomy", "post_tag", {
+    per_page: -1
+  });
   var arrayCatePost = {
     posts: true,
-    category: cate_
+    category: cate_,
+    tags: tags_
   };
 
   if (getAllPost && getAllPost.length) {
