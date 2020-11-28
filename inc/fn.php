@@ -27,6 +27,11 @@ function wpgt_register_block_fn($blockName, $extraFeature = [])
         ), $extraFeature)
     );
 }
+// zita post slider callback function
+function mytheme_blocks_render_post_slider($attr)
+{
+    return "<h1>This is my block post slider</h1>";
+}
 // zita post callback function
 function mytheme_blocks_render_latest_post_block($attr)
 {

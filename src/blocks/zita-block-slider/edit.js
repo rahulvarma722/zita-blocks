@@ -11,11 +11,7 @@ import {
   ToggleControl,
 } from "@wordpress/components";
 import { Component } from "@wordpress/element";
-// import defaultArray from "./default.js";
-
-// console.log(defaultArray);
 let bgImageWrapper = plugin_url.url + "assets/img/image2.jpg";
-
 class Edit extends Component {
   constructor(props) {
     super(props);
@@ -534,9 +530,6 @@ class Edit extends Component {
             checked={currentSlide[activeTwoBtnState].enable}
             onChange={(e) => {
               this.updateSlides(e, activeTwoBtnState, "enable");
-              console.log(activeTwoBtnState);
-              console.log(e);
-              console.log(currentSlide);
             }}
           />
           {currentSlide[activeTwoBtnState].enable && (
@@ -711,7 +704,6 @@ class Edit extends Component {
           )}
           {/* next prev btn */}
           {/* slider trigger */}
-
           {slides.length > 1 && (
             <span
               className="zita-remove-slide"

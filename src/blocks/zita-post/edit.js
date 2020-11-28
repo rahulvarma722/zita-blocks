@@ -11,7 +11,26 @@ import {
   ToggleControl,
   SelectControl,
 } from "@wordpress/components";
+import {
+  SortableContainer,
+  SortableElement,
+  arrayMove,
+} from "react-sortable-hoc";
+// import arrayMove from "array-move";
+
 class Edit extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      shortList: [
+        { name: "Item 1" },
+        { name: "Item 2" },
+        { name: "Item 3" },
+        { name: "Item 4" },
+        { name: "Item 5" },
+      ],
+    };
+  }
   updateObj = (parent_key, child_key, initialValue, value_) => {
     let newNewValue = [...initialValue];
     newNewValue[0][child_key] = value_;
@@ -97,7 +116,7 @@ class Edit extends Component {
   };
   render() {
     const { posts, attributes, setAttributes, category } = this.props;
-    console.log("this.props", this.props);
+    // console.log("this.props", this.props);
     let {
       heading,
       author,
@@ -131,11 +150,40 @@ class Edit extends Component {
         });
       });
     }
+    // let shortList = this.state.shortList;
+    // let ShotableList = SortableContainer(() => {
+    //   return (
+    //     <ul>
+    //       {shortList.map((item, index) => {
+    //         let ShortItem = SortableElement(() => {
+    //           return (
+    //             <li key={index}>
+    //               <h1>hello {item.name}</h1>
+    //             </li>
+    //           );
+    //         });
+    //         return <ShortItem key={index} index={index} />;
+    //       })}
+    //     </ul>
+    //   );
+    // });
     return (
       <>
         <InspectorControls>
           <PanelBody title="Post Layout" initialOpen={false}>
             <p className="block-inside">Block Title</p>
+            {/* <div className="check-shortable">
+              <ShotableList
+                distance={10}
+                axis="y"
+                helperClass={"dragging-element"}
+                onSortEnd={({ oldIndex, newIndex }) => {
+                  const items = this.state.shortList;
+                  let new_items = arrayMove(items, oldIndex, newIndex);
+                  this.setState({ shortList: new_items });
+                }}
+              />
+            </div> */}
             <ToggleControl
               label={title_.enable ? "Hide" : "Show"}
               checked={title_.enable}
