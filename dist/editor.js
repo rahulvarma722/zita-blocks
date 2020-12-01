@@ -36664,6 +36664,7 @@ var Edit = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "authorFn", function (author) {
+      // console.log("wordkinggg");
       var retur = {};
 
       if ("authors" in _this.props) {
@@ -36693,8 +36694,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
           posts = _this$props.posts;
-      var slideIndex = this.state.slideIndex;
-      console.log("this.props", this.props);
+      var slideIndex = this.state.slideIndex; // console.log("this.props", this.props);
+
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
@@ -36729,7 +36730,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       }, wp.element.createElement("ul", {
         className: "zita-slider-ul-bullet"
       }, posts && posts.length > 0 && "getMedia_" in posts[0] && posts.map(function (val, index_) {
-        return wp.element.createElement("li", {
+        return "getMedia_" in val && val.getMedia_ && "guid" in val.getMedia_ && wp.element.createElement("li", {
           key: index_,
           className: slideIndex == index_ ? "selected_" : null
         }, wp.element.createElement("span", {

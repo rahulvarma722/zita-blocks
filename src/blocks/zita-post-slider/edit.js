@@ -84,6 +84,7 @@ class Edit extends Component {
   };
   // autor
   authorFn = (author) => {
+    // console.log("wordkinggg");
     let retur = {};
     if ("authors" in this.props) {
       this.props.authors.map((authorDetail) => {
@@ -98,7 +99,7 @@ class Edit extends Component {
   render() {
     let { attributes, setAttributes, posts } = this.props;
     let { slideIndex } = this.state;
-    console.log("this.props", this.props);
+    // console.log("this.props", this.props);
     let {
       heading,
       author,
@@ -136,16 +137,20 @@ class Edit extends Component {
               "getMedia_" in posts[0] &&
               posts.map((val, index_) => {
                 return (
-                  <li
-                    key={index_}
-                    className={slideIndex == index_ ? "selected_" : null}
-                  >
-                    <span
-                      onClick={(e) => {
-                        this.setState({ slideIndex: index_ });
-                      }}
-                    ></span>
-                  </li>
+                  "getMedia_" in val &&
+                  val.getMedia_ &&
+                  "guid" in val.getMedia_ && (
+                    <li
+                      key={index_}
+                      className={slideIndex == index_ ? "selected_" : null}
+                    >
+                      <span
+                        onClick={(e) => {
+                          this.setState({ slideIndex: index_ });
+                        }}
+                      ></span>
+                    </li>
+                  )
                 );
               })}
           </ul>

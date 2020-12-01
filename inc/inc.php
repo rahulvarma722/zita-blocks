@@ -1,4 +1,4 @@
-<?
+<?php
 $fontsFamily = 
 ["ABeeZee",
 "Abel",
@@ -222,4 +222,3 @@ $fontsFamily =
         $fontFamilyLink .= str_replace(' ','+',$font_value ) . $Line_;
     }
     define("FONT_FAMILY_LINK",$fontFamilyLink);
-    // return ['font-family-array'=>$fontFamily_,'font-family-link'=>$fontFamilyLink];
