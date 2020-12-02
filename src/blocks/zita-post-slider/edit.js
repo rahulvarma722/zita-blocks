@@ -9,9 +9,11 @@ import {
   RangeControl,
   ColorPicker,
   ToggleControl,
+  SelectControl,
 } from "@wordpress/components";
 import { Component } from "@wordpress/element";
 import { withSelect } from "@wordpress/data";
+import { decodeEntities } from "@wordpress/html-entities";
 
 let bgImageWrapper = plugin_url.url + "assets/img/image2.jpg";
 class Edit extends Component {
@@ -45,6 +47,7 @@ class Edit extends Component {
     return <RichText.Content tag="span" value={dateArr} />;
   };
   excerptWords = (words, words_) => {
+    words_ = decodeEntities(words_);
     words_ = words_.replace(/<\/?[^>]+(>|$)/g, "");
     words_ = words_.split(" ");
     words_ = words_.slice(0, words);
@@ -96,10 +99,17 @@ class Edit extends Component {
     }
     return retur;
   };
+  updateObj = (parent_key, child_key, initialValue, value_) => {
+    let newNewValue = [...initialValue];
+    newNewValue[0][child_key] = value_;
+    let setAttr_ = {};
+    setAttr_[parent_key] = newNewValue;
+    this.props.setAttributes(setAttr_);
+  };
   render() {
-    let { attributes, setAttributes, posts } = this.props;
+    let { attributes, setAttributes, posts, category } = this.props;
     let { slideIndex } = this.state;
-    // console.log("this.props", this.props);
+    console.log("this.props", this.props);
     let {
       heading,
       author,
@@ -123,11 +133,114 @@ class Edit extends Component {
     let title_ = title[0];
     let showTag_ = showTag[0];
     let showCate_ = showCate[0];
-
+    let cateGory = [{ value: "all", label: "All" }];
+    if (category && category.length) {
+      category.map((catt) => {
+        cateGory.push({
+          value: catt.id,
+          label: catt.name,
+        });
+      });
+    }
     return [
       <InspectorControls>
         <PanelBody title={"Slider Setting"} initialOpen={false}></PanelBody>
-        <PanelBody title={"Slide Setting"} initialOpen={false}></PanelBody>
+        <PanelBody title={"Post Setting"} initialOpen={false}>
+          <p>
+            <strong>No of Post Display</strong>
+          </p>
+          <RangeControl
+            value={numberOfPosts}
+            min={1}
+            max={20}
+            onChange={(e) => {
+              setAttributes({ numberOfPosts: e });
+            }}
+          />
+          <p>
+            <strong>Choose Category</strong>
+          </p>
+          <div className="zita-multiple-select">
+            <SelectControl
+              multiple
+              value={postCategories.length ? postCategories : ["all"]}
+              onChange={(choosen) => {
+                let chooseAll = choosen.filter((choose) => {
+                  if (choose == "all") return true;
+                });
+                if (chooseAll.length) choosen = [];
+                setAttributes({ postCategories: choosen });
+              }}
+              options={cateGory}
+            />
+          </div>
+          {/* show author */}
+          <ToggleControl
+            label="Author"
+            checked={author_.enable}
+            onChange={(e) => this.updateObj("author", "enable", author, e)}
+          />
+          {/* show date */}
+          <ToggleControl
+            label="Date"
+            checked={date_.enable}
+            onChange={(e) => this.updateObj("date", "enable", date, e)}
+          />
+          <ToggleControl
+            label="Categories"
+            checked={showCate_.enable}
+            onChange={(e) => this.updateObj("showCate", "enable", showCate, e)}
+          />
+          {/* show last date */}
+          <ToggleControl
+            label="Last Modified Date"
+            checked={date_.last_modified}
+            onChange={(e) => this.updateObj("date", "last_modified", date, e)}
+          />
+          <ToggleControl
+            label="Tag"
+            checked={showTag_.enable}
+            onChange={(e) => this.updateObj("showTag", "enable", showTag, e)}
+          />
+          <p>
+            <strong>Color</strong>
+          </p>
+          <ColorPalette
+            value={"color" in meta_style_ ? meta_style_.color : ""}
+            onChange={(color) =>
+              this.updateObj("meta_style", "color", meta_style, color)
+            }
+          />
+        </PanelBody>
+        <PanelBody title="Excerpt" initialOpen={false}>
+          <ToggleControl
+            label={excerpt_.enable ? "Hide" : "Show"}
+            checked={excerpt_.enable}
+            onChange={(e) => this.updateObj("excerpt", "enable", excerpt, e)}
+          />
+          {excerpt_.enable && (
+            <>
+              <p>
+                <strong>Number of words</strong>
+              </p>
+              <RangeControl
+                value={excerpt_.words}
+                min={1}
+                max={200}
+                onChange={(e) => this.updateObj("excerpt", "words", excerpt, e)}
+              />
+            </>
+          )}
+          <p>
+            <strong>Color</strong>
+          </p>
+          <ColorPalette
+            value={excerpt_.color}
+            onChange={(color) =>
+              this.updateObj("excerpt", "color", excerpt, color)
+            }
+          />
+        </PanelBody>
       </InspectorControls>,
       <div className="zita-block-slide-wrapper">
         <div className="zita-slider-bullet">
@@ -188,11 +301,6 @@ class Edit extends Component {
                               <div className="slider-post-content">
                                 <div className="post-wrapper">
                                   <div className="post-content">
-                                    {showCate_.enable && (
-                                      <p className="post-category">
-                                        {this.showCateFn(post.categories)}
-                                      </p>
-                                    )}
                                     <RichText.Content
                                       className="post-heading"
                                       tagName={heading_.tag}
@@ -202,6 +310,11 @@ class Edit extends Component {
                                         color: heading_.color,
                                       }}
                                     />
+                                    {showCate_.enable && (
+                                      <p className="post-category">
+                                        {this.showCateFn(post.categories)}
+                                      </p>
+                                    )}
                                     <div className="post-meta-all">
                                       {postAuthor && (
                                         <p

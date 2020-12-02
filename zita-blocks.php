@@ -13,7 +13,7 @@ function zita_register_block()
 	wp_register_script(
 		'my-custom-block',
 		WPPB_PLUGIN_URL . 'dist/editor.js',
-		array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data'),
+		array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data','wp-html-entities'),
 		1
 	);
 	// Register JavasScript File src/script.js

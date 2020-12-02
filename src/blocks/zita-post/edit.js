@@ -17,6 +17,7 @@ import {
   arrayMove,
 } from "react-sortable-hoc";
 // import arrayMove from "array-move";
+import { decodeEntities } from "@wordpress/html-entities";
 
 class Edit extends Component {
   constructor(props) {
@@ -64,6 +65,7 @@ class Edit extends Component {
     return <RichText.Content tag="span" value={dateArr} />;
   };
   excerptWords = (words, words_) => {
+    words_ = decodeEntities(words_);
     words_ = words_.replace(/<\/?[^>]+(>|$)/g, "");
     words_ = words_.split(" ");
     words_ = words_.slice(0, words);
@@ -317,7 +319,6 @@ class Edit extends Component {
               checked={date_.enable}
               onChange={(e) => this.updateObj("date", "enable", date, e)}
             />
-            {/* show last date */}
             <ToggleControl
               label="Categories"
               checked={showCate_.enable}
@@ -325,6 +326,7 @@ class Edit extends Component {
                 this.updateObj("showCate", "enable", showCate, e)
               }
             />
+            {/* show last date */}
             <ToggleControl
               label="Last Modified Date"
               checked={date_.last_modified}
