@@ -90,17 +90,47 @@ wpgt_register_block_fn('zita-post',  [
         ]
     ]
 ]);
+
+
+
+
 // zita block post slider
 wpgt_register_block_fn('zita-post-slider',  [
     "render_callback" => "mytheme_blocks_render_post_slider",
-    'attributes' => [
+    'attributes' => array(
+        'sliderSetting' => [
+            'type' => "array",
+            'default' => [
+                [
+                    "dimension" => [
+                        "width" => false,
+                        "custom_width" => 580,
+                        "height" => false,
+                        "custom_height" => 360,
+                    ],
+                    "sliderEffect" => "fadeEffect",
+                    "linearTrigger" => [
+                        "enable" => true,
+                        "fontSize" => 20,
+                        "color" => "rgba(231,192,192,1)",
+                        "activeColor" => "rgba(68,222,68,1)",
+                    ],
+                    "leftRightTrigger" => [
+                        "enable" => true,
+                        "fontSize" => 20,
+                        "color" => "rgba(231,192,192,1)",
+                        "backgroundColor" => "rgb(128, 128, 128)",
+                    ],
+                    "autoTrigger" => [
+                        "enable" => true,
+                        "delay" => 4,
+                    ],
+                ],
+            ],
+        ],
         'numberOfPosts' => [
             'type' => "number",
             "default" => 3
-        ],
-        "numberOfColumn" => [
-            "type" => "number",
-            "default" => 2
         ],
         "title" => [
             "type" => "array",
@@ -109,13 +139,6 @@ wpgt_register_block_fn('zita-post-slider',  [
                 "value" => "My block title",
                 "color" => "black",
                 "fontSize" => 30
-            ]]
-        ],
-        "thumbnail" => [
-            "type" => "array",
-            "default" => [[
-                "enable" => true,
-                "borderRadius" => 10
             ]]
         ],
         'heading' => [
@@ -168,5 +191,5 @@ wpgt_register_block_fn('zita-post-slider',  [
             "type" => "array",
             "default" => []
         ]
-    ]
+    )
 ]);

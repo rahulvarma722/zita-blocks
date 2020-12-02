@@ -411,17 +411,17 @@ registerBlockType("zita-blocks/slide", {
             className={`zita-slider-ul-slides ${sliderSetting.sliderEffect}`}
             sliderSetting={sliderSettingJson}
           >
-            {sliderSetting.sliderEffect == "slideEffect" &&
+            {/* {sliderSetting.sliderEffect == "slideEffect" &&
               elementLiSlide(
                 slides[slides.length - 1],
                 slides.length - 1,
                 "clone_ last_"
-              )}
+              )} */}
             {slides.map((val, index_) => {
               return elementLiSlide(val, index_);
             })}
-            {sliderSetting.sliderEffect == "slideEffect" &&
-              elementLiSlide(slides[0], 0, "clone_ first_")}
+            {/* {sliderSetting.sliderEffect == "slideEffect" &&
+              elementLiSlide(slides[0], 0, "clone_ first_")} */}
           </ul>
         </div>
       </div>

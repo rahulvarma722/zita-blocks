@@ -19,7 +19,7 @@ let bgImageWrapper = plugin_url.url + "assets/img/image2.jpg";
 class Edit extends Component {
   constructor(props) {
     super(props);
-    this.state = { slideIndex: 0 };
+    this.state = { slideIndex: 0, trigger: "linear" };
   }
   dateFormate = (date) => {
     let date_ = date.split("T")[0];
@@ -106,6 +106,16 @@ class Edit extends Component {
     setAttr_[parent_key] = newNewValue;
     this.props.setAttributes(setAttr_);
   };
+  updateGlobalSlide = (value, for_, type) => {
+    let sliderSetting = this.props.attributes.sliderSetting;
+    let newSetting = [...sliderSetting];
+    if (type) {
+      newSetting[0][for_][type] = value;
+    } else {
+      newSetting[0][for_] = value;
+    }
+    this.props.setAttributes({ sliderSetting: newSetting });
+  };
   render() {
     let { attributes, setAttributes, posts, category } = this.props;
     let { slideIndex } = this.state;
@@ -114,7 +124,6 @@ class Edit extends Component {
       heading,
       author,
       numberOfPosts,
-      thumbnail,
       numberOfColumn,
       date,
       showTag,
@@ -123,9 +132,9 @@ class Edit extends Component {
       postCategories,
       meta_style,
       title,
+      sliderSetting,
     } = attributes;
     let heading_ = heading[0];
-    let thumbnail_ = thumbnail[0];
     let excerpt_ = excerpt[0];
     let date_ = date[0];
     let author_ = author[0];
@@ -142,9 +151,231 @@ class Edit extends Component {
         });
       });
     }
+    sliderSetting = sliderSetting[0];
+    let SlideulStyle = null;
+    if (sliderSetting.dimension.height) {
+      SlideulStyle = { minHeight: sliderSetting.dimension.custom_height };
+    }
+    let leftRightStyle = {
+      color: sliderSetting.leftRightTrigger.color,
+      backgroundColor: sliderSetting.leftRightTrigger.backgroundColor,
+      fontSize: sliderSetting.leftRightTrigger.fontSize,
+    };
+    let triggerActive = this.state.trigger;
     return [
       <InspectorControls>
-        <PanelBody title={"Slider Setting"} initialOpen={false}></PanelBody>
+        <PanelBody title={"Slider Setting"} initialOpen={false}>
+          <p className="block-inside">Slider Dimension</p>
+          <p>
+            <strong>Width</strong>
+          </p>
+          <ToggleControl
+            label={
+              sliderSetting.dimension.width ? "Full Width" : "Custom Width"
+            }
+            checked={sliderSetting.dimension.width}
+            onChange={(e) => {
+              this.updateGlobalSlide(e, "dimension", "width");
+            }}
+          />
+          {sliderSetting.dimension.width && (
+            <RangeControl
+              label="Width"
+              value={sliderSetting.dimension.custom_width}
+              min={200}
+              max={1400}
+              onChange={(e) =>
+                this.updateGlobalSlide(e, "dimension", "custom_width")
+              }
+            />
+          )}
+          <p>
+            <strong>Height</strong>
+          </p>
+          <ToggleControl
+            label={sliderSetting.dimension.width ? "Auto" : "Custom Height"}
+            checked={sliderSetting.dimension.height}
+            onChange={(e) => {
+              this.updateGlobalSlide(e, "dimension", "height");
+            }}
+          />
+          {sliderSetting.dimension.height && (
+            <RangeControl
+              label="Height"
+              value={sliderSetting.dimension.custom_height}
+              min={360}
+              max={1000}
+              onChange={(e) =>
+                this.updateGlobalSlide(e, "dimension", "custom_height")
+              }
+            />
+          )}
+          <p className="block-inside">Slider Effect</p>
+          <div class="zita-switcher-button-section">
+            <span
+              onClick={() =>
+                this.updateGlobalSlide("slideEffect", "sliderEffect")
+              }
+              className={
+                sliderSetting.sliderEffect == "slideEffect" ? "selected" : ""
+              }
+            >
+              Slide
+            </span>
+            <span
+              onClick={() =>
+                this.updateGlobalSlide("fadeEffect", "sliderEffect")
+              }
+              className={
+                sliderSetting.sliderEffect == "fadeEffect" ? "selected" : ""
+              }
+            >
+              Fade
+            </span>
+          </div>
+          <p className="block-inside">Trigger</p>
+          <div class="zita-switcher-button-section">
+            <span
+              onClick={() => this.setState({ trigger: "linear" })}
+              className={triggerActive == "linear" ? "selected" : ""}
+            >
+              Linear
+            </span>
+            <span
+              onClick={() => this.setState({ trigger: "left" })}
+              className={triggerActive == "left" ? "selected" : ""}
+            >
+              Left Right
+            </span>
+            <span
+              onClick={() => this.setState({ trigger: "auto" })}
+              className={triggerActive == "auto" ? "selected" : ""}
+            >
+              Auto
+            </span>
+          </div>
+          {triggerActive == "linear" && (
+            <>
+              <ToggleControl
+                label={
+                  sliderSetting.linearTrigger.enable ? "Disable" : "Enable"
+                }
+                checked={sliderSetting.linearTrigger.enable}
+                onChange={(e) =>
+                  this.updateGlobalSlide(e, "linearTrigger", "enable")
+                }
+              />
+              {sliderSetting.linearTrigger.enable && (
+                <>
+                  <RangeControl
+                    label="Size"
+                    value={sliderSetting.linearTrigger.fontSize}
+                    min={0}
+                    max={70}
+                    onChange={(e) =>
+                      this.updateGlobalSlide(e, "linearTrigger", "fontSize")
+                    }
+                  />
+                  <p>
+                    <strong>Color</strong>
+                  </p>
+                  <ColorPicker
+                    color={sliderSetting.linearTrigger.color}
+                    onChangeComplete={(colorBg) => {
+                      let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                      this.updateGlobalSlide(color, "linearTrigger", "color");
+                    }}
+                  />
+                  <p>
+                    <strong>Active Color</strong>
+                  </p>
+                  <ColorPicker
+                    color={sliderSetting.linearTrigger.activeColor}
+                    onChangeComplete={(colorBg) => {
+                      let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                      this.updateGlobalSlide(
+                        color,
+                        "linearTrigger",
+                        "activeColor"
+                      );
+                    }}
+                  />
+                </>
+              )}
+            </>
+          )}
+          {triggerActive == "left" && (
+            <>
+              <ToggleControl
+                label={
+                  sliderSetting.leftRightTrigger.enable ? "Disable" : "Enable"
+                }
+                checked={sliderSetting.leftRightTrigger.enable}
+                onChange={(e) =>
+                  this.updateGlobalSlide(e, "leftRightTrigger", "enable")
+                }
+              />
+              {sliderSetting.leftRightTrigger.enable && (
+                <>
+                  <RangeControl
+                    label="Font Size"
+                    value={sliderSetting.leftRightTrigger.fontSize}
+                    min={0}
+                    max={70}
+                    onChange={(e) =>
+                      this.updateGlobalSlide(e, "leftRightTrigger", "fontSize")
+                    }
+                  />
+                  <p>
+                    <strong>Color</strong>
+                  </p>
+                  <ColorPalette
+                    value={sliderSetting.leftRightTrigger.color}
+                    onChange={(color) =>
+                      this.updateGlobalSlide(color, "leftRightTrigger", "color")
+                    }
+                  />
+                  <p>
+                    <strong>Background Color</strong>
+                  </p>
+                  <ColorPicker
+                    color={sliderSetting.leftRightTrigger.backgroundColor}
+                    onChangeComplete={(colorBg) => {
+                      let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                      this.updateGlobalSlide(
+                        color,
+                        "leftRightTrigger",
+                        "backgroundColor"
+                      );
+                    }}
+                  />
+                </>
+              )}
+            </>
+          )}
+          {triggerActive == "auto" && (
+            <>
+              <ToggleControl
+                label={sliderSetting.autoTrigger.enable ? "Disable" : "Enable"}
+                checked={sliderSetting.autoTrigger.enable}
+                onChange={(e) =>
+                  this.updateGlobalSlide(e, "autoTrigger", "enable")
+                }
+              />
+              {sliderSetting.autoTrigger.enable && (
+                <RangeControl
+                  label="Slide Delay"
+                  value={sliderSetting.autoTrigger.delay}
+                  min={0}
+                  max={12}
+                  onChange={(e) =>
+                    this.updateGlobalSlide(e, "autoTrigger", "delay")
+                  }
+                />
+              )}
+            </>
+          )}
+        </PanelBody>
         <PanelBody title={"Post Setting"} initialOpen={false}>
           <p>
             <strong>No of Post Display</strong>
@@ -241,6 +472,53 @@ class Edit extends Component {
             }
           />
         </PanelBody>
+        <PanelBody title="Heading" initialOpen={false}>
+          <p>
+            <strong>Heading Tag</strong>
+          </p>
+          <select
+            value={heading_.tag}
+            className="zita-block-select"
+            onChange={(e) => {
+              let value_ = e.target.value;
+              let font_ =
+                value_ == "h1"
+                  ? 30
+                  : value_ == "h2"
+                  ? 25
+                  : value_ == "h3"
+                  ? 20
+                  : 17;
+              let newHeading = [...heading];
+              newHeading[0]["tag"] = value_;
+              newHeading[0]["fontSize"] = font_;
+              setAttributes({ heading: newHeading });
+            }}
+          >
+            <option value="h1">H1</option>
+            <option value="h2">H2</option>
+            <option value="h3">H3</option>
+            <option value="p">P</option>
+          </select>
+          <p>
+            <strong>Font Size</strong>
+          </p>
+          <RangeControl
+            value={heading_.fontSize}
+            min={1}
+            max={50}
+            onChange={(e) => this.updateObj("heading", "fontSize", heading, e)}
+          />
+          <p>
+            <strong>Color</strong>
+          </p>
+          <ColorPalette
+            value={heading_.color}
+            onChange={(color) =>
+              this.updateObj("heading", "color", heading, color)
+            }
+          />
+        </PanelBody>
       </InspectorControls>,
       <div className="zita-block-slide-wrapper">
         <div className="zita-slider-bullet">
@@ -269,10 +547,63 @@ class Edit extends Component {
           </ul>
         </div>
         <div className="zita-slider-container">
-          <ul
-            className="zita-slider-ul-slides"
-            style={{ minHeight: 500 + "px" }}
-          >
+          {/* slider trigger */}
+          {sliderSetting.linearTrigger.enable &&
+            posts &&
+            posts.length > 0 &&
+            "getMedia_" in posts[0] && (
+              <ul className="zita-slider-bullet-trigger">
+                {posts.map((post, index_) => {
+                  let trigStyle = {
+                    height: sliderSetting.linearTrigger.fontSize + "px",
+                    width: sliderSetting.linearTrigger.fontSize + "px",
+                  };
+                  trigStyle =
+                    index_ != slideIndex
+                      ? {
+                          ...trigStyle,
+                          ...{
+                            backgroundColor: sliderSetting.linearTrigger.color,
+                          },
+                        }
+                      : {
+                          ...trigStyle,
+                          ...{
+                            backgroundColor:
+                              sliderSetting.linearTrigger.activeColor,
+                          },
+                        };
+                  return (
+                    "getMedia_" in post &&
+                    post.getMedia_ &&
+                    "guid" in post.getMedia_ && (
+                      <li
+                        className={`${index_ == slideIndex ? "selected_" : ""}`}
+                      >
+                        <span style={trigStyle}></span>
+                      </li>
+                    )
+                  );
+                })}
+              </ul>
+            )}
+          {/* next prev btn */}
+          {sliderSetting.leftRightTrigger.enable && (
+            <>
+              <div className="zita-slider-bullet-next-prev next">
+                <span style={leftRightStyle}>
+                  <i class="fas fa-arrow-right"></i>
+                </span>
+              </div>
+              <div className="zita-slider-bullet-next-prev prev">
+                <span style={leftRightStyle}>
+                  <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </>
+          )}
+          {/* next prev btn */}
+          <ul className="zita-slider-ul-slides" style={SlideulStyle}>
             {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
               posts.map((post, slideIndexCu) => {
                 let postAuthor =

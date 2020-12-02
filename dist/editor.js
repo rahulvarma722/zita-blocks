@@ -36536,9 +36536,9 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
     })))), wp.element.createElement("ul", {
       className: "zita-slider-ul-slides ".concat(sliderSetting.sliderEffect),
       sliderSetting: sliderSettingJson
-    }, sliderSetting.sliderEffect == "slideEffect" && elementLiSlide(slides[slides.length - 1], slides.length - 1, "clone_ last_"), slides.map(function (val, index_) {
+    }, slides.map(function (val, index_) {
       return elementLiSlide(val, index_);
-    }), sliderSetting.sliderEffect == "slideEffect" && elementLiSlide(slides[0], 0, "clone_ first_"))));
+    }))));
   }
 });
 
@@ -36564,6 +36564,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/html-entities */ "@wordpress/html-entities");
 /* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -36705,8 +36709,25 @@ var Edit = /*#__PURE__*/function (_Component) {
       _this.props.setAttributes(setAttr_);
     });
 
+    _defineProperty(_assertThisInitialized(_this), "updateGlobalSlide", function (value, for_, type) {
+      var sliderSetting = _this.props.attributes.sliderSetting;
+
+      var newSetting = _toConsumableArray(sliderSetting);
+
+      if (type) {
+        newSetting[0][for_][type] = value;
+      } else {
+        newSetting[0][for_] = value;
+      }
+
+      _this.props.setAttributes({
+        sliderSetting: newSetting
+      });
+    });
+
     _this.state = {
-      slideIndex: 0
+      slideIndex: 0,
+      trigger: "linear"
     };
     return _this;
   }
@@ -36726,7 +36747,6 @@ var Edit = /*#__PURE__*/function (_Component) {
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
-          thumbnail = attributes.thumbnail,
           numberOfColumn = attributes.numberOfColumn,
           date = attributes.date,
           showTag = attributes.showTag,
@@ -36734,9 +36754,9 @@ var Edit = /*#__PURE__*/function (_Component) {
           excerpt = attributes.excerpt,
           postCategories = attributes.postCategories,
           meta_style = attributes.meta_style,
-          title = attributes.title;
+          title = attributes.title,
+          sliderSetting = attributes.sliderSetting;
       var heading_ = heading[0];
-      var thumbnail_ = thumbnail[0];
       var excerpt_ = excerpt[0];
       var date_ = date[0];
       var author_ = author[0];
@@ -36758,10 +36778,162 @@ var Edit = /*#__PURE__*/function (_Component) {
         });
       }
 
+      sliderSetting = sliderSetting[0];
+      var SlideulStyle = null;
+
+      if (sliderSetting.dimension.height) {
+        SlideulStyle = {
+          minHeight: sliderSetting.dimension.custom_height
+        };
+      }
+
+      var leftRightStyle = {
+        color: sliderSetting.leftRightTrigger.color,
+        backgroundColor: sliderSetting.leftRightTrigger.backgroundColor,
+        fontSize: sliderSetting.leftRightTrigger.fontSize
+      };
+      var triggerActive = this.state.trigger;
       return [wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
         title: "Slider Setting",
         initialOpen: false
-      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
+      }, wp.element.createElement("p", {
+        className: "block-inside"
+      }, "Slider Dimension"), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Width")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
+        label: sliderSetting.dimension.width ? "Full Width" : "Custom Width",
+        checked: sliderSetting.dimension.width,
+        onChange: function onChange(e) {
+          _this2.updateGlobalSlide(e, "dimension", "width");
+        }
+      }), sliderSetting.dimension.width && wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        label: "Width",
+        value: sliderSetting.dimension.custom_width,
+        min: 200,
+        max: 1400,
+        onChange: function onChange(e) {
+          return _this2.updateGlobalSlide(e, "dimension", "custom_width");
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Height")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
+        label: sliderSetting.dimension.width ? "Auto" : "Custom Height",
+        checked: sliderSetting.dimension.height,
+        onChange: function onChange(e) {
+          _this2.updateGlobalSlide(e, "dimension", "height");
+        }
+      }), sliderSetting.dimension.height && wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        label: "Height",
+        value: sliderSetting.dimension.custom_height,
+        min: 360,
+        max: 1000,
+        onChange: function onChange(e) {
+          return _this2.updateGlobalSlide(e, "dimension", "custom_height");
+        }
+      }), wp.element.createElement("p", {
+        className: "block-inside"
+      }, "Slider Effect"), wp.element.createElement("div", {
+        class: "zita-switcher-button-section"
+      }, wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.updateGlobalSlide("slideEffect", "sliderEffect");
+        },
+        className: sliderSetting.sliderEffect == "slideEffect" ? "selected" : ""
+      }, "Slide"), wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.updateGlobalSlide("fadeEffect", "sliderEffect");
+        },
+        className: sliderSetting.sliderEffect == "fadeEffect" ? "selected" : ""
+      }, "Fade")), wp.element.createElement("p", {
+        className: "block-inside"
+      }, "Trigger"), wp.element.createElement("div", {
+        class: "zita-switcher-button-section"
+      }, wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.setState({
+            trigger: "linear"
+          });
+        },
+        className: triggerActive == "linear" ? "selected" : ""
+      }, "Linear"), wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.setState({
+            trigger: "left"
+          });
+        },
+        className: triggerActive == "left" ? "selected" : ""
+      }, "Left Right"), wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.setState({
+            trigger: "auto"
+          });
+        },
+        className: triggerActive == "auto" ? "selected" : ""
+      }, "Auto")), triggerActive == "linear" && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
+        label: sliderSetting.linearTrigger.enable ? "Disable" : "Enable",
+        checked: sliderSetting.linearTrigger.enable,
+        onChange: function onChange(e) {
+          return _this2.updateGlobalSlide(e, "linearTrigger", "enable");
+        }
+      }), sliderSetting.linearTrigger.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        label: "Size",
+        value: sliderSetting.linearTrigger.fontSize,
+        min: 0,
+        max: 70,
+        onChange: function onChange(e) {
+          return _this2.updateGlobalSlide(e, "linearTrigger", "fontSize");
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ColorPicker"], {
+        color: sliderSetting.linearTrigger.color,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateGlobalSlide(color, "linearTrigger", "color");
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Active Color")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ColorPicker"], {
+        color: sliderSetting.linearTrigger.activeColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateGlobalSlide(color, "linearTrigger", "activeColor");
+        }
+      }))), triggerActive == "left" && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
+        label: sliderSetting.leftRightTrigger.enable ? "Disable" : "Enable",
+        checked: sliderSetting.leftRightTrigger.enable,
+        onChange: function onChange(e) {
+          return _this2.updateGlobalSlide(e, "leftRightTrigger", "enable");
+        }
+      }), sliderSetting.leftRightTrigger.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        label: "Font Size",
+        value: sliderSetting.leftRightTrigger.fontSize,
+        min: 0,
+        max: 70,
+        onChange: function onChange(e) {
+          return _this2.updateGlobalSlide(e, "leftRightTrigger", "fontSize");
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
+        value: sliderSetting.leftRightTrigger.color,
+        onChange: function onChange(color) {
+          return _this2.updateGlobalSlide(color, "leftRightTrigger", "color");
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Background Color")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ColorPicker"], {
+        color: sliderSetting.leftRightTrigger.backgroundColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateGlobalSlide(color, "leftRightTrigger", "backgroundColor");
+        }
+      }))), triggerActive == "auto" && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
+        label: sliderSetting.autoTrigger.enable ? "Disable" : "Enable",
+        checked: sliderSetting.autoTrigger.enable,
+        onChange: function onChange(e) {
+          return _this2.updateGlobalSlide(e, "autoTrigger", "enable");
+        }
+      }), sliderSetting.autoTrigger.enable && wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        label: "Slide Delay",
+        value: sliderSetting.autoTrigger.delay,
+        min: 0,
+        max: 12,
+        onChange: function onChange(e) {
+          return _this2.updateGlobalSlide(e, "autoTrigger", "delay");
+        }
+      }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
         title: "Post Setting",
         initialOpen: false
       }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "No of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
@@ -36844,6 +37016,44 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(color) {
           return _this2.updateObj("excerpt", "color", excerpt, color);
         }
+      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
+        title: "Heading",
+        initialOpen: false
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Heading Tag")), wp.element.createElement("select", {
+        value: heading_.tag,
+        className: "zita-block-select",
+        onChange: function onChange(e) {
+          var value_ = e.target.value;
+          var font_ = value_ == "h1" ? 30 : value_ == "h2" ? 25 : value_ == "h3" ? 20 : 17;
+
+          var newHeading = _toConsumableArray(heading);
+
+          newHeading[0]["tag"] = value_;
+          newHeading[0]["fontSize"] = font_;
+          setAttributes({
+            heading: newHeading
+          });
+        }
+      }, wp.element.createElement("option", {
+        value: "h1"
+      }, "H1"), wp.element.createElement("option", {
+        value: "h2"
+      }, "H2"), wp.element.createElement("option", {
+        value: "h3"
+      }, "H3"), wp.element.createElement("option", {
+        value: "p"
+      }, "P")), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Font Size")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        value: heading_.fontSize,
+        min: 1,
+        max: 50,
+        onChange: function onChange(e) {
+          return _this2.updateObj("heading", "fontSize", heading, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
+        value: heading_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("heading", "color", heading, color);
+        }
       }))), wp.element.createElement("div", {
         className: "zita-block-slide-wrapper"
       }, wp.element.createElement("div", {
@@ -36863,11 +37073,38 @@ var Edit = /*#__PURE__*/function (_Component) {
         }));
       }))), wp.element.createElement("div", {
         className: "zita-slider-container"
-      }, wp.element.createElement("ul", {
+      }, sliderSetting.linearTrigger.enable && posts && posts.length > 0 && "getMedia_" in posts[0] && wp.element.createElement("ul", {
+        className: "zita-slider-bullet-trigger"
+      }, posts.map(function (post, index_) {
+        var trigStyle = {
+          height: sliderSetting.linearTrigger.fontSize + "px",
+          width: sliderSetting.linearTrigger.fontSize + "px"
+        };
+        trigStyle = index_ != slideIndex ? _objectSpread(_objectSpread({}, trigStyle), {
+          backgroundColor: sliderSetting.linearTrigger.color
+        }) : _objectSpread(_objectSpread({}, trigStyle), {
+          backgroundColor: sliderSetting.linearTrigger.activeColor
+        });
+        return "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && wp.element.createElement("li", {
+          className: "".concat(index_ == slideIndex ? "selected_" : "")
+        }, wp.element.createElement("span", {
+          style: trigStyle
+        }));
+      })), sliderSetting.leftRightTrigger.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
+        className: "zita-slider-bullet-next-prev next"
+      }, wp.element.createElement("span", {
+        style: leftRightStyle
+      }, wp.element.createElement("i", {
+        class: "fas fa-arrow-right"
+      }))), wp.element.createElement("div", {
+        className: "zita-slider-bullet-next-prev prev"
+      }, wp.element.createElement("span", {
+        style: leftRightStyle
+      }, wp.element.createElement("i", {
+        class: "fas fa-arrow-left"
+      })))), wp.element.createElement("ul", {
         className: "zita-slider-ul-slides",
-        style: {
-          minHeight: 500 + "px"
-        }
+        style: SlideulStyle
       }, posts && posts.length > 0 && "getMedia_" in posts[0] ? posts.map(function (post, slideIndexCu) {
         var postAuthor = author_.enable && "name" in _this2.authorFn(post.author) ? _this2.authorFn(post.author).name : false;
         return "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && wp.element.createElement("li", {
@@ -37031,6 +37268,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/blocks/zita-post-slider/edit.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -37039,7 +37282,23 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   title: "Post Slider",
   icon: "format-aside",
   category: "zita-category",
-  getEditWrapperProps: function getEditWrapperProps(attributes) {},
+  getEditWrapperProps: function getEditWrapperProps(attributes) {
+    var sliderSetting = attributes.sliderSetting;
+    var sliderWidth = sliderSetting[0].dimension;
+    var attr_ = {
+      "data-align": "full"
+    };
+
+    if (sliderWidth.width && sliderWidth.custom_width) {
+      attr_ = _objectSpread(_objectSpread({}, attr_), {
+        style: {
+          maxWidth: sliderWidth.custom_width + "px"
+        }
+      });
+    }
+
+    return attr_;
+  },
   keywords: ["post", "post slider"],
   // attributes: attrSave,
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],

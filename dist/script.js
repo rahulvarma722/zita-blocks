@@ -308,6 +308,14 @@ var stateCheck = setInterval(function () {
       if (getAllslideSlide[sliderSlide].nodeName == "UL") {
         (function () {
           var slider = getAllslideSlide[sliderSlide];
+          var firstElement_ = slider.firstElementChild.cloneNode(true);
+          firstElement_.classList.add('first-element');
+          var lastElement_ = slider.lastElementChild.cloneNode(true);
+          lastElement_.classList.add('last-element');
+          slider.append(firstElement_);
+          slider.prepend(lastElement_);
+          slider.children[1].classList.add("selected_"); // return;
+
           var sliderINIT = slider.getAttribute("slidersetting");
           sliderINIT = JSON.parse(sliderINIT);
           var containerClosest = slider.closest(".zita-block-slide-wrapper");

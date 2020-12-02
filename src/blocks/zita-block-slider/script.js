@@ -10,6 +10,16 @@ let stateCheck = setInterval(() => {
     for (let sliderSlide in getAllslideSlide) {
       if (getAllslideSlide[sliderSlide].nodeName == "UL") {
         let slider = getAllslideSlide[sliderSlide];
+
+        let firstElement_ = slider.firstElementChild.cloneNode(true);
+        firstElement_.classList.add('first-element');
+        let lastElement_ = slider.lastElementChild.cloneNode(true);
+        lastElement_.classList.add('last-element');
+        slider.append(firstElement_);
+        slider.prepend(lastElement_);
+        slider.children[1].classList.add("selected_");
+        // return;
+
         let sliderINIT = slider.getAttribute("slidersetting");
         sliderINIT = JSON.parse(sliderINIT);
         let containerClosest = slider.closest(".zita-block-slide-wrapper");

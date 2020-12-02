@@ -6,7 +6,20 @@ registerBlockType("zita-blocks/zita-post-slider", {
   title: "Post Slider",
   icon: "format-aside",
   category: "zita-category",
-  getEditWrapperProps(attributes) {},
+  getEditWrapperProps(attributes) {
+    let { sliderSetting } = attributes;
+    let sliderWidth = sliderSetting[0].dimension;
+    let attr_ = { "data-align": "full" };
+    if (sliderWidth.width && sliderWidth.custom_width) {
+      attr_ = {
+        ...attr_,
+        ...{
+          style: { maxWidth: sliderWidth.custom_width + "px" },
+        },
+      };
+    }
+    return attr_;
+  },
   keywords: ["post", "post slider"],
   // attributes: attrSave,
   edit: Edit,

@@ -883,6 +883,10 @@
 .zita-block-post .post-content p.post-tags span:first-child {
   margin: 1px 0;
 }
+.block-editor-block-list__block[data-type="zita-blocks/zita-post-slider"] {
+  margin: auto;
+}
+
 .zita-slider-ul-slides .zita-slider-content-wrapper * {
   font-family: "Catamaran-Regular", sans-serif;
 }
