@@ -8,6 +8,8 @@ function mytheme_blocks_render_post_slider($attr)
     $query = new WP_Query($args);
     $postHtml = '';
     // echo "<pre>";
+    // print_r($attr);
+    // echo "</pre>";
     if ($query->have_posts()) {
         $postAuthor = isset($attr['author'][0]['enable']) && $attr['author'][0]['enable']  ? true : false;
         $postDate = isset($attr['date'][0]['enable']) && $attr['date'][0]['enable']  ? true : false;
@@ -26,37 +28,50 @@ function mytheme_blocks_render_post_slider($attr)
         if (isset($sliderPara["dimension"]['height']) && $sliderPara["dimension"]['height']) {
             $slidersetting["height"] = $sliderPara["dimension"]['custom_height'];
         }
+        // slider delay
+        // autoTrigger
+        $sliderDelay = isset($sliderPara['autoTrigger']["enable"]) && $sliderPara['autoTrigger']["enable"] && $sliderPara['autoTrigger']["delay"] > 0 ? $sliderPara['autoTrigger']["delay"] : 0;
         // effect 
         $sliderEffect = isset($sliderPara["sliderEffect"]) ? $sliderPara["sliderEffect"] : "fadeEffect";
         $slidersetting = json_encode($slidersetting);
         $postHtml .= '<div class="zita-block-slide-wrapper" id="zita-block-slide-wrapper">';
-        $postHtml .= "<div class='zita-slider-container' sliderDelay='4'>";
+        $postHtml .= "<div class='zita-slider-container' sliderDelay='" . $sliderDelay . "'>";
         // next previous
-        $postHtml .= "<div class='zita-slider-bullet-next-prev next'>";
-        $postHtml .= '<span><i class="fas fa-arrow-right"></i></span>';
-        $postHtml .= "</div>";
-        $postHtml .= "<div class='zita-slider-bullet-next-prev prev'>";
-        $postHtml .= '<span><i class="fas fa-arrow-left"></i></span>';
-        $postHtml .= "</div>";
+        if (isset($sliderPara["leftRightTrigger"]['enable']) && $sliderPara["leftRightTrigger"]['enable']) {
+            $LRfontSize = $sliderPara["leftRightTrigger"]['fontSize'];
+            $LRcolor = $sliderPara["leftRightTrigger"]['color'];
+            $LRbGColor = $sliderPara["leftRightTrigger"]['backgroundColor'];
+            $LRstyle = 'font-size:' . $LRfontSize . 'px;' . 'color:' . $LRcolor . ';background-color:' . $LRbGColor . ';';
+            $postHtml .= "<div class='zita-slider-bullet-next-prev next'>";
+            $postHtml .= '<span style="' . $LRstyle . '"><i class="fas fa-arrow-right"></i></span>';
+            $postHtml .= "</div>";
+            $postHtml .= "<div class='zita-slider-bullet-next-prev prev'>";
+            $postHtml .= '<span style="' . $LRstyle . '"><i class="fas fa-arrow-left"></i></span>';
+            $postHtml .= "</div>";
+        }
         // next previous
         // slider bullet
-        $postHtml .= '<ul class="zita-slider-bullet-trigger" active-color="rgba(68,222,68,1)" childstyle="height: 20px;width:20px;background-color: rgba(231,192,192,1);">';
-        while ($query->have_posts()) {
-            $query->the_post();
-            if (get_the_post_thumbnail_url()) {
-                $postHtml .= '<li class=""><span style="height: 20px;width:20px;background-color: rgba(231,192,192,1);"></span></li>';
+
+        // linear bullet 
+        if (isset($sliderPara["linearTrigger"]['enable']) && $sliderPara["linearTrigger"]['enable']) {
+            $LfontSize = $sliderPara["linearTrigger"]['fontSize'];
+            $Lcolor = $sliderPara["linearTrigger"]['color'];
+            $LactiveColor = $sliderPara["linearTrigger"]['activeColor'];
+            $postHtml .= '<ul class="zita-slider-bullet-trigger" active-color="' . $LactiveColor . '" childstyle="height: ' . $LfontSize . 'px;width:20px;background-color: ' . $Lcolor . ';">';
+            while ($query->have_posts()) {
+                $query->the_post();
+                if (get_the_post_thumbnail_url()) {
+                    $postHtml .= '<li><span style="height: ' . $LfontSize . 'px;width:20px;background-color: ' . $Lcolor . ';"></span></li>';
+                }
             }
+            $postHtml .= '</ul>';
         }
-        $postHtml .= '</ul>';
         // slider bullet
         $postHtml .= "<ul class='zita-slider-ul-slides " . $sliderEffect . "' slidersetting='" . $slidersetting . "'>";
-        $countFirst = 0;
         while ($query->have_posts()) {
             $query->the_post();
             if (get_the_post_thumbnail_url()) {
-                // $activeFirst = $countFirst == 0 ? " selected_" : '';
                 $postHtml .= "<li class='slides'>";
-                // $postHtml .= "<li class='slides" . $activeFirst . "'>";
                 $postHtml .= "<div class='zita-slider-wrapper' id='zita-slider-wrapper'>";
                 $postHtml .= "<div class='zita-slider-container'>";
                 $postHtml .= "<div class='zita-slider-content-wrapper'>";
@@ -149,7 +164,6 @@ function mytheme_blocks_render_post_slider($attr)
                 $postHtml .= "</div>";
                 $postHtml .= "</div>";
                 $postHtml .= "</div>";
-                $countFirst = 1;
             }
         }
         $postHtml .= "</ul>";
