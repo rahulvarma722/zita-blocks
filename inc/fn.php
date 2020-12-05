@@ -29,3 +29,4 @@ function wpgt_register_block_fn($blockName, $extraFeature = [])
 }
 include "block-callback/post-fn.php";
 include "block-callback/post-slider.php";
+include "block-callback/post-tc.php";

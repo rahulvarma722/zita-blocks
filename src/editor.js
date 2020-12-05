@@ -7,3 +7,4 @@ import "./blocks/progress-bar-pie";
 import "./blocks/zita-block-slider";
 import "./blocks/zita-post";
 import "./blocks/zita-post-slider";
+import "./blocks/zita-post-tc";

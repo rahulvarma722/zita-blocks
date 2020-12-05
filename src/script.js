@@ -6,3 +6,4 @@ import "./blocks/progress-bar-pie/script";
 import "./blocks/zita-block-slider/script";
 import "./blocks/zita-post/script";
 import "./blocks/zita-post-slider/script";
+import "./blocks/zita-post-tc/script";

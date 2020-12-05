@@ -816,41 +816,42 @@
   letter-spacing: 1px;
   font-weight: 600;
 }
-.zita-block-post .post-content .post-heading {
+
+.block-post-article .post-content .post-heading {
   margin: 5px 0;
   line-height: 1.2;
   font-weight: 600;
 }
-.zita-block-post .post-content .post-meta-all {
+.block-post-article .post-content .post-meta-all {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
 }
-.zita-block-post .post-content .post-meta-all .slash {
+.block-post-article .post-content .post-meta-all .slash {
   color: #cec4c4;
   margin: 1px 5px;
 }
-.zita-block-post .post-content p,
-.zita-block-post .post-content h1,
-.zita-block-post .post-content h2,
-.zita-block-post .post-content h3 {
+.block-post-article .post-content p,
+.block-post-article .post-content h1,
+.block-post-article .post-content h2,
+.block-post-article .post-content h3 {
   line-height: 1.5;
   margin: 6px 0;
   letter-spacing: 1px;
 }
-.zita-block-post .post-content p.post-author {
+.block-post-article .post-content p.post-author {
   font-size: 13px;
   letter-spacing: 1.2px;
 }
-.zita-block-post .post-content p.post-date, .zita-block-post .post-content p.post-date-last-modified {
+.block-post-article .post-content p.post-date, .block-post-article .post-content p.post-date-last-modified {
   letter-spacing: 1.2px;
   font-size: 14px;
   display: flex;
 }
-.zita-block-post .post-content p.post-category {
+.block-post-article .post-content p.post-category {
   display: block;
 }
-.zita-block-post .post-content p.post-category span {
+.block-post-article .post-content p.post-category span {
   margin: 1px 5px;
   padding: 3px 4px;
   color: white;
@@ -858,29 +859,29 @@
   font-size: 13px;
   text-transform: capitalize;
 }
-.zita-block-post .post-content p.post-category span:nth-child(2) {
+.block-post-article .post-content p.post-category span:nth-child(2) {
   background: #1a609c;
 }
-.zita-block-post .post-content p.post-category span:nth-child(3) {
+.block-post-article .post-content p.post-category span:nth-child(3) {
   background: #9e710c;
 }
-.zita-block-post .post-content p.post-category span:nth-child(4) {
+.block-post-article .post-content p.post-category span:nth-child(4) {
   background: #6a7f6a;
 }
-.zita-block-post .post-content p.post-category span:first-child {
+.block-post-article .post-content p.post-category span:first-child {
   margin: 1px 0;
 }
-.zita-block-post .post-content p.post-tags {
+.block-post-article .post-content p.post-tags {
   display: flex;
   flex-wrap: wrap;
 }
-.zita-block-post .post-content p.post-tags span {
+.block-post-article .post-content p.post-tags span {
   border: 1px solid;
   margin: 1px 7px;
   font-size: 13px;
   padding: 1px 11px;
 }
-.zita-block-post .post-content p.post-tags span:first-child {
+.block-post-article .post-content p.post-tags span:first-child {
   margin: 1px 0;
 }
 .block-editor-block-list__block[data-type="zita-blocks/zita-post-slider"] {
@@ -962,6 +963,55 @@
 }
 .zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-content p.post-tags span:first-child {
   margin: 1px 0;
+}
+.zita-post-two-column {
+  display: flex;
+}
+.zita-post-two-column * {
+  font-family: "Catamaran-Regular", sans-serif;
+}
+.zita-post-two-column > div {
+  flex: 1;
+  padding: 10px;
+}
+.zita-post-two-column .column-one .featured-image img {
+  width: 100%;
+}
+.zita-post-two-column .column-two .post-wrapper {
+  display: flex;
+  margin-bottom: 20px;
+}
+.zita-post-two-column .column-two .post-wrapper .featured-image {
+  width: 273px;
+  height: 149px;
+  margin-right: 23px;
+}
+.zita-post-two-column .column-two .featured-image {
+  width: 100%;
+  position: relative;
+  height: 168px;
+}
+.zita-post-two-column .column-two .featured-image img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.zita-two-post-wrapper-next-prev {
+  display: flex;
+}
+.zita-two-post-wrapper-next-prev > div {
+  border: 1px solid #d8d7d7;
+  margin: 7px;
+  padding: 0px 8px;
+}
+.zita-two-post-wrapper-next-prev > div i {
+  color: #adadad;
 }
 
 /*# sourceMappingURL=editor.css.map*/

@@ -119,12 +119,11 @@ class Edit extends Component {
   render() {
     let { attributes, setAttributes, posts, category } = this.props;
     let { slideIndex } = this.state;
-    console.log("this.props", this.props);
+    // console.log("this.props", this.props);
     let {
       heading,
       author,
       numberOfPosts,
-      numberOfColumn,
       date,
       showTag,
       showCate,
