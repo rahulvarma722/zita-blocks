@@ -1,42 +1,20 @@
 <?php
-// zita post callback function
-function zita_two_column_block($attr)
+function post_tc_block()
 {
     // echo "<pre>";
-    // print_r($attr);
+    // print_r($_POST);
     // echo "</pre>";
-    // $args = [
-    //     'post_type' => 'post',
-    //     "posts_per_page" => 2,
-    //     // 'offset' => 2
-    //     'paged' => 2,
-    //     'order'   => 'ASC'
-    // ];
-    // $query_t = new WP_Query($args);
-    // $count = 0;
-    // echo "total posts-> ".$query_t->found_posts;
-    // echo "<br>";
-    // while ($query_t->have_posts()) {
-    //     $count++;
-    //     $query_t->the_post();
-    //     echo "<h1>" . $count . " ->" . get_the_title() . "</h1>";
-    //     echo "<h1>*************</h1>";
-    // }
-    // wp_reset_postdata();
-    // return "<h1> paged-> max no-> My Post block Two column</h1>";
+    $pageNo = $_POST['trigger'] == "next" ? $_POST['page'] + 1 : $_POST['page'] - 1;
+    $attr = $_POST['attr'];
     $args = [
         'post_type' => 'post',
-        "posts_per_page" => $attr['numberOfPosts']
+        "posts_per_page" => $attr['numberOfPosts'],
+        'paged' => $pageNo,
     ];
     $query = new WP_Query($args);
-    $postSetting['currentPage'] = 1;
-    $currentPage = json_encode(array("current" => 1));
-    $postSetting = json_encode($attr);
-    $postHtml = "<div class='zita-two-col-container'>";
-    $postHtml .= "<div class='zita-two-post-wrapper' data-setting='" . $postSetting . "' data-currentpage='" . $currentPage . "'><div class='zita-post-two-column'>";
+    $postHtml = "<div class='zita-post-two-column'>";
     $postHtmlCl1 = '<div class="column-one">';
     $postHtmlCl2 = '<div class="column-two">';
-    // echo "<pre>";
     if ($query->have_posts()) {
         $postAuthor = isset($attr['author'][0]['enable']) && $attr['author'][0]['enable']  ? true : false;
         $postDate = isset($attr['date'][0]['enable']) && $attr['date'][0]['enable']  ? true : false;
@@ -45,7 +23,6 @@ function zita_two_column_block($attr)
         $postExcerptColor = $postExcerpt && $attr['excerpt'][0]['color'] ? $attr['excerpt'][0]['color'] : "";
         $postThumbnail = isset($attr['thumbnail'][0]['enable']) && $attr['thumbnail'][0]['enable']  ? true : false;
         $metaStyleColor = isset($attr['meta_style'][0]['color']) && $attr['meta_style'][0]['color']  ? $attr['meta_style'][0]['color'] : "";
-        $metaLeftBorder = isset($attr['meta_style'][0]['left_border']) && $attr['meta_style'][0]['left_border']  ? "left-border" : "";
         $metashowCate = isset($attr['showCate'][0]['enable']) && $attr['showCate'][0]['enable']  ? true : false;
         $metashowshowTag = isset($attr['showTag'][0]['enable']) && $attr['showTag'][0]['enable']  ? true : false;
         $checkFirst = true;
@@ -193,23 +170,10 @@ function zita_two_column_block($attr)
         $postHtmlCl2 .= '</div>';
         $postHtml .= $postHtmlCl1 . $postHtmlCl2;
         $postHtml .= '</div>';
-        if ($query->found_posts > $attr['numberOfPosts']) {
-            $postHtml .= "<div class='zita-two-post-wrapper-next-prev'>
-                            <div class='zita-post-NP-btn prev'>
-                                <i class='fas fa-chevron-left'></i>
-                            </div>
-                            <div class='zita-post-NP-btn next'>
-                                <i class='fas fa-chevron-right'></i>
-                            </div>
-                        </div>";
-        }
-        $postHtml .= '</div>';
-        $postHtml .= '</div>';
-
         // echo "</pre>";
         wp_reset_postdata();
-        return $postHtml;
-    } else {
-        return "<div>No post found.</div>";
+        echo $postHtml;
     }
+    die();
 }
+add_action('wp_ajax_post_tc_block', "post_tc_block");

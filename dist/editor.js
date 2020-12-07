@@ -37540,7 +37540,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category;
+          category = _this$props.category,
+          totalPost = _this$props.totalPost;
       console.log("this.props", this.props); // return <h1>This is Two Column Block</h1>;
 
       var heading = attributes.heading,
@@ -37754,7 +37755,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         className: "column-two"
       }, posts.length > 1 && posts.map(function (post, index__) {
         return index__ != 0 && _this2.returnHtml(post, heading_, author_, date_, meta_style_, thumbnail_, false, false, false);
-      }))), posts && posts.length > 0 && "getMedia_" in posts[0] && posts.totalPost > posts.length && wp.element.createElement("div", {
+      }))), posts && posts.length > 0 && "getMedia_" in posts[0] && totalPost > posts.length && wp.element.createElement("div", {
         className: "zita-two-post-wrapper-next-prev"
       }, wp.element.createElement("div", null, wp.element.createElement("i", {
         class: "fas fa-chevron-left"

@@ -1,0 +1,143 @@
+.zita-post-two-column {
+  * {
+    font-family: "Catamaran-Regular", sans-serif;
+  }
+  display: flex;
+  > div {
+    flex: 1;
+    padding: 10px;
+  }
+  .column-one {
+    .featured-image img {
+      width: 100%;
+    }
+  }
+  .column-two {
+    .post-wrapper {
+      display: flex;
+      margin-bottom: 20px;
+      .featured-image {
+        width: 273px;
+        height: 149px;
+        margin-right: 23px;
+        max-width: 100%;
+      }
+    }
+    .featured-image {
+      width: 100%;
+      position: relative;
+      height: 168px;
+      img {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  #post-wrapper {
+    .post-content {
+      .post-meta-all {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        .slash {
+          color: #cec4c4;
+          margin: 1px 5px;
+        }
+      }
+      a {
+        font-size: inherit;
+        color: inherit;
+        text-decoration: none;
+        display: block;
+        border-bottom: 1px dotted transparent;
+        transition: 0.5s border ease;
+        margin-bottom: -1px;
+        &:hover {
+          border-color: #a7a3a3;
+        }
+      }
+      .post-heading {
+        margin: 5px 0;
+        line-height: 1.2;
+        font-weight: 600;
+      }
+      p,
+      h1,
+      h2,
+      h3 {
+        line-height: 1.5;
+        margin: 6px 0;
+        letter-spacing: 1px;
+      }
+      p {
+        &.post-author {
+          font-size: 13px;
+          letter-spacing: 1.2px;
+        }
+
+        &.post-date,
+        &.post-date-last-modified {
+          letter-spacing: 1.2px;
+          font-size: 14px;
+          display: flex;
+        }
+        &.post-category {
+          display: flex;
+          flex-wrap: wrap;
+          margin: 10px 0;
+          span {
+            margin: 1px 5px;
+            padding: 3px 4px;
+            color: white;
+            background: #ff5e00;
+            font-size: 13px;
+            text-transform: capitalize;
+            &:nth-child(2) {
+              background: #1a609c;
+            }
+            &:nth-child(3) {
+              background: #9e710c;
+            }
+            &:nth-child(4) {
+              background: #6a7f6a;
+            }
+            &:first-child {
+              margin: 1px 0;
+            }
+          }
+        }
+        &.post-tags {
+          display: flex;
+          flex-wrap: wrap;
+          span {
+            border: 1px solid;
+            margin: 1px 7px;
+            font-size: 13px;
+            padding: 1px 11px;
+            &:first-child {
+              margin: 1px 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.zita-two-post-wrapper-next-prev {
+  display: flex;
+  > div {
+    border: 1px solid #d8d7d7;
+    margin: 7px;
+    padding: 4px 8px;
+    i {
+      color: #adadad;
+      display: block;
+    }
+  }
+}

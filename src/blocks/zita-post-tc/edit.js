@@ -191,7 +191,13 @@ class Edit extends Component {
     );
   };
   render() {
-    const { posts, attributes, setAttributes, category } = this.props;
+    const {
+      posts,
+      attributes,
+      setAttributes,
+      category,
+      totalPost,
+    } = this.props;
     console.log("this.props", this.props);
     // return <h1>This is Two Column Block</h1>;
     let {
@@ -482,7 +488,7 @@ class Edit extends Component {
             {posts &&
               posts.length > 0 &&
               "getMedia_" in posts[0] &&
-              posts.totalPost > posts.length && (
+              totalPost > posts.length && (
                 <div className="zita-two-post-wrapper-next-prev">
                   <div>
                     <i class="fas fa-chevron-left"></i>
