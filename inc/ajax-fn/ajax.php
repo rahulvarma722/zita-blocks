@@ -4,6 +4,7 @@ function post_tc_block()
     // echo "<pre>";
     // print_r($_POST);
     // echo "</pre>";
+    // return;
     $pageNo = $_POST['trigger'] == "next" ? $_POST['page'] + 1 : $_POST['page'] - 1;
     $attr = $_POST['attr'];
     $args = [
@@ -21,6 +22,8 @@ function post_tc_block()
         $postDateModify = isset($attr['date'][0]['last_modified']) && $attr['date'][0]['last_modified']  ? true : false;
         $postExcerpt = isset($attr['excerpt'][0]['enable']) && $attr['excerpt'][0]['enable']  ? true : false;
         $postExcerptColor = $postExcerpt && $attr['excerpt'][0]['color'] ? $attr['excerpt'][0]['color'] : "";
+        $postExcerpt2 = isset($attr['excerpt2'][0]['enable']) && $attr['excerpt2'][0]['enable']  ? true : false;
+        $postExcerpt2Color = $postExcerpt2 && $attr['excerpt2'][0]['color'] ? $attr['excerpt2'][0]['color'] : "";
         $postThumbnail = isset($attr['thumbnail'][0]['enable']) && $attr['thumbnail'][0]['enable']  ? true : false;
         $metaStyleColor = isset($attr['meta_style'][0]['color']) && $attr['meta_style'][0]['color']  ? $attr['meta_style'][0]['color'] : "";
         $metashowCate = isset($attr['showCate'][0]['enable']) && $attr['showCate'][0]['enable']  ? true : false;
@@ -160,6 +163,19 @@ function post_tc_block()
                     $postHtmlCl2 .= "</a></p>";
                 }
                 $postHtmlCl2 .= '</div>';
+                if ($postExcerpt2) {
+                    $postExcerpt2 = get_the_excerpt();
+                    // exerpt length
+                    $exLength2 = isset($attr['excerpt2'][0]['words']) && $attr['excerpt2'][0]['words']  ? $attr['excerpt2'][0]['words'] : false;
+                    if ($exLength2) {
+                        $postExcerpt2 = explode(" ", $postExcerpt2);
+                        $postExcerpt2 = array_slice($postExcerpt2, 0, $exLength2);
+                        $postExcerpt2 = implode(" ", $postExcerpt2);
+                    }
+                    $postHtmlCl2 .= "<p style='color:" . $postExcerpt2Color . "' class='post-excerpt'>";
+                    $postHtmlCl2 .= $postExcerpt2;
+                    $postHtmlCl2 .= "</p>";
+                }
                 // tags
                 $postHtmlCl2 .= "</div>";
                 $postHtmlCl2 .= "</div>";
@@ -177,3 +193,4 @@ function post_tc_block()
     die();
 }
 add_action('wp_ajax_post_tc_block', "post_tc_block");
+add_action('wp_ajax_nopriv_post_tc_block', "post_tc_block");

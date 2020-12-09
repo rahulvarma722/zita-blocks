@@ -68,6 +68,14 @@ wpgt_register_block_fn('zita-post-tc',  [
                 "color" => '#7d7d7d',
             ]]
         ],
+        'excerpt2' => [
+            'type' => "array",
+            "default" => [[
+                "enable" => true,
+                "words" => 10,
+                "color" => 'grey',
+            ]]
+        ],
         "postCategories" => [
             "type" => "array",
             "default" => []

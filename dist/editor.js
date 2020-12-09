@@ -37552,12 +37552,14 @@ var Edit = /*#__PURE__*/function (_Component) {
           showTag = attributes.showTag,
           showCate = attributes.showCate,
           excerpt = attributes.excerpt,
+          excerpt2 = attributes.excerpt2,
           postCategories = attributes.postCategories,
           meta_style = attributes.meta_style,
           title = attributes.title;
       var heading_ = heading[0];
       var thumbnail_ = thumbnail[0];
       var excerpt_ = excerpt[0];
+      var excerpt2_ = excerpt2[0];
       var date_ = date[0];
       var author_ = author[0];
       var meta_style_ = meta_style[0];
@@ -37689,7 +37691,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Excerpt",
         initialOpen: false
-      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Primery Excerpt")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
         label: excerpt_.enable ? "Hide" : "Show",
         checked: excerpt_.enable,
         onChange: function onChange(e) {
@@ -37702,12 +37704,30 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(e) {
           return _this2.updateObj("excerpt", "words", excerpt, e);
         }
-      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
         value: excerpt_.color,
         onChange: function onChange(color) {
           return _this2.updateObj("excerpt", "color", excerpt, color);
         }
-      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Secondary Excerpt")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: excerpt2_.enable ? "Hide" : "Show",
+        checked: excerpt2_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt2", "enable", excerpt2, e);
+        }
+      }), excerpt2_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Number of words")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: excerpt2_.words,
+        min: 1,
+        max: 200,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt2", "words", excerpt2, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: excerpt2_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("excerpt2", "color", excerpt2, color);
+        }
+      }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Heading",
         initialOpen: false
       }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Heading Tag")), wp.element.createElement("select", {
@@ -37754,7 +37774,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       }, this.returnHtml(posts[0], heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_)), wp.element.createElement("div", {
         className: "column-two"
       }, posts.length > 1 && posts.map(function (post, index__) {
-        return index__ != 0 && _this2.returnHtml(post, heading_, author_, date_, meta_style_, thumbnail_, false, false, false);
+        return index__ != 0 && _this2.returnHtml(post, heading_, author_, date_, meta_style_, thumbnail_, false, excerpt2_, false);
       }))), posts && posts.length > 0 && "getMedia_" in posts[0] && totalPost > posts.length && wp.element.createElement("div", {
         className: "zita-two-post-wrapper-next-prev"
       }, wp.element.createElement("div", null, wp.element.createElement("i", {

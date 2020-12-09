@@ -982,9 +982,10 @@
   margin-bottom: 20px;
 }
 .zita-post-two-column .column-two .post-wrapper .featured-image {
-  width: 273px;
+  min-width: 198px;
   height: 149px;
   margin-right: 23px;
+  width: unset;
 }
 .zita-post-two-column .column-two .featured-image {
   width: 100%;

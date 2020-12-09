@@ -28,11 +28,21 @@ function zita_two_column_block($attr)
         'post_type' => 'post',
         "posts_per_page" => $attr['numberOfPosts']
     ];
+
     $query = new WP_Query($args);
-    $postSetting['currentPage'] = 1;
-    $currentPage = json_encode(array("current" => 1));
-    $postSetting = json_encode($attr);
+    $currentPage = $postSetting = "";
+    $totalPosts = $query->found_posts;
+    if ($totalPosts > $attr['numberOfPosts']) {
+        $pagesOfPost = ceil($totalPosts / $attr['numberOfPosts']);
+        $currentPage = json_encode(array("current" => 1, "total" => $pagesOfPost));
+        $postSetting = json_encode($attr);
+    }
     $postHtml = "<div class='zita-two-col-container'>";
+    // loader
+    $postHtml .= "<div class='zita-block-loader linear-bubble'>";
+    $postHtml .= "<div><span></span></div>";
+    $postHtml .= "</div>";
+    // loader
     $postHtml .= "<div class='zita-two-post-wrapper' data-setting='" . $postSetting . "' data-currentpage='" . $currentPage . "'><div class='zita-post-two-column'>";
     $postHtmlCl1 = '<div class="column-one">';
     $postHtmlCl2 = '<div class="column-two">';
@@ -43,6 +53,8 @@ function zita_two_column_block($attr)
         $postDateModify = isset($attr['date'][0]['last_modified']) && $attr['date'][0]['last_modified']  ? true : false;
         $postExcerpt = isset($attr['excerpt'][0]['enable']) && $attr['excerpt'][0]['enable']  ? true : false;
         $postExcerptColor = $postExcerpt && $attr['excerpt'][0]['color'] ? $attr['excerpt'][0]['color'] : "";
+        $postExcerpt2 = isset($attr['excerpt2'][0]['enable']) && $attr['excerpt2'][0]['enable']  ? true : false;
+        $postExcerpt2Color = $postExcerpt2 && $attr['excerpt2'][0]['color'] ? $attr['excerpt2'][0]['color'] : "";
         $postThumbnail = isset($attr['thumbnail'][0]['enable']) && $attr['thumbnail'][0]['enable']  ? true : false;
         $metaStyleColor = isset($attr['meta_style'][0]['color']) && $attr['meta_style'][0]['color']  ? $attr['meta_style'][0]['color'] : "";
         $metaLeftBorder = isset($attr['meta_style'][0]['left_border']) && $attr['meta_style'][0]['left_border']  ? "left-border" : "";
@@ -183,6 +195,19 @@ function zita_two_column_block($attr)
                     $postHtmlCl2 .= "</a></p>";
                 }
                 $postHtmlCl2 .= '</div>';
+                if ($postExcerpt2) {
+                    $postExcerpt2 = get_the_excerpt();
+                    // exerpt length
+                    $exLength2 = isset($attr['excerpt2'][0]['words']) && $attr['excerpt2'][0]['words']  ? $attr['excerpt2'][0]['words'] : false;
+                    if ($exLength2) {
+                        $postExcerpt2 = explode(" ", $postExcerpt2);
+                        $postExcerpt2 = array_slice($postExcerpt2, 0, $exLength2);
+                        $postExcerpt2 = implode(" ", $postExcerpt2);
+                    }
+                    $postHtmlCl2 .= "<p style='color:" . $postExcerpt2Color . "' class='post-excerpt'>";
+                    $postHtmlCl2 .= $postExcerpt2;
+                    $postHtmlCl2 .= "</p>";
+                }
                 // tags
                 $postHtmlCl2 .= "</div>";
                 $postHtmlCl2 .= "</div>";
@@ -193,9 +218,9 @@ function zita_two_column_block($attr)
         $postHtmlCl2 .= '</div>';
         $postHtml .= $postHtmlCl1 . $postHtmlCl2;
         $postHtml .= '</div>';
-        if ($query->found_posts > $attr['numberOfPosts']) {
+        if ($totalPosts > $attr['numberOfPosts']) {
             $postHtml .= "<div class='zita-two-post-wrapper-next-prev'>
-                            <div class='zita-post-NP-btn prev'>
+                            <div class='zita-post-NP-btn disable prev'>
                                 <i class='fas fa-chevron-left'></i>
                             </div>
                             <div class='zita-post-NP-btn next'>

@@ -209,6 +209,7 @@ class Edit extends Component {
       showTag,
       showCate,
       excerpt,
+      excerpt2,
       postCategories,
       meta_style,
       title,
@@ -216,6 +217,7 @@ class Edit extends Component {
     let heading_ = heading[0];
     let thumbnail_ = thumbnail[0];
     let excerpt_ = excerpt[0];
+    let excerpt2_ = excerpt2[0];
     let date_ = date[0];
     let author_ = author[0];
     let meta_style_ = meta_style[0];
@@ -369,6 +371,9 @@ class Edit extends Component {
             />
           </PanelBody>
           <PanelBody title="Excerpt" initialOpen={false}>
+            <p>
+              <strong>Primery Excerpt</strong>
+            </p>
             <ToggleControl
               label={excerpt_.enable ? "Hide" : "Show"}
               checked={excerpt_.enable}
@@ -387,17 +392,51 @@ class Edit extends Component {
                     this.updateObj("excerpt", "words", excerpt, e)
                   }
                 />
+                <p>
+                  <strong>Color</strong>
+                </p>
+                <ColorPalette
+                  value={excerpt_.color}
+                  onChange={(color) =>
+                    this.updateObj("excerpt", "color", excerpt, color)
+                  }
+                />
               </>
             )}
             <p>
-              <strong>Color</strong>
+              <strong>Secondary Excerpt</strong>
             </p>
-            <ColorPalette
-              value={excerpt_.color}
-              onChange={(color) =>
-                this.updateObj("excerpt", "color", excerpt, color)
+            <ToggleControl
+              label={excerpt2_.enable ? "Hide" : "Show"}
+              checked={excerpt2_.enable}
+              onChange={(e) =>
+                this.updateObj("excerpt2", "enable", excerpt2, e)
               }
             />
+            {excerpt2_.enable && (
+              <>
+                <p>
+                  <strong>Number of words</strong>
+                </p>
+                <RangeControl
+                  value={excerpt2_.words}
+                  min={1}
+                  max={200}
+                  onChange={(e) =>
+                    this.updateObj("excerpt2", "words", excerpt2, e)
+                  }
+                />
+                <p>
+                  <strong>Color</strong>
+                </p>
+                <ColorPalette
+                  value={excerpt2_.color}
+                  onChange={(color) =>
+                    this.updateObj("excerpt2", "color", excerpt2, color)
+                  }
+                />
+              </>
+            )}
           </PanelBody>
           <PanelBody title="Heading" initialOpen={false}>
             <p>
@@ -478,7 +517,7 @@ class Edit extends Component {
                         meta_style_,
                         thumbnail_,
                         false,
-                        false,
+                        excerpt2_,
                         false
                       )
                     );

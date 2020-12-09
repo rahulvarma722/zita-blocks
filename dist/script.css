@@ -686,6 +686,10 @@
 .zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-content p.post-tags span:first-child {
   margin: 1px 0;
 }
+.zita-two-col-container {
+  position: relative;
+}
+
 .zita-post-two-column {
   display: flex;
 }
@@ -813,10 +817,44 @@
   border: 1px solid #d8d7d7;
   margin: 7px;
   padding: 4px 8px;
+  cursor: pointer;
 }
 .zita-two-post-wrapper-next-prev > div i {
   color: #adadad;
   display: block;
+}
+.zita-two-post-wrapper-next-prev > div.disable {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.zita-block-loader.active {
+  position: absolute;
+  width: 100%;
+  background: #827f7fb8;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.zita-block-loader.active > div span {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: block;
+  border: 5px solid;
+  border-color: white #00000075 #00000075;
+  animation: round 1.5s linear 0s infinite forwards;
+}
+
+@keyframes round {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /*# sourceMappingURL=script.css.map*/

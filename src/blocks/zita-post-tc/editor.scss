@@ -17,10 +17,14 @@
       display: flex;
       margin-bottom: 20px;
       .featured-image {
-        width: 273px;
+        min-width: 198px;
         height: 149px;
         margin-right: 23px;
+        width: unset;
       }
+      // .post-content {
+      //   display: block;
+      // }
     }
     .featured-image {
       width: 100%;
