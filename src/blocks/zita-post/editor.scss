@@ -110,6 +110,9 @@
       letter-spacing: 1px;
     }
     p {
+      .read-more {
+        color: #45a6e0;
+      }
       &.post-author {
         font-size: 13px;
         letter-spacing: 1.2px;

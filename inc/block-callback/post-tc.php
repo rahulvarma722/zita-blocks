@@ -71,7 +71,9 @@ function zita_two_column_block($attr)
                     if (get_the_post_thumbnail_url()) {
                         $postThumbRadius = isset($attr['thumbnail'][0]['borderRadius']) && $attr['thumbnail'][0]['borderRadius']  ? $attr['thumbnail'][0]['borderRadius'] : false;
                         $postHtmlCl1 .= '<div class="featured-image">';
+                        $postHtmlCl1 .= "<a href='" . esc_url(get_the_permalink()) . "'>";
                         $postHtmlCl1 .= '<img style="border-radius:' . $postThumbRadius . 'px" src="' . get_the_post_thumbnail_url() . '"/>';
+                        $postHtmlCl1 .= '</a>';
                         $postHtmlCl1 .= '</div>';
                     }
                 }
@@ -90,7 +92,7 @@ function zita_two_column_block($attr)
                     $postHtmlCl1 .= '</p>';
                 }
                 // category
-                $postHtmlCl1 .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . "' class='post-heading'>";
+                $postHtmlCl1 .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . ";font-size:" . $attr['heading'][0]['fontSize'] . "px;' class='post-heading'>";
                 $postHtmlCl1 .= "<a href='" . esc_url(get_the_permalink()) . "'>" . get_the_title() . "</a>";
                 $postHtmlCl1 .= "</" . $attr['heading'][0]['tag'] . ">";
                 $postHtmlCl1 .= '<div class="post-meta-all">';
@@ -132,6 +134,7 @@ function zita_two_column_block($attr)
                     }
                     $postHtmlCl1 .= "<p style='color:" . $postExcerptColor . "' class='post-excerpt'>";
                     $postHtmlCl1 .= $postExcerpt;
+                    $postHtmlCl1 .= "<a class='read-more' href='" . esc_url(get_the_permalink()) . "'>Read More</a>";
                     $postHtmlCl1 .= "</p>";
                 }
                 // tags
@@ -158,13 +161,28 @@ function zita_two_column_block($attr)
                     if (get_the_post_thumbnail_url()) {
                         $postThumbRadius = isset($attr['thumbnail'][0]['borderRadius']) && $attr['thumbnail'][0]['borderRadius']  ? $attr['thumbnail'][0]['borderRadius'] : false;
                         $postHtmlCl2 .= '<div class="featured-image">';
+                        $postHtmlCl2 .= "<a href='" . esc_url(get_the_permalink()) . "'>";
                         $postHtmlCl2 .= '<img style="border-radius:' . $postThumbRadius . 'px" src="' . get_the_post_thumbnail_url() . '"/>';
+                        $postHtmlCl2 .= '</a>';
                         $postHtmlCl2 .= '</div>';
                     }
                 }
                 $postHtmlCl2 .= "<div class='post-content'>";
                 // category
-                $postHtmlCl2 .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . "' class='post-heading'>";
+                if ($metashowCate) {
+                    $postHtmlCl2 .= '<p class="post-category">';
+                    $category_ = get_the_category();
+                    if (!empty($category_)) {
+                        foreach ($category_ as $cateValue) {
+                            $postHtmlCl2 .= '<span>';
+                            $postHtmlCl2 .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
+                            $postHtmlCl2 .= '</span>';
+                        }
+                    }
+                    $postHtmlCl2 .= '</p>';
+                }
+                // category
+                $postHtmlCl2 .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . ";font-size:" . $attr['heading'][0]['fontSize'] . "px;' class='post-heading'>";
                 $postHtmlCl2 .= "<a href='" . esc_url(get_the_permalink()) . "'>" . get_the_title() . "</a>";
                 $postHtmlCl2 .= "</" . $attr['heading'][0]['tag'] . ">";
                 $postHtmlCl2 .= '<div class="post-meta-all">';
@@ -206,6 +224,7 @@ function zita_two_column_block($attr)
                     }
                     $postHtmlCl2 .= "<p style='color:" . $postExcerpt2Color . "' class='post-excerpt'>";
                     $postHtmlCl2 .= $postExcerpt2;
+                    $postHtmlCl2 .= "<a class='read-more' href='" . esc_url(get_the_permalink()) . "'>Read More</a>";
                     $postHtmlCl2 .= "</p>";
                 }
                 // tags

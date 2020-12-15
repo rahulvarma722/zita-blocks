@@ -34,7 +34,7 @@ wpgt_register_block_fn('zita-post-tc',  [
             "type" => "array",
             "default" => [[
                 "color" => "#8e8c8d",
-                "left_border" => true
+                // "left_border" => true
             ]]
         ],
         "author" => [

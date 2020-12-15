@@ -708,10 +708,10 @@
   margin-bottom: 20px;
 }
 .zita-post-two-column .column-two .post-wrapper .featured-image {
-  width: 273px;
+  min-width: 198px;
   height: 149px;
   margin-right: 23px;
-  max-width: 100%;
+  width: unset;
 }
 .zita-post-two-column .column-two .featured-image {
   width: 100%;
@@ -762,6 +762,11 @@
   margin: 6px 0;
   letter-spacing: 1px;
 }
+.zita-post-two-column #post-wrapper .post-content p a.read-more {
+  color: #52a8d2;
+  display: inline;
+  margin-left: 5px;
+}
 .zita-post-two-column #post-wrapper .post-content p.post-author {
   font-size: 13px;
   letter-spacing: 1.2px;
@@ -770,6 +775,8 @@
   letter-spacing: 1.2px;
   font-size: 14px;
   display: flex;
+  margin: 0;
+  line-height: 1;
 }
 .zita-post-two-column #post-wrapper .post-content p.post-category {
   display: flex;
@@ -831,7 +838,7 @@
 .zita-block-loader.active {
   position: absolute;
   width: 100%;
-  background: #827f7fb8;
+  background: #f9fcffe6;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -839,13 +846,13 @@
   z-index: 1000;
 }
 .zita-block-loader.active > div span {
-  width: 90px;
-  height: 90px;
   border-radius: 50%;
   display: block;
   border: 5px solid;
-  border-color: white #00000075 #00000075;
   animation: round 1.5s linear 0s infinite forwards;
+  width: 30px;
+  height: 30px;
+  border-color: white #3f51b5 #3f51b5;
 }
 
 @keyframes round {

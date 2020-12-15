@@ -100,6 +100,7 @@ function post_tc_block()
                     }
                     $postHtmlCl1 .= "<p style='color:" . $postExcerptColor . "' class='post-excerpt'>";
                     $postHtmlCl1 .= $postExcerpt;
+                    $postHtmlCl1 .= "<a class='read-more' href='" . esc_url(get_the_permalink()) . "'>Read More</a>";
                     $postHtmlCl1 .= "</p>";
                 }
                 // tags
@@ -174,6 +175,7 @@ function post_tc_block()
                     }
                     $postHtmlCl2 .= "<p style='color:" . $postExcerpt2Color . "' class='post-excerpt'>";
                     $postHtmlCl2 .= $postExcerpt2;
+                    $postHtmlCl2 .= "<a class='read-more' href='" . esc_url(get_the_permalink()) . "'>Read More</a>";
                     $postHtmlCl2 .= "</p>";
                 }
                 // tags

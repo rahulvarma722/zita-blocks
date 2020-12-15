@@ -839,6 +839,9 @@
   margin: 6px 0;
   letter-spacing: 1px;
 }
+.block-post-article .post-content p .read-more {
+  color: #45a6e0;
+}
 .block-post-article .post-content p.post-author {
   font-size: 13px;
   letter-spacing: 1.2px;
@@ -1013,6 +1016,12 @@
 }
 .zita-two-post-wrapper-next-prev > div i {
   color: #adadad;
+}
+
+.components-panel__body p {
+  margin-top: 16px;
+  background: #efefff;
+  padding: 5px;
 }
 
 /*# sourceMappingURL=editor.css.map*/

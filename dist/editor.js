@@ -37407,7 +37407,9 @@ var Edit = /*#__PURE__*/function (_Component) {
       words_ = words_.replace(/<\/?[^>]+(>|$)/g, "");
       words_ = words_.split(" ");
       words_ = words_.slice(0, words);
-      return words_.join(" ");
+      words_ = words_.join(" "); // words_ = decodeEntities(words_);
+
+      return words_;
     });
 
     _defineProperty(_assertThisInitialized(_this), "showCateFn", function (categories) {
@@ -37519,7 +37521,9 @@ var Edit = /*#__PURE__*/function (_Component) {
           color: excerpt_.color
         },
         className: "post-excerpt"
-      }, _this.excerptWords(excerpt_.words, post.excerpt.rendered)), showTag_ && showTag_.enable && wp.element.createElement("p", {
+      }, _this.excerptWords(excerpt_.words, post.excerpt.rendered), wp.element.createElement("span", {
+        className: "read-more"
+      }, "...Read More")), showTag_ && showTag_.enable && wp.element.createElement("p", {
         style: {
           color: meta_style_.color
         },
@@ -37613,12 +37617,6 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes({
             numberOfPosts: e
           });
-        }
-      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: "Left Border",
-        checked: meta_style_.left_border,
-        onChange: function onChange(e) {
-          return _this2.updateObj("meta_style", "left_border", meta_style, e);
         }
       }), wp.element.createElement("p", {
         className: "block-inside"
@@ -37774,7 +37772,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       }, this.returnHtml(posts[0], heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_)), wp.element.createElement("div", {
         className: "column-two"
       }, posts.length > 1 && posts.map(function (post, index__) {
-        return index__ != 0 && _this2.returnHtml(post, heading_, author_, date_, meta_style_, thumbnail_, false, excerpt2_, false);
+        return index__ != 0 && _this2.returnHtml(post, heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt2_, false);
       }))), posts && posts.length > 0 && "getMedia_" in posts[0] && totalPost > posts.length && wp.element.createElement("div", {
         className: "zita-two-post-wrapper-next-prev"
       }, wp.element.createElement("div", null, wp.element.createElement("i", {

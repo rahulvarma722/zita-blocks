@@ -55,7 +55,9 @@ class Edit extends Component {
     words_ = words_.replace(/<\/?[^>]+(>|$)/g, "");
     words_ = words_.split(" ");
     words_ = words_.slice(0, words);
-    return words_.join(" ");
+    words_ = words_.join(" ");
+    // words_ = decodeEntities(words_);
+    return words_;
   };
   showCateFn = (categories) => {
     let returR = [];
@@ -178,6 +180,7 @@ class Edit extends Component {
             {excerpt_ && excerpt_.enable && (
               <p style={{ color: excerpt_.color }} className="post-excerpt">
                 {this.excerptWords(excerpt_.words, post.excerpt.rendered)}
+                <span className="read-more">...Read More</span>
               </p>
             )}
             {showTag_ && showTag_.enable && (
@@ -276,13 +279,6 @@ class Edit extends Component {
               onChange={(e) => {
                 setAttributes({ numberOfPosts: e });
               }}
-            />
-            <ToggleControl
-              label="Left Border"
-              checked={meta_style_.left_border}
-              onChange={(e) =>
-                this.updateObj("meta_style", "left_border", meta_style, e)
-              }
             />
             {/* featured image */}
             <p className="block-inside">Featured Image</p>
@@ -516,7 +512,7 @@ class Edit extends Component {
                         date_,
                         meta_style_,
                         thumbnail_,
-                        false,
+                        showCate_,
                         excerpt2_,
                         false
                       )
