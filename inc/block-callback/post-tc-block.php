@@ -68,12 +68,38 @@ wpgt_register_block_fn('zita-post-tc',  [
                 "color" => '#7d7d7d',
             ]]
         ],
+        // secondary section
+        'heading2' => [
+            'type' => "array",
+            "default" => [[
+                "tag" => 'h1',
+                "fontSize" => 30,
+                "color" => '#616161',
+            ]]
+        ],
         'excerpt2' => [
             'type' => "array",
             "default" => [[
                 "enable" => true,
                 "words" => 10,
                 "color" => 'grey',
+            ]]
+        ],
+        "author2" => [
+            "type" => "array",
+            "default" => [["enable" => true]]
+        ],
+        'date2' => [
+            "type" => "array",
+            "default" => [[
+                "enable" => true,
+                "last_modified" => true
+            ]]
+        ],
+        'showCate2' => [
+            "type" => "array",
+            "default" => [[
+                "enable" => true
             ]]
         ],
         "postCategories" => [

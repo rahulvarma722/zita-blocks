@@ -1,10 +1,6 @@
 <?php
 function post_tc_block()
 {
-    // echo "<pre>";
-    // print_r($_POST);
-    // echo "</pre>";
-    // return;
     $pageNo = $_POST['trigger'] == "next" ? $_POST['page'] + 1 : $_POST['page'] - 1;
     $attr = $_POST['attr'];
     $args = [
@@ -20,6 +16,10 @@ function post_tc_block()
         $postAuthor = isset($attr['author'][0]['enable']) && $attr['author'][0]['enable']  ? true : false;
         $postDate = isset($attr['date'][0]['enable']) && $attr['date'][0]['enable']  ? true : false;
         $postDateModify = isset($attr['date'][0]['last_modified']) && $attr['date'][0]['last_modified']  ? true : false;
+        $postAuthor2 = isset($attr['author2'][0]['enable']) && $attr['author2'][0]['enable']  ? true : false;
+        $postDate2 = isset($attr['date2'][0]['enable']) && $attr['date2'][0]['enable']  ? true : false;
+        $postDateModify2 = isset($attr['date2'][0]['last_modified']) && $attr['date2'][0]['last_modified']  ? true : false;
+
         $postExcerpt = isset($attr['excerpt'][0]['enable']) && $attr['excerpt'][0]['enable']  ? true : false;
         $postExcerptColor = $postExcerpt && $attr['excerpt'][0]['color'] ? $attr['excerpt'][0]['color'] : "";
         $postExcerpt2 = isset($attr['excerpt2'][0]['enable']) && $attr['excerpt2'][0]['enable']  ? true : false;
@@ -27,6 +27,7 @@ function post_tc_block()
         $postThumbnail = isset($attr['thumbnail'][0]['enable']) && $attr['thumbnail'][0]['enable']  ? true : false;
         $metaStyleColor = isset($attr['meta_style'][0]['color']) && $attr['meta_style'][0]['color']  ? $attr['meta_style'][0]['color'] : "";
         $metashowCate = isset($attr['showCate'][0]['enable']) && $attr['showCate'][0]['enable']  ? true : false;
+        $metashowCate2 = isset($attr['showCate2'][0]['enable']) && $attr['showCate2'][0]['enable']  ? true : false;
         $metashowshowTag = isset($attr['showTag'][0]['enable']) && $attr['showTag'][0]['enable']  ? true : false;
         $checkFirst = true;
         while ($query->have_posts()) {
@@ -132,18 +133,31 @@ function post_tc_block()
                     }
                 }
                 $postHtmlCl2 .= "<div class='post-content'>";
+
+                if ($metashowCate2) {
+                    $postHtmlCl2 .= '<p class="post-category">';
+                    $category_ = get_the_category();
+                    if (!empty($category_)) {
+                        foreach ($category_ as $cateValue) {
+                            $postHtmlCl2 .= '<span>';
+                            $postHtmlCl2 .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
+                            $postHtmlCl2 .= '</span>';
+                        }
+                    }
+                    $postHtmlCl2 .= '</p>';
+                }
                 // category
                 $postHtmlCl2 .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . "' class='post-heading'>";
                 $postHtmlCl2 .= "<a href='" . esc_url(get_the_permalink()) . "'>" . get_the_title() . "</a>";
                 $postHtmlCl2 .= "</" . $attr['heading'][0]['tag'] . ">";
                 $postHtmlCl2 .= '<div class="post-meta-all">';
-                if ($postAuthor) {
+                if ($postAuthor2) {
                     $postHtmlCl2 .= "<p style='color:" . $metaStyleColor . "' class='post-author'>";
                     $postHtmlCl2 .= "<a target='_blank' href='" . get_author_posts_url(get_the_author_meta('ID')) . "'>";
                     $postHtmlCl2 .=  get_the_author();
                     $postHtmlCl2 .= "</a></p>";
                 }
-                if ($postDate) {
+                if ($postDate2) {
                     $postHtmlCl2 .= '<span class="slash">/</span>';
                     $dateYear =   get_the_date('Y');
                     $dateMonth =   get_the_date('m');
@@ -153,7 +167,7 @@ function post_tc_block()
                     $postHtmlCl2 .=  get_the_date();
                     $postHtmlCl2 .= "</a></p>";
                 }
-                if ($postDateModify) {
+                if ($postDateModify2) {
                     $postHtmlCl2 .= '<span class="slash">/</span>';
                     $dateYear =   get_the_modified_date('Y');
                     $dateMonth =   get_the_modified_date('m');

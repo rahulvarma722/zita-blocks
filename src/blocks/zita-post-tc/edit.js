@@ -16,7 +16,11 @@ import { decodeEntities } from "@wordpress/html-entities";
 class Edit extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      metaChoose: "primary",
+      excerpt: "primary",
+      heading: "primary",
+    };
   }
   updateObj = (parent_key, child_key, initialValue, value_) => {
     let newNewValue = [...initialValue];
@@ -212,7 +216,11 @@ class Edit extends Component {
       showTag,
       showCate,
       excerpt,
+      heading2,
       excerpt2,
+      author2,
+      date2,
+      showCate2,
       postCategories,
       meta_style,
       title,
@@ -220,13 +228,19 @@ class Edit extends Component {
     let heading_ = heading[0];
     let thumbnail_ = thumbnail[0];
     let excerpt_ = excerpt[0];
-    let excerpt2_ = excerpt2[0];
     let date_ = date[0];
     let author_ = author[0];
     let meta_style_ = meta_style[0];
     let title_ = title[0];
     let showTag_ = showTag[0];
     let showCate_ = showCate[0];
+    // secondary
+
+    let heading2_ = heading2[0];
+    let excerpt2_ = excerpt2[0];
+    let showCate2_ = showCate2[0];
+    let date2_ = date2[0];
+    let author2_ = author2[0];
     // category init
     let cateGory = [{ value: "all", label: "All" }];
     if (category && category.length) {
@@ -326,36 +340,97 @@ class Edit extends Component {
               />
             </div>
             {/* category */}
+            {/* primery and secondary */}
+            <div class="zita-switcher-button-section">
+              <span
+                onClick={() => this.setState({ metaChoose: "primary" })}
+                className={this.state.metaChoose == "primary" ? "selected" : ""}
+              >
+                Primary
+              </span>
+              <span
+                onClick={() => this.setState({ metaChoose: "secondary" })}
+                className={
+                  this.state.metaChoose == "secondary" ? "selected" : ""
+                }
+              >
+                Secondary
+              </span>
+            </div>
             {/* show author */}
-            <ToggleControl
-              label="Author"
-              checked={author_.enable}
-              onChange={(e) => this.updateObj("author", "enable", author, e)}
-            />
-            {/* show date */}
-            <ToggleControl
-              label="Date"
-              checked={date_.enable}
-              onChange={(e) => this.updateObj("date", "enable", date, e)}
-            />
-            <ToggleControl
-              label="Categories"
-              checked={showCate_.enable}
-              onChange={(e) =>
-                this.updateObj("showCate", "enable", showCate, e)
-              }
-            />
-            {/* show last date */}
-            <ToggleControl
-              label="Last Modified Date"
-              checked={date_.last_modified}
-              onChange={(e) => this.updateObj("date", "last_modified", date, e)}
-            />
-            <ToggleControl
-              label="Tag"
-              checked={showTag_.enable}
-              onChange={(e) => this.updateObj("showTag", "enable", showTag, e)}
-            />
+            {this.state.metaChoose == "primary" ? (
+              <>
+                <ToggleControl
+                  label="Author"
+                  checked={author_.enable}
+                  onChange={(e) =>
+                    this.updateObj("author", "enable", author, e)
+                  }
+                />
+                {/* show date */}
+                <ToggleControl
+                  label="Date"
+                  checked={date_.enable}
+                  onChange={(e) => this.updateObj("date", "enable", date, e)}
+                />
+                <ToggleControl
+                  label="Categories"
+                  checked={showCate_.enable}
+                  onChange={(e) =>
+                    this.updateObj("showCate", "enable", showCate, e)
+                  }
+                />
+                {/* show last date */}
+                <ToggleControl
+                  label="Last Modified Date"
+                  checked={date_.last_modified}
+                  onChange={(e) =>
+                    this.updateObj("date", "last_modified", date, e)
+                  }
+                />
+                <ToggleControl
+                  label="Tag"
+                  checked={showTag_.enable}
+                  onChange={(e) =>
+                    this.updateObj("showTag", "enable", showTag, e)
+                  }
+                />
+              </>
+            ) : (
+              <>
+                {/* secondary  */}
+                {/* show author */}
+                <ToggleControl
+                  label="Author"
+                  checked={author2_.enable}
+                  onChange={(e) =>
+                    this.updateObj("author2", "enable", author2, e)
+                  }
+                />
+                {/* show date */}
+                <ToggleControl
+                  label="Date"
+                  checked={date2_.enable}
+                  onChange={(e) => this.updateObj("date2", "enable", date2, e)}
+                />
+                <ToggleControl
+                  label="Categories"
+                  checked={showCate2_.enable}
+                  onChange={(e) =>
+                    this.updateObj("showCate2", "enable", showCate2, e)
+                  }
+                />
+                {/* show last date */}
+                <ToggleControl
+                  label="Last Modified Date"
+                  checked={date2_.last_modified}
+                  onChange={(e) =>
+                    this.updateObj("date2", "last_modified", date2, e)
+                  }
+                />
+              </>
+            )}
+            {/* secondary  */}
             <p>
               <strong>Color</strong>
             </p>
@@ -367,121 +442,206 @@ class Edit extends Component {
             />
           </PanelBody>
           <PanelBody title="Excerpt" initialOpen={false}>
-            <p>
-              <strong>Primery Excerpt</strong>
-            </p>
-            <ToggleControl
-              label={excerpt_.enable ? "Hide" : "Show"}
-              checked={excerpt_.enable}
-              onChange={(e) => this.updateObj("excerpt", "enable", excerpt, e)}
-            />
-            {excerpt_.enable && (
+            <div class="zita-switcher-button-section">
+              <span
+                onClick={() => this.setState({ excerpt: "primary" })}
+                className={this.state.excerpt == "primary" ? "selected" : ""}
+              >
+                Primary
+              </span>
+              <span
+                onClick={() => this.setState({ excerpt: "secondary" })}
+                className={this.state.excerpt == "secondary" ? "selected" : ""}
+              >
+                Secondary
+              </span>
+            </div>
+            {this.state.excerpt == "primary" ? (
               <>
-                <p>
-                  <strong>Number of words</strong>
-                </p>
-                <RangeControl
-                  value={excerpt_.words}
-                  min={1}
-                  max={200}
+                <ToggleControl
+                  label={excerpt_.enable ? "Hide" : "Show"}
+                  checked={excerpt_.enable}
                   onChange={(e) =>
-                    this.updateObj("excerpt", "words", excerpt, e)
+                    this.updateObj("excerpt", "enable", excerpt, e)
                   }
                 />
-                <p>
-                  <strong>Color</strong>
-                </p>
-                <ColorPalette
-                  value={excerpt_.color}
-                  onChange={(color) =>
-                    this.updateObj("excerpt", "color", excerpt, color)
-                  }
-                />
+                {excerpt_.enable && (
+                  <>
+                    <p>
+                      <strong>Number of words</strong>
+                    </p>
+                    <RangeControl
+                      value={excerpt_.words}
+                      min={1}
+                      max={200}
+                      onChange={(e) =>
+                        this.updateObj("excerpt", "words", excerpt, e)
+                      }
+                    />
+                    <p>
+                      <strong>Color</strong>
+                    </p>
+                    <ColorPalette
+                      value={excerpt_.color}
+                      onChange={(color) =>
+                        this.updateObj("excerpt", "color", excerpt, color)
+                      }
+                    />
+                  </>
+                )}
               </>
-            )}
-            <p>
-              <strong>Secondary Excerpt</strong>
-            </p>
-            <ToggleControl
-              label={excerpt2_.enable ? "Hide" : "Show"}
-              checked={excerpt2_.enable}
-              onChange={(e) =>
-                this.updateObj("excerpt2", "enable", excerpt2, e)
-              }
-            />
-            {excerpt2_.enable && (
+            ) : (
               <>
-                <p>
-                  <strong>Number of words</strong>
-                </p>
-                <RangeControl
-                  value={excerpt2_.words}
-                  min={1}
-                  max={200}
+                <ToggleControl
+                  label={excerpt2_.enable ? "Hide" : "Show"}
+                  checked={excerpt2_.enable}
                   onChange={(e) =>
-                    this.updateObj("excerpt2", "words", excerpt2, e)
+                    this.updateObj("excerpt2", "enable", excerpt2, e)
                   }
                 />
-                <p>
-                  <strong>Color</strong>
-                </p>
-                <ColorPalette
-                  value={excerpt2_.color}
-                  onChange={(color) =>
-                    this.updateObj("excerpt2", "color", excerpt2, color)
-                  }
-                />
+                {excerpt2_.enable && (
+                  <>
+                    <p>
+                      <strong>Number of words</strong>
+                    </p>
+                    <RangeControl
+                      value={excerpt2_.words}
+                      min={1}
+                      max={200}
+                      onChange={(e) =>
+                        this.updateObj("excerpt2", "words", excerpt2, e)
+                      }
+                    />
+                    <p>
+                      <strong>Color</strong>
+                    </p>
+                    <ColorPalette
+                      value={excerpt2_.color}
+                      onChange={(color) =>
+                        this.updateObj("excerpt2", "color", excerpt2, color)
+                      }
+                    />
+                  </>
+                )}
               </>
             )}
           </PanelBody>
           <PanelBody title="Heading" initialOpen={false}>
-            <p>
-              <strong>Heading Tag</strong>
-            </p>
-            <select
-              value={heading_.tag}
-              className="zita-block-select"
-              onChange={(e) => {
-                let value_ = e.target.value;
-                let font_ =
-                  value_ == "h1"
-                    ? 30
-                    : value_ == "h2"
-                    ? 25
-                    : value_ == "h3"
-                    ? 20
-                    : 17;
-                let newHeading = [...heading];
-                newHeading[0]["tag"] = value_;
-                newHeading[0]["fontSize"] = font_;
-                setAttributes({ heading: newHeading });
-              }}
-            >
-              <option value="h1">H1</option>
-              <option value="h2">H2</option>
-              <option value="h3">H3</option>
-              <option value="p">P</option>
-            </select>
-            <p>
-              <strong>Font Size</strong>
-            </p>
-            <RangeControl
-              value={heading_.fontSize}
-              min={1}
-              max={50}
-              onChange={(e) =>
-                this.updateObj("heading", "fontSize", heading, e)
-              }
-            />
-            <p>
-              <strong>Color</strong>
-            </p>
-            <ColorPalette
-              value={heading_.color}
-              onChange={(color) =>
-                this.updateObj("heading", "color", heading, color)
-              }
-            />
+            <div class="zita-switcher-button-section">
+              <span
+                onClick={() => this.setState({ heading: "primary" })}
+                className={this.state.heading == "primary" ? "selected" : ""}
+              >
+                Primary
+              </span>
+              <span
+                onClick={() => this.setState({ heading: "secondary" })}
+                className={this.state.heading == "secondary" ? "selected" : ""}
+              >
+                Secondary
+              </span>
+            </div>
+            {this.state.heading == "primary" ? (
+              <>
+                <p>
+                  <strong>Heading Tag</strong>
+                </p>
+                <select
+                  value={heading_.tag}
+                  className="zita-block-select"
+                  onChange={(e) => {
+                    let value_ = e.target.value;
+                    let font_ =
+                      value_ == "h1"
+                        ? 30
+                        : value_ == "h2"
+                        ? 25
+                        : value_ == "h3"
+                        ? 20
+                        : 17;
+                    let newHeading = [...heading];
+                    newHeading[0]["tag"] = value_;
+                    newHeading[0]["fontSize"] = font_;
+                    setAttributes({ heading: newHeading });
+                  }}
+                >
+                  <option value="h1">H1</option>
+                  <option value="h2">H2</option>
+                  <option value="h3">H3</option>
+                  <option value="p">P</option>
+                </select>
+                <p>
+                  <strong>Font Size</strong>
+                </p>
+                <RangeControl
+                  value={heading_.fontSize}
+                  min={1}
+                  max={50}
+                  onChange={(e) =>
+                    this.updateObj("heading", "fontSize", heading, e)
+                  }
+                />
+                <p>
+                  <strong>Color</strong>
+                </p>
+                <ColorPalette
+                  value={heading_.color}
+                  onChange={(color) =>
+                    this.updateObj("heading", "color", heading, color)
+                  }
+                />
+              </>
+            ) : (
+              <>
+                <p>
+                  <strong>Heading Tag</strong>
+                </p>
+                <select
+                  value={heading2_.tag}
+                  className="zita-block-select"
+                  onChange={(e) => {
+                    let value_ = e.target.value;
+                    let font_ =
+                      value_ == "h1"
+                        ? 30
+                        : value_ == "h2"
+                        ? 25
+                        : value_ == "h3"
+                        ? 20
+                        : 17;
+                    let newHeading = [...heading2];
+                    newHeading[0]["tag"] = value_;
+                    newHeading[0]["fontSize"] = font_;
+                    setAttributes({ heading2: newHeading });
+                  }}
+                >
+                  <option value="h1">H1</option>
+                  <option value="h2">H2</option>
+                  <option value="h3">H3</option>
+                  <option value="p">P</option>
+                </select>
+                <p>
+                  <strong>Font Size</strong>
+                </p>
+                <RangeControl
+                  value={heading2_.fontSize}
+                  min={1}
+                  max={50}
+                  onChange={(e) =>
+                    this.updateObj("heading2", "fontSize", heading2, e)
+                  }
+                />
+                <p>
+                  <strong>Color</strong>
+                </p>
+                <ColorPalette
+                  value={heading2_.color}
+                  onChange={(color) =>
+                    this.updateObj("heading2", "color", heading2, color)
+                  }
+                />
+              </>
+            )}
           </PanelBody>
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
@@ -507,12 +667,12 @@ class Edit extends Component {
                       index__ != 0 &&
                       this.returnHtml(
                         post,
-                        heading_,
-                        author_,
-                        date_,
+                        heading2_,
+                        author2_,
+                        date2_,
                         meta_style_,
                         thumbnail_,
-                        showCate_,
+                        showCate2_,
                         excerpt2_,
                         false
                       )
