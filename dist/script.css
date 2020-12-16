@@ -690,6 +690,9 @@
   margin: 1px 0;
 }
 
+.zita-slider-bullet-trigger.thumbnail-image li {
+  transition: 0.5s all linear;
+}
 .zita-slider-bullet-trigger.thumbnail-image li > div {
   height: 60px;
   width: 76px;
@@ -700,6 +703,9 @@
   height: 100%;
   position: absolute;
   object-fit: cover;
+}
+.zita-slider-bullet-trigger.thumbnail-image li.selected_ {
+  box-shadow: 0px 0px 4px 4px #797979;
 }
 .zita-two-col-container {
   position: relative;
@@ -876,6 +882,80 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+@media only screen and (max-width: 768px) {
+  .zita-post-two-column {
+    flex-direction: column;
+  }
+  .zita-post-two-column > div {
+    padding: 2px;
+  }
+  .zita-post-two-column .column-two .post-wrapper .featured-image {
+    min-width: 35%;
+    height: 100px;
+    margin-right: 14px;
+  }
+  .zita-post-two-column .column-two .featured-image {
+    width: 100%;
+    position: relative;
+    height: 168px;
+  }
+  .zita-post-two-column #post-wrapper .post-content .post-meta-all {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .zita-post-two-column #post-wrapper .post-content .post-meta-all .slash {
+    color: #cec4c4;
+    margin: 1px 5px;
+  }
+  .zita-post-two-column #post-wrapper .post-content .post-heading {
+    margin: 5px 0;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+  .zita-post-two-column #post-wrapper .post-content p a.read-more {
+    color: #52a8d2;
+    display: inline;
+    margin-left: 3px;
+    font-size: 10px;
+  }
+  .zita-post-two-column #post-wrapper .post-content p.post-author {
+    font-size: 13px;
+    letter-spacing: 1.2px;
+  }
+  .zita-post-two-column #post-wrapper .post-content p.post-date, .zita-post-two-column #post-wrapper .post-content p.post-date-last-modified {
+    letter-spacing: 1.2px;
+    font-size: 14px;
+    display: flex;
+    margin: 0;
+    line-height: 1;
+  }
+  .zita-post-two-column #post-wrapper .post-content p.post-category {
+    margin: 2px 0;
+  }
+  .zita-post-two-column #post-wrapper .post-content p.post-category span {
+    padding: 2px 3px;
+    font-size: 10px;
+  }
+
+  .zita-two-post-wrapper-next-prev {
+    display: flex;
+  }
+  .zita-two-post-wrapper-next-prev > div {
+    border: 1px solid #d8d7d7;
+    margin: 7px;
+    padding: 4px 8px;
+    cursor: pointer;
+  }
+  .zita-two-post-wrapper-next-prev > div i {
+    color: #adadad;
+    display: block;
+  }
+  .zita-two-post-wrapper-next-prev > div.disable {
+    opacity: 0.5;
+    cursor: default;
   }
 }
 

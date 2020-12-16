@@ -39,7 +39,7 @@ wpgt_register_block_fn('zita-post-tc',  [
         ],
         "author" => [
             "type" => "array",
-            "default" => [["enable" => false]]
+            "default" => [["enable" => true]]
         ],
         'date' => [
             "type" => "array",
