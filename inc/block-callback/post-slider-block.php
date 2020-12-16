@@ -19,6 +19,8 @@ wpgt_register_block_fn('zita-post-slider',  [
                         "fontSize" => 20,
                         "color" => "rgba(231,192,192,1)",
                         "activeColor" => "rgba(68,222,68,1)",
+                        "trigger"=>"bullet",
+                        "place"=>"in"
                     ],
                     "leftRightTrigger" => [
                         "enable" => true,

@@ -12,9 +12,9 @@ let stateCheck = setInterval(() => {
         let slider = getAllslideSlide[sliderSlide];
 
         let firstElement_ = slider.firstElementChild.cloneNode(true);
-        firstElement_.classList.add('first-element');
+        firstElement_.classList.add("first-element");
         let lastElement_ = slider.lastElementChild.cloneNode(true);
-        lastElement_.classList.add('last-element');
+        lastElement_.classList.add("last-element");
         slider.append(firstElement_);
         slider.prepend(lastElement_);
         slider.children[1].classList.add("selected_");
@@ -43,7 +43,8 @@ let stateCheck = setInterval(() => {
         let countChildern = slider.children.length;
         slider.style.width = countChildern * getPArentWidthSlide + "px";
         slider.style.marginLeft = -getPArentWidthSlide + "px";
-        slider.style.opacity = 1;
+        containerClosest.style.opacity = 1;
+
         let tranSitionDuration = 1;
         let transitionDuClone = tranSitionDuration;
         let sliderDelay = containerClosest
@@ -64,9 +65,11 @@ let stateCheck = setInterval(() => {
           indicatorActive = indicator.getAttribute("active-color");
           indiCatorStyle = indicator.getAttribute("childStyle");
           indicator = indicator.children;
-          indicator[0].querySelector(
-            "span"
-          ).style.backgroundColor = indicatorActive;
+          if (indicator[0].querySelector("span")) {
+            indicator[0].querySelector(
+              "span"
+            ).style.backgroundColor = indicatorActive;
+          }
         }
         let slideIndex = 1;
         if (prev && next) {
@@ -130,9 +133,11 @@ let stateCheck = setInterval(() => {
             slider.children[i].classList.remove("selected_");
             if (indicator && indicator[i]) {
               indicator[i].classList.remove("selected_");
-              indicator[i]
-                .querySelector("span")
-                .setAttribute("style", indiCatorStyle);
+              if (indicator[i].querySelector("span")) {
+                indicator[i]
+                  .querySelector("span")
+                  .setAttribute("style", indiCatorStyle);
+              }
             }
           }
           slider.children[slideIndex].classList.add("selected_");
@@ -144,9 +149,11 @@ let stateCheck = setInterval(() => {
                 ? indicator.length - 1
                 : slideIndex - 1;
             indicator[indicatorIndex].classList.add("selected_");
-            indicator[indicatorIndex].querySelector(
-              "span"
-            ).style.backgroundColor = indicatorActive;
+            if (indicator[indicatorIndex].querySelector("span")) {
+              indicator[indicatorIndex].querySelector(
+                "span"
+              ).style.backgroundColor = indicatorActive;
+            }
           }
         }
         sliderDelay = parseInt(sliderDelay);
@@ -188,6 +195,8 @@ let stateCheck = setInterval(() => {
         );
         let getPArentWidthSlide_ = containerWrapper.parentNode.getBoundingClientRect()
           .width;
+        slides[0].classList.add("selected_");
+
         if (
           "width" in sliderINIT_ &&
           sliderINIT_.width &&
@@ -215,14 +224,18 @@ let stateCheck = setInterval(() => {
           ".zita-slider-bullet-trigger"
         );
         let indicatorActive, indiCatorStyle;
+        // console.log(indicator.children);
         if (indicator) {
           indicatorActive = indicator.getAttribute("active-color");
           indiCatorStyle = indicator.getAttribute("childStyle");
           indicator = indicator.children;
-          indicator[0].querySelector(
-            "span"
-          ).style.backgroundColor = indicatorActive;
+          if (indicator[0].querySelector("span")) {
+            indicator[0].querySelector(
+              "span"
+            ).style.backgroundColor = indicatorActive;
+          }
         }
+        containerWrapper.style.opacity = 1;
         let index = 0;
         if (prev && next) {
           prev.addEventListener("click", function () {
@@ -265,17 +278,21 @@ let stateCheck = setInterval(() => {
             slides[i].classList.remove("selected_");
             if (indicator) {
               indicator[i].classList.remove("selected_");
-              indicator[i]
-                .querySelector("span")
-                .setAttribute("style", indiCatorStyle);
+              if (indicator[i].querySelector("span")) {
+                indicator[i]
+                  .querySelector("span")
+                  .setAttribute("style", indiCatorStyle);
+              }
             }
           }
           slides[index].classList.add("selected_");
           if (indicator) {
             indicator[index].classList.add("selected_");
-            indicator[index].querySelector(
-              "span"
-            ).style.backgroundColor = indicatorActive;
+            if (indicator[index].querySelector("span")) {
+              indicator[index].querySelector(
+                "span"
+              ).style.backgroundColor = indicatorActive;
+            }
           }
         }
         // console.log(sliderDelay);

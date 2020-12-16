@@ -119,7 +119,7 @@ class Edit extends Component {
   render() {
     let { attributes, setAttributes, posts, category } = this.props;
     let { slideIndex } = this.state;
-    // console.log("this.props", this.props);
+    // console.log("zita slider this.props", this.props);
     let {
       heading,
       author,
@@ -161,6 +161,11 @@ class Edit extends Component {
       fontSize: sliderSetting.leftRightTrigger.fontSize,
     };
     let triggerActive = this.state.trigger;
+    let trigStyle = {
+      height: sliderSetting.linearTrigger.fontSize + "px",
+      width: sliderSetting.linearTrigger.fontSize + "px",
+    };
+
     return [
       <InspectorControls>
         <PanelBody title={"Slider Setting"} initialOpen={false}>
@@ -264,41 +269,115 @@ class Edit extends Component {
                   this.updateGlobalSlide(e, "linearTrigger", "enable")
                 }
               />
+              <p>
+                <strong>Position</strong>
+              </p>
+              <div class="zita-switcher-button-section">
+                <span
+                  onClick={() => {
+                    this.updateGlobalSlide("in", "linearTrigger", "place");
+                  }}
+                  className={
+                    sliderSetting.linearTrigger.place == "in" ? "selected" : ""
+                  }
+                >
+                  In
+                </span>
+                <span
+                  onClick={() => {
+                    this.updateGlobalSlide("out", "linearTrigger", "place");
+                  }}
+                  className={
+                    sliderSetting.linearTrigger.place == "out" ? "selected" : ""
+                  }
+                >
+                  Out
+                </span>
+              </div>
+              <p>
+                <strong>Trigger Type</strong>
+              </p>
               {sliderSetting.linearTrigger.enable && (
                 <>
-                  <RangeControl
-                    label="Size"
-                    value={sliderSetting.linearTrigger.fontSize}
-                    min={0}
-                    max={70}
-                    onChange={(e) =>
-                      this.updateGlobalSlide(e, "linearTrigger", "fontSize")
-                    }
-                  />
-                  <p>
-                    <strong>Color</strong>
-                  </p>
-                  <ColorPicker
-                    color={sliderSetting.linearTrigger.color}
-                    onChangeComplete={(colorBg) => {
-                      let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                      this.updateGlobalSlide(color, "linearTrigger", "color");
-                    }}
-                  />
-                  <p>
-                    <strong>Active Color</strong>
-                  </p>
-                  <ColorPicker
-                    color={sliderSetting.linearTrigger.activeColor}
-                    onChangeComplete={(colorBg) => {
-                      let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                      this.updateGlobalSlide(
-                        color,
-                        "linearTrigger",
-                        "activeColor"
-                      );
-                    }}
-                  />
+                  {/* dk */}
+                  <div class="zita-switcher-button-section">
+                    <span
+                      onClick={() => {
+                        this.updateGlobalSlide(
+                          "bullet",
+                          "linearTrigger",
+                          "trigger"
+                        );
+                      }}
+                      className={
+                        sliderSetting.linearTrigger.trigger == "bullet"
+                          ? "selected"
+                          : ""
+                      }
+                    >
+                      Bullets
+                    </span>
+                    <span
+                      onClick={() => {
+                        this.updateGlobalSlide(
+                          "thumbnail",
+                          "linearTrigger",
+                          "trigger"
+                        );
+                      }}
+                      className={
+                        sliderSetting.linearTrigger.trigger == "thumbnail"
+                          ? "selected"
+                          : ""
+                      }
+                    >
+                      Thumbnail
+                    </span>
+                  </div>
+                  {/* dk */}
+                  {sliderSetting.linearTrigger.trigger == "bullet" ? (
+                    <>
+                      <RangeControl
+                        label="Size"
+                        value={sliderSetting.linearTrigger.fontSize}
+                        min={0}
+                        max={70}
+                        onChange={(e) =>
+                          this.updateGlobalSlide(e, "linearTrigger", "fontSize")
+                        }
+                      />
+                      <p>
+                        <strong>Color</strong>
+                      </p>
+                      <ColorPicker
+                        color={sliderSetting.linearTrigger.color}
+                        onChangeComplete={(colorBg) => {
+                          let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                          this.updateGlobalSlide(
+                            color,
+                            "linearTrigger",
+                            "color"
+                          );
+                        }}
+                      />
+                      <p>
+                        <strong>Active Color</strong>
+                      </p>
+                      <ColorPicker
+                        color={sliderSetting.linearTrigger.activeColor}
+                        onChangeComplete={(colorBg) => {
+                          let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                          this.updateGlobalSlide(
+                            color,
+                            "linearTrigger",
+                            "activeColor"
+                          );
+                        }}
+                      />
+                    </>
+                  ) : (
+                    <h1>thumbnail design</h1>
+                  )}
                 </>
               )}
             </>
@@ -546,46 +625,6 @@ class Edit extends Component {
           </ul>
         </div>
         <div className="zita-slider-container">
-          {/* slider trigger */}
-          {sliderSetting.linearTrigger.enable &&
-            posts &&
-            posts.length > 0 &&
-            "getMedia_" in posts[0] && (
-              <ul className="zita-slider-bullet-trigger">
-                {posts.map((post, index_) => {
-                  let trigStyle = {
-                    height: sliderSetting.linearTrigger.fontSize + "px",
-                    width: sliderSetting.linearTrigger.fontSize + "px",
-                  };
-                  trigStyle =
-                    index_ != slideIndex
-                      ? {
-                          ...trigStyle,
-                          ...{
-                            backgroundColor: sliderSetting.linearTrigger.color,
-                          },
-                        }
-                      : {
-                          ...trigStyle,
-                          ...{
-                            backgroundColor:
-                              sliderSetting.linearTrigger.activeColor,
-                          },
-                        };
-                  return (
-                    "getMedia_" in post &&
-                    post.getMedia_ &&
-                    "guid" in post.getMedia_ && (
-                      <li
-                        className={`${index_ == slideIndex ? "selected_" : ""}`}
-                      >
-                        <span style={trigStyle}></span>
-                      </li>
-                    )
-                  );
-                })}
-              </ul>
-            )}
           {/* next prev btn */}
           {sliderSetting.leftRightTrigger.enable && (
             <>
@@ -714,6 +753,51 @@ class Edit extends Component {
               <h1>Loading </h1>
             )}
           </ul>
+          {/* slider trigger */}
+          {sliderSetting.linearTrigger.enable &&
+            posts &&
+            posts.length > 0 &&
+            "getMedia_" in posts[0] && (
+              <ul
+                className={`zita-slider-bullet-trigger thumbnail-image trigger_${sliderSetting.linearTrigger.place}`}
+              >
+                {posts.map((post, index_) => {
+                  trigStyle =
+                    index_ != slideIndex
+                      ? {
+                          ...trigStyle,
+                          ...{
+                            backgroundColor: sliderSetting.linearTrigger.color,
+                          },
+                        }
+                      : {
+                          ...trigStyle,
+                          ...{
+                            backgroundColor:
+                              sliderSetting.linearTrigger.activeColor,
+                          },
+                        };
+                  return (
+                    "getMedia_" in post &&
+                    post.getMedia_ &&
+                    "guid" in post.getMedia_ &&
+                    (sliderSetting.linearTrigger.trigger == "thumbnail" ? (
+                      <li>
+                        <div>
+                          <img src={post.getMedia_.guid.rendered} />
+                        </div>
+                      </li>
+                    ) : (
+                      <li
+                        className={`${index_ == slideIndex ? "selected_" : ""}`}
+                      >
+                        <span style={trigStyle}></span>
+                      </li>
+                    ))
+                  );
+                })}
+              </ul>
+            )}
         </div>
       </div>,
     ];

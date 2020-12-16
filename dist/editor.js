@@ -36742,7 +36742,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes = _this$props.setAttributes,
           posts = _this$props.posts,
           category = _this$props.category;
-      var slideIndex = this.state.slideIndex; // console.log("this.props", this.props);
+      var slideIndex = this.state.slideIndex; // console.log("zita slider this.props", this.props);
 
       var heading = attributes.heading,
           author = attributes.author,
@@ -36792,6 +36792,10 @@ var Edit = /*#__PURE__*/function (_Component) {
         fontSize: sliderSetting.leftRightTrigger.fontSize
       };
       var triggerActive = this.state.trigger;
+      var trigStyle = {
+        height: sliderSetting.linearTrigger.fontSize + "px",
+        width: sliderSetting.linearTrigger.fontSize + "px"
+      };
       return [wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
         title: "Slider Setting",
         initialOpen: false
@@ -36870,7 +36874,31 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(e) {
           return _this2.updateGlobalSlide(e, "linearTrigger", "enable");
         }
-      }), sliderSetting.linearTrigger.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Position")), wp.element.createElement("div", {
+        class: "zita-switcher-button-section"
+      }, wp.element.createElement("span", {
+        onClick: function onClick() {
+          _this2.updateGlobalSlide("in", "linearTrigger", "place");
+        },
+        className: sliderSetting.linearTrigger.place == "in" ? "selected" : ""
+      }, "In"), wp.element.createElement("span", {
+        onClick: function onClick() {
+          _this2.updateGlobalSlide("out", "linearTrigger", "place");
+        },
+        className: sliderSetting.linearTrigger.place == "out" ? "selected" : ""
+      }, "Out")), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Trigger Type")), sliderSetting.linearTrigger.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
+        class: "zita-switcher-button-section"
+      }, wp.element.createElement("span", {
+        onClick: function onClick() {
+          _this2.updateGlobalSlide("bullet", "linearTrigger", "trigger");
+        },
+        className: sliderSetting.linearTrigger.trigger == "bullet" ? "selected" : ""
+      }, "Bullets"), wp.element.createElement("span", {
+        onClick: function onClick() {
+          _this2.updateGlobalSlide("thumbnail", "linearTrigger", "trigger");
+        },
+        className: sliderSetting.linearTrigger.trigger == "thumbnail" ? "selected" : ""
+      }, "Thumbnail")), sliderSetting.linearTrigger.trigger == "bullet" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
         label: "Size",
         value: sliderSetting.linearTrigger.fontSize,
         min: 0,
@@ -36892,7 +36920,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           _this2.updateGlobalSlide(color, "linearTrigger", "activeColor");
         }
-      }))), triggerActive == "left" && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
+      })) : wp.element.createElement("h1", null, "thumbnail design"))), triggerActive == "left" && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
         label: sliderSetting.leftRightTrigger.enable ? "Disable" : "Enable",
         checked: sliderSetting.leftRightTrigger.enable,
         onChange: function onChange(e) {
@@ -37072,24 +37100,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         }));
       }))), wp.element.createElement("div", {
         className: "zita-slider-container"
-      }, sliderSetting.linearTrigger.enable && posts && posts.length > 0 && "getMedia_" in posts[0] && wp.element.createElement("ul", {
-        className: "zita-slider-bullet-trigger"
-      }, posts.map(function (post, index_) {
-        var trigStyle = {
-          height: sliderSetting.linearTrigger.fontSize + "px",
-          width: sliderSetting.linearTrigger.fontSize + "px"
-        };
-        trigStyle = index_ != slideIndex ? _objectSpread(_objectSpread({}, trigStyle), {
-          backgroundColor: sliderSetting.linearTrigger.color
-        }) : _objectSpread(_objectSpread({}, trigStyle), {
-          backgroundColor: sliderSetting.linearTrigger.activeColor
-        });
-        return "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && wp.element.createElement("li", {
-          className: "".concat(index_ == slideIndex ? "selected_" : "")
-        }, wp.element.createElement("span", {
-          style: trigStyle
-        }));
-      })), sliderSetting.leftRightTrigger.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
+      }, sliderSetting.leftRightTrigger.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
         className: "zita-slider-bullet-next-prev next"
       }, wp.element.createElement("span", {
         style: leftRightStyle
@@ -37170,7 +37181,22 @@ var Edit = /*#__PURE__*/function (_Component) {
           },
           className: "post-tags"
         }, _this2.showTagsFn(post.tags))))))))));
-      }) : !posts ? wp.element.createElement("h1", null, "No Post Found ") : wp.element.createElement("h1", null, "Loading "))))];
+      }) : !posts ? wp.element.createElement("h1", null, "No Post Found ") : wp.element.createElement("h1", null, "Loading ")), sliderSetting.linearTrigger.enable && posts && posts.length > 0 && "getMedia_" in posts[0] && wp.element.createElement("ul", {
+        className: "zita-slider-bullet-trigger thumbnail-image trigger_".concat(sliderSetting.linearTrigger.place)
+      }, posts.map(function (post, index_) {
+        trigStyle = index_ != slideIndex ? _objectSpread(_objectSpread({}, trigStyle), {
+          backgroundColor: sliderSetting.linearTrigger.color
+        }) : _objectSpread(_objectSpread({}, trigStyle), {
+          backgroundColor: sliderSetting.linearTrigger.activeColor
+        });
+        return "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && (sliderSetting.linearTrigger.trigger == "thumbnail" ? wp.element.createElement("li", null, wp.element.createElement("div", null, wp.element.createElement("img", {
+          src: post.getMedia_.guid.rendered
+        }))) : wp.element.createElement("li", {
+          className: "".concat(index_ == slideIndex ? "selected_" : "")
+        }, wp.element.createElement("span", {
+          style: trigStyle
+        })));
+      }))))];
     }
   }]);
 
@@ -38639,7 +38665,12 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   title: "Post",
   icon: "format-aside",
   category: "zita-category",
-  getEditWrapperProps: function getEditWrapperProps(attributes) {},
+  getEditWrapperProps: function getEditWrapperProps(attributes) {
+    var attr_ = {
+      "data-align": "full"
+    };
+    return attr_;
+  },
   keywords: ["post"],
   // attributes: attrSave,
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],

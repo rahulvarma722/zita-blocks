@@ -3,13 +3,14 @@
 function mytheme_blocks_render_post_slider($attr)
 {
     $args = [
-        "post_per_page" => $attr['numberOfPosts']
+        "posts_per_page" => $attr['numberOfPosts']
     ];
     $query = new WP_Query($args);
     $postHtml = '';
     // echo "<pre>";
     // print_r($attr);
     // echo "</pre>";
+
     if ($query->have_posts()) {
         $postAuthor = isset($attr['author'][0]['enable']) && $attr['author'][0]['enable']  ? true : false;
         $postDate = isset($attr['date'][0]['enable']) && $attr['date'][0]['enable']  ? true : false;
@@ -19,7 +20,7 @@ function mytheme_blocks_render_post_slider($attr)
         $metaStyleColor = isset($attr['meta_style'][0]['color']) && $attr['meta_style'][0]['color']  ? $attr['meta_style'][0]['color'] : "";
         $metashowCate = isset($attr['showCate'][0]['enable']) && $attr['showCate'][0]['enable']  ? true : false;
         $metashowshowTag = isset($attr['showTag'][0]['enable']) && $attr['showTag'][0]['enable']  ? true : false;
-        // height and width
+        // height and width       
         $sliderPara = isset($attr['sliderSetting'][0])  ? $attr['sliderSetting'][0] : false;
         $slidersetting = [];
         if (isset($sliderPara["dimension"]['width']) && $sliderPara["dimension"]['width']) {
@@ -50,22 +51,6 @@ function mytheme_blocks_render_post_slider($attr)
             $postHtml .= "</div>";
         }
         // next previous
-        // slider bullet
-
-        // linear bullet 
-        if (isset($sliderPara["linearTrigger"]['enable']) && $sliderPara["linearTrigger"]['enable']) {
-            $LfontSize = $sliderPara["linearTrigger"]['fontSize'];
-            $Lcolor = $sliderPara["linearTrigger"]['color'];
-            $LactiveColor = $sliderPara["linearTrigger"]['activeColor'];
-            $postHtml .= '<ul class="zita-slider-bullet-trigger" active-color="' . $LactiveColor . '" childstyle="height: ' . $LfontSize . 'px;width:20px;background-color: ' . $Lcolor . ';">';
-            while ($query->have_posts()) {
-                $query->the_post();
-                if (get_the_post_thumbnail_url()) {
-                    $postHtml .= '<li><span style="height: ' . $LfontSize . 'px;width:20px;background-color: ' . $Lcolor . ';"></span></li>';
-                }
-            }
-            $postHtml .= '</ul>';
-        }
         // slider bullet
         $postHtml .= "<ul class='zita-slider-ul-slides " . $sliderEffect . "' slidersetting='" . $slidersetting . "'>";
         while ($query->have_posts()) {
@@ -167,6 +152,27 @@ function mytheme_blocks_render_post_slider($attr)
             }
         }
         $postHtml .= "</ul>";
+        // linear bullet 
+        if (isset($sliderPara["linearTrigger"]['enable']) && $sliderPara["linearTrigger"]['enable']) {
+            $LfontSize = $sliderPara["linearTrigger"]['fontSize'];
+            $Lcolor = $sliderPara["linearTrigger"]['color'];
+            $LactiveColor = $sliderPara["linearTrigger"]['activeColor'];
+            $positionTrigger = $sliderPara["linearTrigger"]['place'];
+            $bulletOrThumbnail = $sliderPara["linearTrigger"]['trigger'] == "thumbnail" ? "thumbnail-image" : '';
+            $postHtml .= '<ul class="zita-slider-bullet-trigger ' . $bulletOrThumbnail . ' trigger_' . $positionTrigger . '" active-color="' . $LactiveColor . '" childstyle="height: ' . $LfontSize . 'px;width:20px;background-color: ' . $Lcolor . ';">';
+            while ($query->have_posts()) {
+                $query->the_post();
+                if (get_the_post_thumbnail_url()) {
+                    if ($sliderPara["linearTrigger"]['trigger'] == "bullet") {
+                        $postHtml .= '<li><span style="height: ' . $LfontSize . 'px;width:20px;background-color: ' . $Lcolor . ';"></span></li>';
+                    } else {
+                        $postHtml .= '<li><div><img src="' . get_the_post_thumbnail_url() . '"></div></li>';
+                    }
+                }
+            }
+            $postHtml .= '</ul>';
+        }
+        // slider bullet
         $postHtml .= "</div>";
         $postHtml .= "</div>";
         // echo "</pre>";

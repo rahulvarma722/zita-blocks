@@ -6,7 +6,10 @@ registerBlockType("zita-blocks/zita-post", {
   title: "Post",
   icon: "format-aside",
   category: "zita-category",
-  getEditWrapperProps(attributes) {},
+  getEditWrapperProps(attributes) {
+    let attr_ = { "data-align": "full" };
+    return attr_;
+  },
   keywords: ["post"],
   // attributes: attrSave,
   edit: Edit,

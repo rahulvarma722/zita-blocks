@@ -3,7 +3,7 @@
 function mytheme_blocks_render_latest_post_block($attr)
 {
     $args = [
-        "post_per_page" => $attr['numberOfPosts']
+        "posts_per_page" => $attr['numberOfPosts']
     ];
     $query = new WP_Query($args);
     $postHtml = '';
