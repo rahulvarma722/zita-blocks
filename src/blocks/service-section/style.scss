@@ -2,7 +2,7 @@
 .service-section-wrapper {
   text-align: center;
   .service-image-icon {
-    &.icon_{
+    &.icon_ {
       padding-top: 12px;
     }
     .icon-container {
@@ -46,35 +46,44 @@
   display: flex;
   flex-wrap: wrap;
 }
-.wp-block-zita-blocks-block-column-parent.column-count-2
-  .wp-block-zita-blocks-icon-image-content {
-  width: calc(50% - 20px);
-  margin: 10px;
+@for $i from 2 through 4 {
+  .wp-block-zita-blocks-block-column-parent.column-count-#{$i}
+    .wp-block-zita-blocks-icon-image-content {
+    width: calc(100% /#{$i} - 10px *#{$i});
+    margin: 10px;
+  }
+  .wp-block-zita-blocks-block-column-parent.full-width.column-count-#{$i}
+    .wp-block-zita-blocks-icon-image-content {
+    width: calc(100% / #{$i});
+    margin: 0;
+  }
 }
-.wp-block-zita-blocks-block-column-parent.column-count-3
-  .wp-block-zita-blocks-icon-image-content {
-  width: calc(100% / 3 - 30px);
-  margin: 10px;
-}
-.wp-block-zita-blocks-block-column-parent.column-count-4
-  .wp-block-zita-blocks-icon-image-content {
-  width: calc(100% / 4 - 40px);
-  margin: 10px;
-}
-
 /* full */
-.wp-block-zita-blocks-block-column-parent.full-width.column-count-2
-  .wp-block-zita-blocks-icon-image-content {
-  width: 50%;
-  margin: 0;
+@media only screen and (max-width: 768px) {
+  @for $i from 2 through 4 {
+    .wp-block-zita-blocks-block-column-parent.column-count-#{$i}
+      .wp-block-zita-blocks-icon-image-content {
+      width: calc(100% / 2 - 10px * 2);
+      margin: 10px;
+    }
+    .wp-block-zita-blocks-block-column-parent.full-width.column-count-#{$i}
+      .wp-block-zita-blocks-icon-image-content {
+      width: calc(100% / 2);
+      margin: 0;
+    }
+  }
 }
-.wp-block-zita-blocks-block-column-parent.full-width.column-count-3
-  .wp-block-zita-blocks-icon-image-content {
-  width: calc(100% / 3);
-  margin: 0;
-}
-.wp-block-zita-blocks-block-column-parent.full-width.column-count-4
-  .wp-block-zita-blocks-icon-image-content {
-  width: calc(100% / 4);
-  margin: 0;
+@media only screen and (max-width: 480px) {
+  @for $i from 2 through 4 {
+    .wp-block-zita-blocks-block-column-parent.column-count-#{$i}
+      .wp-block-zita-blocks-icon-image-content {
+      width: 100%;
+      margin: 10px;
+    }
+    .wp-block-zita-blocks-block-column-parent.full-width.column-count-#{$i}
+      .wp-block-zita-blocks-icon-image-content {
+      width: 100%;
+      margin: 0;
+    }
+  }
 }

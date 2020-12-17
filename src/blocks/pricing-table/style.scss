@@ -109,36 +109,17 @@
   display: flex;
   flex-wrap: wrap;
 }
-.wp-block-zita-blocks-pricing-table-section.column-count-2
-  .wp-block-zita-blocks-pricing-table-table {
-  width: calc(50% - 20px);
-  margin: 10px;
-}
-.wp-block-zita-blocks-pricing-table-section.column-count-3
-  .wp-block-zita-blocks-pricing-table-table {
-  width: calc(100% / 3 - 30px);
-  margin: 10px;
-}
-.wp-block-zita-blocks-pricing-table-section.column-count-4
-  .wp-block-zita-blocks-pricing-table-table {
-  width: calc(100% / 4 - 40px);
-  margin: 10px;
-}
-/* full width */
-.wp-block-zita-blocks-pricing-table-section.full-width.column-count-2
-  .wp-block-zita-blocks-pricing-table-table {
-  width: calc(50%);
-  margin: 0;
-}
-.wp-block-zita-blocks-pricing-table-section.full-width.column-count-3
-  .wp-block-zita-blocks-pricing-table-table {
-  width: calc(100% / 3);
-  margin: 0;
-}
-.wp-block-zita-blocks-pricing-table-section.full-width.column-count-4
-  .wp-block-zita-blocks-pricing-table-table {
-  width: calc(100% / 4);
-  margin: 0;
+@for $i from 2 through 4 {
+  .wp-block-zita-blocks-pricing-table-section.column-count-#{$i}
+    .wp-block-zita-blocks-pricing-table-table {
+    width: calc(100% / #{$i} - 10px * #{$i});
+    margin: 10px;
+  }
+  .wp-block-zita-blocks-pricing-table-section.full-width.column-count-#{$i}
+    .wp-block-zita-blocks-pricing-table-table {
+    width: calc(100% / #{$i});
+    margin: 0;
+  }
 }
 /* full width */
 /* for align left and right  */
@@ -149,4 +130,18 @@
   position: unset !important;
   margin: unset !important;
   min-width: 700px;
+}
+@media only screen and (max-width: 768px) {
+  @for $i from 2 through 4 {
+    .wp-block-zita-blocks-pricing-table-section.column-count-#{$i}
+      .wp-block-zita-blocks-pricing-table-table {
+      width: calc(100% - 10px);
+      margin: 10px;
+    }
+    .wp-block-zita-blocks-pricing-table-section.full-width.column-count-#{$i}
+      .wp-block-zita-blocks-pricing-table-table {
+      width: 100%;
+      margin: 0;
+    }
+  }
 }

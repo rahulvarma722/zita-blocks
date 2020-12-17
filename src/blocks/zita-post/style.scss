@@ -1,7 +1,7 @@
 #zita-block-post {
   * {
     font-family: "Catamaran-Regular", sans-serif;
-    -webkit-font-smoothing: auto;
+    -webkit-font-smoothing: initial;
   }
   .column-count:not(.column-count-1) {
     &.left-border {
@@ -157,3 +157,63 @@
     }
   }
 }
+@media only screen and (max-width: 768px) {
+  #zita-block-post {
+    .column-count:not(.column-count-1) {
+      .featured-image {
+        height: 168px;
+      }
+    }
+    @for $i from 3 through 4 {
+      .column-count-#{$i} {
+        > article {
+          width: calc(100% / 2);
+          padding: 7px;
+        }
+      }
+    }
+    #zita-block-post-title {
+      line-height: 1.2;
+      margin: 3px 0;
+    }
+    #post-wrapper {
+      .post-content {
+        .post-meta-all {
+          .slash {
+            margin: 1px 2px;
+          }
+        }
+        .post-heading {
+          margin: 3px 0;
+          line-height: 1.2;
+        }
+        p,
+        h1,
+        h2,
+        h3 {
+          line-height: 1.2;
+          margin: 3px 0;
+          letter-spacing: 1px;
+        }
+        p {
+          font-size: 10px;
+          letter-spacing: 1px;
+          &.post-category {
+            margin: 5px 0;
+            span {
+              margin: 1px 3px;
+              padding: 2px;
+            }
+          }
+          &.post-tags {
+            span {
+              margin: 1px 2px;
+              padding: 1px 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
