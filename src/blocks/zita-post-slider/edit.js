@@ -132,6 +132,7 @@ class Edit extends Component {
       meta_style,
       title,
       sliderSetting,
+      // overlayColor,
     } = attributes;
     let heading_ = heading[0];
     let excerpt_ = excerpt[0];
