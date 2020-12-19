@@ -62,7 +62,7 @@ function mytheme_blocks_render_post_slider($attr)
                 $postHtml .= "<div class='zita-slider-content-wrapper'>";
                 // three divs
                 $postHtml .= '<div class="zita-slider-image-container" style="background-image: url(' . get_the_post_thumbnail_url() . ');"></div>';
-                $postHtml .= "<div class='zita-slider-text'>";
+                $postHtml .= "<div class='zita-slider-text' style='background-color:" . $sliderPara["overlayColor"] . ";'>";
                 $postHtml .= "<div class='slider-post-content'>";
                 $postHtml .= "<div class='post-wrapper'>";
                 $postHtml .= "<div class='post-content'>";

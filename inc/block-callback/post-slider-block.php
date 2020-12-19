@@ -32,7 +32,7 @@ wpgt_register_block_fn('zita-post-slider',  [
                         "enable" => true,
                         "delay" => 4,
                     ],
-                    // "overlayColor" => "#717167c7"
+                    "overlayColor" => "#717167c7"
                 ],
             ],
         ],

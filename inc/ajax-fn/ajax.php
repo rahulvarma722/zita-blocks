@@ -8,6 +8,9 @@ function post_tc_block()
         "posts_per_page" => $attr['numberOfPosts'],
         'paged' => $pageNo,
     ];
+    if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
+        $args['category__in'] = $attr["postCategories"];
+    }
     $query = new WP_Query($args);
     $postHtml = "<div class='zita-post-two-column'>";
     $postHtmlCl1 = '<div class="column-one">';

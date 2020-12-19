@@ -5,29 +5,33 @@ function zita_two_column_block($attr)
     // echo "<pre>";
     // print_r($attr);
     // echo "</pre>";
-    // $args = [
-    //     'post_type' => 'post',
-    //     "posts_per_page" => 2,
-    //     // 'offset' => 2
-    //     'paged' => 2,
-    //     'order'   => 'ASC'
-    // ];
-    // $query_t = new WP_Query($args);
-    // $count = 0;
-    // echo "total posts-> ".$query_t->found_posts;
-    // echo "<br>";
-    // while ($query_t->have_posts()) {
-    //     $count++;
-    //     $query_t->the_post();
-    //     echo "<h1>" . $count . " ->" . get_the_title() . "</h1>";
-    //     echo "<h1>*************</h1>";
-    // }
-    // wp_reset_postdata();
-    // return "<h1> paged-> max no-> My Post block Two column</h1>";
     $args = [
         'post_type' => 'post',
-        "posts_per_page" => $attr['numberOfPosts']
+        "posts_per_page" => $attr['numberOfPosts'],
     ];
+    $fourAndMoreNav = [];
+    if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
+        $args['category__in'] = $attr["postCategories"];
+        $fourAndMoreNav = $attr["postCategories"];
+    } else {
+        $fourAndMoreNav = get_terms(
+            array(
+                'taxonomy' => 'category',
+                'fields'   => 'ids',
+                'hide_empty' => true,
+            )
+        );
+    }
+    // inner and outer making
+    $innerITem = $outerItem = [];
+    if (isset($attr["categorynav"][0]['enable']) && $attr["categorynav"][0]['enable'] && count($fourAndMoreNav) > 0) {
+        if (count($fourAndMoreNav) <= 4) {
+            $innerITem = $fourAndMoreNav;
+        } else {
+            $innerITem = array_slice($fourAndMoreNav, 0, 3);
+            $outerItem = array_slice($fourAndMoreNav, -3);
+        }
+    }
 
     $query = new WP_Query($args);
     $currentPage = $postSetting = "";
@@ -43,6 +47,48 @@ function zita_two_column_block($attr)
     $postHtml .= "<div><span></span></div>";
     $postHtml .= "</div>";
     // loader
+    // category navigation
+
+    // echo "<pre>";
+    // print_r($innerITem);
+    // print_r($outerItem);
+    // print_r($attr["postCategories"]);
+    // echo count($innerITem);
+    // echo "</pre>";
+
+    if (count($innerITem) > 0) {
+        $postHtml .= "<div class='navigation_'>";
+        // linear items
+        $postHtml .= "<div class='zita-block-nav-items nav-linear-items'>";
+        $postHtml .= "<ul>";
+        $category_in = wp_list_categories(array(
+            'orderby'    => 'name',
+            'include'    => $outerItem,
+            "title_li" => false,
+            "echo" => false
+        ));
+        $postHtml .= $category_in;
+        $postHtml .= "</ul>";
+        $postHtml .= "</div>";
+        // dropdown items
+        if (!empty($outerItem)) {
+            $postHtml .= "<div class='zita-block-nav-items nav-drop-items'>";
+            $postHtml .= "<span class='more-opener'>More<i class='fas fa-chevron-down'></i></span>";
+            $postHtml .= "<ul>";
+            $category_in = wp_list_categories(array(
+                'orderby'    => 'name',
+                'include'    => $outerItem,
+                "title_li" => false,
+                "echo" => false
+            ));
+            $postHtml .= $category_in;
+            $postHtml .= "</ul>";
+            $postHtml .= "</div>";
+        }
+        // dropdown items
+        $postHtml .= "</div>";
+    }
+    // category navigation
     $postHtml .= "<div class='zita-two-post-wrapper' data-setting='" . $postSetting . "' data-currentpage='" . $currentPage . "'><div class='zita-post-two-column'>";
     $postHtmlCl1 = '<div class="column-one">';
     $postHtmlCl2 = '<div class="column-two">';

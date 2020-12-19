@@ -884,12 +884,96 @@
 .zita-two-col-container {
   position: relative;
 }
+.zita-two-col-container * {
+  font-family: "Catamaran-Regular", sans-serif;
+}
+.zita-two-col-container .navigation_ {
+  display: flex;
+  border-bottom: 2px solid #dddddd;
+}
+.zita-two-col-container .navigation_ .nav-linear-items {
+  flex: 2;
+}
+.zita-two-col-container .navigation_ .nav-linear-items ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+.zita-two-col-container .navigation_ .nav-linear-items ul li {
+  list-style: none;
+  margin: 0 !important;
+}
+.zita-two-col-container .navigation_ .nav-linear-items ul li a {
+  display: block;
+  padding: 8px 26px;
+  background-color: #f1f1f1;
+  color: #757575;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  text-decoration: none;
+  font-size: 14px;
+}
+.zita-two-col-container .navigation_ .nav-linear-items ul li a:hover {
+  color: white;
+  background-color: #949494;
+}
+.zita-two-col-container .navigation_ .nav-drop-items {
+  position: relative;
+  margin: 0;
+}
+.zita-two-col-container .navigation_ .nav-drop-items:hover .more-opener i {
+  transform: rotate(0);
+}
+.zita-two-col-container .navigation_ .nav-drop-items:hover ul {
+  height: auto;
+  opacity: 1;
+}
+.zita-two-col-container .navigation_ .nav-drop-items .more-opener {
+  padding: 8px 26px;
+  background: #f3f3f3;
+  display: flex;
+  align-items: center;
+  line-height: 1.8;
+  font-size: 14px;
+  cursor: pointer;
+}
+.zita-two-col-container .navigation_ .nav-drop-items .more-opener i {
+  margin-left: 10px;
+  transform: rotate(-90deg);
+  font-size: 12px;
+  transition: 0.2s all linear;
+}
+.zita-two-col-container .navigation_ .nav-drop-items ul {
+  margin: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 42px;
+  overflow: hidden;
+  height: 0;
+  opacity: 0;
+  transition: 0.5s all linear;
+}
+.zita-two-col-container .navigation_ .nav-drop-items ul li {
+  list-style: none;
+  margin: 0 !important;
+}
+.zita-two-col-container .navigation_ .nav-drop-items ul li a {
+  display: block;
+  padding: 8px 26px;
+  background-color: #f1f1f1;
+  color: #757575;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+}
+.zita-two-col-container .navigation_ .nav-drop-items ul li a:hover {
+  color: white;
+  background-color: #949494;
+}
 
 .zita-post-two-column {
   display: flex;
-}
-.zita-post-two-column * {
-  font-family: "Catamaran-Regular", sans-serif;
 }
 .zita-post-two-column > div {
   flex: 1;

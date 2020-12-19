@@ -105,6 +105,10 @@ wpgt_register_block_fn('zita-post-tc',  [
         "postCategories" => [
             "type" => "array",
             "default" => []
+        ],
+        "categorynav" => [
+            "type" => "array",
+            "default" => [["enable" => true,]]
         ]
     ]
 ]);

@@ -36742,8 +36742,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes = _this$props.setAttributes,
           posts = _this$props.posts,
           category = _this$props.category;
-      var slideIndex = this.state.slideIndex; // console.log("zita slider this.props", this.props);
-
+      var slideIndex = this.state.slideIndex;
+      console.log("zita slider this.props", this.props);
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
@@ -36800,6 +36800,15 @@ var Edit = /*#__PURE__*/function (_Component) {
         title: "Slider Setting",
         initialOpen: false
       }, wp.element.createElement("p", {
+        className: "block-inside"
+      }, "Overlay Color"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ColorPicker"], {
+        color: sliderSetting.overlayColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateGlobalSlide(color, "overlayColor");
+        }
+      }), wp.element.createElement("p", {
         className: "block-inside"
       }, "Slider Dimension"), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Width")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
         label: sliderSetting.dimension.width ? "Full Width" : "Custom Width",
@@ -37132,7 +37141,10 @@ var Edit = /*#__PURE__*/function (_Component) {
             backgroundImage: "url(" + post.getMedia_.guid.rendered + ")"
           }
         }), wp.element.createElement("div", {
-          class: "zita-slider-text"
+          class: "zita-slider-text",
+          style: {
+            backgroundColor: sliderSetting.overlayColor
+          }
         }, wp.element.createElement("div", {
           className: "slider-post-content"
         }, wp.element.createElement("div", {
@@ -37557,6 +37569,36 @@ var Edit = /*#__PURE__*/function (_Component) {
       }, _this.showTagsFn(post.tags)))));
     });
 
+    _defineProperty(_assertThisInitialized(_this), "navCategory", function () {
+      var category_ = _this.props.category; // console.log("category_", category_);
+
+      if (category_ && category_.length) {
+        return wp.element.createElement("div", {
+          className: "navigation_"
+        }, wp.element.createElement("div", {
+          class: "zita-block-nav-items nav-linear-items"
+        }, wp.element.createElement("ul", null, category_.map(function (cateV, cKey) {
+          return cKey <= 2 && wp.element.createElement("li", {
+            class: "cat-item"
+          }, wp.element.createElement("a", {
+            href: "#"
+          }, cateV.name));
+        }))), category_.length >= 4 && wp.element.createElement("div", {
+          class: "zita-block-nav-items nav-drop-items"
+        }, wp.element.createElement("span", {
+          class: "more-opener"
+        }, "More", wp.element.createElement("i", {
+          class: "fas fa-chevron-down"
+        })), wp.element.createElement("ul", null, category_.map(function (cateV, cKey) {
+          return cKey >= 3 && wp.element.createElement("li", {
+            class: "cat-item"
+          }, wp.element.createElement("a", {
+            href: "#"
+          }, cateV.name));
+        }))));
+      }
+    });
+
     _this.state = {
       metaChoose: "primary",
       excerpt: "primary",
@@ -37593,7 +37635,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           showCate2 = attributes.showCate2,
           postCategories = attributes.postCategories,
           meta_style = attributes.meta_style,
-          title = attributes.title;
+          title = attributes.title,
+          categorynav = attributes.categorynav;
       var heading_ = heading[0];
       var thumbnail_ = thumbnail[0];
       var excerpt_ = excerpt[0];
@@ -37622,33 +37665,22 @@ var Edit = /*#__PURE__*/function (_Component) {
             label: catt.name
           });
         });
-      }
+      } // console.log("category", category);
+      // console.log("cateGory", cateGory);
+
 
       return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Post Layout",
         initialOpen: false
       }, wp.element.createElement("p", {
         className: "block-inside"
-      }, "Block Title"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: title_.enable ? "Hide" : "Show",
-        checked: title_.enable,
+      }, "Show Category Navigation"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: categorynav[0].enable ? "Hide" : "Show",
+        checked: categorynav[0].enable,
         onChange: function onChange(e) {
-          return _this2.updateObj("title", "enable", title, e);
+          return _this2.updateObj("categorynav", "enable", categorynav, e);
         }
-      }), title_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
-        label: "Font Size",
-        value: title_.fontSize,
-        min: 5,
-        max: 50,
-        onChange: function onChange(e) {
-          _this2.updateObj("title", "fontSize", title, e);
-        }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
-        value: title_.color,
-        onChange: function onChange(color) {
-          return _this2.updateObj("title", "color", title, color);
-        }
-      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "No of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "No of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: numberOfPosts,
         min: 1,
         max: 20,
@@ -37765,7 +37797,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(color) {
           return _this2.updateObj("meta_style", "color", meta_style, color);
         }
-      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Category Navigation"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Excerpt",
         initialOpen: false
       }, wp.element.createElement("div", {
@@ -37911,7 +37943,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       })))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
         className: "zita-two-post-wrapper"
-      }, wp.element.createElement("div", {
+      }, categorynav[0].enable && this.navCategory(), wp.element.createElement("div", {
         className: "zita-post-two-column"
       }, wp.element.createElement("div", {
         className: "column-one"
@@ -37958,7 +37990,8 @@ var Edit = /*#__PURE__*/function (_Component) {
   var getTotalPost = getEntityRecords("postType", "post", query2);
   var getAllPost = getEntityRecords("postType", "post", query);
   var cate_ = getEntityRecords("taxonomy", "category", {
-    per_page: -1
+    per_page: -1,
+    hide_empty: true
   });
   var tags_ = getEntityRecords("taxonomy", "post_tag", {
     per_page: -1

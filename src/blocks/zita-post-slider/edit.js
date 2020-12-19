@@ -119,7 +119,7 @@ class Edit extends Component {
   render() {
     let { attributes, setAttributes, posts, category } = this.props;
     let { slideIndex } = this.state;
-    // console.log("zita slider this.props", this.props);
+    console.log("zita slider this.props", this.props);
     let {
       heading,
       author,
@@ -132,7 +132,6 @@ class Edit extends Component {
       meta_style,
       title,
       sliderSetting,
-      // overlayColor,
     } = attributes;
     let heading_ = heading[0];
     let excerpt_ = excerpt[0];
@@ -170,6 +169,15 @@ class Edit extends Component {
     return [
       <InspectorControls>
         <PanelBody title={"Slider Setting"} initialOpen={false}>
+          <p className="block-inside">Overlay Color</p>
+          <ColorPicker
+            color={sliderSetting.overlayColor}
+            onChangeComplete={(colorBg) => {
+              let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+              this.updateGlobalSlide(color, "overlayColor");
+            }}
+          />
+
           <p className="block-inside">Slider Dimension</p>
           <p>
             <strong>Width</strong>
@@ -667,7 +675,12 @@ class Edit extends Component {
                                   "url(" + post.getMedia_.guid.rendered + ")",
                               }}
                             ></div>
-                            <div class="zita-slider-text">
+                            <div
+                              class="zita-slider-text"
+                              style={{
+                                backgroundColor: sliderSetting.overlayColor,
+                              }}
+                            >
                               <div className="slider-post-content">
                                 <div className="post-wrapper">
                                   <div className="post-content">

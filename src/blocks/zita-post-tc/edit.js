@@ -197,6 +197,47 @@ class Edit extends Component {
       </article>
     );
   };
+  navCategory = () => {
+    let category_ = this.props.category;
+    // console.log("category_", category_);
+    if (category_ && category_.length) {
+      return (
+        <div className="navigation_">
+          <div class="zita-block-nav-items nav-linear-items">
+            <ul>
+              {category_.map((cateV, cKey) => {
+                return (
+                  cKey <= 2 && (
+                    <li class="cat-item">
+                      <a href="#">{cateV.name}</a>
+                    </li>
+                  )
+                );
+              })}
+            </ul>
+          </div>
+          {category_.length >= 4 && (
+            <div class="zita-block-nav-items nav-drop-items">
+              <span class="more-opener">
+                More<i class="fas fa-chevron-down"></i>
+              </span>
+              <ul>
+                {category_.map((cateV, cKey) => {
+                  return (
+                    cKey >= 3 && (
+                      <li class="cat-item">
+                        <a href="#">{cateV.name}</a>
+                      </li>
+                    )
+                  );
+                })}
+              </ul>
+            </div>
+          )}
+        </div>
+      );
+    }
+  };
   render() {
     const {
       posts,
@@ -224,6 +265,7 @@ class Edit extends Component {
       postCategories,
       meta_style,
       title,
+      categorynav,
     } = attributes;
     let heading_ = heading[0];
     let thumbnail_ = thumbnail[0];
@@ -251,11 +293,22 @@ class Edit extends Component {
         });
       });
     }
+    // console.log("category", category);
+    // console.log("cateGory", cateGory);
     return (
       <>
         <InspectorControls>
           <PanelBody title="Post Layout" initialOpen={false}>
-            <p className="block-inside">Block Title</p>
+            {/* categorynav */}
+            <p className="block-inside">Show Category Navigation</p>
+            <ToggleControl
+              label={categorynav[0].enable ? "Hide" : "Show"}
+              checked={categorynav[0].enable}
+              onChange={(e) =>
+                this.updateObj("categorynav", "enable", categorynav, e)
+              }
+            />
+            {/* <p className="block-inside">Block Title</p>
             <ToggleControl
               label={title_.enable ? "Hide" : "Show"}
               checked={title_.enable}
@@ -282,7 +335,7 @@ class Edit extends Component {
                   }
                 />
               </>
-            )}
+            )} */}
             <p>
               <strong>No of Post Display</strong>
             </p>
@@ -440,6 +493,16 @@ class Edit extends Component {
                 this.updateObj("meta_style", "color", meta_style, color)
               }
             />
+            <p>
+              <strong>Category Navigation</strong>
+            </p>
+            {/* <ToggleControl
+              label="Last Modified Date"
+              checked={date2_.last_modified}
+              onChange={(e) =>
+                this.updateObj("date2", "last_modified", date2, e)
+              }
+            /> */}
           </PanelBody>
           <PanelBody title="Excerpt" initialOpen={false}>
             <div class="zita-switcher-button-section">
@@ -646,6 +709,7 @@ class Edit extends Component {
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
           <div className="zita-two-post-wrapper">
+            {categorynav[0].enable && this.navCategory()}
             <div className="zita-post-two-column">
               <div className="column-one">
                 {this.returnHtml(
@@ -715,7 +779,11 @@ export default withSelect((select, props) => {
   const { getMedia, getEntityRecords, getAuthors } = select("core");
   let getTotalPost = getEntityRecords("postType", "post", query2);
   let getAllPost = getEntityRecords("postType", "post", query);
-  let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
+
+  let cate_ = getEntityRecords("taxonomy", "category", {
+    per_page: -1,
+    hide_empty: true,
+  });
   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
   let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
   if (getAllPost && getAllPost.length) {
