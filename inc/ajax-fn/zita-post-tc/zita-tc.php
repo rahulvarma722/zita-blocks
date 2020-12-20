@@ -1,113 +1,59 @@
 <?php
-// zita post callback function
-function zita_two_column_block($attr)
+function post_tc_block()
 {
-    // echo "<pre>";
-    // print_r($attr);
-    // echo "</pre>";
+    $pageNo = $_POST['trigger'] == "next" ? $_POST['page'] + 1 : $_POST['page'] - 1;
+    $attr = $_POST['attr'];
     $args = [
         'post_type' => 'post',
         "posts_per_page" => $attr['numberOfPosts'],
+        'paged' => $pageNo,
     ];
-    $fourAndMoreNav = [];
     if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
         $args['category__in'] = $attr["postCategories"];
-        $fourAndMoreNav = $attr["postCategories"];
-    } else {
-        $fourAndMoreNav = get_terms(
-            array(
-                'taxonomy' => 'category',
-                'fields'   => 'ids',
-                'hide_empty' => true,
-            )
-        );
     }
-    // inner and outer making
-    $innerITem = $outerItem = [];
-    if (isset($attr["categorynav"][0]['enable']) && $attr["categorynav"][0]['enable'] && count($fourAndMoreNav) > 0) {
-        if (count($fourAndMoreNav) <= 4) {
-            $innerITem = $fourAndMoreNav;
-        } else {
-            $innerITem = array_slice($fourAndMoreNav, 0, 3);
-            $outerItem = array_slice($fourAndMoreNav, -3);
-        }
+    echo post_tc_html($args, $attr) ? post_tc_html($args, $attr) : 0;
+    die();
+}
+add_action('wp_ajax_post_tc_block', "post_tc_block");
+add_action('wp_ajax_nopriv_post_tc_block', "post_tc_block");
+function post_tc_block_choose_cate()
+{
+    $attr = $_POST['attr'];
+    $args = [
+        'post_type' => 'post',
+        "posts_per_page" => $attr['numberOfPosts'],
+        'paged' => 1,
+    ];
+    if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
+        $args['category__in'] = $attr["postCategories"];
     }
+    echo post_tc_html($args, $attr) ? json_encode(post_tc_html($args, $attr, true)) : 0;
+    die();
+}
+add_action('wp_ajax_post_tc_block_choose_cate', "post_tc_block_choose_cate");
+add_action('wp_ajax_nopriv_post_tc_block_choose_cate', "post_tc_block_choose_cate");
 
+// return html function
+function post_tc_html($args, $attr, $showNextPrev = false)
+{
     $query = new WP_Query($args);
-    $currentPage = $postSetting = "";
-    $totalPosts = $query->found_posts;
-    if ($totalPosts > $attr['numberOfPosts']) {
-        $pagesOfPost = ceil($totalPosts / $attr['numberOfPosts']);
-        $currentPage = json_encode(array("current" => 1, "total" => $pagesOfPost));
-        $postSetting = json_encode($attr);
-    }
-    $postHtml = "<div class='zita-two-col-container'>";
-    // loader
-    $postHtml .= "<div class='zita-block-loader linear-bubble'>";
-    $postHtml .= "<div><span></span></div>";
-    $postHtml .= "</div>";
-    // loader
-    // category navigation
-
-    // echo "<pre>";
-    // print_r($innerITem);
-    // print_r($outerItem);
-    // print_r($attr["postCategories"]);
-    // echo count($innerITem);
-    // echo "</pre>";
-
-    if (count($innerITem) > 0) {
-        $postHtml .= "<div class='navigation_'>";
-        // linear items
-        $postHtml .= "<div class='zita-block-nav-items nav-linear-items'>";
-        $postHtml .= "<ul>";
-        $postHtml .= '<li class="cat-item cat-item-all"><a href="#">all</a></li>';
-        $category_in = wp_list_categories(array(
-            'orderby'    => 'name',
-            'include'    => $innerITem,
-            "title_li" => false,
-            "echo" => false
-        ));
-        $postHtml .= $category_in;
-        $postHtml .= "</ul>";
-        $postHtml .= "</div>";
-        // dropdown items
-        if (!empty($outerItem)) {
-            $postHtml .= "<div class='zita-block-nav-items nav-drop-items'>";
-            $postHtml .= "<span class='more-opener'>More<i class='fas fa-chevron-down'></i></span>";
-            $postHtml .= "<ul>";
-            $category_in = wp_list_categories(array(
-                'orderby'    => 'name',
-                'include'    => $outerItem,
-                "title_li" => false,
-                "echo" => false
-            ));
-            $postHtml .= $category_in;
-            $postHtml .= "</ul>";
-            $postHtml .= "</div>";
-        }
-        // dropdown items
-        $postHtml .= "</div>";
-    }
-    // category navigation
-    $postHtml .= "<div class='zita-two-post-wrapper' data-setting='" . $postSetting . "' data-currentpage='" . $currentPage . "'><div class='zita-post-two-column'>";
+    $postHtml = "<div class='zita-post-two-column'>";
     $postHtmlCl1 = '<div class="column-one">';
     $postHtmlCl2 = '<div class="column-two">';
-    // echo "<pre>";
     if ($query->have_posts()) {
         $postAuthor = isset($attr['author'][0]['enable']) && $attr['author'][0]['enable']  ? true : false;
-        $postAuthor2 = isset($attr['author2'][0]['enable']) && $attr['author2'][0]['enable']  ? true : false;
         $postDate = isset($attr['date'][0]['enable']) && $attr['date'][0]['enable']  ? true : false;
-        $postDate2 = isset($attr['date2'][0]['enable']) && $attr['date2'][0]['enable']  ? true : false;
         $postDateModify = isset($attr['date'][0]['last_modified']) && $attr['date'][0]['last_modified']  ? true : false;
+        $postAuthor2 = isset($attr['author2'][0]['enable']) && $attr['author2'][0]['enable']  ? true : false;
+        $postDate2 = isset($attr['date2'][0]['enable']) && $attr['date2'][0]['enable']  ? true : false;
         $postDateModify2 = isset($attr['date2'][0]['last_modified']) && $attr['date2'][0]['last_modified']  ? true : false;
+
         $postExcerpt = isset($attr['excerpt'][0]['enable']) && $attr['excerpt'][0]['enable']  ? true : false;
         $postExcerptColor = $postExcerpt && $attr['excerpt'][0]['color'] ? $attr['excerpt'][0]['color'] : "";
         $postExcerpt2 = isset($attr['excerpt2'][0]['enable']) && $attr['excerpt2'][0]['enable']  ? true : false;
         $postExcerpt2Color = $postExcerpt2 && $attr['excerpt2'][0]['color'] ? $attr['excerpt2'][0]['color'] : "";
         $postThumbnail = isset($attr['thumbnail'][0]['enable']) && $attr['thumbnail'][0]['enable']  ? true : false;
         $metaStyleColor = isset($attr['meta_style'][0]['color']) && $attr['meta_style'][0]['color']  ? $attr['meta_style'][0]['color'] : "";
-        // $metaLeftBorder = isset($attr['meta_style'][0]['left_border']) && $attr['meta_style'][0]['left_border']  ? "left-border" : "";
         $metashowCate = isset($attr['showCate'][0]['enable']) && $attr['showCate'][0]['enable']  ? true : false;
         $metashowCate2 = isset($attr['showCate2'][0]['enable']) && $attr['showCate2'][0]['enable']  ? true : false;
         $metashowshowTag = isset($attr['showTag'][0]['enable']) && $attr['showTag'][0]['enable']  ? true : false;
@@ -122,9 +68,7 @@ function zita_two_column_block($attr)
                     if (get_the_post_thumbnail_url()) {
                         $postThumbRadius = isset($attr['thumbnail'][0]['borderRadius']) && $attr['thumbnail'][0]['borderRadius']  ? $attr['thumbnail'][0]['borderRadius'] : false;
                         $postHtmlCl1 .= '<div class="featured-image">';
-                        $postHtmlCl1 .= "<a href='" . esc_url(get_the_permalink()) . "'>";
                         $postHtmlCl1 .= '<img style="border-radius:' . $postThumbRadius . 'px" src="' . get_the_post_thumbnail_url() . '"/>';
-                        $postHtmlCl1 .= '</a>';
                         $postHtmlCl1 .= '</div>';
                     }
                 }
@@ -143,7 +87,7 @@ function zita_two_column_block($attr)
                     $postHtmlCl1 .= '</p>';
                 }
                 // category
-                $postHtmlCl1 .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . ";font-size:" . $attr['heading'][0]['fontSize'] . "px;' class='post-heading'>";
+                $postHtmlCl1 .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . "' class='post-heading'>";
                 $postHtmlCl1 .= "<a href='" . esc_url(get_the_permalink()) . "'>" . get_the_title() . "</a>";
                 $postHtmlCl1 .= "</" . $attr['heading'][0]['tag'] . ">";
                 $postHtmlCl1 .= '<div class="post-meta-all">';
@@ -212,14 +156,12 @@ function zita_two_column_block($attr)
                     if (get_the_post_thumbnail_url()) {
                         $postThumbRadius = isset($attr['thumbnail'][0]['borderRadius']) && $attr['thumbnail'][0]['borderRadius']  ? $attr['thumbnail'][0]['borderRadius'] : false;
                         $postHtmlCl2 .= '<div class="featured-image">';
-                        $postHtmlCl2 .= "<a href='" . esc_url(get_the_permalink()) . "'>";
                         $postHtmlCl2 .= '<img style="border-radius:' . $postThumbRadius . 'px" src="' . get_the_post_thumbnail_url() . '"/>';
-                        $postHtmlCl2 .= '</a>';
                         $postHtmlCl2 .= '</div>';
                     }
                 }
                 $postHtmlCl2 .= "<div class='post-content'>";
-                // category
+
                 if ($metashowCate2) {
                     $postHtmlCl2 .= '<p class="post-category">';
                     $category_ = get_the_category();
@@ -233,9 +175,9 @@ function zita_two_column_block($attr)
                     $postHtmlCl2 .= '</p>';
                 }
                 // category
-                $postHtmlCl2 .= "<" . $attr['heading2'][0]['tag'] . " style='color:" . $attr['heading2'][0]['color'] . ";font-size:" . $attr['heading2'][0]['fontSize'] . "px;' class='post-heading'>";
+                $postHtmlCl2 .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . "' class='post-heading'>";
                 $postHtmlCl2 .= "<a href='" . esc_url(get_the_permalink()) . "'>" . get_the_title() . "</a>";
-                $postHtmlCl2 .= "</" . $attr['heading2'][0]['tag'] . ">";
+                $postHtmlCl2 .= "</" . $attr['heading'][0]['tag'] . ">";
                 $postHtmlCl2 .= '<div class="post-meta-all">';
                 if ($postAuthor2) {
                     $postHtmlCl2 .= "<p style='color:" . $metaStyleColor . "' class='post-author'>";
@@ -288,23 +230,25 @@ function zita_two_column_block($attr)
         $postHtmlCl2 .= '</div>';
         $postHtml .= $postHtmlCl1 . $postHtmlCl2;
         $postHtml .= '</div>';
-        if ($totalPosts > $attr['numberOfPosts']) {
-            $postHtml .= "<div class='zita-two-post-wrapper-next-prev'>
-                            <div class='zita-post-NP-btn disable prev'>
-                                <i class='fas fa-chevron-left'></i>
-                            </div>
-                            <div class='zita-post-NP-btn next'>
-                                <i class='fas fa-chevron-right'></i>
-                            </div>
-                        </div>";
-        }
-        $postHtml .= '</div>';
-        $postHtml .= '</div>';
 
+        // for category click 
+        if ($showNextPrev === true) {
+            $totalPosts = $query->found_posts;
+            $currentPage = null;
+            if ($totalPosts > $attr['numberOfPosts']) {
+                $pagesOfPost = ceil($totalPosts / $attr['numberOfPosts']);
+                $currentPage = json_encode(array("current" => 1, "total" => $pagesOfPost));
+            }
+            $returnObj = ["nextprev" => $currentPage];
+        }
         // echo "</pre>";
+
         wp_reset_postdata();
-        return $postHtml;
-    } else {
-        return "<div>No post found.</div>";
+        if ($showNextPrev === false) {
+            return $postHtml;
+        } else {
+            $returnObj['html'] = $postHtml;
+            return $returnObj;
+        }
     }
 }

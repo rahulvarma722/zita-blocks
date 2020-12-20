@@ -6,31 +6,40 @@
   .navigation_ {
     display: flex;
     border-bottom: 2px solid #dddddd;
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+    li.cat-item {
+      list-style: none;
+      margin: 0 !important;
+      &.active {
+        a {
+          color: white;
+          background-color: #949494;
+        }
+      }
+      a {
+        display: block;
+        padding: 8px 26px;
+        background-color: #f1f1f1;
+        color: #757575;
+        letter-spacing: 1px;
+        text-transform: capitalize;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.2s all linear;
+        &:hover {
+          color: white;
+          background-color: #949494;
+        }
+      }
+    }
     .nav-linear-items {
       flex: 2;
       ul {
-        margin: 0;
-        padding: 0;
         display: flex;
         justify-content: flex-end;
-        li {
-          list-style: none;
-          margin: 0 !important;
-          a {
-            display: block;
-            padding: 8px 26px;
-            background-color: #f1f1f1;
-            color: #757575;
-            letter-spacing: 1px;
-            text-transform: capitalize;
-            text-decoration: none;
-            font-size: 14px;
-            &:hover {
-              color: white;
-              background-color: #949494;
-            }
-          }
-        }
       }
     }
     // navigation
@@ -62,8 +71,6 @@
         }
       }
       ul {
-        margin: 0;
-        margin: 0;
         position: absolute;
         right: 0;
         top: 42px;
@@ -71,22 +78,6 @@
         height: 0;
         opacity: 0;
         transition: 0.5s all linear;
-        li {
-          list-style: none;
-          margin: 0 !important;
-          a {
-            display: block;
-            padding: 8px 26px;
-            background-color: #f1f1f1;
-            color: #757575;
-            letter-spacing: 1px;
-            text-transform: capitalize;
-            &:hover {
-              color: white;
-              background-color: #949494;
-            }
-          }
-        }
       }
     }
     // navigation
@@ -229,6 +220,9 @@
 }
 .zita-two-post-wrapper-next-prev {
   display: flex;
+  &.disable {
+    display: none;
+  }
   > div {
     border: 1px solid #d8d7d7;
     margin: 7px;

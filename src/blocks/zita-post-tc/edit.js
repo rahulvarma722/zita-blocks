@@ -203,8 +203,11 @@ class Edit extends Component {
     if (category_ && category_.length) {
       return (
         <div className="navigation_">
-          <div class="zita-block-nav-items nav-linear-items">
+          <div class="nav-linear-items">
             <ul>
+              <li class="cat-item cat-item-all">
+                <a href="#">all</a>
+              </li>
               {category_.map((cateV, cKey) => {
                 return (
                   cKey <= 2 && (
@@ -217,7 +220,7 @@ class Edit extends Component {
             </ul>
           </div>
           {category_.length >= 4 && (
-            <div class="zita-block-nav-items nav-drop-items">
+            <div class="nav-drop-items">
               <span class="more-opener">
                 More<i class="fas fa-chevron-down"></i>
               </span>

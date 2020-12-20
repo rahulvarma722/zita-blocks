@@ -37576,15 +37576,19 @@ var Edit = /*#__PURE__*/function (_Component) {
         return wp.element.createElement("div", {
           className: "navigation_"
         }, wp.element.createElement("div", {
-          class: "zita-block-nav-items nav-linear-items"
-        }, wp.element.createElement("ul", null, category_.map(function (cateV, cKey) {
+          class: "nav-linear-items"
+        }, wp.element.createElement("ul", null, wp.element.createElement("li", {
+          class: "cat-item cat-item-all"
+        }, wp.element.createElement("a", {
+          href: "#"
+        }, "all")), category_.map(function (cateV, cKey) {
           return cKey <= 2 && wp.element.createElement("li", {
             class: "cat-item"
           }, wp.element.createElement("a", {
             href: "#"
           }, cateV.name));
         }))), category_.length >= 4 && wp.element.createElement("div", {
-          class: "zita-block-nav-items nav-drop-items"
+          class: "nav-drop-items"
         }, wp.element.createElement("span", {
           class: "more-opener"
         }, "More", wp.element.createElement("i", {
