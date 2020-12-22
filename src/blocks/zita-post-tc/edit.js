@@ -197,45 +197,53 @@ class Edit extends Component {
       </article>
     );
   };
-  navCategory = () => {
+  navCategory = (cateTrue, title_) => {
     let category_ = this.props.category;
-    // console.log("category_", category_);
-    if (category_ && category_.length) {
+    if ((category_ && category_.length) || title_.enable) {
       return (
         <div className="navigation_">
-          <div class="nav-linear-items">
-            <ul>
-              <li class="cat-item cat-item-all">
-                <a href="#">all</a>
-              </li>
-              {category_.map((cateV, cKey) => {
-                return (
-                  cKey <= 2 && (
-                    <li class="cat-item">
-                      <a href="#">{cateV.name}</a>
-                    </li>
-                  )
-                );
-              })}
-            </ul>
-          </div>
-          {category_.length >= 4 && (
-            <div class="nav-drop-items">
-              <span class="more-opener">
-                More<i class="fas fa-chevron-down"></i>
-              </span>
-              <ul>
-                {category_.map((cateV, cKey) => {
-                  return (
-                    cKey >= 3 && (
-                      <li class="cat-item">
-                        <a href="#">{cateV.name}</a>
-                      </li>
-                    )
-                  );
-                })}
-              </ul>
+          {title_.enable && (
+            <div className="nav-heading">
+              <h1>{title_.value}</h1>
             </div>
+          )}
+          {cateTrue && category_ && category_.length && (
+            <>
+              <div class="nav-linear-items">
+                <ul>
+                  <li class="cat-item cat-item-all">
+                    <a href="#">all</a>
+                  </li>
+                  {category_.map((cateV, cKey) => {
+                    return (
+                      cKey <= 3 && (
+                        <li class="cat-item">
+                          <a href="#">{cateV.name}</a>
+                        </li>
+                      )
+                    );
+                  })}
+                </ul>
+              </div>
+              {category_.length >= 5 && (
+                <div class="nav-drop-items">
+                  <span class="more-opener">
+                    More<i class="fas fa-chevron-down"></i>
+                  </span>
+                  <ul>
+                    {category_.map((cateV, cKey) => {
+                      return (
+                        cKey >= 4 && (
+                          <li class="cat-item">
+                            <a href="#">{cateV.name}</a>
+                          </li>
+                        )
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
+            </>
           )}
         </div>
       );
@@ -311,7 +319,7 @@ class Edit extends Component {
                 this.updateObj("categorynav", "enable", categorynav, e)
               }
             />
-            {/* <p className="block-inside">Block Title</p>
+            <p className="block-inside">Block Title</p>
             <ToggleControl
               label={title_.enable ? "Hide" : "Show"}
               checked={title_.enable}
@@ -338,7 +346,7 @@ class Edit extends Component {
                   }
                 />
               </>
-            )} */}
+            )}
             <p>
               <strong>No of Post Display</strong>
             </p>
@@ -712,7 +720,8 @@ class Edit extends Component {
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
           <div className="zita-two-post-wrapper">
-            {categorynav[0].enable && this.navCategory()}
+            {(categorynav[0].enable || title_.enable) &&
+              this.navCategory(categorynav[0].enable, title_)}
             <div className="zita-post-two-column">
               <div className="column-one">
                 {this.returnHtml(

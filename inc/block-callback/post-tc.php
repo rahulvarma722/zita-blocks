@@ -25,11 +25,11 @@ function zita_two_column_block($attr)
     // inner and outer making
     $innerITem = $outerItem = [];
     if (isset($attr["categorynav"][0]['enable']) && $attr["categorynav"][0]['enable'] && count($fourAndMoreNav) > 0) {
-        if (count($fourAndMoreNav) <= 4) {
+        if (count($fourAndMoreNav) <= 5) {
             $innerITem = $fourAndMoreNav;
         } else {
-            $innerITem = array_slice($fourAndMoreNav, 0, 3);
-            $outerItem = array_slice($fourAndMoreNav, -3);
+            $innerITem = array_slice($fourAndMoreNav, 0, 4);
+            $outerItem = array_slice($fourAndMoreNav, -2);
         }
     }
 

@@ -37569,37 +37569,39 @@ var Edit = /*#__PURE__*/function (_Component) {
       }, _this.showTagsFn(post.tags)))));
     });
 
-    _defineProperty(_assertThisInitialized(_this), "navCategory", function () {
-      var category_ = _this.props.category; // console.log("category_", category_);
+    _defineProperty(_assertThisInitialized(_this), "navCategory", function (cateTrue, title_) {
+      var category_ = _this.props.category;
 
-      if (category_ && category_.length) {
+      if (category_ && category_.length || title_.enable) {
         return wp.element.createElement("div", {
           className: "navigation_"
-        }, wp.element.createElement("div", {
+        }, title_.enable && wp.element.createElement("div", {
+          className: "nav-heading"
+        }, wp.element.createElement("h1", null, title_.value)), cateTrue && category_ && category_.length && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
           class: "nav-linear-items"
         }, wp.element.createElement("ul", null, wp.element.createElement("li", {
           class: "cat-item cat-item-all"
         }, wp.element.createElement("a", {
           href: "#"
         }, "all")), category_.map(function (cateV, cKey) {
-          return cKey <= 2 && wp.element.createElement("li", {
+          return cKey <= 3 && wp.element.createElement("li", {
             class: "cat-item"
           }, wp.element.createElement("a", {
             href: "#"
           }, cateV.name));
-        }))), category_.length >= 4 && wp.element.createElement("div", {
+        }))), category_.length >= 5 && wp.element.createElement("div", {
           class: "nav-drop-items"
         }, wp.element.createElement("span", {
           class: "more-opener"
         }, "More", wp.element.createElement("i", {
           class: "fas fa-chevron-down"
         })), wp.element.createElement("ul", null, category_.map(function (cateV, cKey) {
-          return cKey >= 3 && wp.element.createElement("li", {
+          return cKey >= 4 && wp.element.createElement("li", {
             class: "cat-item"
           }, wp.element.createElement("a", {
             href: "#"
           }, cateV.name));
-        }))));
+        })))));
       }
     });
 
@@ -37684,7 +37686,28 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(e) {
           return _this2.updateObj("categorynav", "enable", categorynav, e);
         }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "No of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }), wp.element.createElement("p", {
+        className: "block-inside"
+      }, "Block Title"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: title_.enable ? "Hide" : "Show",
+        checked: title_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("title", "enable", title, e);
+        }
+      }), title_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        label: "Font Size",
+        value: title_.fontSize,
+        min: 5,
+        max: 50,
+        onChange: function onChange(e) {
+          _this2.updateObj("title", "fontSize", title, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: title_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("title", "color", title, color);
+        }
+      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "No of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: numberOfPosts,
         min: 1,
         max: 20,
@@ -37947,7 +37970,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       })))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
         className: "zita-two-post-wrapper"
-      }, categorynav[0].enable && this.navCategory(), wp.element.createElement("div", {
+      }, (categorynav[0].enable || title_.enable) && this.navCategory(categorynav[0].enable, title_), wp.element.createElement("div", {
         className: "zita-post-two-column"
       }, wp.element.createElement("div", {
         className: "column-one"
