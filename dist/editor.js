@@ -37574,10 +37574,18 @@ var Edit = /*#__PURE__*/function (_Component) {
 
       if (category_ && category_.length || title_.enable) {
         return wp.element.createElement("div", {
-          className: "navigation_"
+          className: "navigation_",
+          style: {
+            borderColor: title_.bgColor
+          }
         }, title_.enable && wp.element.createElement("div", {
           className: "nav-heading"
-        }, wp.element.createElement("h1", null, title_.value)), cateTrue && category_ && category_.length && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
+        }, wp.element.createElement("p", {
+          style: {
+            backgroundColor: title_.bgColor,
+            color: title_.color
+          }
+        }, title_.value)), cateTrue && category_ && category_.length && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
           class: "nav-linear-items"
         }, wp.element.createElement("ul", null, wp.element.createElement("li", {
           class: "cat-item cat-item-all"
@@ -37686,28 +37694,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(e) {
           return _this2.updateObj("categorynav", "enable", categorynav, e);
         }
-      }), wp.element.createElement("p", {
-        className: "block-inside"
-      }, "Block Title"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: title_.enable ? "Hide" : "Show",
-        checked: title_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("title", "enable", title, e);
-        }
-      }), title_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
-        label: "Font Size",
-        value: title_.fontSize,
-        min: 5,
-        max: 50,
-        onChange: function onChange(e) {
-          _this2.updateObj("title", "fontSize", title, e);
-        }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
-        value: title_.color,
-        onChange: function onChange(color) {
-          return _this2.updateObj("title", "color", title, color);
-        }
-      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "No of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "No of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: numberOfPosts,
         min: 1,
         max: 20,
@@ -37732,6 +37719,29 @@ var Edit = /*#__PURE__*/function (_Component) {
           return _this2.updateObj("thumbnail", "borderRadius", thumbnail, e);
         }
       }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+        title: "Post Navigation",
+        initialOpen: false
+      }, wp.element.createElement("p", {
+        className: "block-inside"
+      }, "Block Title"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: title_.enable ? "Hide" : "Show",
+        checked: title_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("title", "enable", title, e);
+        }
+      }), title_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: title_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("title", "color", title, color);
+        }
+      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Background Color & Underline Color")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ColorPicker"], {
+        color: title_.bgColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateObj("title", "bgColor", title, color);
+        }
+      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Post Meta",
         initialOpen: false
       }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Choose Category")), wp.element.createElement("div", {

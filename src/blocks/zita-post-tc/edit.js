@@ -10,6 +10,7 @@ import {
   RangeControl,
   ToggleControl,
   SelectControl,
+  ColorPicker,
 } from "@wordpress/components";
 import { decodeEntities } from "@wordpress/html-entities";
 
@@ -201,10 +202,14 @@ class Edit extends Component {
     let category_ = this.props.category;
     if ((category_ && category_.length) || title_.enable) {
       return (
-        <div className="navigation_">
+        <div className="navigation_" style={{ borderColor: title_.bgColor }}>
           {title_.enable && (
             <div className="nav-heading">
-              <h1>{title_.value}</h1>
+              <p
+                style={{ backgroundColor: title_.bgColor, color: title_.color }}
+              >
+                {title_.value}
+              </p>
             </div>
           )}
           {cateTrue && category_ && category_.length && (
@@ -319,34 +324,7 @@ class Edit extends Component {
                 this.updateObj("categorynav", "enable", categorynav, e)
               }
             />
-            <p className="block-inside">Block Title</p>
-            <ToggleControl
-              label={title_.enable ? "Hide" : "Show"}
-              checked={title_.enable}
-              onChange={(e) => this.updateObj("title", "enable", title, e)}
-            />
-            {title_.enable && (
-              <>
-                <RangeControl
-                  label="Font Size"
-                  value={title_.fontSize}
-                  min={5}
-                  max={50}
-                  onChange={(e) => {
-                    this.updateObj("title", "fontSize", title, e);
-                  }}
-                />
-                <p>
-                  <strong>Color</strong>
-                </p>
-                <ColorPalette
-                  value={title_.color}
-                  onChange={(color) =>
-                    this.updateObj("title", "color", title, color)
-                  }
-                />
-              </>
-            )}
+
             <p>
               <strong>No of Post Display</strong>
             </p>
@@ -383,6 +361,52 @@ class Edit extends Component {
               </>
             )}
             {/* featured image */}
+          </PanelBody>
+          <PanelBody title="Post Navigation" initialOpen={false}>
+            <p className="block-inside">Block Title</p>
+            <ToggleControl
+              label={title_.enable ? "Hide" : "Show"}
+              checked={title_.enable}
+              onChange={(e) => this.updateObj("title", "enable", title, e)}
+            />
+            {title_.enable && (
+              <>
+                {/* <RangeControl
+                  label="Font Size"
+                  value={title_.fontSize}
+                  min={5}
+                  max={50}
+                  onChange={(e) => {
+                    this.updateObj("title", "fontSize", title, e);
+                  }}
+                /> */}
+                <p>
+                  <strong>Color</strong>
+                </p>
+                <ColorPalette
+                  value={title_.color}
+                  onChange={(color) =>
+                    this.updateObj("title", "color", title, color)
+                  }
+                />
+              </>
+            )}
+            <p>
+              <strong>Background Color & Underline Color</strong>
+            </p>
+            {/* <ColorPalette
+              value={title_.color}
+              onChange={(color) =>
+                this.updateObj("title", "color", title, color)
+              }
+            /> */}
+            <ColorPicker
+              color={title_.bgColor}
+              onChangeComplete={(colorBg) => {
+                let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                this.updateObj("title", "bgColor", title, color);
+              }}
+            />
           </PanelBody>
           <PanelBody title="Post Meta" initialOpen={false}>
             {/* category */}

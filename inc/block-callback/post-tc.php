@@ -49,42 +49,53 @@ function zita_two_column_block($attr)
     // loader
     // category navigation
 
-    // echo "<pre>";
-    // print_r($innerITem);
-    // print_r($outerItem);
-    // print_r($attr["postCategories"]);
-    // echo count($innerITem);
-    // echo "</pre>";
-
-    if (count($innerITem) > 0) {
-        $postHtml .= "<div class='navigation_'>";
-        // linear items
-        $postHtml .= "<div class='zita-block-nav-items nav-linear-items'>";
-        $postHtml .= "<ul>";
-        $postHtml .= '<li class="cat-item cat-item-all"><a href="#">all</a></li>';
-        $category_in = wp_list_categories(array(
-            'orderby'    => 'name',
-            'include'    => $innerITem,
-            "title_li" => false,
-            "echo" => false
-        ));
-        $postHtml .= $category_in;
-        $postHtml .= "</ul>";
-        $postHtml .= "</div>";
-        // dropdown items
-        if (!empty($outerItem)) {
-            $postHtml .= "<div class='zita-block-nav-items nav-drop-items'>";
-            $postHtml .= "<span class='more-opener'>More<i class='fas fa-chevron-down'></i></span>";
+    // {title_.enable && (
+    //     <div className="nav-heading">
+    //       <p
+    //         style={{ backgroundColor: title_.bgColor, color: title_.color }}
+    //       >
+    //         {title_.value}
+    //       </p>
+    //     </div>
+    //   )}
+    if (count($innerITem) > 0 || $attr['title'][0]["enable"]) {
+        $titleAttrs = $attr['title'][0];
+        $postHtml .= "<div class='navigation_' style='border-color:" . $titleAttrs["bgColor"] . ";'>";
+        if ($titleAttrs["enable"]) {
+            $postHtml .= '<div class="nav-heading">';
+            $postHtml .= '<p style="background-color: ' . $titleAttrs["bgColor"] . '; color:' . $titleAttrs["color"] . ';">';
+            $postHtml .= $titleAttrs['value'];
+            $postHtml .= '</p></div>';
+        }
+        if (count($innerITem) > 0) {
+            // linear items
+            $postHtml .= "<div class='zita-block-nav-items nav-linear-items'>";
             $postHtml .= "<ul>";
+            $postHtml .= '<li class="cat-item cat-item-all"><a href="#">all</a></li>';
             $category_in = wp_list_categories(array(
                 'orderby'    => 'name',
-                'include'    => $outerItem,
+                'include'    => $innerITem,
                 "title_li" => false,
                 "echo" => false
             ));
             $postHtml .= $category_in;
             $postHtml .= "</ul>";
             $postHtml .= "</div>";
+            // dropdown items
+            if (!empty($outerItem)) {
+                $postHtml .= "<div class='zita-block-nav-items nav-drop-items'>";
+                $postHtml .= "<span class='more-opener'>More<i class='fas fa-chevron-down'></i></span>";
+                $postHtml .= "<ul>";
+                $category_in = wp_list_categories(array(
+                    'orderby'    => 'name',
+                    'include'    => $outerItem,
+                    "title_li" => false,
+                    "echo" => false
+                ));
+                $postHtml .= $category_in;
+                $postHtml .= "</ul>";
+                $postHtml .= "</div>";
+            }
         }
         // dropdown items
         $postHtml .= "</div>";
