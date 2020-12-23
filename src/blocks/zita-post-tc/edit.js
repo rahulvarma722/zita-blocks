@@ -163,7 +163,7 @@ class Edit extends Component {
               )}
               {date_.enable && (
                 <>
-                  <span className="slash">/</span>
+                  {postAuthor && <span className="slash">/</span>}
                   <p style={{ color: meta_style_.color }} className="post-date">
                     {this.dateFormate(post.date)}
                   </p>
@@ -171,7 +171,9 @@ class Edit extends Component {
               )}
               {date_.last_modified && (
                 <>
-                  <span className="slash">/</span>
+                  {(date_.enable || postAuthor) && (
+                    <span className="slash">/</span>
+                  )}
                   <p
                     style={{ color: meta_style_.color }}
                     className="post-date-last-modified"

@@ -36544,6 +36544,549 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
 
 /***/ }),
 
+/***/ "./src/blocks/zita-post-section/edit.js":
+/*!**********************************************!*\
+  !*** ./src/blocks/zita-post-section/edit.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/html-entities */ "@wordpress/html-entities");
+/* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+var Edit = /*#__PURE__*/function (_Component) {
+  _inherits(Edit, _Component);
+
+  var _super = _createSuper(Edit);
+
+  function Edit(props) {
+    var _this;
+
+    _classCallCheck(this, Edit);
+
+    _this = _super.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "updateObj", function (parent_key, child_key, initialValue, value_) {
+      var newNewValue = _toConsumableArray(initialValue);
+
+      newNewValue[0][child_key] = value_;
+      var setAttr_ = {};
+      setAttr_[parent_key] = newNewValue;
+
+      _this.props.setAttributes(setAttr_);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "dateFormate", function (date) {
+      var date_ = date.split("T")[0];
+      var dateObj = new Date(date_);
+      var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      var dateArr = monthNames[dateObj.getMonth()] + " " + dateObj.getDate() + ", " + dateObj.getFullYear();
+      return wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
+        tag: "span",
+        value: dateArr
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "excerptWords", function (words, words_) {
+      words_ = Object(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4__["decodeEntities"])(words_);
+      words_ = words_.replace(/<\/?[^>]+(>|$)/g, "");
+      words_ = words_.split(" ");
+      words_ = words_.slice(0, words);
+      return words_.join(" ");
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showCateFn", function (categories) {
+      var returR = [];
+
+      if ("category" in _this.props && _this.props.category && categories.length) {
+        categories.forEach(function (cate) {
+          _this.props.category.forEach(function (searchCate) {
+            if (cate == searchCate.id) {
+              returR.push(searchCate.name);
+              return;
+            }
+          });
+        });
+      }
+
+      if (returR.length) {
+        return returR.map(function (returnH) {
+          return wp.element.createElement("span", null, returnH);
+        });
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showTagsFn", function (tags_) {
+      var returR = [];
+
+      if ("tags" in _this.props && _this.props.tags && tags_.length) {
+        tags_.forEach(function (tag) {
+          _this.props.tags.forEach(function (searchtag) {
+            if (tag == searchtag.id) {
+              returR.push(searchtag.name);
+              return;
+            }
+          });
+        });
+      }
+
+      if (returR.length) {
+        return returR.map(function (returnH) {
+          return wp.element.createElement("span", null, returnH);
+        });
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "authorFn", function (author) {
+      var retur = {};
+
+      if ("authors" in _this.props) {
+        _this.props.authors.map(function (authorDetail) {
+          if (authorDetail.id == author) {
+            retur = authorDetail;
+            return;
+          }
+        });
+      }
+
+      return retur;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "returnHtml", function (post, heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_) {
+      var postAuthor = author_ && author_.enable && "name" in _this.authorFn(post.author) ? _this.authorFn(post.author).name : false;
+      return wp.element.createElement("article", {
+        className: "block-post-article",
+        key: post.id
+      }, wp.element.createElement("div", {
+        className: "post-wrapper"
+      }, "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && thumbnail_.enable && wp.element.createElement("div", {
+        className: "featured-image"
+      }, wp.element.createElement("img", {
+        src: post.getMedia_.guid.rendered
+      })), wp.element.createElement("div", {
+        className: "post-content"
+      }, showCate_ && showCate_.enable && wp.element.createElement("p", {
+        className: "post-category"
+      }, _this.showCateFn(post.categories)), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
+        className: "post-heading",
+        tagName: heading_.tag,
+        value: post.title.rendered,
+        style: {
+          fontSize: heading_.fontSize,
+          color: heading_.color
+        }
+      }), wp.element.createElement("div", {
+        className: "post-meta-all"
+      }, postAuthor && wp.element.createElement("p", {
+        style: {
+          color: meta_style_.color
+        },
+        className: "post-author"
+      }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, postAuthor && wp.element.createElement("span", {
+        className: "slash"
+      }, "/"), wp.element.createElement("p", {
+        style: {
+          color: meta_style_.color
+        },
+        className: "post-date"
+      }, _this.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (date_.enable || postAuthor) && wp.element.createElement("span", {
+        className: "slash"
+      }, "/"), wp.element.createElement("p", {
+        style: {
+          color: meta_style_.color
+        },
+        className: "post-date-last-modified"
+      }, wp.element.createElement("span", null, "Modified: "), _this.dateFormate(post.modified)))), excerpt_ && excerpt_.enable && wp.element.createElement("p", {
+        style: {
+          color: excerpt_.color
+        },
+        className: "post-excerpt"
+      }, _this.excerptWords(excerpt_.words, post.excerpt.rendered), wp.element.createElement("span", {
+        className: "read-more"
+      }, "...Read More")), showTag_ && showTag_.enable && wp.element.createElement("p", {
+        style: {
+          color: meta_style_.color
+        },
+        className: "post-tags"
+      }, _this.showTagsFn(post.tags)))));
+    });
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(Edit, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      // ++++++++++++++===============
+      var _this$props = this.props,
+          posts = _this$props.posts,
+          attributes = _this$props.attributes,
+          setAttributes = _this$props.setAttributes,
+          category = _this$props.category;
+      console.log("this.props", this.props);
+      var heading = attributes.heading,
+          author = attributes.author,
+          numberOfPosts = attributes.numberOfPosts,
+          thumbnail = attributes.thumbnail,
+          numberOfColumn = attributes.numberOfColumn,
+          date = attributes.date,
+          showTag = attributes.showTag,
+          showCate = attributes.showCate,
+          excerpt = attributes.excerpt,
+          postCategories = attributes.postCategories,
+          meta_style = attributes.meta_style,
+          title = attributes.title;
+      var heading_ = heading[0];
+      var thumbnail_ = thumbnail[0];
+      var excerpt_ = excerpt[0];
+      var date_ = date[0];
+      var author_ = author[0];
+      var meta_style_ = meta_style[0];
+      var title_ = title[0];
+      var showTag_ = showTag[0];
+      var showCate_ = showCate[0]; // category init
+
+      var cateGory = [{
+        value: "all",
+        label: "All"
+      }];
+
+      if (category && category.length) {
+        category.map(function (catt) {
+          cateGory.push({
+            value: catt.id,
+            label: catt.name
+          });
+        });
+      }
+
+      return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+        title: "Post Layout",
+        initialOpen: false
+      }, wp.element.createElement("p", {
+        className: "block-inside"
+      }, "Block Title"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: title_.enable ? "Hide" : "Show",
+        checked: title_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("title", "enable", title, e);
+        }
+      }), title_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: title_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("title", "color", title, color);
+        }
+      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "No of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: numberOfPosts,
+        min: 1,
+        max: 20,
+        onChange: function onChange(e) {
+          setAttributes({
+            numberOfPosts: e
+          });
+        }
+      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+        title: "Post Meta",
+        initialOpen: false
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Choose Category")), wp.element.createElement("div", {
+        className: "zita-multiple-select"
+      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+        multiple: true,
+        value: postCategories.length ? postCategories : ["all"],
+        onChange: function onChange(choosen) {
+          var chooseAll = choosen.filter(function (choose) {
+            if (choose == "all") return true;
+          });
+          if (chooseAll.length) choosen = [];
+          setAttributes({
+            postCategories: choosen
+          });
+        },
+        options: cateGory
+      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Author",
+        checked: author_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("author", "enable", author, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Date",
+        checked: date_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("date", "enable", date, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Categories",
+        checked: showCate_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("showCate", "enable", showCate, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Last Modified Date",
+        checked: date_.last_modified,
+        onChange: function onChange(e) {
+          return _this2.updateObj("date", "last_modified", date, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Tag",
+        checked: showTag_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("showTag", "enable", showTag, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: "color" in meta_style_ ? meta_style_.color : "",
+        onChange: function onChange(color) {
+          return _this2.updateObj("meta_style", "color", meta_style, color);
+        }
+      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+        title: "Excerpt",
+        initialOpen: false
+      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: excerpt_.enable ? "Hide" : "Show",
+        checked: excerpt_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt", "enable", excerpt, e);
+        }
+      }), excerpt_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Number of words")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: excerpt_.words,
+        min: 1,
+        max: 200,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt", "words", excerpt, e);
+        }
+      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: excerpt_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("excerpt", "color", excerpt, color);
+        }
+      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+        title: "Heading",
+        initialOpen: false
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Heading Tag")), wp.element.createElement("select", {
+        value: heading_.tag,
+        className: "zita-block-select",
+        onChange: function onChange(e) {
+          var value_ = e.target.value;
+          var font_ = value_ == "h1" ? 30 : value_ == "h2" ? 25 : value_ == "h3" ? 20 : 17;
+
+          var newHeading = _toConsumableArray(heading);
+
+          newHeading[0]["tag"] = value_;
+          newHeading[0]["fontSize"] = font_;
+          setAttributes({
+            heading: newHeading
+          });
+        }
+      }, wp.element.createElement("option", {
+        value: "h1"
+      }, "H1"), wp.element.createElement("option", {
+        value: "h2"
+      }, "H2"), wp.element.createElement("option", {
+        value: "h3"
+      }, "H3"), wp.element.createElement("option", {
+        value: "p"
+      }, "P")), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Font Size")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: heading_.fontSize,
+        min: 1,
+        max: 50,
+        onChange: function onChange(e) {
+          return _this2.updateObj("heading", "fontSize", heading, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: heading_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("heading", "color", heading, color);
+        }
+      }))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
+        className: "zita-section-post"
+      }, (posts.length == 1 || posts.length == 2 || posts.length == 4 || posts.length == 6) && wp.element.createElement("div", {
+        className: "column-count column-count-".concat(posts.length == 2 || posts.length == 4 ? 2 : posts.length == 6 ? 3 : 1)
+      }, posts.map(function (post) {
+        return _this2.returnHtml(post, heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_);
+      })), (posts.length == 3 || posts.length == 5) && wp.element.createElement("div", {
+        className: "parent-column-two count-".concat(posts.length == 3 ? 3 : 5)
+      }, wp.element.createElement("div", null, wp.element.createElement("div", {
+        className: "column-count column-count-1"
+      }, this.returnHtml(posts[0], heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_))), wp.element.createElement("div", null, wp.element.createElement("div", {
+        className: "column-count column-count-".concat(posts.length == 3 ? 1 : 2)
+      }, posts.map(function (post, in_) {
+        return in_ != 0 && _this2.returnHtml(post, heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_);
+      }))))) : wp.element.createElement("div", null, !posts ? "No Post Found" : "Loding...")); // ++++++++++++++===============
+    }
+  }]);
+
+  return Edit;
+}(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Component"]); // export default Edit;
+
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["withSelect"])(function (select, props) {
+  var attributes = props.attributes;
+  var numberOfPosts = attributes.numberOfPosts,
+      postCategories = attributes.postCategories;
+  var query = {
+    per_page: numberOfPosts
+  };
+
+  if (postCategories && postCategories.length) {
+    query["categories"] = postCategories.join(",");
+  }
+
+  var _select = select("core"),
+      getMedia = _select.getMedia,
+      getEntityRecords = _select.getEntityRecords,
+      getAuthors = _select.getAuthors;
+
+  var getAllPost = getEntityRecords("postType", "post", query);
+  var cate_ = getEntityRecords("taxonomy", "category", {
+    per_page: -1
+  });
+  var tags_ = getEntityRecords("taxonomy", "post_tag", {
+    per_page: -1
+  });
+  var arrayCatePost = {
+    posts: true,
+    category: cate_,
+    tags: tags_
+  };
+
+  if (getAllPost && getAllPost.length) {
+    var returnArray = [];
+    getAllPost.map(function (v, index_) {
+      if (v.featured_media) {
+        getAllPost[index_]["getMedia_"] = getMedia(v.featured_media);
+      } else {
+        getAllPost[index_]["getMedia_"] = false;
+      }
+
+      returnArray.push(getAllPost[index_]);
+    });
+    arrayCatePost["posts"] = returnArray;
+  } else if (getAllPost instanceof Array && getAllPost.length == 0) {
+    arrayCatePost["posts"] = false;
+  } // autohrs
+
+
+  var authors = getAuthors();
+
+  if (authors && authors.length) {
+    var authors_ = [];
+    authors.map(function (v) {
+      authors_.push({
+        id: v.id,
+        name: v.name
+      });
+    });
+    arrayCatePost["authors"] = authors_;
+  }
+
+  return arrayCatePost;
+})(Edit));
+
+/***/ }),
+
+/***/ "./src/blocks/zita-post-section/editor.scss":
+/*!**************************************************!*\
+  !*** ./src/blocks/zita-post-section/editor.scss ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/blocks/zita-post-section/index.js":
+/*!***********************************************!*\
+  !*** ./src/blocks/zita-post-section/index.js ***!
+  \***********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editor.scss */ "./src/blocks/zita-post-section/editor.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/blocks/zita-post-section/edit.js");
+
+
+
+var attrSave = {};
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zita-blocks/zita-post-section", {
+  title: "Post Sections",
+  icon: "tagcloud",
+  category: "zita-category",
+  getEditWrapperProps: function getEditWrapperProps(attributes) {
+    var attr_ = {
+      "data-align": "full"
+    };
+    return attr_;
+  },
+  keywords: ["post"],
+  // attributes: attrSave,
+  edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
+  save: function save() {
+    return null;
+  }
+});
+
+/***/ }),
+
 /***/ "./src/blocks/zita-post-slider/edit.js":
 /*!*********************************************!*\
   !*** ./src/blocks/zita-post-slider/edit.js ***!
@@ -37540,14 +38083,14 @@ var Edit = /*#__PURE__*/function (_Component) {
           color: meta_style_.color
         },
         className: "post-author"
-      }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("span", {
+      }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, postAuthor && wp.element.createElement("span", {
         className: "slash"
       }, "/"), wp.element.createElement("p", {
         style: {
           color: meta_style_.color
         },
         className: "post-date"
-      }, _this.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("span", {
+      }, _this.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (date_.enable || postAuthor) && wp.element.createElement("span", {
         className: "slash"
       }, "/"), wp.element.createElement("p", {
         style: {
@@ -38604,14 +39147,14 @@ var Edit = /*#__PURE__*/function (_Component) {
             color: meta_style_.color
           },
           className: "post-author"
-        }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("span", {
+        }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, postAuthor && wp.element.createElement("span", {
           className: "slash"
         }, "/"), wp.element.createElement("p", {
           style: {
             color: meta_style_.color
           },
           className: "post-date"
-        }, _this2.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("span", {
+        }, _this2.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (postAuthor || date_.enable) && wp.element.createElement("span", {
           className: "slash"
         }, "/"), wp.element.createElement("p", {
           style: {
@@ -38769,7 +39312,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_zita_post__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./blocks/zita-post */ "./src/blocks/zita-post/index.js");
 /* harmony import */ var _blocks_zita_post_slider__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./blocks/zita-post-slider */ "./src/blocks/zita-post-slider/index.js");
 /* harmony import */ var _blocks_zita_post_tc__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./blocks/zita-post-tc */ "./src/blocks/zita-post-tc/index.js");
+/* harmony import */ var _blocks_zita_post_section__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./blocks/zita-post-section */ "./src/blocks/zita-post-section/index.js");
  // import './blocks/test-block';
+
 
 
 

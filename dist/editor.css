@@ -857,7 +857,8 @@
   display: flex;
 }
 .block-post-article .post-content p.post-category {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
 }
 .block-post-article .post-content p.post-category span {
   margin: 1px 5px;
@@ -1135,6 +1136,76 @@
   margin-top: 16px;
   background: #efefff;
   padding: 5px;
+}
+.zita-section-post * {
+  font-family: "Catamaran-Regular", sans-serif;
+  box-sizing: border-box;
+}
+.zita-section-post .parent-column-two {
+  display: flex;
+}
+.zita-section-post .parent-column-two.count-3 > div {
+  width: 50%;
+}
+.zita-section-post .parent-column-two.count-3 > div:first-child .block-post-article .post-content {
+  min-height: 448px;
+}
+.zita-section-post .parent-column-two.count-3 > div:last-child .block-post-article .post-content {
+  min-height: 200px;
+}
+.zita-section-post .parent-column-two.count-5 > div:first-child {
+  width: 40%;
+}
+.zita-section-post .parent-column-two.count-5 > div:first-child .block-post-article .post-content {
+  min-height: 548px;
+}
+.zita-section-post .parent-column-two.count-5 > div:last-child {
+  width: 60%;
+}
+.zita-section-post .column-count {
+  display: flex;
+  flex-wrap: wrap;
+}
+.zita-section-post .column-count article {
+  padding: 2px;
+  max-width: 700px;
+  width: 100%;
+}
+.zita-section-post .column-count.column-count-1 {
+  flex-direction: column;
+  width: 100%;
+}
+.zita-section-post .column-count.column-count-2 > .block-post-article {
+  width: 50%;
+}
+.zita-section-post .column-count.column-count-3 > .block-post-article {
+  width: calc(100% / 3);
+}
+.zita-section-post .block-post-article {
+  display: block;
+}
+.zita-section-post .block-post-article .post-wrapper {
+  display: flex;
+  position: relative;
+}
+.zita-section-post .block-post-article .post-wrapper .featured-image {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+.zita-section-post .block-post-article .post-wrapper .featured-image img {
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+  width: 100%;
+}
+.zita-section-post .block-post-article .post-wrapper .post-content {
+  position: relative;
+  min-height: 396px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  padding: 16px;
 }
 
 /*# sourceMappingURL=editor.css.map*/

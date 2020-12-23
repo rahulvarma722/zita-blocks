@@ -105,7 +105,7 @@
               let returnData = fns._ajaxFunction(data_, "json");
               // replace data setting after result success
               returnData.success(function (response) {
-                if ("html" in response) {
+                if (typeof response == "object" && "html" in response) {
                   loader_.removeClass("active");
                   getDataWrapper
                     .find(".zita-post-two-column")

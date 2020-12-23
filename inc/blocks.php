@@ -14,3 +14,4 @@ wpgt_register_block_fn('slide');
 include_once "block-callback/post-fn-block.php";
 include_once "block-callback/post-slider-block.php";
 include_once "block-callback/post-tc-block.php";
+include_once "block-callback/post-section-block.php";

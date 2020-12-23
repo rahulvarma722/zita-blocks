@@ -11,26 +11,12 @@ import {
   ToggleControl,
   SelectControl,
 } from "@wordpress/components";
-import {
-  SortableContainer,
-  SortableElement,
-  arrayMove,
-} from "react-sortable-hoc";
-// import arrayMove from "array-move";
 import { decodeEntities } from "@wordpress/html-entities";
 
 class Edit extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      shortList: [
-        { name: "Item 1" },
-        { name: "Item 2" },
-        { name: "Item 3" },
-        { name: "Item 4" },
-        { name: "Item 5" },
-      ],
-    };
+    this.state = {};
   }
   updateObj = (parent_key, child_key, initialValue, value_) => {
     let newNewValue = [...initialValue];
@@ -117,8 +103,10 @@ class Edit extends Component {
     return retur;
   };
   render() {
+    // ++++++++++++++===============
+
     const { posts, attributes, setAttributes, category } = this.props;
-    // console.log("this.props", this.props);
+    console.log("this.props", this.props);
     let {
       heading,
       author,
@@ -152,40 +140,11 @@ class Edit extends Component {
         });
       });
     }
-    // let shortList = this.state.shortList;
-    // let ShotableList = SortableContainer(() => {
-    //   return (
-    //     <ul>
-    //       {shortList.map((item, index) => {
-    //         let ShortItem = SortableElement(() => {
-    //           return (
-    //             <li key={index}>
-    //               <h1>hello {item.name}</h1>
-    //             </li>
-    //           );
-    //         });
-    //         return <ShortItem key={index} index={index} />;
-    //       })}
-    //     </ul>
-    //   );
-    // });
     return (
       <>
         <InspectorControls>
           <PanelBody title="Post Layout" initialOpen={false}>
             <p className="block-inside">Block Title</p>
-            {/* <div className="check-shortable">
-              <ShotableList
-                distance={10}
-                axis="y"
-                helperClass={"dragging-element"}
-                onSortEnd={({ oldIndex, newIndex }) => {
-                  const items = this.state.shortList;
-                  let new_items = arrayMove(items, oldIndex, newIndex);
-                  this.setState({ shortList: new_items });
-                }}
-              />
-            </div> */}
             <ToggleControl
               label={title_.enable ? "Hide" : "Show"}
               checked={title_.enable}
@@ -193,15 +152,6 @@ class Edit extends Component {
             />
             {title_.enable && (
               <>
-                <RangeControl
-                  label="Font Size"
-                  value={title_.fontSize}
-                  min={5}
-                  max={50}
-                  onChange={(e) => {
-                    this.updateObj("title", "fontSize", title, e);
-                  }}
-                />
                 <p>
                   <strong>Color</strong>
                 </p>
@@ -214,36 +164,6 @@ class Edit extends Component {
               </>
             )}
             <p>
-              <strong>Layout</strong>
-            </p>
-            <select
-              value={numberOfColumn < 2 ? "list" : "grid"}
-              className="zita-block-select"
-              onChange={(e) => {
-                let value_ = e.target.value == "grid" ? 2 : 1;
-                setAttributes({ numberOfColumn: value_ });
-              }}
-            >
-              <option value="list">List</option>
-              <option value="grid">Grid</option>
-            </select>
-            {numberOfColumn >= 2 && (
-              <>
-                <p>
-                  <strong>Column</strong>
-                </p>
-                <RangeControl
-                  value={numberOfColumn}
-                  min={2}
-                  max={4}
-                  onChange={(e) => {
-                    setAttributes({ numberOfColumn: e });
-                  }}
-                />
-              </>
-            )}
-
-            <p>
               <strong>No of Post Display</strong>
             </p>
             <RangeControl
@@ -254,37 +174,6 @@ class Edit extends Component {
                 setAttributes({ numberOfPosts: e });
               }}
             />
-            <ToggleControl
-              label="Left Border"
-              checked={meta_style_.left_border}
-              onChange={(e) =>
-                this.updateObj("meta_style", "left_border", meta_style, e)
-              }
-            />
-            {/* featured image */}
-            <p className="block-inside">Featured Image</p>
-            <ToggleControl
-              label={thumbnail_.enable ? "Hide" : "Show"}
-              checked={thumbnail_.enable}
-              onChange={(e) =>
-                this.updateObj("thumbnail", "enable", thumbnail, e)
-              }
-            />
-            {thumbnail_.enable && (
-              <>
-                <p>
-                  <strong>Border Radius</strong>
-                </p>
-                <RangeControl
-                  value={thumbnail_.borderRadius}
-                  min={0}
-                  max={80}
-                  onChange={(e) =>
-                    this.updateObj("thumbnail", "borderRadius", thumbnail, e)
-                  }
-                />
-              </>
-            )}
             {/* featured image */}
           </PanelBody>
           <PanelBody title="Post Meta" initialOpen={false}>
@@ -429,129 +318,176 @@ class Edit extends Component {
           </PanelBody>
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
-          <div className="zita-block-post">
-            {title_.enable && (
-              <RichText
-                className="zita-block-post-title"
-                key="editable"
-                tagName="h1"
-                placeholder="My block title"
-                value={title_.value}
-                style={{
-                  fontSize: title_.fontSize + "px",
-                  color: title_.color,
-                }}
-                onChange={(e) => this.updateObj("title", "value", title, e)}
-              />
+          <div className="zita-section-post">
+            {(posts.length == 1 ||
+              posts.length == 2 ||
+              posts.length == 4 ||
+              posts.length == 6) && (
+              <div
+                className={`column-count column-count-${
+                  posts.length == 2 || posts.length == 4
+                    ? 2
+                    : posts.length == 6
+                    ? 3
+                    : 1
+                }`}
+              >
+                {posts.map((post) => {
+                  return this.returnHtml(
+                    post,
+                    heading_,
+                    author_,
+                    date_,
+                    meta_style_,
+                    thumbnail_,
+                    showCate_,
+                    excerpt_,
+                    showTag_
+                  );
+                })}
+              </div>
             )}
-            <div
-              className={`column-count column-count-${numberOfColumn} ${
-                meta_style_.left_border && "left-border"
-              }`}
-            >
-              {posts.map((post) => {
-                let postAuthor =
-                  author_.enable && "name" in this.authorFn(post.author)
-                    ? this.authorFn(post.author).name
-                    : false;
-                return (
-                  <article className="block-post-article" key={post.id}>
-                    <div className="post-wrapper">
-                      {"getMedia_" in post &&
-                        post.getMedia_ &&
-                        "guid" in post.getMedia_ &&
-                        thumbnail_.enable && (
-                          <div className="featured-image">
-                            <img
-                              style={{
-                                borderRadius: thumbnail_.borderRadius + "px",
-                              }}
-                              src={post.getMedia_.guid.rendered}
-                            />
-                          </div>
-                        )}
-                      <div className="post-content">
-                        {showCate_.enable && (
-                          <p className="post-category">
-                            {this.showCateFn(post.categories)}
-                          </p>
-                        )}
-                        <RichText.Content
-                          className="post-heading"
-                          tagName={heading_.tag}
-                          value={post.title.rendered}
-                          style={{
-                            fontSize: heading_.fontSize,
-                            color: heading_.color,
-                          }}
-                        />
-                        <div className="post-meta-all">
-                          {postAuthor && (
-                            <p
-                              style={{ color: meta_style_.color }}
-                              className="post-author"
-                            >
-                              {postAuthor}
-                            </p>
-                          )}
-                          {date_.enable && (
-                            <>
-                              {postAuthor && <span className="slash">/</span>}
-                              <p
-                                style={{ color: meta_style_.color }}
-                                className="post-date"
-                              >
-                                {this.dateFormate(post.date)}
-                              </p>
-                            </>
-                          )}
-                          {date_.last_modified && (
-                            <>
-                              {(postAuthor || date_.enable) && (
-                                <span className="slash">/</span>
-                              )}
-                              <p
-                                style={{ color: meta_style_.color }}
-                                className="post-date-last-modified"
-                              >
-                                <span>Modified: </span>
-                                {this.dateFormate(post.modified)}
-                              </p>
-                            </>
-                          )}
-                        </div>
-                        {excerpt_.enable && (
-                          <p
-                            style={{ color: excerpt_.color }}
-                            className="post-excerpt"
-                          >
-                            {this.excerptWords(
-                              excerpt_.words,
-                              post.excerpt.rendered
-                            )}
-                          </p>
-                        )}
-                        {showTag_.enable && (
-                          <p
-                            style={{ color: meta_style_.color }}
-                            className="post-tags"
-                          >
-                            {this.showTagsFn(post.tags)}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
+            {(posts.length == 3 || posts.length == 5) && (
+              <div
+                className={`parent-column-two count-${
+                  posts.length == 3 ? 3 : 5
+                }`}
+              >
+                <div>
+                  <div className="column-count column-count-1">
+                    {this.returnHtml(
+                      posts[0],
+                      heading_,
+                      author_,
+                      date_,
+                      meta_style_,
+                      thumbnail_,
+                      showCate_,
+                      excerpt_,
+                      showTag_
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <div
+                    className={`column-count column-count-${
+                      posts.length == 3 ? 1 : 2
+                    }`}
+                  >
+                    {posts.map((post, in_) => {
+                      return (
+                        in_ != 0 &&
+                        this.returnHtml(
+                          post,
+                          heading_,
+                          author_,
+                          date_,
+                          meta_style_,
+                          thumbnail_,
+                          showCate_,
+                          excerpt_,
+                          showTag_
+                        )
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div>{!posts ? "No Post Found" : "Loding..."}</div>
         )}
       </>
     );
+    // ++++++++++++++===============
   }
+  returnHtml = (
+    post,
+    heading_,
+    author_,
+    date_,
+    meta_style_,
+    thumbnail_,
+    showCate_,
+    excerpt_,
+    showTag_
+  ) => {
+    let postAuthor =
+      author_ && author_.enable && "name" in this.authorFn(post.author)
+        ? this.authorFn(post.author).name
+        : false;
+    return (
+      <article className="block-post-article" key={post.id}>
+        <div className="post-wrapper">
+          {"getMedia_" in post &&
+            post.getMedia_ &&
+            "guid" in post.getMedia_ &&
+            thumbnail_.enable && (
+              <div className="featured-image">
+                <img src={post.getMedia_.guid.rendered} />
+              </div>
+            )}
+          <div className="post-content">
+            {showCate_ && showCate_.enable && (
+              <p className="post-category">
+                {this.showCateFn(post.categories)}
+              </p>
+            )}
+            <RichText.Content
+              className="post-heading"
+              tagName={heading_.tag}
+              value={post.title.rendered}
+              style={{
+                fontSize: heading_.fontSize,
+                color: heading_.color,
+              }}
+            />
+            <div className="post-meta-all">
+              {postAuthor && (
+                <p style={{ color: meta_style_.color }} className="post-author">
+                  {postAuthor}
+                </p>
+              )}
+              {date_.enable && (
+                <>
+                  {postAuthor && <span className="slash">/</span>}
+                  <p style={{ color: meta_style_.color }} className="post-date">
+                    {this.dateFormate(post.date)}
+                  </p>
+                </>
+              )}
+              {date_.last_modified && (
+                <>
+                  {(date_.enable || postAuthor) && (
+                    <span className="slash">/</span>
+                  )}
+                  <p
+                    style={{ color: meta_style_.color }}
+                    className="post-date-last-modified"
+                  >
+                    <span>Modified: </span>
+                    {this.dateFormate(post.modified)}
+                  </p>
+                </>
+              )}
+            </div>
+            {excerpt_ && excerpt_.enable && (
+              <p style={{ color: excerpt_.color }} className="post-excerpt">
+                {this.excerptWords(excerpt_.words, post.excerpt.rendered)}
+                <span className="read-more">...Read More</span>
+              </p>
+            )}
+            {showTag_ && showTag_.enable && (
+              <p style={{ color: meta_style_.color }} className="post-tags">
+                {this.showTagsFn(post.tags)}
+              </p>
+            )}
+          </div>
+        </div>
+      </article>
+    );
+  };
 }
 // export default Edit;
 export default withSelect((select, props) => {

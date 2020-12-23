@@ -72,7 +72,7 @@ function mytheme_blocks_render_latest_post_block($attr)
             }
 
             if ($postDate) {
-                $postHtml .= '<span class="slash">/</span>';
+                $postHtml .= $postAuthor ? '<span class="slash">/</span>' : '';
                 $dateYear =   get_the_date('Y');
                 $dateMonth =   get_the_date('m');
                 $dateDay =   get_the_date('j');
@@ -82,7 +82,7 @@ function mytheme_blocks_render_latest_post_block($attr)
                 $postHtml .= "</a></p>";
             }
             if ($postDateModify) {
-                $postHtml .= '<span class="slash">/</span>';
+                $postHtml .= $postAuthor || $postDate ? '<span class="slash">/</span>' : '';
                 $dateYear =   get_the_modified_date('Y');
                 $dateMonth =   get_the_modified_date('m');
                 $dateDay =   get_the_modified_date('j');

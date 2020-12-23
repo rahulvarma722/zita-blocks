@@ -125,7 +125,8 @@
         display: flex;
       }
       &.post-category {
-        display: block;
+        display: flex;
+        flex-wrap: wrap;
         span {
           margin: 1px 5px;
           padding: 3px 4px;

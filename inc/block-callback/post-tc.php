@@ -47,17 +47,7 @@ function zita_two_column_block($attr)
     $postHtml .= "<div><span></span></div>";
     $postHtml .= "</div>";
     // loader
-    // category navigation
 
-    // {title_.enable && (
-    //     <div className="nav-heading">
-    //       <p
-    //         style={{ backgroundColor: title_.bgColor, color: title_.color }}
-    //       >
-    //         {title_.value}
-    //       </p>
-    //     </div>
-    //   )}
     if (count($innerITem) > 0 || $attr['title'][0]["enable"]) {
         $titleAttrs = $attr['title'][0];
         $postHtml .= "<div class='navigation_' style='border-color:" . $titleAttrs["bgColor"] . ";'>";
@@ -165,7 +155,7 @@ function zita_two_column_block($attr)
                     $postHtmlCl1 .= "</a></p>";
                 }
                 if ($postDate) {
-                    $postHtmlCl1 .= '<span class="slash">/</span>';
+                    $postHtmlCl1 .= $postAuthor ? '<span class="slash">/</span>' : '';
                     $dateYear =   get_the_date('Y');
                     $dateMonth =   get_the_date('m');
                     $dateDay =   get_the_date('j');
@@ -175,7 +165,7 @@ function zita_two_column_block($attr)
                     $postHtmlCl1 .= "</a></p>";
                 }
                 if ($postDateModify) {
-                    $postHtmlCl1 .= '<span class="slash">/</span>';
+                    $postHtmlCl1 .= ($postDate || $postAuthor) ? '<span class="slash">/</span>' : '';
                     $dateYear =   get_the_modified_date('Y');
                     $dateMonth =   get_the_modified_date('m');
                     $dateDay =   get_the_modified_date('j');
@@ -255,7 +245,7 @@ function zita_two_column_block($attr)
                     $postHtmlCl2 .= "</a></p>";
                 }
                 if ($postDate2) {
-                    $postHtmlCl2 .= '<span class="slash">/</span>';
+                    $postHtmlCl2 .= $postAuthor2 ? '<span class="slash">/</span>' : '';
                     $dateYear =   get_the_date('Y');
                     $dateMonth =   get_the_date('m');
                     $dateDay =   get_the_date('j');
@@ -265,7 +255,7 @@ function zita_two_column_block($attr)
                     $postHtmlCl2 .= "</a></p>";
                 }
                 if ($postDateModify2) {
-                    $postHtmlCl2 .= '<span class="slash">/</span>';
+                    $postHtmlCl2 .= ($postDate2 || $postAuthor2) ? '<span class="slash">/</span>' : '';
                     $dateYear =   get_the_modified_date('Y');
                     $dateMonth =   get_the_modified_date('m');
                     $dateDay =   get_the_modified_date('j');
