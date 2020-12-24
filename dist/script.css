@@ -1200,6 +1200,150 @@
     cursor: default;
   }
 }
-
+#zita-section-post * {
+  font-family: "Catamaran-Regular", sans-serif;
+  -webkit-font-smoothing: initial;
+}
+#zita-section-post .parent-column-two {
+  display: flex;
+}
+#zita-section-post .parent-column-two > div {
+  width: 50%;
+}
+#zita-section-post .parent-column-two > div:first-child .block-post-article .post-content {
+  min-height: 404px;
+}
+#zita-section-post .parent-column-two > div:last-child .block-post-article .post-content {
+  min-height: 200px;
+}
+#zita-section-post .parent-column-two.count-5 > div:last-child {
+  min-height: 150px;
+}
+#zita-section-post .column-count {
+  display: flex;
+  flex-wrap: wrap;
+}
+#zita-section-post .column-count article {
+  padding: 2px;
+  max-width: 700px;
+  width: 100%;
+}
+#zita-section-post .column-count.column-count-1 {
+  flex-direction: column;
+  width: 100%;
+}
+#zita-section-post .column-count.column-count-2 > .block-post-article {
+  width: 50%;
+}
+#zita-section-post .column-count.column-count-3 > .block-post-article {
+  width: calc(100% / 3);
+}
+#zita-section-post .block-post-article {
+  display: block;
+}
+#zita-section-post .block-post-article .post-wrapper {
+  display: flex;
+  position: relative;
+}
+#zita-section-post .block-post-article .post-wrapper .featured-image {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+#zita-section-post .block-post-article .post-wrapper .featured-image img {
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+  width: 100%;
+}
+#zita-section-post .block-post-article .post-wrapper .post-content {
+  position: relative;
+  min-height: 396px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  padding: 16px;
+}
+#zita-section-post #post-wrapper .post-content .post-meta-all {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+#zita-section-post #post-wrapper .post-content .post-meta-all .slash {
+  color: #cec4c4;
+  margin: 1px 5px;
+}
+#zita-section-post #post-wrapper .post-content a {
+  font-size: inherit;
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  border-bottom: 1px dotted transparent;
+  transition: 0.5s border ease;
+  margin-bottom: -1px;
+}
+#zita-section-post #post-wrapper .post-content a:hover {
+  border-color: #a7a3a3;
+}
+#zita-section-post #post-wrapper .post-content .post-heading {
+  margin: 5px 0;
+  line-height: 1.2;
+  font-weight: 600;
+}
+#zita-section-post #post-wrapper .post-content p,
+#zita-section-post #post-wrapper .post-content h1,
+#zita-section-post #post-wrapper .post-content h2,
+#zita-section-post #post-wrapper .post-content h3 {
+  line-height: 1.5;
+  margin: 6px 0;
+  letter-spacing: 1px;
+}
+#zita-section-post #post-wrapper .post-content p.post-author {
+  font-size: 13px;
+  letter-spacing: 1.2px;
+}
+#zita-section-post #post-wrapper .post-content p.post-date, #zita-section-post #post-wrapper .post-content p.post-date-last-modified {
+  letter-spacing: 1.2px;
+  font-size: 14px;
+  display: flex;
+}
+#zita-section-post #post-wrapper .post-content p.post-category {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+#zita-section-post #post-wrapper .post-content p.post-category span {
+  margin: 1px 5px;
+  padding: 3px 4px;
+  color: white;
+  background: #ff5e00;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+#zita-section-post #post-wrapper .post-content p.post-category span:nth-child(2) {
+  background: #1a609c;
+}
+#zita-section-post #post-wrapper .post-content p.post-category span:nth-child(3) {
+  background: #9e710c;
+}
+#zita-section-post #post-wrapper .post-content p.post-category span:nth-child(4) {
+  background: #6a7f6a;
+}
+#zita-section-post #post-wrapper .post-content p.post-category span:first-child {
+  margin: 1px 0;
+}
+#zita-section-post #post-wrapper .post-content p.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+#zita-section-post #post-wrapper .post-content p.post-tags span {
+  border: 1px solid;
+  margin: 1px 7px;
+  font-size: 13px;
+  padding: 1px 11px;
+}
+#zita-section-post #post-wrapper .post-content p.post-tags span:first-child {
+  margin: 1px 0;
+}
 
 /*# sourceMappingURL=script.css.map*/

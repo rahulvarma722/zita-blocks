@@ -1144,23 +1144,17 @@
 .zita-section-post .parent-column-two {
   display: flex;
 }
-.zita-section-post .parent-column-two.count-3 > div {
+.zita-section-post .parent-column-two > div {
   width: 50%;
 }
-.zita-section-post .parent-column-two.count-3 > div:first-child .block-post-article .post-content {
-  min-height: 448px;
+.zita-section-post .parent-column-two > div:first-child .block-post-article .post-content {
+  min-height: 404px;
 }
-.zita-section-post .parent-column-two.count-3 > div:last-child .block-post-article .post-content {
+.zita-section-post .parent-column-two > div:last-child .block-post-article .post-content {
   min-height: 200px;
 }
-.zita-section-post .parent-column-two.count-5 > div:first-child {
-  width: 40%;
-}
-.zita-section-post .parent-column-two.count-5 > div:first-child .block-post-article .post-content {
-  min-height: 548px;
-}
 .zita-section-post .parent-column-two.count-5 > div:last-child {
-  width: 60%;
+  min-height: 150px;
 }
 .zita-section-post .column-count {
   display: flex;
