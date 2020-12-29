@@ -61,11 +61,12 @@
       };
       if (datatyle_ == "json") {
         ajaxObj["dataType"] = "json";
+        ajaxObj["async"] = false;
       }
       return jQuery.ajax(ajaxObj);
     },
     chooseCate: function (e) {
-      // console.log(e);
+      console.log("edited event", e);
       e.preventDefault();
       let thisButton = $(this);
       if (!thisButton.parent("li").hasClass("active")) {
@@ -97,14 +98,18 @@
                 .closest(".navigation_")
                 .find("li.cat-item")
                 .removeClass("active");
+              console.log("data_", data_);
               thisButton.parent().addClass("active");
               let loader_ = thisButton
                 .closest(".zita-two-col-container")
                 .find(".zita-block-loader");
               loader_.addClass("active");
               let returnData = fns._ajaxFunction(data_, "json");
+              // let returnData = fns._ajaxFunction(data_, "json");
               // replace data setting after result success
               returnData.success(function (response) {
+                console.log(response);
+
                 if (typeof response == "object" && "html" in response) {
                   loader_.removeClass("active");
                   getDataWrapper

@@ -36,11 +36,11 @@ function zita_two_column_block($attr)
     $query = new WP_Query($args);
     $currentPage = $postSetting = "";
     $totalPosts = $query->found_posts;
-    if ($totalPosts > $attr['numberOfPosts']) {
-        $pagesOfPost = ceil($totalPosts / $attr['numberOfPosts']);
-        $currentPage = json_encode(array("current" => 1, "total" => $pagesOfPost));
-        $postSetting = json_encode($attr);
-    }
+    // if ($totalPosts > $attr['numberOfPosts']) {
+    $pagesOfPost = ceil($totalPosts / $attr['numberOfPosts']);
+    $currentPage = json_encode(array("current" => 1, "total" => $pagesOfPost));
+    $postSetting = json_encode($attr);
+    // }
     $postHtml = "<div class='zita-two-col-container'>";
     // loader
     $postHtml .= "<div class='zita-block-loader linear-bubble'>";
@@ -289,8 +289,9 @@ function zita_two_column_block($attr)
         $postHtmlCl2 .= '</div>';
         $postHtml .= $postHtmlCl1 . $postHtmlCl2;
         $postHtml .= '</div>';
-        if ($totalPosts > $attr['numberOfPosts']) {
-            $postHtml .= "<div class='zita-two-post-wrapper-next-prev'>
+        // if ($totalPosts > $attr['numberOfPosts']) {
+        $keepDisable = $totalPosts <= $attr['numberOfPosts'] ? "disable" : '';
+        $postHtml .= "<div class='zita-two-post-wrapper-next-prev " . $keepDisable . "'>
                             <div class='zita-post-NP-btn disable prev'>
                                 <i class='fas fa-chevron-left'></i>
                             </div>
@@ -298,7 +299,7 @@ function zita_two_column_block($attr)
                                 <i class='fas fa-chevron-right'></i>
                             </div>
                         </div>";
-        }
+        // }
         $postHtml .= '</div>';
         $postHtml .= '</div>';
 

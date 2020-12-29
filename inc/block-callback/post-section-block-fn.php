@@ -41,7 +41,7 @@ function zita_section_block($attr)
             $postHtml .= "<div class='column-count column-count-" . $numberOfColumn . "'>";
             while ($query->have_posts()) {
                 $query->the_post();
-                $postHtml .= returnHtmlPost($postThumbnail, $metashowCate, $attr['heading'], $postAuthor, $metaStyleColor, $postDate, $postExcerpt, $attr['excerpt'], $postExcerptColor, $metashowshowTag);
+                $postHtml .= returnHtmlPost($postThumbnail, $metashowCate, $attr['heading'], $postAuthor, $metaStyleColor, $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $metashowshowTag);
             }
             $postHtml .= "</div>";
         } else if ($attr['numberOfPosts'] == 3 || $attr['numberOfPosts'] == 5) {
@@ -54,9 +54,9 @@ function zita_section_block($attr)
                 $query->the_post();
                 if ($checkFirst) {
                     $checkFirst = false;
-                    $columnOne .= returnHtmlPost($postThumbnail, $metashowCate, $attr['heading'], $postAuthor, $metaStyleColor, $postDate, $postExcerpt, $attr['excerpt'], $postExcerptColor, $metashowshowTag);
+                    $columnOne .= returnHtmlPost($postThumbnail, $metashowCate, $attr['heading'], $postAuthor, $metaStyleColor, $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $metashowshowTag);
                 } else {
-                    $columnTwo .= returnHtmlPost($postThumbnail, $metashowCate, $attr['heading'], $postAuthor, $metaStyleColor, $postDate, $postExcerpt, $attr['excerpt'], $postExcerptColor, $metashowshowTag);
+                    $columnTwo .= returnHtmlPost($postThumbnail, $metashowCate2, $attr['heading2'], $postAuthor2, $metaStyleColor, $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $metashowshowTag);
                 }
             }
             $columnOne .= "</div></div>";
@@ -74,9 +74,9 @@ function zita_section_block($attr)
     }
 }
 
-
+// echo 'hello'. $koooo;
 // fnnn
-function returnHtmlPost($postThumbnail, $metashowCate, $heading__, $postAuthor, $metaStyleColor, $postDate, $postExcerpt, $postExcerpt__, $postExcerptColor, $metashowshowTag)
+function returnHtmlPost($postThumbnail, $metashowCate, $heading__, $postAuthor, $metaStyleColor, $postDate, $postExcerpt, $postExcerpt__, $postDateModify, $postExcerptColor, $metashowshowTag)
 {
     $postHtmlCl1 = "<article class='block-post-article'>";
     $postHtmlCl1 .= "<div class='post-wrapper' id='post-wrapper'>";
@@ -138,6 +138,8 @@ function returnHtmlPost($postThumbnail, $metashowCate, $heading__, $postAuthor, 
     if ($postExcerpt) {
         $postExcerpt = get_the_excerpt();
         // exerpt length
+        // echo "length ---->> ";
+        // print_r($postExcerpt__);
         $exLength = isset($postExcerpt__[0]['words']) && $postExcerpt__[0]['words']  ? $postExcerpt__[0]['words'] : false;
         if ($exLength) {
             $postExcerpt = explode(" ", $postExcerpt);
