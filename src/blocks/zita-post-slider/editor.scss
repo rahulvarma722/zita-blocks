@@ -53,13 +53,13 @@
             background: #ff5e00;
             font-size: 13px;
             text-transform: capitalize;
-            &:nth-child(2) {
+            &:nth-child(n + 2) {
               background: #1a609c;
             }
-            &:nth-child(3) {
+            &:nth-child(n + 3) {
               background: #9e710c;
             }
-            &:nth-child(4) {
+            &:nth-child(n + 4) {
               background: #6a7f6a;
             }
             &:first-child {

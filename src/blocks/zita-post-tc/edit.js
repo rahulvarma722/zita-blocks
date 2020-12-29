@@ -202,26 +202,52 @@ class Edit extends Component {
   };
   navCategory = (cateTrue, title_) => {
     let category_ = this.props.category;
+    let makingCate = [];
     if ((category_ && category_.length) || title_.enable) {
+      // choosen category only show in nav
+      if (cateTrue && category_ && category_.length) {
+        if (this.props.attributes.postCategories.length) {
+          this.props.attributes.postCategories.map((choosenCate) => {
+            category_.map((existCate) => {
+              if (existCate.id == choosenCate) {
+                makingCate.push(existCate);
+                return;
+              }
+            });
+          });
+        } else {
+          makingCate = category_;
+        }
+      }
       return (
         <div className="navigation_" style={{ borderColor: title_.bgColor }}>
           {title_.enable && (
             <div className="nav-heading">
-              <p
+              <RichText
+                key="editable"
+                onChange={(e) =>
+                  this.updateObj(
+                    "title",
+                    "value",
+                    this.props.attributes.title,
+                    e
+                  )
+                }
+                className="post-heading"
+                tagName="p"
+                value={title_.value}
                 style={{ backgroundColor: title_.bgColor, color: title_.color }}
-              >
-                {title_.value}
-              </p>
+              />
             </div>
           )}
-          {cateTrue && category_ && category_.length && (
+          {cateTrue && makingCate.length && (
             <>
               <div class="nav-linear-items">
                 <ul>
                   <li class="cat-item cat-item-all">
                     <a href="#">all</a>
                   </li>
-                  {category_.map((cateV, cKey) => {
+                  {makingCate.map((cateV, cKey) => {
                     return (
                       cKey <= 3 && (
                         <li class="cat-item">
@@ -232,13 +258,13 @@ class Edit extends Component {
                   })}
                 </ul>
               </div>
-              {category_.length >= 5 && (
+              {makingCate.length >= 5 && (
                 <div class="nav-drop-items">
                   <span class="more-opener">
                     More<i class="fas fa-chevron-down"></i>
                   </span>
                   <ul>
-                    {category_.map((cateV, cKey) => {
+                    {makingCate.map((cateV, cKey) => {
                       return (
                         cKey >= 4 && (
                           <li class="cat-item">

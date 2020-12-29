@@ -38240,8 +38240,25 @@ var Edit = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "navCategory", function (cateTrue, title_) {
       var category_ = _this.props.category;
+      var makingCate = [];
 
       if (category_ && category_.length || title_.enable) {
+        // choosen category only show in nav
+        if (cateTrue && category_ && category_.length) {
+          if (_this.props.attributes.postCategories.length) {
+            _this.props.attributes.postCategories.map(function (choosenCate) {
+              category_.map(function (existCate) {
+                if (existCate.id == choosenCate) {
+                  makingCate.push(existCate);
+                  return;
+                }
+              });
+            });
+          } else {
+            makingCate = category_;
+          }
+        }
+
         return wp.element.createElement("div", {
           className: "navigation_",
           style: {
@@ -38249,30 +38266,37 @@ var Edit = /*#__PURE__*/function (_Component) {
           }
         }, title_.enable && wp.element.createElement("div", {
           className: "nav-heading"
-        }, wp.element.createElement("p", {
+        }, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+          key: "editable",
+          onChange: function onChange(e) {
+            return _this.updateObj("title", "value", _this.props.attributes.title, e);
+          },
+          className: "post-heading",
+          tagName: "p",
+          value: title_.value,
           style: {
             backgroundColor: title_.bgColor,
             color: title_.color
           }
-        }, title_.value)), cateTrue && category_ && category_.length && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
+        })), cateTrue && makingCate.length && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
           class: "nav-linear-items"
         }, wp.element.createElement("ul", null, wp.element.createElement("li", {
           class: "cat-item cat-item-all"
         }, wp.element.createElement("a", {
           href: "#"
-        }, "all")), category_.map(function (cateV, cKey) {
+        }, "all")), makingCate.map(function (cateV, cKey) {
           return cKey <= 3 && wp.element.createElement("li", {
             class: "cat-item"
           }, wp.element.createElement("a", {
             href: "#"
           }, cateV.name));
-        }))), category_.length >= 5 && wp.element.createElement("div", {
+        }))), makingCate.length >= 5 && wp.element.createElement("div", {
           class: "nav-drop-items"
         }, wp.element.createElement("span", {
           class: "more-opener"
         }, "More", wp.element.createElement("i", {
           class: "fas fa-chevron-down"
-        })), wp.element.createElement("ul", null, category_.map(function (cateV, cKey) {
+        })), wp.element.createElement("ul", null, makingCate.map(function (cateV, cKey) {
           return cKey >= 4 && wp.element.createElement("li", {
             class: "cat-item"
           }, wp.element.createElement("a", {
