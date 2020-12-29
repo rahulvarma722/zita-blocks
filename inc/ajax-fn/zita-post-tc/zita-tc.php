@@ -18,7 +18,6 @@ add_action('wp_ajax_post_tc_block', "post_tc_block");
 add_action('wp_ajax_nopriv_post_tc_block', "post_tc_block");
 function post_tc_block_choose_cate()
 {
-    // print_r($_POST);
     $attr = $_POST['attr'];
     $args = [
         'post_type' => 'post',
@@ -37,8 +36,6 @@ add_action('wp_ajax_nopriv_post_tc_block_choose_cate', "post_tc_block_choose_cat
 // return html function
 function post_tc_html($args, $attr, $showNextPrev = false)
 {
-    // print_r($args);
-    // print_r($attr);
     $query = new WP_Query($args);
     $postHtml = "<div class='zita-post-two-column'>";
     $postHtmlCl1 = '<div class="column-one">';

@@ -66,7 +66,6 @@
       return jQuery.ajax(ajaxObj);
     },
     chooseCate: function (e) {
-      console.log("edited event", e);
       e.preventDefault();
       let thisButton = $(this);
       if (!thisButton.parent("li").hasClass("active")) {
@@ -74,10 +73,19 @@
         let classList = thisButton.parent("li").attr("class");
         if (classList) {
           let ind_dex = classList.indexOf("cat-item-");
-          let getNumVAlue =
-            classList.substr(ind_dex + 9, 1) === "a"
-              ? "all"
-              : parseInt(classList.substr(ind_dex + 9, 1));
+          let getNumVAlue = false;
+          if (classList.substr(ind_dex + 9, 1) === "a") {
+            getNumVAlue = "all";
+          } else {
+            let getSepClass = classList.split(" ");
+            getSepClass.map((v) => {
+              if (v.includes("cat-item-")) {
+                let getIddd = v.replace("cat-item-", "");
+                getNumVAlue = parseInt(getIddd);
+              }
+              return;
+            });
+          }
           if (getNumVAlue) {
             let getDataWrapper = thisButton
               .closest(".zita-two-col-container")
@@ -98,14 +106,12 @@
                 .closest(".navigation_")
                 .find("li.cat-item")
                 .removeClass("active");
-              console.log("data_", data_);
               thisButton.parent().addClass("active");
               let loader_ = thisButton
                 .closest(".zita-two-col-container")
                 .find(".zita-block-loader");
               loader_.addClass("active");
               let returnData = fns._ajaxFunction(data_, "json");
-              // let returnData = fns._ajaxFunction(data_, "json");
               // replace data setting after result success
               returnData.success(function (response) {
                 console.log(response);

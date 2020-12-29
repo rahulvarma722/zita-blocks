@@ -50,7 +50,7 @@ function zita_blocks_script()
 	wp_enqueue_style('fontawesom-css', ZITA_PLUGIN_URL . 'assets/fontawesome/css/all.css', false);
 	// wp_enqueue_style('google-font', FONT_FAMILY_LINK, false);
 	wp_enqueue_style('google-font', 'https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;700&display=swap', false);
-	wp_enqueue_script('custom-query', ZITA_PLUGIN_URL . 'src/custom-query.js', array('jquery'));
+	wp_enqueue_script('custom-query', ZITA_PLUGIN_URL . 'src/custom-query.js', array('jquery'),2);
 	wp_localize_script('custom-query', 'zita_ajax_url', array('admin_ajax' => admin_url('admin-ajax.php')));
 	// wp_enqueue_scripts( 'wp-utils' );
 
