@@ -75,6 +75,7 @@ module.exports = (env, argv) => {
       "@wordpress/components": ["wp", "components"],
       "@wordpress/data": ["wp", "data"],
       "@wordpress/html-entities": ["wp", "htmlEntities"],
+      "@wordpress/i18n": ["wp", "i18n"],
     },
   };
   return config;

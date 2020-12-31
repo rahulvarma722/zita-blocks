@@ -2,6 +2,7 @@ import "./editor.scss";
 import { registerBlockType } from "@wordpress/blocks";
 import Edit from "./edit";
 let bgImageWrapper = plugin_url.url + "assets/img/image2.jpg";
+import { __ } from "@wordpress/i18n";
 import { RichText } from "@wordpress/block-editor";
 const attrSave = {
   sliderSetting: {
@@ -50,14 +51,18 @@ const attrSave = {
           spacing: 2,
         },
         title: {
-          text: "This Is Title text",
+          text: __("This Is Title text", "zita-blocks"),
           fontSize: 17,
           color: "red",
         },
-        text: { text: "Add Description", fontSize: 17, color: "red" },
+        text: {
+          text: __("Add Description", "zita-blocks"),
+          fontSize: 17,
+          color: "red",
+        },
         buttoneOne: {
           enable: true,
-          text: "Button One",
+          text: __("Button One", "zita-blocks"),
           link: "#",
           target: false,
           fontSize: "",
@@ -72,7 +77,7 @@ const attrSave = {
         },
         buttoneTwo: {
           enable: true,
-          text: "Button Two",
+          text: __("Button Two", "zita-blocks"),
           link: "#",
           target: false,
           fontSize: "",
@@ -99,14 +104,18 @@ const attrSave = {
           spacing: 2,
         },
         title: {
-          text: "This Is Title text",
+          text: __("This Is Title text", "zita-blocks"),
           fontSize: 17,
           color: "red",
         },
-        text: { text: "Add Description", fontSize: 17, color: "red" },
+        text: {
+          text: __("Add Description", "zita-blocks"),
+          fontSize: 17,
+          color: "red",
+        },
         buttoneOne: {
           enable: true,
-          text: "Button One",
+          text: __("Button One", "zita-blocks"),
           link: "#",
           target: false,
           fontSize: "",
@@ -121,7 +130,7 @@ const attrSave = {
         },
         buttoneTwo: {
           enable: true,
-          text: "Button Two",
+          text: __("Button Two", "zita-blocks"),
           link: "#",
           target: false,
           fontSize: "",
@@ -148,14 +157,18 @@ const attrSave = {
           spacing: 2,
         },
         title: {
-          text: "This Is Title text",
+          text: __("This Is Title text", "zita-blocks"),
           fontSize: 17,
           color: "red",
         },
-        text: { text: "Add Description", fontSize: 17, color: "red" },
+        text: {
+          text: __("Add Description", "zita-blocks"),
+          fontSize: 17,
+          color: "red",
+        },
         buttoneOne: {
           enable: true,
-          text: "Button One",
+          text: __("Button One", "zita-blocks"),
           link: "#",
           target: false,
           fontSize: "",
@@ -170,7 +183,7 @@ const attrSave = {
         },
         buttoneTwo: {
           enable: true,
-          text: "Button Two",
+          text: __("Button Two", "zita-blocks"),
           link: "#",
           target: false,
           fontSize: "",
@@ -274,7 +287,7 @@ let elementLiSlide = (val, index_, clone = false) => {
               >
                 <RichText.Content
                   tagName="h1"
-                  value={val.title.text}
+                  value={__(val.title.text, "zita-blocks")}
                   style={{
                     fontSize: val.title.fontSize + "px",
                     color: val.title.color,
@@ -282,7 +295,7 @@ let elementLiSlide = (val, index_, clone = false) => {
                 />
                 <RichText.Content
                   tagName="h2"
-                  value={val.text.text}
+                  value={__(val.text.text, "zita-blocks")}
                   style={{
                     fontSize: val.text.fontSize + "px",
                     color: val.text.color,
@@ -294,7 +307,7 @@ let elementLiSlide = (val, index_, clone = false) => {
                     <>
                       <RichText.Content
                         tagName="a"
-                        placeholder="Button One"
+                        placeholder={__("Button One", "zita-blocks")}
                         value={val.buttoneOne.text}
                         style={buttonOneStyle}
                       />
@@ -303,7 +316,7 @@ let elementLiSlide = (val, index_, clone = false) => {
                   {val.buttoneTwo.enable && (
                     <RichText.Content
                       tagName="a"
-                      placeholder="Button One"
+                      placeholder={__("Button One", "zita-blocks")}
                       value={val.buttoneTwo.text}
                       style={buttonTwoStyle}
                     />
@@ -318,7 +331,7 @@ let elementLiSlide = (val, index_, clone = false) => {
   );
 };
 registerBlockType("zita-blocks/slide", {
-  title: "Slider",
+  title: __("Slider", "zita-blocks"),
   icon: "editor-code",
   category: "zita-category",
   getEditWrapperProps(attributes) {

@@ -18,6 +18,7 @@ import {
   ToggleControl,
   ColorPicker,
 } from "@wordpress/components";
+import { __ } from "@wordpress/i18n";
 
 const attrSave = {
   image: {
@@ -42,7 +43,7 @@ const attrSave = {
   },
   title: {
     type: "string",
-    default: "Add Title",
+    default: __("Add Title", "zita-blocks"),
   },
   titleFontSize: {
     type: "number",
@@ -57,7 +58,7 @@ const attrSave = {
   },
   description: {
     type: "string",
-    default: "Add Service Description",
+    default: __("Add Service Description", "zita-blocks"),
   },
   descriptionFontSize: {
     type: "number",
@@ -130,7 +131,7 @@ const attrSave = {
   },
 };
 registerBlockType("zita-blocks/icon-image-content", {
-  title: "icon Image content",
+  title: __("icon Image content", "zita-blocks"),
   icon: "editor-insertmore",
   category: "zita-category",
   parent: ["zita-blocks/block-column-parent"],
@@ -241,12 +242,19 @@ registerBlockType("zita-blocks/icon-image-content", {
 
     return [
       <InspectorControls>
-        <PanelBody title={"Image and Icon Setting"} initialOpen={false}>
+        <PanelBody
+          title={__("Image and Icon Setting", "zita-blocks")}
+          initialOpen={false}
+        >
           <p>
-            <strong>Choose Image Or Icon </strong>
+            <strong>{__("Choose Image Or Icon", "zita-blocks")} </strong>
           </p>
           <ToggleControl
-            label={image == "image" ? "Icon" : "Image"}
+            label={
+              image == "image"
+                ? __("Icon", "zita-blocks")
+                : __("Image", "zita-blocks")
+            }
             checked={image == "image" ? true : false}
             onChange={(e) => {
               setAttributes({ image: e ? "image" : "icon" });
@@ -255,7 +263,7 @@ registerBlockType("zita-blocks/icon-image-content", {
           {image == "image" && (
             <div className="service-image-setting">
               <MediaUpload
-                label="Choose Image"
+                label={__("Choose Image", "zita-blocks")}
                 onSelect={(e) => {
                   setAttributes({ imageUrl: e.sizes.full.url });
                 }}
@@ -266,26 +274,26 @@ registerBlockType("zita-blocks/icon-image-content", {
                     icon="upload"
                     className="service-image-uploader editor-media-placeholder__button is-button is-default is-large"
                   >
-                    Open Media Library
+                    {__("Open Media Library", "zita-blocks")}
                   </IconButton>
                 )}
               />
               <RangeControl
-                label={"Width"}
+                label={__("Width", "zita-blocks")}
                 value={imageWidth}
                 min={0}
                 max={100}
                 onChange={(e) => setAttributes({ imageWidth: e })}
               />
               <RangeControl
-                label={"Padding"}
+                label={__("Padding", "zita-blocks")}
                 value={imagePadding}
                 min={0}
                 max={100}
                 onChange={(e) => setAttributes({ imagePadding: e })}
               />
               <RangeControl
-                label={"Border Radius"}
+                label={__("Border Radius", "zita-blocks")}
                 value={imageBorderRadius}
                 min={0}
                 max={100}
@@ -296,7 +304,7 @@ registerBlockType("zita-blocks/icon-image-content", {
           {image == "icon" && (
             <div className="service-icon-setting">
               <p>
-                <strong>Choose Icon</strong>
+                <strong>{__("Choose Icon", "zita-blocks")}</strong>
               </p>
 
               <div
@@ -358,7 +366,7 @@ registerBlockType("zita-blocks/icon-image-content", {
                 </div>
               </div>
               <p>
-                <strong>Font Size</strong>
+                <strong>{__("Font Size", "zita-blocks")}</strong>
               </p>
               <RangeControl
                 value={iconFontsize}
@@ -367,13 +375,13 @@ registerBlockType("zita-blocks/icon-image-content", {
                 onChange={(e) => setAttributes({ iconFontsize: e })}
               />
               <p>
-                <strong>Color</strong>
+                <strong>{__("Color", "zita-blocks")}</strong>
               </p>
               <ColorPalette
                 onChange={(color) => setAttributes({ iconColor: color })}
               />
               <p>
-                <strong>Background Color</strong>
+                <strong>{__("Background Color", "zita-blocks")}</strong>
               </p>
               <ColorPicker
                 onChangeComplete={(colorBg) => {
@@ -382,34 +390,38 @@ registerBlockType("zita-blocks/icon-image-content", {
                 }}
               />
               <ToggleControl
-                label={iconBorder ? "Disable" : "Enable"}
+                label={
+                  iconBorder
+                    ? __("Disable", "zita-blocks")
+                    : __("Enable", "zita-blocks")
+                }
                 checked={iconBorder}
                 onChange={(e) => setAttributes({ iconBorder: e })}
               />
               {iconBorder && (
                 <div className="icon-border-setting">
                   <RangeControl
-                    label="Border Width"
+                    label={__("Border Width", "zita-blocks")}
                     value={iconBorderWidth}
                     min={0}
                     max={100}
                     onChange={(e) => setAttributes({ iconBorderWidth: e })}
                   />
                   <RangeControl
-                    label="Border Radius"
+                    label={__("Border Radius", "zita-blocks")}
                     value={iconBorderRadius}
                     min={0}
                     max={50}
                     onChange={(e) => setAttributes({ iconBorderRadius: e })}
                   />
-                  <p>Border Color</p>
+                  <p>{__("Border Color", "zita-blocks")}</p>
                   <ColorPalette
                     onChange={(color) =>
                       setAttributes({ iconBorderColor: color })
                     }
                   />
                   <RangeControl
-                    label="Icon Space"
+                    label={__("Icon Space", "zita-blocks")}
                     value={iconSpace}
                     min={0}
                     max={200}
@@ -421,16 +433,19 @@ registerBlockType("zita-blocks/icon-image-content", {
           )}
         </PanelBody>
 
-        <PanelBody title={"Title Settings"} initialOpen={false}>
+        <PanelBody
+          title={__("Title Settings", "zita-blocks")}
+          initialOpen={false}
+        >
           <RangeControl
-            label={"Font Size"}
+            label={__("Font Size", "zita-blocks")}
             value={titleFontSize}
             min={0}
             max={100}
             onChange={(e) => setAttributes({ titleFontSize: e })}
           />
           <p>
-            <strong>Color </strong>
+            <strong>{__("Color", "zita-blocks")} </strong>
           </p>
           <ColorPalette
             value={titleColor}
@@ -439,7 +454,7 @@ registerBlockType("zita-blocks/icon-image-content", {
           {/* font family */}
           <div className="THK-font-family-wrapper">
             <p>
-              <strong>Font Family</strong>
+              <strong>{__("Font Family", "zita-blocks")}</strong>
             </p>
             <div
               ref={familyRef}
@@ -455,7 +470,7 @@ registerBlockType("zita-blocks/icon-image-content", {
                 className="font-family-show"
               >
                 <span style={{ fontFamily: titleFF }}>
-                  {titleFF ? titleFF : "Choose Family"}
+                  {titleFF ? titleFF : __("Choose Family", "zita-blocks")}
                 </span>
               </div>
               <div className="family-items">
@@ -474,16 +489,19 @@ registerBlockType("zita-blocks/icon-image-content", {
           </div>
           {/* font family */}
         </PanelBody>
-        <PanelBody title={"Description Settings"} initialOpen={false}>
+        <PanelBody
+          title={__("Description Settings", "zita-blocks")}
+          initialOpen={false}
+        >
           <RangeControl
-            label={"Font Size"}
+            label={__("Font Size", "zita-blocks")}
             value={descriptionFontSize}
             min={0}
             max={100}
             onChange={(e) => setAttributes({ descriptionFontSize: e })}
           />
           <p>
-            <strong>Color </strong>
+            <strong>{__("Color", "zita-blocks")} </strong>
           </p>
           <ColorPalette
             value={descriptionColor}
@@ -492,7 +510,7 @@ registerBlockType("zita-blocks/icon-image-content", {
           {/* font family */}
           <div className="THK-font-family-wrapper">
             <p>
-              <strong>Font Family</strong>
+              <strong>{__("Font Family", "zita-blocks")}</strong>
             </p>
             <div
               ref={familyRef}
@@ -508,7 +526,9 @@ registerBlockType("zita-blocks/icon-image-content", {
                 className="font-family-show"
               >
                 <span style={{ fontFamily: descriptionFF }}>
-                  {descriptionFF ? descriptionFF : "Choose Family"}
+                  {descriptionFF
+                    ? descriptionFF
+                    : __("Choose Family", "zita-blocks")}
                 </span>
               </div>
               <div className="family-items">
@@ -527,7 +547,10 @@ registerBlockType("zita-blocks/icon-image-content", {
           </div>
           {/* font family */}
         </PanelBody>
-        <PanelBody title={"Container Settings"} initialOpen={false}>
+        <PanelBody
+          title={__("Container Settings", "zita-blocks")}
+          initialOpen={false}
+        >
           <ColorPicker
             onChangeComplete={(colorBg) => {
               let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
@@ -535,37 +558,41 @@ registerBlockType("zita-blocks/icon-image-content", {
             }}
           />
           <RangeControl
-            label="Container Space"
+            label={__("Container Space", "zita-blocks")}
             value={containerSpace}
             min={0}
             max={100}
             onChange={(e) => setAttributes({ containerSpace: e })}
           />
           <p>
-            <strong>Border</strong>
+            <strong>{__("Border", "zita-blocks")}</strong>
           </p>
           <ToggleControl
-            label={containerBorder ? "Disable" : "Enable"}
+            label={
+              containerBorder
+                ? __("Disable", "zita-blocks")
+                : __("Enable", "zita-blocks")
+            }
             checked={containerBorder}
             onChange={(e) => setAttributes({ containerBorder: e })}
           />
           {containerBorder && (
             <div className="icon-border-setting">
               <RangeControl
-                label="Border Width"
+                label={__("Border Width", "zita-blocks")}
                 value={containerBorderWidth}
                 min={0}
                 max={100}
                 onChange={(e) => setAttributes({ containerBorderWidth: e })}
               />
               <RangeControl
-                label="Border Radius"
+                label={__("Border Radius", "zita-blocks")}
                 value={containerBorderRadius}
                 min={0}
                 max={50}
                 onChange={(e) => setAttributes({ containerBorderRadius: e })}
               />
-              <p>Border Color</p>
+              <p>{__("Border Color", "zita-blocks")}</p>
               <ColorPalette
                 onChange={(color) =>
                   setAttributes({ containerBorderColor: color })
@@ -575,7 +602,6 @@ registerBlockType("zita-blocks/icon-image-content", {
           )}
         </PanelBody>
       </InspectorControls>,
-
       <div className="service-section-wrapper" style={containerBorderStyle}>
         <div className={`service-image-icon ${image == "icon" ? "icon_" : ""}`}>
           {image == "image" && (
@@ -600,24 +626,24 @@ registerBlockType("zita-blocks/icon-image-content", {
             <RichText
               key="editable"
               tagName="h1"
-              placeholder="Service Title"
-              value={title}
+              placeholder={__("Service Title", "zita-blocks")}
+              value={__(title, "zita-blocks")}
               onChange={(e) => setAttributes({ title: e })}
               style={{
                 color: titleColor,
-                fontSize: titleFontSize+"px",
+                fontSize: titleFontSize + "px",
                 fontFamily: titleFF,
               }}
             />
             <RichText
               key="editable"
               tagName="p"
-              placeholder="Service Description"
+              placeholder={__("Service Description", "zita-blocks")}
               value={description}
               onChange={(e) => setAttributes({ description: e })}
               style={{
                 color: descriptionColor,
-                fontSize: descriptionFontSize+"px",
+                fontSize: descriptionFontSize + "px",
                 fontFamily: descriptionFF,
               }}
             />
@@ -722,13 +748,16 @@ registerBlockType("zita-blocks/icon-image-content", {
           <div>
             <RichText.Content
               tagName="h1"
-              value={title}
-              style={{ color: titleColor, fontSize: titleFontSize+"px" }}
+              value={__(title,"zita-blocks")}
+              style={{ color: titleColor, fontSize: titleFontSize + "px" }}
             />
             <RichText.Content
               tagName="p"
-              value={description}
-              style={{ color: descriptionColor, fontSize: descriptionFontSize+"px" }}
+              value={__(description,"zita-blocks")}
+              style={{
+                color: descriptionColor,
+                fontSize: descriptionFontSize + "px",
+              }}
             />
           </div>
         </div>

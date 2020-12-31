@@ -1,7 +1,8 @@
 <?php
 /*
-Plugin Name: A zita-blocks
-slug: zita-blocks
+*Plugin Name: A zita-blocks
+*slug: zita-blocks
+* Text Domain: zita-blocks
 */
 define('ZITA_PLUGIN_URL', plugins_url('zita-blocks') . '/');
 define('ZITA_PLUGIN_PATH', plugin_dir_path(__FILE__));
@@ -13,7 +14,7 @@ function zita_register_block()
 	wp_register_script(
 		'my-custom-block',
 		ZITA_PLUGIN_URL . 'dist/editor.js',
-		array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-html-entities'),
+		array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-html-entities', "wp-i18n"),
 		1
 	);
 	// Register JavasScript File src/script.js
@@ -50,7 +51,7 @@ function zita_blocks_script()
 	wp_enqueue_style('fontawesom-css', ZITA_PLUGIN_URL . 'assets/fontawesome/css/all.css', false);
 	// wp_enqueue_style('google-font', FONT_FAMILY_LINK, false);
 	wp_enqueue_style('google-font', 'https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;700&display=swap', false);
-	wp_enqueue_script('custom-query', ZITA_PLUGIN_URL . 'src/custom-query.js', array('jquery'),2);
+	wp_enqueue_script('custom-query', ZITA_PLUGIN_URL . 'src/custom-query.js', array('jquery'), 2);
 	wp_localize_script('custom-query', 'zita_ajax_url', array('admin_ajax' => admin_url('admin-ajax.php')));
 	// wp_enqueue_scripts( 'wp-utils' );
 
@@ -72,4 +73,3 @@ function zita_block_loaded()
 {
 	include_once(ZITA_PLUGIN_PATH . 'inc/ajax-fn/ajax.php');
 }
-

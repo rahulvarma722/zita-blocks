@@ -9,6 +9,7 @@ import {
   RichText,
 } from "@wordpress/block-editor";
 import { PanelBody, RangeControl, ToggleControl } from "@wordpress/components";
+import { __ } from "@wordpress/i18n";
 const attrs_ = {
   circleRadius: { type: "number", default: 80 },
   strokeWidth: { type: "number", default: 15 },
@@ -27,7 +28,7 @@ const attrs_ = {
   percentTitleColor: { type: "string" },
 };
 registerBlockType("zita-blocks/progress-bar-pie", {
-  title: "Circular Progress Bar",
+  title: __("Circular Progress Bar", "zita-blocks"),
   icon: (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -69,83 +70,97 @@ registerBlockType("zita-blocks/progress-bar-pie", {
     let cxCy = HW / 2;
     return [
       <InspectorControls>
-        <PanelBody title={"Circle Setting"} initialOpen={false}>
+        <PanelBody
+          title={__("Circle Setting", "zita-blocks")}
+          initialOpen={false}
+        >
           <RangeControl
-            label="Percent"
+            label={__("Percent", "zita-blocks")}
             value={text}
             min={1}
             max={100}
             onChange={(e) => setAttributes({ text: e })}
           />
           <RangeControl
-            label="Width"
+            label={__("Width", "zita-blocks")}
             value={circleRadius}
             min={1}
             max={150}
             onChange={(e) => setAttributes({ circleRadius: e })}
           />
           <RangeControl
-            label="Stroke Width"
+            label={__("Stroke Width", "zita-blocks")}
             value={strokeWidth}
             min={1}
             max={150}
             onChange={(e) => setAttributes({ strokeWidth: e })}
           />
           <RangeControl
-            label="Animation Delay"
+            label={__("Animation Delay", "zita-blocks")}
             value={animationDelay}
             min={1}
             max={100}
             onChange={(e) => setAttributes({ animationDelay: e })}
           />
           <p>
-            <strong>Stroke Edges Type</strong>
+            <strong>{__("Stroke Edges Type", "zita-blocks")}</strong>
           </p>
           <ToggleControl
-            label={lineCap ? "Flat" : "Circular"}
+            label={
+              lineCap
+                ? __("Flat", "zita-blocks")
+                : __("Circular", "zita-blocks")
+            }
             checked={lineCap}
             onChange={(e) => setAttributes({ lineCap: e })}
           />
           <p>
-            <strong>Stroke Color</strong>
+            <strong>{__("Stroke Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={strokeColor}
             onChange={(color) => setAttributes({ strokeColor: color })}
           />
           <p>
-            <strong>Stroke Background Color</strong>
+            <strong>{__("Stroke Background Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={strokeBgColor}
             onChange={(color) => setAttributes({ strokeBgColor: color })}
           />
           <p>
-            <strong>Fill Background Color</strong>
+            <strong>{__("Fill Background Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={fillBgColor}
             onChange={(color) => setAttributes({ fillBgColor: color })}
           />
         </PanelBody>
-        <PanelBody title={"Text Setting"} initialOpen={false}>
-          <p className="block-inside">Title Setting</p>
+        <PanelBody
+          title={__("Text Setting", "zita-blocks")}
+          initialOpen={false}
+        >
+          <p className="block-inside">{__("Title Setting", "zita-blocks")}</p>
           <ToggleControl
-            label={percentTitleE ? "Hide" : "Show"}
+            label={
+              percentTitleE
+                ? __("Hide", "zita-blocks")
+                : __("Show", "zita-blocks")
+            }
             checked={percentTitleE}
             onChange={(e) => setAttributes({ percentTitleE: e })}
           />
           {percentTitleE && (
             <>
               <RangeControl
-                label="Font Size"
+                label={__("Font Size", "zita-blocks")}
                 value={percentTitleFs}
                 min={1}
                 max={50}
                 onChange={(e) => setAttributes({ percentTitleFs: e })}
               />
               <p>
-                <strong>Color</strong>
+                <strong>{__("Color", "zita-blocks")}</strong>
               </p>
               <ColorPalette
                 value={percentTitleColor}
@@ -155,16 +170,16 @@ registerBlockType("zita-blocks/progress-bar-pie", {
               />
             </>
           )}
-          <p className="block-inside">Percent Setting</p>
+          <p className="block-inside">{__("Percent Setting", "zita-blocks")}</p>
           <RangeControl
-            label="Font Size"
+            label={__("Font Size", "zita-blocks")}
             value={textFs}
             min={1}
             max={50}
             onChange={(e) => setAttributes({ textFs: e })}
           />
           <p>
-            <strong>Color</strong>
+            <strong>{__("Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={textColor}

@@ -6,6 +6,7 @@ import {
   ColorPalette,
 } from "@wordpress/block-editor";
 import { PanelBody, RangeControl, ToggleControl } from "@wordpress/components";
+import { __ } from "@wordpress/i18n";
 const attrs_ = {
   percentTitle: { type: "string", default: "Percent title" },
   titleFs: { type: "number" },
@@ -20,7 +21,7 @@ const attrs_ = {
   borderRadius: { type: "number" },
 };
 registerBlockType("zita-blocks/progress-block", {
-  title: "Linear Progress Bar",
+  title: __("Linear Progress Bar", "zita-blocks"),
   icon: "update",
   // description: "progress bar.",
   category: "zita-category",
@@ -42,37 +43,47 @@ registerBlockType("zita-blocks/progress-block", {
     } = attributes;
     return [
       <InspectorControls>
-        <PanelBody title={"Title Setting"} initialOpen={false}>
+        <PanelBody
+          title={__("Title Setting", "zita-blocks")}
+          initialOpen={false}
+        >
           <ToggleControl
-            label={titleIn ? "Outside" : "Inside"}
+            label={
+              titleIn
+                ? __("Outside", "zita-blocks")
+                : __("Inside", "zita-blocks")
+            }
             checked={titleIn}
             onChange={(e) => setAttributes({ titleIn: e })}
           />
           <RangeControl
-            label="Font Size"
+            label={__("Font Size", "zita-blocks")}
             value={titleFs}
             min={1}
             max={100}
             onChange={(e) => setAttributes({ titleFs: e })}
           />
           <p>
-            <strong>Color</strong>
+            <strong>{__("Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={titleColor}
             onChange={(color) => setAttributes({ titleColor: color })}
           />
         </PanelBody>
-        <PanelBody title={"Progress Bar Setting"} initialOpen={false}>
+        <PanelBody
+          title={__("Progress Bar Setting", "zita-blocks")}
+          initialOpen={false}
+        >
           <RangeControl
-            label="Height"
+            label={__("Height", "zita-blocks")}
             value={progressHeight}
             min={1}
             max={50}
             onChange={(e) => setAttributes({ progressHeight: e })}
           />
           <RangeControl
-            label="Percent"
+            label={__("Percent", "zita-blocks")}
             value={percent}
             min={1}
             max={100}
@@ -80,28 +91,28 @@ registerBlockType("zita-blocks/progress-block", {
           />
 
           <RangeControl
-            label="Border Radius"
+            label={__("Border Radius", "zita-blocks")}
             value={borderRadius}
             min={1}
             max={60}
             onChange={(e) => setAttributes({ borderRadius: e })}
           />
           <RangeControl
-            label="Animation Delay"
+            label={__("Animation Delay", "zita-blocks")}
             value={animationDelay}
             min={1}
             max={100}
             onChange={(e) => setAttributes({ animationDelay: e })}
           />
           <p>
-            <strong>Color</strong>
+            <strong>{__("Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={percentColor}
             onChange={(color) => setAttributes({ percentColor: color })}
           />
           <p>
-            <strong>Background Color</strong>
+            <strong>{__("Background Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={percentBgColor}
@@ -157,7 +168,11 @@ registerBlockType("zita-blocks/progress-block", {
     } = attributes;
     return (
       <div className="thk-progress-bar-wrapper">
-        <div className="zita-linear-progress-bar front_" percent={percent} delay={animationDelay}>
+        <div
+          className="zita-linear-progress-bar front_"
+          percent={percent}
+          delay={animationDelay}
+        >
           <div
             className="txt-section"
             style={{ fontSize: titleFs, color: titleColor }}
