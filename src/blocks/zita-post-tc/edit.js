@@ -457,6 +457,7 @@ class Edit extends Component {
             </div>
             {/* category */}
             {/* primery and secondary */}
+            
             <div class="zita-switcher-button-section">
               <span
                 onClick={() => this.setState({ metaChoose: "primary" })}
@@ -473,6 +474,7 @@ class Edit extends Component {
                 Secondary
               </span>
             </div>
+
             {/* show author */}
             {this.state.metaChoose == "primary" ? (
               <>

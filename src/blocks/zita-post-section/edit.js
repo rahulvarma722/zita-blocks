@@ -112,6 +112,16 @@ class Edit extends Component {
 
     const { posts, attributes, setAttributes, category } = this.props;
     console.log("this.props", this.props);
+    // if number of post sum
+    if (numberOfPosts == 3 || numberOfPosts == 5) {
+      this.setState({
+        metaChoose: "primary",
+        excerpt: "primary",
+        heading: "primary",
+      });
+    }
+    // if number of post sum
+
     let {
       heading,
       author,
@@ -166,7 +176,7 @@ class Edit extends Component {
             <RangeControl
               value={numberOfPosts}
               min={1}
-              max={20}
+              max={6}
               onChange={(e) => {
                 setAttributes({ numberOfPosts: e });
               }}
@@ -218,22 +228,26 @@ class Edit extends Component {
             </div>
             {/* category */}
             {/* primery and secondary */}
-            <div class="zita-switcher-button-section">
-              <span
-                onClick={() => this.setState({ metaChoose: "primary" })}
-                className={this.state.metaChoose == "primary" ? "selected" : ""}
-              >
-                Primary
-              </span>
-              <span
-                onClick={() => this.setState({ metaChoose: "secondary" })}
-                className={
-                  this.state.metaChoose == "secondary" ? "selected" : ""
-                }
-              >
-                Secondary
-              </span>
-            </div>
+            {(numberOfPosts == 3 || numberOfPosts == 5) && (
+              <div class="zita-switcher-button-section">
+                <span
+                  onClick={() => this.setState({ metaChoose: "primary" })}
+                  className={
+                    this.state.metaChoose == "primary" ? "selected" : ""
+                  }
+                >
+                  Primary
+                </span>
+                <span
+                  onClick={() => this.setState({ metaChoose: "secondary" })}
+                  className={
+                    this.state.metaChoose == "secondary" ? "selected" : ""
+                  }
+                >
+                  Secondary
+                </span>
+              </div>
+            )}
             {/* show author */}
             {this.state.metaChoose == "primary" ? (
               <>
@@ -319,20 +333,24 @@ class Edit extends Component {
             />
           </PanelBody>
           <PanelBody title="Excerpt" initialOpen={false}>
-            <div class="zita-switcher-button-section">
-              <span
-                onClick={() => this.setState({ excerpt: "primary" })}
-                className={this.state.excerpt == "primary" ? "selected" : ""}
-              >
-                Primary
-              </span>
-              <span
-                onClick={() => this.setState({ excerpt: "secondary" })}
-                className={this.state.excerpt == "secondary" ? "selected" : ""}
-              >
-                Secondary
-              </span>
-            </div>
+            {(numberOfPosts == 3 || numberOfPosts == 5) && (
+              <div className="zita-switcher-button-section">
+                <span
+                  onClick={() => this.setState({ excerpt: "primary" })}
+                  className={this.state.excerpt == "primary" ? "selected" : ""}
+                >
+                  Primary
+                </span>
+                <span
+                  onClick={() => this.setState({ excerpt: "secondary" })}
+                  className={
+                    this.state.excerpt == "secondary" ? "selected" : ""
+                  }
+                >
+                  Secondary
+                </span>
+              </div>
+            )}
             {this.state.excerpt == "primary" ? (
               <>
                 <ToggleControl
@@ -404,20 +422,24 @@ class Edit extends Component {
             )}
           </PanelBody>
           <PanelBody title="Heading" initialOpen={false}>
-            <div class="zita-switcher-button-section">
-              <span
-                onClick={() => this.setState({ heading: "primary" })}
-                className={this.state.heading == "primary" ? "selected" : ""}
-              >
-                Primary
-              </span>
-              <span
-                onClick={() => this.setState({ heading: "secondary" })}
-                className={this.state.heading == "secondary" ? "selected" : ""}
-              >
-                Secondary
-              </span>
-            </div>
+            {(numberOfPosts == 3 || numberOfPosts == 5) && (
+              <div class="zita-switcher-button-section">
+                <span
+                  onClick={() => this.setState({ heading: "primary" })}
+                  className={this.state.heading == "primary" ? "selected" : ""}
+                >
+                  Primary
+                </span>
+                <span
+                  onClick={() => this.setState({ heading: "secondary" })}
+                  className={
+                    this.state.heading == "secondary" ? "selected" : ""
+                  }
+                >
+                  Secondary
+                </span>
+              </div>
+            )}
             {this.state.heading == "primary" ? (
               <>
                 <p>

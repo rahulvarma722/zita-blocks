@@ -36781,7 +36781,17 @@ var Edit = /*#__PURE__*/function (_Component) {
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
           category = _this$props.category;
-      console.log("this.props", this.props);
+      console.log("this.props", this.props); // if number of post sum
+
+      if (numberOfPosts == 3 || numberOfPosts == 5) {
+        this.setState({
+          metaChoose: "primary",
+          excerpt: "primary",
+          heading: "primary"
+        });
+      } // if number of post sum
+
+
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
@@ -36834,7 +36844,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "No of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: numberOfPosts,
         min: 1,
-        max: 20,
+        max: 6,
         onChange: function onChange(e) {
           setAttributes({
             numberOfPosts: e
@@ -36858,7 +36868,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           });
         },
         options: cateGory
-      })), wp.element.createElement("div", {
+      })), (numberOfPosts == 3 || numberOfPosts == 5) && wp.element.createElement("div", {
         class: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
@@ -36936,8 +36946,8 @@ var Edit = /*#__PURE__*/function (_Component) {
       })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Excerpt",
         initialOpen: false
-      }, wp.element.createElement("div", {
-        class: "zita-switcher-button-section"
+      }, (numberOfPosts == 3 || numberOfPosts == 5) && wp.element.createElement("div", {
+        className: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
           return _this2.setState({
@@ -36991,7 +37001,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       })))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Heading",
         initialOpen: false
-      }, wp.element.createElement("div", {
+      }, (numberOfPosts == 3 || numberOfPosts == 5) && wp.element.createElement("div", {
         class: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
