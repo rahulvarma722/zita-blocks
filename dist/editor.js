@@ -7489,13 +7489,14 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category; // console.log("this.props", this.props);
-
+          category = _this$props.category;
+      console.log("this.props post block ->", this.props);
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
           thumbnail = attributes.thumbnail,
           numberOfColumn = attributes.numberOfColumn,
+          columnLayout = attributes.columnLayout,
           date = attributes.date,
           showTag = attributes.showTag,
           showCate = attributes.showCate,
@@ -7553,21 +7554,20 @@ var Edit = /*#__PURE__*/function (_Component) {
         title: "Post Layout",
         initialOpen: false
       }, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Layout", "zita-blocks"))), wp.element.createElement("select", {
-        value: numberOfColumn < 2 ? "list" : "grid",
+        value: columnLayout,
         className: "zita-block-select",
         onChange: function onChange(e) {
-          var value_ = e.target.value == "grid" ? 2 : 1;
           setAttributes({
-            numberOfColumn: value_
+            columnLayout: e.target.value
           });
         }
       }, wp.element.createElement("option", {
         value: "list"
       }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("List", "zita-blocks")), wp.element.createElement("option", {
         value: "grid"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Grid", "zita-blocks"))), numberOfColumn >= 2 && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Column", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Grid", "zita-blocks"))), columnLayout == "grid" && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Column", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: numberOfColumn,
-        min: 2,
+        min: 1,
         max: 4,
         onChange: function onChange(e) {
           setAttributes({
@@ -7741,7 +7741,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           return _this2.updateObj("title", "value", title, e);
         }
       }), wp.element.createElement("div", {
-        className: "column-count column-count-".concat(numberOfColumn, " ").concat(meta_style_.left_border && "left-border")
+        className: "column-count column-count-".concat(columnLayout == "grid" ? numberOfColumn : 1, " ").concat(meta_style_.left_border && "left-border")
       }, posts.map(function (post) {
         var postAuthor = author_.enable && "name" in _this2.authorFn(post.author) ? _this2.authorFn(post.author).name : false;
         return thumbnail_.typeShow == "1" && "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ ? wp.element.createElement("article", {

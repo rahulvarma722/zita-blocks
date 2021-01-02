@@ -3,6 +3,8 @@ function post_tc_block()
 {
     $pageNo = $_POST['trigger'] == "next" ? $_POST['page'] + 1 : $_POST['page'] - 1;
     $attr = $_POST['attr'];
+    // echo "inside ajax->";
+    // print_r($attr);
     $args = [
         'post_type' => 'post',
         "posts_per_page" => $attr['numberOfPosts'],
@@ -87,9 +89,15 @@ function post_tc_html($args, $attr, $showNextPrev = false)
                     $postHtmlCl1 .= '</p>';
                 }
                 // category
-                $postHtmlCl1 .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . "' class='post-heading'>";
+                // $postHtmlCl1 .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . "' class='post-heading'>";
+                // $postHtmlCl1 .= "<a href='" . esc_url(get_the_permalink()) . "'>" . get_the_title() . "</a>";
+                // $postHtmlCl1 .= "</" . $attr['heading'][0]['tag'] . ">";
+
+                $postHtmlCl1 .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . ";font-size:" . $attr['heading'][0]['fontSize'] . "px;' class='post-heading'>";
                 $postHtmlCl1 .= "<a href='" . esc_url(get_the_permalink()) . "'>" . get_the_title() . "</a>";
                 $postHtmlCl1 .= "</" . $attr['heading'][0]['tag'] . ">";
+
+
                 $postHtmlCl1 .= '<div class="post-meta-all">';
                 if ($postAuthor) {
                     $postHtmlCl1 .= "<p style='color:" . $metaStyleColor . "' class='post-author'>";
@@ -175,9 +183,14 @@ function post_tc_html($args, $attr, $showNextPrev = false)
                     $postHtmlCl2 .= '</p>';
                 }
                 // category
-                $postHtmlCl2 .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . "' class='post-heading'>";
+                // $postHtmlCl2 .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . "' class='post-heading'>";
+                // $postHtmlCl2 .= "<a href='" . esc_url(get_the_permalink()) . "'>" . get_the_title() . "</a>";
+                // $postHtmlCl2 .= "</" . $attr['heading'][0]['tag'] . ">";
+                $postHtmlCl2 .= "<" . $attr['heading2'][0]['tag'] . " style='color:" . $attr['heading2'][0]['color'] . ";font-size:" . $attr['heading2'][0]['fontSize'] . "px;' class='post-heading'>";
                 $postHtmlCl2 .= "<a href='" . esc_url(get_the_permalink()) . "'>" . get_the_title() . "</a>";
-                $postHtmlCl2 .= "</" . $attr['heading'][0]['tag'] . ">";
+                $postHtmlCl2 .= "</" . $attr['heading2'][0]['tag'] . ">";
+
+
                 $postHtmlCl2 .= '<div class="post-meta-all">';
                 if ($postAuthor2) {
                     $postHtmlCl2 .= "<p style='color:" . $metaStyleColor . "' class='post-author'>";

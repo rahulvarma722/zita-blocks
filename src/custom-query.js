@@ -28,6 +28,7 @@
         loader_.addClass("active");
         let returnData = fns._ajaxFunction(data_);
         returnData.success(function (response) {
+          console.log("response->" + response);
           // response
           loader_.removeClass("active");
           let nxtPrev = thisBtn.closest(".zita-two-post-wrapper-next-prev");

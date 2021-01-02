@@ -2,6 +2,10 @@
 // zita post callback function
 function mytheme_blocks_render_latest_post_block($attr)
 {
+
+    // echo "<pre>";
+    // print_r($attr);
+    // echo "</pre>";
     $args = [
         "posts_per_page" => $attr['numberOfPosts']
     ];
@@ -27,11 +31,13 @@ function mytheme_blocks_render_latest_post_block($attr)
         $postHtml .= '<div class="zita-block-post" id="zita-block-post">';
         // post title
         if (isset($attr['title'][0]['enable']) && $attr['title'][0]['enable']) {
-            $postHtml .= '<h1 style="color:' . $attr['title'][0]['color'] . ';font-size:' . $attr['title'][0]['fontSize'] . 'px;" class="zita-block-post-title" id="zita-block-post-title">';
+            $titleHeadingStyle = "style='color:" . $attr['title'][0]['color'] . ";font-size:" . $attr['title'][0]['fontSize'] . "px;'";
+            $postHtml .= '<h1 ' . $titleHeadingStyle . ' class="zita-block-post-title" id="zita-block-post-title">';
             $postHtml .= $attr['title'][0]['value'];
             $postHtml .= '</h1>';
         }
-        $postHtml .= "<div class='column-count column-count-" . $attr['numberOfColumn'] . " " . $metaLeftBorder . "'>";
+        $gridColumn = $attr['columnLayout'] == "grid" ? $attr['numberOfColumn'] : 1;
+        $postHtml .= "<div class='column-count column-count-" . $gridColumn . " " . $metaLeftBorder . "'>";
         $postChecker = false;
         while ($query->have_posts()) {
             $query->the_post();

@@ -105,13 +105,14 @@ class Edit extends Component {
   };
   render() {
     const { posts, attributes, setAttributes, category } = this.props;
-    // console.log("this.props", this.props);
+    console.log("this.props post block ->", this.props);
     let {
       heading,
       author,
       numberOfPosts,
       thumbnail,
       numberOfColumn,
+      columnLayout,
       date,
       showTag,
       showCate,
@@ -180,24 +181,23 @@ class Edit extends Component {
               <strong>{__("Layout", "zita-blocks")}</strong>
             </p>
             <select
-              value={numberOfColumn < 2 ? "list" : "grid"}
+              value={columnLayout}
               className="zita-block-select"
               onChange={(e) => {
-                let value_ = e.target.value == "grid" ? 2 : 1;
-                setAttributes({ numberOfColumn: value_ });
+                setAttributes({ columnLayout: e.target.value });
               }}
             >
               <option value="list">{__("List", "zita-blocks")}</option>
               <option value="grid">{__("Grid", "zita-blocks")}</option>
             </select>
-            {numberOfColumn >= 2 && (
+            {columnLayout == "grid" && (
               <>
                 <p>
                   <strong>{__("Column", "zita-blocks")}</strong>
                 </p>
                 <RangeControl
                   value={numberOfColumn}
-                  min={2}
+                  min={1}
                   max={4}
                   onChange={(e) => {
                     setAttributes({ numberOfColumn: e });
@@ -438,9 +438,9 @@ class Edit extends Component {
               />
             )}
             <div
-              className={`column-count column-count-${numberOfColumn} ${
-                meta_style_.left_border && "left-border"
-              }`}
+              className={`column-count column-count-${
+                columnLayout == "grid" ? numberOfColumn : 1
+              } ${meta_style_.left_border && "left-border"}`}
             >
               {posts.map((post) => {
                 let postAuthor =
