@@ -28,7 +28,7 @@
         loader_.addClass("active");
         let returnData = fns._ajaxFunction(data_);
         returnData.success(function (response) {
-          console.log("response->" + response);
+          // console.log("response->" + response);
           // response
           loader_.removeClass("active");
           let nxtPrev = thisBtn.closest(".zita-two-post-wrapper-next-prev");
@@ -118,7 +118,7 @@
                 console.log(response);
 
                 if (typeof response == "object" && "html" in response) {
-                  loader_.removeClass("active");
+                  setTimeout(() => loader_.removeClass("active"), 500);
                   getDataWrapper
                     .find(".zita-post-two-column")
                     .html(response.html);
