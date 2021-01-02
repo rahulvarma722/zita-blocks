@@ -17,15 +17,7 @@ import { decodeEntities } from "@wordpress/html-entities";
 class Edit extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      shortList: [
-        { name: __("Item 1", "zita-blocks") },
-        { name: __("Item 2", "zita-blocks") },
-        { name: __("Item 3", "zita-blocks") },
-        { name: __("Item 4", "zita-blocks") },
-        { name: __("Item 5", "zita-blocks") },
-      ],
-    };
+    this.state = {};
   }
   updateObj = (parent_key, child_key, initialValue, value_) => {
     let newNewValue = [...initialValue];
@@ -147,40 +139,11 @@ class Edit extends Component {
         });
       });
     }
-    // let shortList = this.state.shortList;
-    // let ShotableList = SortableContainer(() => {
-    //   return (
-    //     <ul>
-    //       {shortList.map((item, index) => {
-    //         let ShortItem = SortableElement(() => {
-    //           return (
-    //             <li key={index}>
-    //               <h1>hello {item.name}</h1>
-    //             </li>
-    //           );
-    //         });
-    //         return <ShortItem key={index} index={index} />;
-    //       })}
-    //     </ul>
-    //   );
-    // });
     return (
       <>
         <InspectorControls>
           <PanelBody title="Post Layout" initialOpen={false}>
             <p className="block-inside">{__("Block Title", "zita-blocks")}</p>
-            {/* <div className="check-shortable">
-              <ShotableList
-                distance={10}
-                axis="y"
-                helperClass={"dragging-element"}
-                onSortEnd={({ oldIndex, newIndex }) => {
-                  const items = this.state.shortList;
-                  let new_items = arrayMove(items, oldIndex, newIndex);
-                  this.setState({ shortList: new_items });
-                }}
-              />
-            </div> */}
             <ToggleControl
               label={
                 title_.enable
@@ -556,7 +519,11 @@ class Edit extends Component {
             </div>
           </div>
         ) : (
-          <div>{!posts ? __("No Post Found", "zita-blocks") : __("Loding...", "zita-blocks")}</div>
+          <div>
+            {!posts
+              ? __("No Post Found", "zita-blocks")
+              : __("Loding...", "zita-blocks")}
+          </div>
         )}
       </>
     );

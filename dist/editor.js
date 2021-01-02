@@ -7476,19 +7476,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       return retur;
     });
 
-    _this.state = {
-      shortList: [{
-        name: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Item 1", "zita-blocks")
-      }, {
-        name: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Item 2", "zita-blocks")
-      }, {
-        name: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Item 3", "zita-blocks")
-      }, {
-        name: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Item 4", "zita-blocks")
-      }, {
-        name: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Item 5", "zita-blocks")
-      }]
-    };
+    _this.state = {};
     return _this;
   }
 
@@ -7537,24 +7525,7 @@ var Edit = /*#__PURE__*/function (_Component) {
             label: catt.name
           });
         });
-      } // let shortList = this.state.shortList;
-      // let ShotableList = SortableContainer(() => {
-      //   return (
-      //     <ul>
-      //       {shortList.map((item, index) => {
-      //         let ShortItem = SortableElement(() => {
-      //           return (
-      //             <li key={index}>
-      //               <h1>hello {item.name}</h1>
-      //             </li>
-      //           );
-      //         });
-      //         return <ShortItem key={index} index={index} />;
-      //       })}
-      //     </ul>
-      //   );
-      // });
-
+      }
 
       return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Post Layout",

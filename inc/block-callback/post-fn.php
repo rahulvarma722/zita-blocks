@@ -5,6 +5,9 @@ function mytheme_blocks_render_latest_post_block($attr)
     $args = [
         "posts_per_page" => $attr['numberOfPosts']
     ];
+    if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
+        $args['category__in'] = $attr["postCategories"];
+    }
     $query = new WP_Query($args);
     $postHtml = '';
     // echo "<pre>";

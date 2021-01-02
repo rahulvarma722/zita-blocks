@@ -5,6 +5,9 @@ function mytheme_blocks_render_post_slider($attr)
     $args = [
         "posts_per_page" => $attr['numberOfPosts']
     ];
+    if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
+        $args['category__in'] = $attr["postCategories"];
+    }
     $query = new WP_Query($args);
     $postHtml = '';
     // echo "<pre>";
@@ -159,12 +162,12 @@ function mytheme_blocks_render_post_slider($attr)
             $LactiveColor = $sliderPara["linearTrigger"]['activeColor'];
             $positionTrigger = $sliderPara["linearTrigger"]['place'];
             $bulletOrThumbnail = $sliderPara["linearTrigger"]['trigger'] == "thumbnail" ? "thumbnail-image" : '';
-            $postHtml .= '<ul class="zita-slider-bullet-trigger ' . $bulletOrThumbnail . ' trigger_' . $positionTrigger . '" active-color="' . $LactiveColor . '" childstyle="height: ' . $LfontSize . 'px;width:20px;background-color: ' . $Lcolor . ';">';
+            $postHtml .= '<ul class="zita-slider-bullet-trigger ' . $bulletOrThumbnail . ' trigger_' . $positionTrigger . '" active-color="' . $LactiveColor . '" childstyle="height: ' . $LfontSize . 'px;width:' . $LfontSize . 'px;background-color: ' . $Lcolor . ';">';
             while ($query->have_posts()) {
                 $query->the_post();
                 if (get_the_post_thumbnail_url()) {
                     if ($sliderPara["linearTrigger"]['trigger'] == "bullet") {
-                        $postHtml .= '<li><span style="height: ' . $LfontSize . 'px;width:20px;background-color: ' . $Lcolor . ';"></span></li>';
+                        $postHtml .= '<li><span style="height: ' . $LfontSize . 'px;width:' . $LfontSize . 'px;background-color: ' . $Lcolor . ';"></span></li>';
                     } else {
                         $postHtml .= '<li><div><img src="' . get_the_post_thumbnail_url() . '"></div></li>';
                     }
