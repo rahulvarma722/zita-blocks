@@ -142,8 +142,7 @@ class Edit extends Component {
     return (
       <>
         <InspectorControls>
-          <PanelBody title="Post Layout" initialOpen={false}>
-            <p className="block-inside">{__("Block Title", "zita-blocks")}</p>
+          <PanelBody title="Post Title" initialOpen={false}>
             <ToggleControl
               label={
                 title_.enable
@@ -175,6 +174,8 @@ class Edit extends Component {
                 />
               </>
             )}
+          </PanelBody>
+          <PanelBody title="Post Layout" initialOpen={false}>
             <p>
               <strong>{__("Layout", "zita-blocks")}</strong>
             </p>
@@ -223,11 +224,116 @@ class Edit extends Component {
                 this.updateObj("meta_style", "left_border", meta_style, e)
               }
             />
-            {/* featured image */}
-            <p className="block-inside">
-              {__("Featured Image", "zita-blocks")}
+          </PanelBody>
+          <PanelBody title={__("Heading", "zita-blocks")} initialOpen={false}>
+            <p>
+              <strong>{__("Heading Tag", "zita-blocks")}</strong>
             </p>
+            <select
+              value={heading_.tag}
+              className="zita-block-select"
+              onChange={(e) => {
+                let value_ = e.target.value;
+                let font_ =
+                  value_ == "h1"
+                    ? 30
+                    : value_ == "h2"
+                    ? 25
+                    : value_ == "h3"
+                    ? 20
+                    : 17;
+                let newHeading = [...heading];
+                newHeading[0]["tag"] = value_;
+                newHeading[0]["fontSize"] = font_;
+                setAttributes({ heading: newHeading });
+              }}
+            >
+              <option value="h1">H1</option>
+              <option value="h2">H2</option>
+              <option value="h3">H3</option>
+              <option value="p">P</option>
+            </select>
+            <p>
+              <strong>{__("Font Size", "zita-blocks")}</strong>
+            </p>
+            <RangeControl
+              value={heading_.fontSize}
+              min={1}
+              max={50}
+              onChange={(e) =>
+                this.updateObj("heading", "fontSize", heading, e)
+              }
+            />
+            <p>
+              <strong>{__("Color", "zita-blocks")}</strong>
+            </p>
+            <ColorPalette
+              value={heading_.color}
+              onChange={(color) =>
+                this.updateObj("heading", "color", heading, color)
+              }
+            />
+          </PanelBody>
+          <PanelBody
+            title={__("Excerpt / Content", "zita-blocks")}
+            initialOpen={false}
+          >
             <ToggleControl
+              label={
+                excerpt_.enable
+                  ? __("Hide", "zita-blocks")
+                  : __("Show", "zita-blocks")
+              }
+              checked={excerpt_.enable}
+              onChange={(e) => this.updateObj("excerpt", "enable", excerpt, e)}
+            />
+            {excerpt_.enable && (
+              <>
+                <p>
+                  <strong>{__("Number of words", "zita-blocks")}</strong>
+                </p>
+                <RangeControl
+                  value={excerpt_.words}
+                  min={1}
+                  max={200}
+                  onChange={(e) =>
+                    this.updateObj("excerpt", "words", excerpt, e)
+                  }
+                />
+              </>
+            )}
+            <p>
+              <strong>{__("Color", "zita-blocks")}</strong>
+            </p>
+            <ColorPalette
+              value={excerpt_.color}
+              onChange={(color) =>
+                this.updateObj("excerpt", "color", excerpt, color)
+              }
+            />
+          </PanelBody>
+          <PanelBody
+            title={__("Featured Image", "zita-blocks")}
+            initialOpen={false}
+          >
+            <select
+              value={thumbnail_.typeShow}
+              className="zita-block-select"
+              onChange={(e) => {
+                let value_ = e.target.value;
+                this.updateObj("thumbnail", "typeShow", thumbnail, value_);
+              }}
+            >
+              <option value="all">{__("All Post", "zita-blocks")}</option>
+              <option value="1">
+                {__("Only Featured Image Post", "zita-blocks")}
+              </option>
+              <option value="2">
+                {__("Without Featured Image Post", "zita-blocks")}
+              </option>
+            </select>
+
+            {/* <ToggleControl
               label={
                 thumbnail_.enable
                   ? __("Hide", "zita-blocks")
@@ -237,8 +343,8 @@ class Edit extends Component {
               onChange={(e) =>
                 this.updateObj("thumbnail", "enable", thumbnail, e)
               }
-            />
-            {thumbnail_.enable && (
+            /> */}
+            {(thumbnail_.typeShow == "all" || thumbnail_.typeShow == "1") && (
               <>
                 <p>
                   <strong>{__("Border Radius", "zita-blocks")}</strong>
@@ -253,7 +359,6 @@ class Edit extends Component {
                 />
               </>
             )}
-            {/* featured image */}
           </PanelBody>
           <PanelBody title={__("Post Meta", "zita-blocks")} initialOpen={false}>
             {/* category */}
@@ -315,90 +420,6 @@ class Edit extends Component {
               }
             />
           </PanelBody>
-          <PanelBody title={__("Excerpt", "zita-blocks")} initialOpen={false}>
-            <ToggleControl
-              label={
-                excerpt_.enable
-                  ? __("Hide", "zita-blocks")
-                  : __("Show", "zita-blocks")
-              }
-              checked={excerpt_.enable}
-              onChange={(e) => this.updateObj("excerpt", "enable", excerpt, e)}
-            />
-            {excerpt_.enable && (
-              <>
-                <p>
-                  <strong>{__("Number of words", "zita-blocks")}</strong>
-                </p>
-                <RangeControl
-                  value={excerpt_.words}
-                  min={1}
-                  max={200}
-                  onChange={(e) =>
-                    this.updateObj("excerpt", "words", excerpt, e)
-                  }
-                />
-              </>
-            )}
-            <p>
-              <strong>{__("Color", "zita-blocks")}</strong>
-            </p>
-            <ColorPalette
-              value={excerpt_.color}
-              onChange={(color) =>
-                this.updateObj("excerpt", "color", excerpt, color)
-              }
-            />
-          </PanelBody>
-          <PanelBody title={__("Heading", "zita-blocks")} initialOpen={false}>
-            <p>
-              <strong>{__("Heading Tag", "zita-blocks")}</strong>
-            </p>
-            <select
-              value={heading_.tag}
-              className="zita-block-select"
-              onChange={(e) => {
-                let value_ = e.target.value;
-                let font_ =
-                  value_ == "h1"
-                    ? 30
-                    : value_ == "h2"
-                    ? 25
-                    : value_ == "h3"
-                    ? 20
-                    : 17;
-                let newHeading = [...heading];
-                newHeading[0]["tag"] = value_;
-                newHeading[0]["fontSize"] = font_;
-                setAttributes({ heading: newHeading });
-              }}
-            >
-              <option value="h1">H1</option>
-              <option value="h2">H2</option>
-              <option value="h3">H3</option>
-              <option value="p">P</option>
-            </select>
-            <p>
-              <strong>{__("Font Size", "zita-blocks")}</strong>
-            </p>
-            <RangeControl
-              value={heading_.fontSize}
-              min={1}
-              max={50}
-              onChange={(e) =>
-                this.updateObj("heading", "fontSize", heading, e)
-              }
-            />
-            <p>
-              <strong>{__("Color", "zita-blocks")}</strong>
-            </p>
-            <ColorPalette
-              value={heading_.color}
-              onChange={(color) =>
-                this.updateObj("heading", "color", heading, color)
-              }
-            />
-          </PanelBody>
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
           <div className="zita-block-post">
@@ -426,13 +447,99 @@ class Edit extends Component {
                   author_.enable && "name" in this.authorFn(post.author)
                     ? this.authorFn(post.author).name
                     : false;
-                return (
+                return thumbnail_.typeShow == "1" &&
+                  "getMedia_" in post &&
+                  post.getMedia_ &&
+                  "guid" in post.getMedia_ ? (
+                  <article className="block-post-article" key={post.id}>
+                    <div className="post-wrapper">
+                      <div className="featured-image">
+                        <img
+                          style={{
+                            borderRadius: thumbnail_.borderRadius + "px",
+                          }}
+                          src={post.getMedia_.guid.rendered}
+                        />
+                      </div>
+                      <div className="post-content">
+                        {showCate_.enable && (
+                          <p className="post-category">
+                            {this.showCateFn(post.categories)}
+                          </p>
+                        )}
+                        <RichText.Content
+                          className="post-heading"
+                          tagName={heading_.tag}
+                          value={__(post.title.rendered, "zita-blocks")}
+                          style={{
+                            fontSize: heading_.fontSize,
+                            color: heading_.color,
+                          }}
+                        />
+                        <div className="post-meta-all">
+                          {postAuthor && (
+                            <p
+                              style={{ color: meta_style_.color }}
+                              className="post-author"
+                            >
+                              {postAuthor}
+                            </p>
+                          )}
+                          {date_.enable && (
+                            <>
+                              {postAuthor && <span className="slash">/</span>}
+                              <p
+                                style={{ color: meta_style_.color }}
+                                className="post-date"
+                              >
+                                {this.dateFormate(post.date)}
+                              </p>
+                            </>
+                          )}
+                          {date_.last_modified && (
+                            <>
+                              {(postAuthor || date_.enable) && (
+                                <span className="slash">/</span>
+                              )}
+                              <p
+                                style={{ color: meta_style_.color }}
+                                className="post-date-last-modified"
+                              >
+                                <span>Modified: </span>
+                                {this.dateFormate(post.modified)}
+                              </p>
+                            </>
+                          )}
+                        </div>
+                        {excerpt_.enable && (
+                          <p
+                            style={{ color: excerpt_.color }}
+                            className="post-excerpt"
+                          >
+                            {this.excerptWords(
+                              excerpt_.words,
+                              post.excerpt.rendered
+                            )}
+                          </p>
+                        )}
+                        {showTag_.enable && (
+                          <p
+                            style={{ color: meta_style_.color }}
+                            className="post-tags"
+                          >
+                            {this.showTagsFn(post.tags)}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </article>
+                ) : (
                   <article className="block-post-article" key={post.id}>
                     <div className="post-wrapper">
                       {"getMedia_" in post &&
                         post.getMedia_ &&
                         "guid" in post.getMedia_ &&
-                        thumbnail_.enable && (
+                        thumbnail_.typeShow == "all" && (
                           <div className="featured-image">
                             <img
                               style={{

@@ -23,6 +23,7 @@ wpgt_register_block_fn('zita-post',  [
             "type" => "array",
             "default" => [[
                 "enable" => true,
+                "typeShow" => 'all',
                 "borderRadius" => 10
             ]]
         ],
