@@ -24,6 +24,7 @@ function mytheme_blocks_render_latest_post_block($attr)
 
         $postThumbnail = $attr['thumbnail'][0]['typeShow'];
         $metaStyleColor = isset($attr['meta_style'][0]['color']) && $attr['meta_style'][0]['color']  ? $attr['meta_style'][0]['color'] : "";
+        $metaStyleFontSize = isset($attr['meta_style'][0]['fontSize']) && $attr['meta_style'][0]['fontSize']  ? $attr['meta_style'][0]['fontSize'] : "";
         $metaLeftBorder = isset($attr['meta_style'][0]['left_border']) && $attr['meta_style'][0]['left_border']  ? "left-border" : "";
         $metashowCate = isset($attr['showCate'][0]['enable']) && $attr['showCate'][0]['enable']  ? true : false;
         $metashowshowTag = isset($attr['showTag'][0]['enable']) && $attr['showTag'][0]['enable']  ? true : false;
@@ -76,28 +77,28 @@ function mytheme_blocks_render_latest_post_block($attr)
 
                 $postHtml .= '<div class="post-meta-all">';
                 if ($postAuthor) {
-                    $postHtml .= "<p style='color:" . $metaStyleColor . "' class='post-author'>";
+                    $postHtml .= "<p style='font-size:" . $metaStyleFontSize . "px;color:" . $metaStyleColor . ";' class='post-author'>";
                     $postHtml .= "<a target='_blank' href='" . get_author_posts_url(get_the_author_meta('ID')) . "'>";
                     $postHtml .=  get_the_author();
                     $postHtml .= "</a></p>";
                 }
 
                 if ($postDate) {
-                    $postHtml .= $postAuthor ? '<span class="slash">/</span>' : '';
+                    $postHtml .= $postAuthor ? '<span style="font-size:' . $metaStyleFontSize . ';" class="slash">/</span>' : '';
                     $dateYear =   get_the_date('Y');
                     $dateMonth =   get_the_date('m');
                     $dateDay =   get_the_date('j');
-                    $postHtml .= "<p style='color:" . $metaStyleColor . "' class='post-date'>";
+                    $postHtml .= "<p style='font-size:" . $metaStyleFontSize . "px;color:" . $metaStyleColor . ";' class='post-date'>";
                     $postHtml .= "<a target='_blank' href='" . get_day_link($dateYear, $dateMonth, $dateDay) . "'>";
                     $postHtml .=  get_the_date();
                     $postHtml .= "</a></p>";
                 }
                 if ($postDateModify) {
-                    $postHtml .= $postAuthor || $postDate ? '<span class="slash">/</span>' : '';
+                    $postHtml .= $postAuthor || $postDate ? '<span style="font-size:' . $metaStyleFontSize . ';" class="slash">/</span>' : '';
                     $dateYear =   get_the_modified_date('Y');
                     $dateMonth =   get_the_modified_date('m');
                     $dateDay =   get_the_modified_date('j');
-                    $postHtml .= "<p style='color:" . $metaStyleColor . "' class='post-date-last-modified'>";
+                    $postHtml .= "<p style='font-size:" . $metaStyleFontSize . "px;color:" . $metaStyleColor . ";' class='post-date-last-modified'>";
                     $postHtml .= "Modified:<a target='_blank' href='" . get_day_link($dateYear, $dateMonth, $dateDay) . "'>";
                     $postHtml .=  get_the_modified_date();
                     $postHtml .= "</a></p>";
@@ -169,28 +170,28 @@ function mytheme_blocks_render_latest_post_block($attr)
 
                 $postHtml .= '<div class="post-meta-all">';
                 if ($postAuthor) {
-                    $postHtml .= "<p style='color:" . $metaStyleColor . "' class='post-author'>";
+                    $postHtml .= "<p style='color:" . $metaStyleColor . ";font-size:" . $metaStyleFontSize . "px;' class='post-author'>";
                     $postHtml .= "<a target='_blank' href='" . get_author_posts_url(get_the_author_meta('ID')) . "'>";
                     $postHtml .=  get_the_author();
                     $postHtml .= "</a></p>";
                 }
 
                 if ($postDate) {
-                    $postHtml .= $postAuthor ? '<span class="slash">/</span>' : '';
+                    $postHtml .= $postAuthor ? '<span style="font-size:' . $metaStyleFontSize . ';" class="slash">/</span>' : '';
                     $dateYear =   get_the_date('Y');
                     $dateMonth =   get_the_date('m');
                     $dateDay =   get_the_date('j');
-                    $postHtml .= "<p style='color:" . $metaStyleColor . "' class='post-date'>";
+                    $postHtml .= "<p style='color:" . $metaStyleColor . ";font-size:" . $metaStyleFontSize . "px;' class='post-date'>";
                     $postHtml .= "<a target='_blank' href='" . get_day_link($dateYear, $dateMonth, $dateDay) . "'>";
                     $postHtml .=  get_the_date();
                     $postHtml .= "</a></p>";
                 }
                 if ($postDateModify) {
-                    $postHtml .= $postAuthor || $postDate ? '<span class="slash">/</span>' : '';
+                    $postHtml .= $postAuthor || $postDate ? '<span style="font-size:' . $metaStyleFontSize . ';" class="slash">/</span>' : '';
                     $dateYear =   get_the_modified_date('Y');
                     $dateMonth =   get_the_modified_date('m');
                     $dateDay =   get_the_modified_date('j');
-                    $postHtml .= "<p style='color:" . $metaStyleColor . "' class='post-date-last-modified'>";
+                    $postHtml .= "<p style='color:" . $metaStyleColor . ";font-size:" . $metaStyleFontSize . "px;' class='post-date-last-modified'>";
                     $postHtml .= "Modified:<a target='_blank' href='" . get_day_link($dateYear, $dateMonth, $dateDay) . "'>";
                     $postHtml .=  get_the_modified_date();
                     $postHtml .= "</a></p>";

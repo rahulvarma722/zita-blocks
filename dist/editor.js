@@ -7512,7 +7512,8 @@ var Edit = /*#__PURE__*/function (_Component) {
       var meta_style_ = meta_style[0];
       var title_ = title[0];
       var showTag_ = showTag[0];
-      var showCate_ = showCate[0]; // category init
+      var showCate_ = showCate[0];
+      console.log("meta_style_ ->  ", meta_style_.fontSize); // category init
 
       var cateGory = [{
         value: "all",
@@ -7751,6 +7752,13 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(e) {
           return _this2.updateObj("showTag", "enable", showTag, e);
         }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: meta_style_.fontSize,
+        min: 1,
+        max: 25,
+        onChange: function onChange(e) {
+          _this2.updateObj("meta_style", "fontSize", meta_style, e);
+        }
       }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
         value: "color" in meta_style_ ? meta_style_.color : "",
         onChange: function onChange(color) {
@@ -7810,21 +7818,30 @@ var Edit = /*#__PURE__*/function (_Component) {
           className: "post-meta-all"
         }, postAuthor && wp.element.createElement("p", {
           style: {
-            color: meta_style_.color
+            color: meta_style_.color,
+            fontSize: meta_style_.fontSize + "px"
           },
           className: "post-author"
         }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, postAuthor && wp.element.createElement("span", {
+          style: {
+            fontSize: meta_style_.fontSize
+          },
           className: "slash"
         }, "/"), wp.element.createElement("p", {
           style: {
-            color: meta_style_.color
+            color: meta_style_.color,
+            fontSize: meta_style_.fontSize + "px"
           },
           className: "post-date"
         }, _this2.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (postAuthor || date_.enable) && wp.element.createElement("span", {
+          style: {
+            fontSize: meta_style_.fontSize
+          },
           className: "slash"
         }, "/"), wp.element.createElement("p", {
           style: {
-            color: meta_style_.color
+            color: meta_style_.color,
+            fontSize: meta_style_.fontSize + "px"
           },
           className: "post-date-last-modified"
         }, wp.element.createElement("span", null, "Modified: "), _this2.dateFormate(post.modified)))), excerpt_.enable && wp.element.createElement("p", {
@@ -7865,21 +7882,30 @@ var Edit = /*#__PURE__*/function (_Component) {
           className: "post-meta-all"
         }, postAuthor && wp.element.createElement("p", {
           style: {
-            color: meta_style_.color
+            color: meta_style_.color,
+            fontSize: meta_style_.fontSize
           },
           className: "post-author"
         }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, postAuthor && wp.element.createElement("span", {
+          style: {
+            fontSize: meta_style_.fontSize
+          },
           className: "slash"
         }, "/"), wp.element.createElement("p", {
           style: {
-            color: meta_style_.color
+            color: meta_style_.color,
+            fontSize: meta_style_.fontSize
           },
           className: "post-date"
         }, _this2.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (postAuthor || date_.enable) && wp.element.createElement("span", {
+          style: {
+            fontSize: meta_style_.fontSize
+          },
           className: "slash"
         }, "/"), wp.element.createElement("p", {
           style: {
-            color: meta_style_.color
+            color: meta_style_.color,
+            fontSize: meta_style_.fontSize
           },
           className: "post-date-last-modified"
         }, wp.element.createElement("span", null, "Modified: "), _this2.dateFormate(post.modified)))), excerpt_.enable && wp.element.createElement("p", {

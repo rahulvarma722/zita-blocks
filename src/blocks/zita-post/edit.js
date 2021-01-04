@@ -131,6 +131,7 @@ class Edit extends Component {
     let title_ = title[0];
     let showTag_ = showTag[0];
     let showCate_ = showCate[0];
+    console.log("meta_style_ ->  ", meta_style_.fontSize);
     // category init
     let cateGory = [{ value: "all", label: "All" }];
     if (category && category.length) {
@@ -462,6 +463,17 @@ class Edit extends Component {
               onChange={(e) => this.updateObj("showTag", "enable", showTag, e)}
             />
             <p>
+              <strong>{__("Font Size", "zita-blocks")}</strong>
+            </p>
+            <RangeControl
+              value={meta_style_.fontSize}
+              min={1}
+              max={25}
+              onChange={(e) => {
+                this.updateObj("meta_style", "fontSize", meta_style, e);
+              }}
+            />
+            <p>
               <strong>{__("Color", "zita-blocks")}</strong>
             </p>
             <ColorPalette
@@ -539,7 +551,10 @@ class Edit extends Component {
                         <div className="post-meta-all">
                           {postAuthor && (
                             <p
-                              style={{ color: meta_style_.color }}
+                              style={{
+                                color: meta_style_.color,
+                                fontSize: meta_style_.fontSize + "px",
+                              }}
                               className="post-author"
                             >
                               {postAuthor}
@@ -547,9 +562,19 @@ class Edit extends Component {
                           )}
                           {date_.enable && (
                             <>
-                              {postAuthor && <span className="slash">/</span>}
+                              {postAuthor && (
+                                <span
+                                  style={{ fontSize: meta_style_.fontSize }}
+                                  className="slash"
+                                >
+                                  /
+                                </span>
+                              )}
                               <p
-                                style={{ color: meta_style_.color }}
+                                style={{
+                                  color: meta_style_.color,
+                                  fontSize: meta_style_.fontSize + "px",
+                                }}
                                 className="post-date"
                               >
                                 {this.dateFormate(post.date)}
@@ -559,10 +584,18 @@ class Edit extends Component {
                           {date_.last_modified && (
                             <>
                               {(postAuthor || date_.enable) && (
-                                <span className="slash">/</span>
+                                <span
+                                  style={{ fontSize: meta_style_.fontSize }}
+                                  className="slash"
+                                >
+                                  /
+                                </span>
                               )}
                               <p
-                                style={{ color: meta_style_.color }}
+                                style={{
+                                  color: meta_style_.color,
+                                  fontSize: meta_style_.fontSize + "px",
+                                }}
                                 className="post-date-last-modified"
                               >
                                 <span>Modified: </span>
@@ -627,7 +660,10 @@ class Edit extends Component {
                         <div className="post-meta-all">
                           {postAuthor && (
                             <p
-                              style={{ color: meta_style_.color }}
+                              style={{
+                                color: meta_style_.color,
+                                fontSize: meta_style_.fontSize,
+                              }}
                               className="post-author"
                             >
                               {postAuthor}
@@ -635,9 +671,19 @@ class Edit extends Component {
                           )}
                           {date_.enable && (
                             <>
-                              {postAuthor && <span className="slash">/</span>}
+                              {postAuthor && (
+                                <span
+                                  style={{ fontSize: meta_style_.fontSize }}
+                                  className="slash"
+                                >
+                                  /
+                                </span>
+                              )}
                               <p
-                                style={{ color: meta_style_.color }}
+                                style={{
+                                  color: meta_style_.color,
+                                  fontSize: meta_style_.fontSize,
+                                }}
                                 className="post-date"
                               >
                                 {this.dateFormate(post.date)}
@@ -647,10 +693,18 @@ class Edit extends Component {
                           {date_.last_modified && (
                             <>
                               {(postAuthor || date_.enable) && (
-                                <span className="slash">/</span>
+                                <span
+                                  style={{ fontSize: meta_style_.fontSize }}
+                                  className="slash"
+                                >
+                                  /
+                                </span>
                               )}
                               <p
-                                style={{ color: meta_style_.color }}
+                                style={{
+                                  color: meta_style_.color,
+                                  fontSize: meta_style_.fontSize,
+                                }}
                                 className="post-date-last-modified"
                               >
                                 <span>Modified: </span>
