@@ -115,8 +115,7 @@
               let returnData = fns._ajaxFunction(data_, "json");
               // replace data setting after result success
               returnData.success(function (response) {
-                console.log(response);
-
+                // console.log(response);
                 if (typeof response == "object" && "html" in response) {
                   setTimeout(() => loader_.removeClass("active"), 500);
                   getDataWrapper

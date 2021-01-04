@@ -10,6 +10,7 @@ import {
   RangeControl,
   ToggleControl,
   SelectControl,
+  ColorPicker,
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { decodeEntities } from "@wordpress/html-entities";
@@ -143,7 +144,7 @@ class Edit extends Component {
     return (
       <>
         <InspectorControls>
-          <PanelBody title="Post Title" initialOpen={false}>
+          <PanelBody title="Block Title" initialOpen={false}>
             <ToggleControl
               label={
                 title_.enable
@@ -173,6 +174,56 @@ class Edit extends Component {
                     this.updateObj("title", "color", title, color)
                   }
                 />
+                <p>
+                  <strong>{__("Background Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPicker
+                  color={title_.backgroundColor}
+                  onChangeComplete={(colorBg) => {
+                    let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                    this.updateObj("title", "backgroundColor", title, color);
+                  }}
+                />
+                <p>
+                  <strong>{__("Max Width %", "zita-blocks")}</strong>
+                </p>
+                <RangeControl
+                  value={title_.width}
+                  min={1}
+                  max={100}
+                  onChange={(e) => {
+                    this.updateObj("title", "width", title, e);
+                  }}
+                />
+                <p>
+                  <strong>{__("Title Alignment", "zita-blocks")}</strong>
+                </p>
+                <div class="zita-switcher-button-section">
+                  <span
+                    onClick={() => {
+                      this.updateObj("title", "align", title, "left");
+                    }}
+                    className={title_.align == "left" && "selected"}
+                  >
+                    Left
+                  </span>
+                  <span
+                    onClick={() => {
+                      this.updateObj("title", "align", title, "center");
+                    }}
+                    className={title_.align == "center" && "selected"}
+                  >
+                    Center
+                  </span>
+                  <span
+                    onClick={() => {
+                      this.updateObj("title", "align", title, "flex-end");
+                    }}
+                    className={title_.align == "flex-end" && "selected"}
+                  >
+                    Right
+                  </span>
+                </div>
               </>
             )}
           </PanelBody>
@@ -424,18 +475,27 @@ class Edit extends Component {
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
           <div className="zita-block-post">
             {title_.enable && (
-              <RichText
+              <div
                 className="zita-block-post-title"
-                key="editable"
-                tagName="h1"
-                placeholder={__("My block title", "zita-blocks")}
-                value={title_.value}
                 style={{
-                  fontSize: title_.fontSize + "px",
-                  color: title_.color,
+                  justifyContent: title_.align,
+                  borderColor: title_.backgroundColor,
                 }}
-                onChange={(e) => this.updateObj("title", "value", title, e)}
-              />
+              >
+                <RichText
+                  key="editable"
+                  tagName="h1"
+                  placeholder={__("My block title", "zita-blocks")}
+                  value={title_.value}
+                  style={{
+                    fontSize: title_.fontSize + "px",
+                    color: title_.color,
+                    backgroundColor: title_.backgroundColor,
+                    width: title_.width + "%",
+                  }}
+                  onChange={(e) => this.updateObj("title", "value", title, e)}
+                />
+              </div>
             )}
             <div
               className={`column-count column-count-${

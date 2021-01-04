@@ -816,10 +816,18 @@
   width: 100%;
 }
 .zita-block-post .zita-block-post-title {
-  line-height: 1.5;
+  display: flex;
   margin: 6px 0;
+  border-bottom: 2px solid;
+}
+.zita-block-post .zita-block-post-title h1 {
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
   letter-spacing: 1px;
   font-weight: 600;
+  min-width: fit-content;
+  padding: 0 8px;
 }
 
 .block-post-article .post-content .post-heading {

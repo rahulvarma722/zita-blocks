@@ -19,8 +19,12 @@ wpgt_register_block_fn('zita-post',  [
             "default" => [[
                 'enable' => true,
                 "value" => "My block title",
-                "color" => "black",
-                "fontSize" => 30
+                "fontSize" => 30,
+                "color" => "white",
+                "backgroundColor" => "black",
+                "align" => "left",
+                // "customWidth" => false,
+                "width" => 10,
             ]]
         ],
         "thumbnail" => [
