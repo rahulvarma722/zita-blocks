@@ -6334,14 +6334,14 @@ var Edit = /*#__PURE__*/function (_Component) {
             color: meta_style_.color
           },
           className: "post-author"
-        }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("span", {
+        }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, postAuthor && wp.element.createElement("span", {
           className: "slash"
         }, "/"), wp.element.createElement("p", {
           style: {
             color: meta_style_.color
           },
           className: "post-date"
-        }, _this2.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("span", {
+        }, _this2.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (postAuthor || date_.enable) && wp.element.createElement("span", {
           className: "slash"
         }, "/"), wp.element.createElement("p", {
           style: {
@@ -7587,7 +7587,28 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           _this2.updateObj("title", "backgroundColor", title, color);
         }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Max Width %", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }), wp.element.createElement("div", {
+        className: "flex-section"
+      }, wp.element.createElement("p", null, "Font Weight"), wp.element.createElement("select", {
+        value: title_.fontWeight,
+        onChange: function onChange(e) {
+          _this2.updateObj("title", "fontWeight", title, e.target.value);
+        }
+      }, wp.element.createElement("option", {
+        value: "100"
+      }, "100"), wp.element.createElement("option", {
+        value: "400"
+      }, "400"), wp.element.createElement("option", {
+        value: "500"
+      }, "500"), wp.element.createElement("option", {
+        value: "700"
+      }, "700"), wp.element.createElement("option", {
+        value: "900"
+      }, "900"), wp.element.createElement("option", {
+        value: "bold"
+      }, "Bold"), wp.element.createElement("option", {
+        value: "bolder"
+      }, "Bolder"))), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Max Width %", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: title_.width,
         min: 1,
         max: 100,
@@ -7752,8 +7773,36 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(e) {
           return _this2.updateObj("showCate", "enable", showCate, e);
         }
-      }), showCate_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Categories Custom Color and Font Size", "zita-blocks"),
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Last Modified Date", "zita-blocks"),
+        checked: date_.last_modified,
+        onChange: function onChange(e) {
+          return _this2.updateObj("date", "last_modified", date, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Tag", "zita-blocks"),
+        checked: showTag_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("showTag", "enable", showTag, e);
+        }
+      }), wp.element.createElement("p", {
+        class: "block-inside"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Meta Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: meta_style_.fontSize,
+        min: 1,
+        max: 25,
+        onChange: function onChange(e) {
+          _this2.updateObj("meta_style", "fontSize", meta_style, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: "color" in meta_style_ ? meta_style_.color : "",
+        onChange: function onChange(color) {
+          return _this2.updateObj("meta_style", "color", meta_style, color);
+        }
+      }), showCate_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
+        class: "block-inside"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Enable", "zita-blocks"),
         checked: showCate_.customColor,
         onChange: function onChange(e) {
           return _this2.updateObj("showCate", "customColor", showCate, e);
@@ -7777,31 +7826,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           _this2.updateObj("showCate", "backgroundColor", showCate, color);
         }
-      }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Last Modified Date", "zita-blocks"),
-        checked: date_.last_modified,
-        onChange: function onChange(e) {
-          return _this2.updateObj("date", "last_modified", date, e);
-        }
-      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Tag", "zita-blocks"),
-        checked: showTag_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("showTag", "enable", showTag, e);
-        }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
-        value: meta_style_.fontSize,
-        min: 1,
-        max: 25,
-        onChange: function onChange(e) {
-          _this2.updateObj("meta_style", "fontSize", meta_style, e);
-        }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
-        value: "color" in meta_style_ ? meta_style_.color : "",
-        onChange: function onChange(color) {
-          return _this2.updateObj("meta_style", "color", meta_style, color);
-        }
-      }))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
+      }))))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
         className: "zita-block-post"
       }, title_.enable && wp.element.createElement("div", {
         className: "zita-block-post-title",
@@ -7818,6 +7843,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           fontSize: title_.fontSize + "px",
           color: title_.color,
           backgroundColor: title_.backgroundColor,
+          fontWeight: title_.fontWeight,
           width: title_.width + "%"
         },
         onChange: function onChange(e) {

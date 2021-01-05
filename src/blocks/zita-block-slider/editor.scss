@@ -239,20 +239,25 @@
   margin: 12px 0;
   span {
     flex: 1;
-    background: #888888;
     text-align: center;
-    padding: 10px;
-    color: white;
+    padding: 6px 9px;
+    color: #504f4f;
     cursor: pointer;
     position: relative;
+    border: 1px solid grey;
+    border-left: none;
+    &:first-child{
+      border-left: 1px solid grey;
+    }
     &.selected {
-      background-color: #0e0e0e;
+      background-color: #dcdcdc;
     }
   }
 }
 .zita-alignment {
   display: flex;
   border: 1px solid #bfbfbf;
+  margin: 5px 0;
   > div {
     flex: 1;
     border-right: 1px solid #bfbfbf;
@@ -260,15 +265,15 @@
       border: none;
     }
     span {
-      color: grey;
-      padding: 20px 0;
+      color: #716f6f;
+      padding: 15px 0;
       justify-content: center;
       align-items: center;
       display: flex;
       cursor: pointer;
       width: 100%;
       &.active {
-        background: black;
+        background: #a7a6a6;
         color: white;
       }
     }

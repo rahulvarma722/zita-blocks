@@ -25,6 +25,7 @@ wpgt_register_block_fn('zita-post',  [
                 "align" => "left",
                 // "customWidth" => false,
                 "width" => 10,
+                "fontWeight" => 600
             ]]
         ],
         "thumbnail" => [

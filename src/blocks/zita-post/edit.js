@@ -168,36 +168,6 @@ class Edit extends Component {
             />
             {title_.enable && (
               <>
-                {/* <p>
-                  <strong>{__("Title Alignment", "zita-blocks")}</strong>
-                </p>
-                <div class="zita-switcher-button-section">
-                  <span
-                    onClick={() => {
-                      this.updateObj("title", "align", title, "left");
-                    }}
-                    className={title_.align == "left" && "selected"}
-                  >
-                    <i className="dashicons dashicons-editor-alignleft"></i>
-                  </span>
-                  <span
-                    onClick={() => {
-                      this.updateObj("title", "align", title, "center");
-                    }}
-                    className={title_.align == "center" && "selected"}
-                  >
-                    <i className="dashicons dashicons-editor-aligncenter"></i>
-                  </span>
-                  <span
-                    onClick={() => {
-                      this.updateObj("title", "align", title, "flex-end");
-                    }}
-                    className={title_.align == "flex-end" && "selected"}
-                  >
-                    <i className="dashicons dashicons-editor-alignright"></i>
-                  </span>
-                </div> */}
-
                 <p>
                   <strong>{__("Title Alignment", "zita-blocks")}</strong>
                 </p>
@@ -262,6 +232,30 @@ class Edit extends Component {
                     this.updateObj("title", "backgroundColor", title, color);
                   }}
                 />
+                {/* font weight */}
+                <div className="flex-section">
+                  <p>Font Weight</p>
+                  <select
+                    value={title_.fontWeight}
+                    onChange={(e) => {
+                      this.updateObj(
+                        "title",
+                        "fontWeight",
+                        title,
+                        e.target.value
+                      );
+                    }}
+                  >
+                    <option value="100">100</option>
+                    <option value="400">400</option>
+                    <option value="500">500</option>
+                    <option value="700">700</option>
+                    <option value="900">900</option>
+                    <option value="bold">Bold</option>
+                    <option value="bolder">Bolder</option>
+                  </select>
+                </div>
+                {/* font weight */}
                 <p>
                   <strong>{__("Max Width %", "zita-blocks")}</strong>
                 </p>
@@ -433,17 +427,6 @@ class Edit extends Component {
               </option>
             </select>
 
-            {/* <ToggleControl
-              label={
-                thumbnail_.enable
-                  ? __("Hide", "zita-blocks")
-                  : __("Show", "zita-blocks")
-              }
-              checked={thumbnail_.enable}
-              onChange={(e) =>
-                this.updateObj("thumbnail", "enable", thumbnail, e)
-              }
-            /> */}
             {(thumbnail_.typeShow == "all" || thumbnail_.typeShow == "1") && (
               <>
                 <p>
@@ -499,13 +482,46 @@ class Edit extends Component {
                 this.updateObj("showCate", "enable", showCate, e)
               }
             />
+
+            {/* show last date */}
+            <ToggleControl
+              label={__("Last Modified Date", "zita-blocks")}
+              checked={date_.last_modified}
+              onChange={(e) => this.updateObj("date", "last_modified", date, e)}
+            />
+            <ToggleControl
+              label={__("Tag", "zita-blocks")}
+              checked={showTag_.enable}
+              onChange={(e) => this.updateObj("showTag", "enable", showTag, e)}
+            />
+            <p class="block-inside">{__("Meta Style", "zita-blocks")}</p>
+            <p>
+              <strong>{__("Font Size", "zita-blocks")}</strong>
+            </p>
+            <RangeControl
+              value={meta_style_.fontSize}
+              min={1}
+              max={25}
+              onChange={(e) => {
+                this.updateObj("meta_style", "fontSize", meta_style, e);
+              }}
+            />
+            <p>
+              <strong>{__("Color", "zita-blocks")}</strong>
+            </p>
+            <ColorPalette
+              value={"color" in meta_style_ ? meta_style_.color : ""}
+              onChange={(color) =>
+                this.updateObj("meta_style", "color", meta_style, color)
+              }
+            />
             {showCate_.enable && (
               <>
+                <p class="block-inside">
+                  {__("Category Custom Style", "zita-blocks")}
+                </p>
                 <ToggleControl
-                  label={__(
-                    "Categories Custom Color and Font Size",
-                    "zita-blocks"
-                  )}
+                  label={__("Enable", "zita-blocks")}
                   checked={showCate_.customColor}
                   onChange={(e) =>
                     this.updateObj("showCate", "customColor", showCate, e)
@@ -552,37 +568,6 @@ class Edit extends Component {
                 )}
               </>
             )}
-            {/* show last date */}
-            <ToggleControl
-              label={__("Last Modified Date", "zita-blocks")}
-              checked={date_.last_modified}
-              onChange={(e) => this.updateObj("date", "last_modified", date, e)}
-            />
-            <ToggleControl
-              label={__("Tag", "zita-blocks")}
-              checked={showTag_.enable}
-              onChange={(e) => this.updateObj("showTag", "enable", showTag, e)}
-            />
-            <p>
-              <strong>{__("Font Size", "zita-blocks")}</strong>
-            </p>
-            <RangeControl
-              value={meta_style_.fontSize}
-              min={1}
-              max={25}
-              onChange={(e) => {
-                this.updateObj("meta_style", "fontSize", meta_style, e);
-              }}
-            />
-            <p>
-              <strong>{__("Color", "zita-blocks")}</strong>
-            </p>
-            <ColorPalette
-              value={"color" in meta_style_ ? meta_style_.color : ""}
-              onChange={(color) =>
-                this.updateObj("meta_style", "color", meta_style, color)
-              }
-            />
           </PanelBody>
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
@@ -604,6 +589,7 @@ class Edit extends Component {
                     fontSize: title_.fontSize + "px",
                     color: title_.color,
                     backgroundColor: title_.backgroundColor,
+                    fontWeight: title_.fontWeight,
                     width: title_.width + "%",
                   }}
                   onChange={(e) => this.updateObj("title", "value", title, e)}
