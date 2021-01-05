@@ -689,7 +689,7 @@
   font-size: 12px;
   text-transform: capitalize;
   font-weight: 500;
-  line-height: 13px;
+  line-height: 1;
 }
 #zita-block-post #post-wrapper .post-content p.post-category span:nth-child(n+1) {
   background: #1a609c;

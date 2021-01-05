@@ -71,7 +71,11 @@ wpgt_register_block_fn('zita-post',  [
         'showTag' => [
             "type" => "array",
             "default" => [[
-                "enable" => true
+                "enable" => true,
+                "customColor" => false,
+                "color" => "white",
+                "backgroundColor" => "black",
+                "fontSize" => 12
             ]]
         ],
         'excerpt' => [

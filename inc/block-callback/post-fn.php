@@ -62,8 +62,12 @@ function mytheme_blocks_render_latest_post_block($attr)
                     $postHtml .= '<p class="post-category">';
                     $category_ = get_the_category();
                     if (!empty($category_)) {
+                        $catestyle = '';
+                        if ($attr['showCate'][0]['customColor']) {
+                            $catestyle = 'font-size:' . $attr['showCate'][0]['fontSize'] . 'px;background-color:' . $attr['showCate'][0]['backgroundColor'] . ';color:' . $attr['showCate'][0]['color'] . ';';
+                        }
                         foreach ($category_ as $cateValue) {
-                            $postHtml .= '<span>';
+                            $postHtml .= '<span style="' . $catestyle . '">';
                             $postHtml .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
                             $postHtml .= '</span>';
                         }
@@ -155,8 +159,12 @@ function mytheme_blocks_render_latest_post_block($attr)
                     $postHtml .= '<p class="post-category">';
                     $category_ = get_the_category();
                     if (!empty($category_)) {
+                        $catestyle = '';
+                        if ($attr['showCate'][0]['customColor']) {
+                            $catestyle = 'font-size:' . $attr['showCate'][0]['fontSize'] . 'px;background-color:' . $attr['showCate'][0]['backgroundColor'] . ';color:' . $attr['showCate'][0]['color'] . ';';
+                        }
                         foreach ($category_ as $cateValue) {
-                            $postHtml .= '<span>';
+                            $postHtml .= '<span style="' . $catestyle . '">';
                             $postHtml .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
                             $postHtml .= '</span>';
                         }

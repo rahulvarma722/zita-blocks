@@ -72,7 +72,19 @@ class Edit extends Component {
       });
     }
     if (returR.length) {
-      return returR.map((returnH) => <span>{returnH}</span>);
+      let getCateStyle = this.props.attributes.showCate;
+      let putCateStyle = null;
+
+      if (getCateStyle[0].customColor) {
+        putCateStyle = {
+          color: getCateStyle[0].color,
+          backgroundColor: getCateStyle[0].backgroundColor,
+          fontSize: getCateStyle[0].fontSize + "px",
+        };
+      }
+      return returR.map((returnH) => (
+        <span style={putCateStyle && putCateStyle}>{returnH}</span>
+      ));
     }
   };
   showTagsFn = (tags_) => {
@@ -131,7 +143,6 @@ class Edit extends Component {
     let title_ = title[0];
     let showTag_ = showTag[0];
     let showCate_ = showCate[0];
-    console.log("meta_style_ ->  ", meta_style_.fontSize);
     // category init
     let cateGory = [{ value: "all", label: "All" }];
     if (category && category.length) {
@@ -157,6 +168,72 @@ class Edit extends Component {
             />
             {title_.enable && (
               <>
+                {/* <p>
+                  <strong>{__("Title Alignment", "zita-blocks")}</strong>
+                </p>
+                <div class="zita-switcher-button-section">
+                  <span
+                    onClick={() => {
+                      this.updateObj("title", "align", title, "left");
+                    }}
+                    className={title_.align == "left" && "selected"}
+                  >
+                    <i className="dashicons dashicons-editor-alignleft"></i>
+                  </span>
+                  <span
+                    onClick={() => {
+                      this.updateObj("title", "align", title, "center");
+                    }}
+                    className={title_.align == "center" && "selected"}
+                  >
+                    <i className="dashicons dashicons-editor-aligncenter"></i>
+                  </span>
+                  <span
+                    onClick={() => {
+                      this.updateObj("title", "align", title, "flex-end");
+                    }}
+                    className={title_.align == "flex-end" && "selected"}
+                  >
+                    <i className="dashicons dashicons-editor-alignright"></i>
+                  </span>
+                </div> */}
+
+                <p>
+                  <strong>{__("Title Alignment", "zita-blocks")}</strong>
+                </p>
+                <div className="zita-alignment">
+                  <div>
+                    <span
+                      onClick={() => {
+                        this.updateObj("title", "align", title, "left");
+                      }}
+                      className={`dashicons dashicons-editor-alignleft ${
+                        title_.align == "left" && "active"
+                      }`}
+                    ></span>
+                  </div>
+                  <div>
+                    <span
+                      onClick={() => {
+                        this.updateObj("title", "align", title, "center");
+                      }}
+                      className={`dashicons dashicons-editor-aligncenter ${
+                        title_.align == "center" && "active"
+                      }`}
+                    ></span>
+                  </div>
+                  <div>
+                    <span
+                      onClick={() => {
+                        this.updateObj("title", "align", title, "flex-end");
+                      }}
+                      className={`dashicons dashicons-editor-alignright ${
+                        title_.align == "flex-end" && "active"
+                      }`}
+                    ></span>
+                  </div>
+                </div>
+
                 <RangeControl
                   label={__("Font Size", "zita-blocks")}
                   value={title_.fontSize}
@@ -196,35 +273,6 @@ class Edit extends Component {
                     this.updateObj("title", "width", title, e);
                   }}
                 />
-                <p>
-                  <strong>{__("Title Alignment", "zita-blocks")}</strong>
-                </p>
-                <div class="zita-switcher-button-section">
-                  <span
-                    onClick={() => {
-                      this.updateObj("title", "align", title, "left");
-                    }}
-                    className={title_.align == "left" && "selected"}
-                  >
-                    Left
-                  </span>
-                  <span
-                    onClick={() => {
-                      this.updateObj("title", "align", title, "center");
-                    }}
-                    className={title_.align == "center" && "selected"}
-                  >
-                    Center
-                  </span>
-                  <span
-                    onClick={() => {
-                      this.updateObj("title", "align", title, "flex-end");
-                    }}
-                    className={title_.align == "flex-end" && "selected"}
-                  >
-                    Right
-                  </span>
-                </div>
               </>
             )}
           </PanelBody>
@@ -451,6 +499,59 @@ class Edit extends Component {
                 this.updateObj("showCate", "enable", showCate, e)
               }
             />
+            {showCate_.enable && (
+              <>
+                <ToggleControl
+                  label={__(
+                    "Categories Custom Color and Font Size",
+                    "zita-blocks"
+                  )}
+                  checked={showCate_.customColor}
+                  onChange={(e) =>
+                    this.updateObj("showCate", "customColor", showCate, e)
+                  }
+                />
+                {showCate_.customColor && (
+                  <>
+                    <p>
+                      <strong>{__("Font Size", "zita-blocks")}</strong>
+                    </p>
+                    <RangeControl
+                      value={showCate_.fontSize}
+                      min={1}
+                      max={30}
+                      onChange={(e) => {
+                        this.updateObj("showCate", "fontSize", showCate, e);
+                      }}
+                    />
+                    <p>
+                      <strong>{__("Color", "zita-blocks")}</strong>
+                    </p>
+                    <ColorPalette
+                      value={showCate_.color}
+                      onChange={(color) =>
+                        this.updateObj("showCate", "color", showCate, color)
+                      }
+                    />
+                    <p>
+                      <strong>{__("Background Color", "zita-blocks")}</strong>
+                    </p>
+                    <ColorPicker
+                      color={showCate_.backgroundColor}
+                      onChangeComplete={(colorBg) => {
+                        let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                        this.updateObj(
+                          "showCate",
+                          "backgroundColor",
+                          showCate,
+                          color
+                        );
+                      }}
+                    />
+                  </>
+                )}
+              </>
+            )}
             {/* show last date */}
             <ToggleControl
               label={__("Last Modified Date", "zita-blocks")}
