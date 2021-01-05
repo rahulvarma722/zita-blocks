@@ -240,14 +240,14 @@
   span {
     flex: 1;
     text-align: center;
-    padding: 6px 9px;
-    color: #504f4f;
+    padding: 5px 9px;
+    color: #504F4F;
     cursor: pointer;
     position: relative;
-    border: 1px solid grey;
+    border: 1px solid #DCDBDB;
     border-left: none;
     &:first-child{
-      border-left: 1px solid grey;
+      border-left: 1px solid #DCDBDB;
     }
     &.selected {
       background-color: #dcdcdc;

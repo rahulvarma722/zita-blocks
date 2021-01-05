@@ -5965,7 +5965,16 @@ var Edit = /*#__PURE__*/function (_Component) {
       return [wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
         title: "Slider Setting",
         initialOpen: false
-      }, wp.element.createElement("p", {
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Number Of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        value: numberOfPosts,
+        min: 1,
+        max: 20,
+        onChange: function onChange(e) {
+          setAttributes({
+            numberOfPosts: e
+          });
+        }
+      }), wp.element.createElement("p", {
         className: "block-inside"
       }, "Overlay Color"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ColorPicker"], {
         color: sliderSetting.overlayColor,
@@ -5974,30 +5983,28 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           _this2.updateGlobalSlide(color, "overlayColor");
         }
-      }), wp.element.createElement("p", {
-        className: "block-inside"
-      }, "Slider Dimension"), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Width")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
-        label: sliderSetting.dimension.width ? "Full Width" : "Custom Width",
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Slider Dimension", " ", wp.element.createElement("small", {
+        className: "dull_grey"
+      }, " (custom Height/Width)"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
+        label: sliderSetting.dimension.width ? "Auto Width" : "Custom Width",
         checked: sliderSetting.dimension.width,
         onChange: function onChange(e) {
           _this2.updateGlobalSlide(e, "dimension", "width");
         }
       }), sliderSetting.dimension.width && wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
-        label: "Width",
         value: sliderSetting.dimension.custom_width,
         min: 200,
         max: 1400,
         onChange: function onChange(e) {
           return _this2.updateGlobalSlide(e, "dimension", "custom_width");
         }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Height")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
-        label: sliderSetting.dimension.width ? "Auto" : "Custom Height",
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
+        label: sliderSetting.dimension.height ? "Auto Height" : "Custom Height",
         checked: sliderSetting.dimension.height,
         onChange: function onChange(e) {
           _this2.updateGlobalSlide(e, "dimension", "height");
         }
       }), sliderSetting.dimension.height && wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
-        label: "Height",
         value: sliderSetting.dimension.custom_height,
         min: 360,
         max: 1000,
@@ -6136,18 +6143,68 @@ var Edit = /*#__PURE__*/function (_Component) {
           return _this2.updateGlobalSlide(e, "autoTrigger", "delay");
         }
       }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
-        title: "Post Setting",
+        title: "Heading",
         initialOpen: false
-      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "No of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
-        value: numberOfPosts,
-        min: 1,
-        max: 20,
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Heading Tag")), wp.element.createElement("select", {
+        value: heading_.tag,
+        className: "zita-block-select",
         onChange: function onChange(e) {
+          var value_ = e.target.value;
+          var font_ = value_ == "h1" ? 30 : value_ == "h2" ? 25 : value_ == "h3" ? 20 : 17;
+
+          var newHeading = _toConsumableArray(heading);
+
+          newHeading[0]["tag"] = value_;
+          newHeading[0]["fontSize"] = font_;
           setAttributes({
-            numberOfPosts: e
+            heading: newHeading
           });
         }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Choose Category")), wp.element.createElement("div", {
+      }, wp.element.createElement("option", {
+        value: "h1"
+      }, "H1"), wp.element.createElement("option", {
+        value: "h2"
+      }, "H2"), wp.element.createElement("option", {
+        value: "h3"
+      }, "H3"), wp.element.createElement("option", {
+        value: "p"
+      }, "P")), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Font Size")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        value: heading_.fontSize,
+        min: 1,
+        max: 50,
+        onChange: function onChange(e) {
+          return _this2.updateObj("heading", "fontSize", heading, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
+        value: heading_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("heading", "color", heading, color);
+        }
+      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
+        title: "Excerpt",
+        initialOpen: false
+      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
+        label: excerpt_.enable ? "Hide" : "Show",
+        checked: excerpt_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt", "enable", excerpt, e);
+        }
+      }), excerpt_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Number of words")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        value: excerpt_.words,
+        min: 1,
+        max: 200,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt", "words", excerpt, e);
+        }
+      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
+        value: excerpt_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("excerpt", "color", excerpt, color);
+        }
+      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
+        title: "Post Meta",
+        initialOpen: false
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Choose Category")), wp.element.createElement("div", {
         className: "zita-multiple-select"
       }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["SelectControl"], {
         multiple: true,
@@ -6196,65 +6253,6 @@ var Edit = /*#__PURE__*/function (_Component) {
         value: "color" in meta_style_ ? meta_style_.color : "",
         onChange: function onChange(color) {
           return _this2.updateObj("meta_style", "color", meta_style, color);
-        }
-      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
-        title: "Excerpt",
-        initialOpen: false
-      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
-        label: excerpt_.enable ? "Hide" : "Show",
-        checked: excerpt_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("excerpt", "enable", excerpt, e);
-        }
-      }), excerpt_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Number of words")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
-        value: excerpt_.words,
-        min: 1,
-        max: 200,
-        onChange: function onChange(e) {
-          return _this2.updateObj("excerpt", "words", excerpt, e);
-        }
-      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
-        value: excerpt_.color,
-        onChange: function onChange(color) {
-          return _this2.updateObj("excerpt", "color", excerpt, color);
-        }
-      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
-        title: "Heading",
-        initialOpen: false
-      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Heading Tag")), wp.element.createElement("select", {
-        value: heading_.tag,
-        className: "zita-block-select",
-        onChange: function onChange(e) {
-          var value_ = e.target.value;
-          var font_ = value_ == "h1" ? 30 : value_ == "h2" ? 25 : value_ == "h3" ? 20 : 17;
-
-          var newHeading = _toConsumableArray(heading);
-
-          newHeading[0]["tag"] = value_;
-          newHeading[0]["fontSize"] = font_;
-          setAttributes({
-            heading: newHeading
-          });
-        }
-      }, wp.element.createElement("option", {
-        value: "h1"
-      }, "H1"), wp.element.createElement("option", {
-        value: "h2"
-      }, "H2"), wp.element.createElement("option", {
-        value: "h3"
-      }, "H3"), wp.element.createElement("option", {
-        value: "p"
-      }, "P")), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Font Size")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
-        value: heading_.fontSize,
-        min: 1,
-        max: 50,
-        onChange: function onChange(e) {
-          return _this2.updateObj("heading", "fontSize", heading, e);
-        }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
-        value: heading_.color,
-        onChange: function onChange(color) {
-          return _this2.updateObj("heading", "color", heading, color);
         }
       }))), wp.element.createElement("div", {
         className: "zita-block-slide-wrapper"

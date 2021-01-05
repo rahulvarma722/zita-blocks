@@ -169,6 +169,17 @@ class Edit extends Component {
     return [
       <InspectorControls>
         <PanelBody title={"Slider Setting"} initialOpen={false}>
+          <p>
+            <strong>Number Of Post Display</strong>
+          </p>
+          <RangeControl
+            value={numberOfPosts}
+            min={1}
+            max={20}
+            onChange={(e) => {
+              setAttributes({ numberOfPosts: e });
+            }}
+          />
           <p className="block-inside">Overlay Color</p>
           <ColorPicker
             color={sliderSetting.overlayColor}
@@ -177,14 +188,15 @@ class Edit extends Component {
               this.updateGlobalSlide(color, "overlayColor");
             }}
           />
-
-          <p className="block-inside">Slider Dimension</p>
           <p>
-            <strong>Width</strong>
+            <strong>
+              Slider Dimension{" "}
+              <small className="dull_grey"> (custom Height/Width)</small>
+            </strong>
           </p>
           <ToggleControl
             label={
-              sliderSetting.dimension.width ? "Full Width" : "Custom Width"
+              sliderSetting.dimension.width ? "Auto Width" : "Custom Width"
             }
             checked={sliderSetting.dimension.width}
             onChange={(e) => {
@@ -193,7 +205,6 @@ class Edit extends Component {
           />
           {sliderSetting.dimension.width && (
             <RangeControl
-              label="Width"
               value={sliderSetting.dimension.custom_width}
               min={200}
               max={1400}
@@ -202,11 +213,10 @@ class Edit extends Component {
               }
             />
           )}
-          <p>
-            <strong>Height</strong>
-          </p>
           <ToggleControl
-            label={sliderSetting.dimension.width ? "Auto" : "Custom Height"}
+            label={
+              sliderSetting.dimension.height ? "Auto Height" : "Custom Height"
+            }
             checked={sliderSetting.dimension.height}
             onChange={(e) => {
               this.updateGlobalSlide(e, "dimension", "height");
@@ -214,7 +224,6 @@ class Edit extends Component {
           />
           {sliderSetting.dimension.height && (
             <RangeControl
-              label="Height"
               value={sliderSetting.dimension.custom_height}
               min={360}
               max={1000}
@@ -463,18 +472,83 @@ class Edit extends Component {
             </>
           )}
         </PanelBody>
-        <PanelBody title={"Post Setting"} initialOpen={false}>
+        <PanelBody title="Heading" initialOpen={false}>
           <p>
-            <strong>No of Post Display</strong>
+            <strong>Heading Tag</strong>
+          </p>
+          <select
+            value={heading_.tag}
+            className="zita-block-select"
+            onChange={(e) => {
+              let value_ = e.target.value;
+              let font_ =
+                value_ == "h1"
+                  ? 30
+                  : value_ == "h2"
+                  ? 25
+                  : value_ == "h3"
+                  ? 20
+                  : 17;
+              let newHeading = [...heading];
+              newHeading[0]["tag"] = value_;
+              newHeading[0]["fontSize"] = font_;
+              setAttributes({ heading: newHeading });
+            }}
+          >
+            <option value="h1">H1</option>
+            <option value="h2">H2</option>
+            <option value="h3">H3</option>
+            <option value="p">P</option>
+          </select>
+          <p>
+            <strong>Font Size</strong>
           </p>
           <RangeControl
-            value={numberOfPosts}
+            value={heading_.fontSize}
             min={1}
-            max={20}
-            onChange={(e) => {
-              setAttributes({ numberOfPosts: e });
-            }}
+            max={50}
+            onChange={(e) => this.updateObj("heading", "fontSize", heading, e)}
           />
+          <p>
+            <strong>Color</strong>
+          </p>
+          <ColorPalette
+            value={heading_.color}
+            onChange={(color) =>
+              this.updateObj("heading", "color", heading, color)
+            }
+          />
+        </PanelBody>
+        <PanelBody title="Excerpt" initialOpen={false}>
+          <ToggleControl
+            label={excerpt_.enable ? "Hide" : "Show"}
+            checked={excerpt_.enable}
+            onChange={(e) => this.updateObj("excerpt", "enable", excerpt, e)}
+          />
+          {excerpt_.enable && (
+            <>
+              <p>
+                <strong>Number of words</strong>
+              </p>
+              <RangeControl
+                value={excerpt_.words}
+                min={1}
+                max={200}
+                onChange={(e) => this.updateObj("excerpt", "words", excerpt, e)}
+              />
+            </>
+          )}
+          <p>
+            <strong>Color</strong>
+          </p>
+          <ColorPalette
+            value={excerpt_.color}
+            onChange={(color) =>
+              this.updateObj("excerpt", "color", excerpt, color)
+            }
+          />
+        </PanelBody>
+        <PanelBody title={"Post Meta"} initialOpen={false}>
           <p>
             <strong>Choose Category</strong>
           </p>
@@ -527,82 +601,6 @@ class Edit extends Component {
             value={"color" in meta_style_ ? meta_style_.color : ""}
             onChange={(color) =>
               this.updateObj("meta_style", "color", meta_style, color)
-            }
-          />
-        </PanelBody>
-        <PanelBody title="Excerpt" initialOpen={false}>
-          <ToggleControl
-            label={excerpt_.enable ? "Hide" : "Show"}
-            checked={excerpt_.enable}
-            onChange={(e) => this.updateObj("excerpt", "enable", excerpt, e)}
-          />
-          {excerpt_.enable && (
-            <>
-              <p>
-                <strong>Number of words</strong>
-              </p>
-              <RangeControl
-                value={excerpt_.words}
-                min={1}
-                max={200}
-                onChange={(e) => this.updateObj("excerpt", "words", excerpt, e)}
-              />
-            </>
-          )}
-          <p>
-            <strong>Color</strong>
-          </p>
-          <ColorPalette
-            value={excerpt_.color}
-            onChange={(color) =>
-              this.updateObj("excerpt", "color", excerpt, color)
-            }
-          />
-        </PanelBody>
-        <PanelBody title="Heading" initialOpen={false}>
-          <p>
-            <strong>Heading Tag</strong>
-          </p>
-          <select
-            value={heading_.tag}
-            className="zita-block-select"
-            onChange={(e) => {
-              let value_ = e.target.value;
-              let font_ =
-                value_ == "h1"
-                  ? 30
-                  : value_ == "h2"
-                  ? 25
-                  : value_ == "h3"
-                  ? 20
-                  : 17;
-              let newHeading = [...heading];
-              newHeading[0]["tag"] = value_;
-              newHeading[0]["fontSize"] = font_;
-              setAttributes({ heading: newHeading });
-            }}
-          >
-            <option value="h1">H1</option>
-            <option value="h2">H2</option>
-            <option value="h3">H3</option>
-            <option value="p">P</option>
-          </select>
-          <p>
-            <strong>Font Size</strong>
-          </p>
-          <RangeControl
-            value={heading_.fontSize}
-            min={1}
-            max={50}
-            onChange={(e) => this.updateObj("heading", "fontSize", heading, e)}
-          />
-          <p>
-            <strong>Color</strong>
-          </p>
-          <ColorPalette
-            value={heading_.color}
-            onChange={(color) =>
-              this.updateObj("heading", "color", heading, color)
             }
           />
         </PanelBody>

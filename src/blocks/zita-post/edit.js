@@ -849,6 +849,7 @@ export default withSelect((select, props) => {
   let getAllPost = getEntityRecords("postType", "post", query);
   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
+
   let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
   if (getAllPost && getAllPost.length) {
     let returnArray = [];
