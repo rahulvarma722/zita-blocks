@@ -14,6 +14,7 @@ import {
 import { Component } from "@wordpress/element";
 import { withSelect } from "@wordpress/data";
 import { decodeEntities } from "@wordpress/html-entities";
+import { __ } from "@wordpress/i18n";
 
 let bgImageWrapper = plugin_url.url + "assets/img/image2.jpg";
 class Edit extends Component {
@@ -66,9 +67,21 @@ class Edit extends Component {
       });
     }
     if (returR.length) {
-      return returR.map((returnH) => <span>{returnH}</span>);
+      let getCateStyle = this.props.attributes.showCate;
+      let putCateStyle = null;
+      if (getCateStyle[0].customColor) {
+        putCateStyle = {
+          color: getCateStyle[0].color,
+          backgroundColor: getCateStyle[0].backgroundColor,
+          fontSize: getCateStyle[0].fontSize + "px",
+        };
+      }
+      return returR.map((returnH) => (
+        <span style={putCateStyle && putCateStyle}>{returnH}</span>
+      ));
     }
   };
+
   showTagsFn = (tags_) => {
     let returR = [];
     if ("tags" in this.props && this.props.tags && tags_.length) {
@@ -82,7 +95,18 @@ class Edit extends Component {
       });
     }
     if (returR.length) {
-      return returR.map((returnH) => <span>{returnH}</span>);
+      let getTagStyle = this.props.attributes.showTag;
+      let putTagStyle = null;
+      if (getTagStyle[0].customColor) {
+        putTagStyle = {
+          color: getTagStyle[0].color,
+          backgroundColor: getTagStyle[0].backgroundColor,
+          fontSize: getTagStyle[0].fontSize + "px",
+        };
+      }
+      return returR.map((returnH) => (
+        <span style={putTagStyle && putTagStyle}>{returnH}</span>
+      ));
     }
   };
   // autor
@@ -168,9 +192,12 @@ class Edit extends Component {
 
     return [
       <InspectorControls>
-        <PanelBody title={"Slider Setting"} initialOpen={false}>
+        <PanelBody
+          title={__("Post Slider Setting", "zita-blocks")}
+          initialOpen={false}
+        >
           <p>
-            <strong>Number Of Post Display</strong>
+            <strong>{__("Number Of Post Display", "zita-blocks")}</strong>
           </p>
           <RangeControl
             value={numberOfPosts}
@@ -180,7 +207,9 @@ class Edit extends Component {
               setAttributes({ numberOfPosts: e });
             }}
           />
-          <p className="block-inside">Overlay Color</p>
+          <p>
+            <strong>{__("Image Overlay Color", "zita-blocks")}</strong>
+          </p>
           <ColorPicker
             color={sliderSetting.overlayColor}
             onChangeComplete={(colorBg) => {
@@ -189,14 +218,53 @@ class Edit extends Component {
             }}
           />
           <p>
+            <strong>{__("Content Alignment", "zita-blocks")}</strong>
+          </p>
+          <div className="zita-alignment">
+            <div>
+              <span
+                onClick={() => {
+                  this.updateGlobalSlide("left", "contentAlign");
+                }}
+                className={`dashicons dashicons-editor-alignleft ${
+                  sliderSetting.contentAlign == "left" && "active"
+                }`}
+              ></span>
+            </div>
+            <div>
+              <span
+                onClick={() => {
+                  this.updateGlobalSlide("center", "contentAlign");
+                }}
+                className={`dashicons dashicons-editor-aligncenter ${
+                  sliderSetting.contentAlign == "center" && "active"
+                }`}
+              ></span>
+            </div>
+            <div>
+              <span
+                onClick={() => {
+                  this.updateGlobalSlide("right", "contentAlign");
+                  this.updateObj("title", "align", title, "flex-end");
+                }}
+                className={`dashicons dashicons-editor-alignright ${
+                  sliderSetting.contentAlign == "right" && "active"
+                }`}
+              ></span>
+            </div>
+          </div>
+          <p>
             <strong>
-              Slider Dimension{" "}
-              <small className="dull_grey"> (custom Height/Width)</small>
+              {__("Slider Dimension", "zita-blocks")}
+              <small className="dull_grey">
+                ({__("custom Height", "zita-blocks")}/
+                {__("Width", "zita-blocks")})
+              </small>
             </strong>
           </p>
           <ToggleControl
             label={
-              sliderSetting.dimension.width ? "Auto Width" : "Custom Width"
+              sliderSetting.dimension.width ? "Custom Width" : "Auto Width"
             }
             checked={sliderSetting.dimension.width}
             onChange={(e) => {
@@ -215,7 +283,7 @@ class Edit extends Component {
           )}
           <ToggleControl
             label={
-              sliderSetting.dimension.height ? "Auto Height" : "Custom Height"
+              sliderSetting.dimension.height ? "Custom Height" : "Auto Height"
             }
             checked={sliderSetting.dimension.height}
             onChange={(e) => {
@@ -280,7 +348,7 @@ class Edit extends Component {
             <>
               <ToggleControl
                 label={
-                  sliderSetting.linearTrigger.enable ? "Disable" : "Enable"
+                  sliderSetting.linearTrigger.enable ? "Enable" : "Disable"
                 }
                 checked={sliderSetting.linearTrigger.enable}
                 onChange={(e) =>
@@ -404,7 +472,7 @@ class Edit extends Component {
             <>
               <ToggleControl
                 label={
-                  sliderSetting.leftRightTrigger.enable ? "Disable" : "Enable"
+                  sliderSetting.leftRightTrigger.enable ? "Enable" : "Disable"
                 }
                 checked={sliderSetting.leftRightTrigger.enable}
                 onChange={(e) =>
@@ -452,7 +520,7 @@ class Edit extends Component {
           {triggerActive == "auto" && (
             <>
               <ToggleControl
-                label={sliderSetting.autoTrigger.enable ? "Disable" : "Enable"}
+                label={sliderSetting.autoTrigger.enable ? "Enable" : "Disable"}
                 checked={sliderSetting.autoTrigger.enable}
                 onChange={(e) =>
                   this.updateGlobalSlide(e, "autoTrigger", "enable")
@@ -521,7 +589,7 @@ class Edit extends Component {
         </PanelBody>
         <PanelBody title="Excerpt" initialOpen={false}>
           <ToggleControl
-            label={excerpt_.enable ? "Hide" : "Show"}
+            label={excerpt_.enable ? "Show" : "Hide"}
             checked={excerpt_.enable}
             onChange={(e) => this.updateObj("excerpt", "enable", excerpt, e)}
           />
@@ -594,8 +662,20 @@ class Edit extends Component {
             checked={showTag_.enable}
             onChange={(e) => this.updateObj("showTag", "enable", showTag, e)}
           />
+          <p class="block-inside">{__("Meta Style", "zita-blocks")}</p>
           <p>
-            <strong>Color</strong>
+            <strong>{__("Author/Dates Font Size", "zita-blocks")}</strong>
+          </p>
+          <RangeControl
+            value={meta_style_.fontSize}
+            min={1}
+            max={25}
+            onChange={(e) => {
+              this.updateObj("meta_style", "fontSize", meta_style, e);
+            }}
+          />
+          <p>
+            <strong>{__("Author/Dates Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={"color" in meta_style_ ? meta_style_.color : ""}
@@ -603,6 +683,112 @@ class Edit extends Component {
               this.updateObj("meta_style", "color", meta_style, color)
             }
           />
+          {showCate_.enable && (
+            <>
+              <p class="block-inside">
+                {__("Category Custom Style", "zita-blocks")}
+              </p>
+              <ToggleControl
+                label={__("Enable", "zita-blocks")}
+                checked={showCate_.customColor}
+                onChange={(e) =>
+                  this.updateObj("showCate", "customColor", showCate, e)
+                }
+              />
+              {showCate_.customColor && (
+                <>
+                  <p>
+                    <strong>{__("Font Size", "zita-blocks")}</strong>
+                  </p>
+                  <RangeControl
+                    value={showCate_.fontSize}
+                    min={1}
+                    max={30}
+                    onChange={(e) => {
+                      this.updateObj("showCate", "fontSize", showCate, e);
+                    }}
+                  />
+                  <p>
+                    <strong>{__("Color", "zita-blocks")}</strong>
+                  </p>
+                  <ColorPalette
+                    value={showCate_.color}
+                    onChange={(color) =>
+                      this.updateObj("showCate", "color", showCate, color)
+                    }
+                  />
+                  <p>
+                    <strong>{__("Background Color", "zita-blocks")}</strong>
+                  </p>
+                  <ColorPicker
+                    color={showCate_.backgroundColor}
+                    onChangeComplete={(colorBg) => {
+                      let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                      this.updateObj(
+                        "showCate",
+                        "backgroundColor",
+                        showCate,
+                        color
+                      );
+                    }}
+                  />
+                </>
+              )}
+            </>
+          )}
+          {showTag_.enable && (
+            <>
+              <p class="block-inside">
+                {__("Tags Custom Style", "zita-blocks")}
+              </p>
+              <ToggleControl
+                label={__("Enable", "zita-blocks")}
+                checked={showTag_.customColor}
+                onChange={(e) =>
+                  this.updateObj("showTag", "customColor", showTag, e)
+                }
+              />
+              {showTag_.customColor && (
+                <>
+                  <p>
+                    <strong>{__("Font Size", "zita-blocks")}</strong>
+                  </p>
+                  <RangeControl
+                    value={showTag_.fontSize}
+                    min={1}
+                    max={30}
+                    onChange={(e) => {
+                      this.updateObj("showTag", "fontSize", showTag, e);
+                    }}
+                  />
+                  <p>
+                    <strong>{__("Color", "zita-blocks")}</strong>
+                  </p>
+                  <ColorPalette
+                    value={showTag_.color}
+                    onChange={(color) =>
+                      this.updateObj("showTag", "color", showTag, color)
+                    }
+                  />
+                  <p>
+                    <strong>{__("Background Color", "zita-blocks")}</strong>
+                  </p>
+                  <ColorPicker
+                    color={showTag_.backgroundColor}
+                    onChangeComplete={(colorBg) => {
+                      let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                      this.updateObj(
+                        "showTag",
+                        "backgroundColor",
+                        showTag,
+                        color
+                      );
+                    }}
+                  />
+                </>
+              )}
+            </>
+          )}
         </PanelBody>
       </InspectorControls>,
       <div className="zita-block-slide-wrapper">
@@ -680,7 +866,9 @@ class Edit extends Component {
                               }}
                             >
                               <div className="slider-post-content">
-                                <div className="post-wrapper">
+                                <div
+                                  className={`post-wrapper content-align-${sliderSetting.contentAlign}`}
+                                >
                                   <div className="post-content">
                                     <RichText.Content
                                       className="post-heading"
@@ -699,7 +887,11 @@ class Edit extends Component {
                                     <div className="post-meta-all">
                                       {postAuthor && (
                                         <p
-                                          style={{ color: meta_style_.color }}
+                                          style={{
+                                            color: meta_style_.color,
+                                            fontSize:
+                                              meta_style_.fontSize + "px",
+                                          }}
                                           className="post-author"
                                         >
                                           {postAuthor}
@@ -708,10 +900,22 @@ class Edit extends Component {
                                       {date_.enable && (
                                         <>
                                           {postAuthor && (
-                                            <span className="slash">/</span>
+                                            <span
+                                              style={{
+                                                fontSize:
+                                                  meta_style_.fontSize + "px",
+                                              }}
+                                              className="slash"
+                                            >
+                                              /
+                                            </span>
                                           )}
                                           <p
-                                            style={{ color: meta_style_.color }}
+                                            style={{
+                                              color: meta_style_.color,
+                                              fontSize:
+                                                meta_style_.fontSize + "px",
+                                            }}
                                             className="post-date"
                                           >
                                             {this.dateFormate(post.date)}
@@ -721,10 +925,22 @@ class Edit extends Component {
                                       {date_.last_modified && (
                                         <>
                                           {(postAuthor || date_.enable) && (
-                                            <span className="slash">/</span>
+                                            <span
+                                              style={{
+                                                fontSize:
+                                                  meta_style_.fontSize + "px",
+                                              }}
+                                              className="slash"
+                                            >
+                                              /
+                                            </span>
                                           )}
                                           <p
-                                            style={{ color: meta_style_.color }}
+                                            style={{
+                                              color: meta_style_.color,
+                                              fontSize:
+                                                meta_style_.fontSize + "px",
+                                            }}
                                             className="post-date-last-modified"
                                           >
                                             <span>Modified: </span>

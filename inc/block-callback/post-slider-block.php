@@ -32,7 +32,8 @@ wpgt_register_block_fn('zita-post-slider',  [
                         "enable" => true,
                         "delay" => 4,
                     ],
-                    "overlayColor" => "#717167c7"
+                    "overlayColor" => "#717167c7",
+                    "contentAlign" => "left"
                 ],
             ],
         ],
@@ -45,8 +46,13 @@ wpgt_register_block_fn('zita-post-slider',  [
             "default" => [[
                 'enable' => true,
                 "value" => "My block title",
-                "color" => "black",
-                "fontSize" => 30
+                "fontSize" => 30,
+                "color" => "white",
+                "backgroundColor" => "black",
+                "align" => "left",
+                // "customWidth" => false,
+                "width" => 10,
+                "fontWeight" => 600
             ]]
         ],
         'heading' => [
@@ -60,8 +66,9 @@ wpgt_register_block_fn('zita-post-slider',  [
         "meta_style" => [
             "type" => "array",
             "default" => [[
-                "color" => "",
-                "left_border" => true
+                "color" => "white",
+                "left_border" => true,
+                "fontSize" => 14
             ]]
         ],
         "author" => [
@@ -78,13 +85,21 @@ wpgt_register_block_fn('zita-post-slider',  [
         'showCate' => [
             "type" => "array",
             "default" => [[
-                "enable" => true
+                "enable" => true,
+                "customColor" => false,
+                "color" => "white",
+                "backgroundColor" => "black",
+                "fontSize" => 12
             ]]
         ],
         'showTag' => [
             "type" => "array",
             "default" => [[
-                "enable" => true
+                "enable" => true,
+                "customColor" => false,
+                "color" => "white",
+                "backgroundColor" => "black",
+                "fontSize" => 12
             ]]
         ],
         'excerpt' => [

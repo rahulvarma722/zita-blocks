@@ -672,7 +672,7 @@
   letter-spacing: 1.2px;
 }
 #zita-block-post #post-wrapper .post-content p.post-date, #zita-block-post #post-wrapper .post-content p.post-date-last-modified {
-  letter-spacing: 1.2px;
+  letter-spacing: 0.03em;
   font-size: 14px;
   display: flex;
 }
@@ -777,6 +777,24 @@
 .zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper {
   padding: 30px;
 }
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-center .post-heading,
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-center .post-excerpt {
+  text-align: center;
+}
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-center .post-meta-all,
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-center .post-tags,
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-center .post-category {
+  justify-content: center;
+}
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-right .post-heading,
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-right .post-excerpt {
+  text-align: right;
+}
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-right .post-meta-all,
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-right .post-tags,
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-right .post-category {
+  justify-content: flex-end;
+}
 .zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-content .post-meta-all {
   display: flex;
   flex-wrap: wrap;
@@ -819,6 +837,7 @@
   background: #ff5e00;
   font-size: 13px;
   text-transform: capitalize;
+  line-height: 1;
 }
 .zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-content p.post-category span:nth-child(2) {
   background: #1a609c;

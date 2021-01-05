@@ -10,6 +10,28 @@
     width: 100%;
     .post-wrapper {
       padding: 30px;
+      &.content-align-center {
+        .post-heading,
+        .post-excerpt {
+          text-align: center;
+        }
+        .post-meta-all,
+        .post-tags,
+        .post-category {
+          justify-content: center;
+        }
+      }
+      &.content-align-right {
+        .post-heading,
+        .post-excerpt {
+          text-align: right;
+        }
+        .post-meta-all,
+        .post-tags,
+        .post-category {
+          justify-content: flex-end;
+        }
+      }
     }
     .post-content {
       .post-meta-all {
@@ -55,6 +77,7 @@
             background: #ff5e00;
             font-size: 13px;
             text-transform: capitalize;
+            line-height: 1;
             &:nth-child(2) {
               background: #1a609c;
             }

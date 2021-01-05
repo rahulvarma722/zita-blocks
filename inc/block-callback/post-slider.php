@@ -21,6 +21,7 @@ function mytheme_blocks_render_post_slider($attr)
         $postExcerpt = isset($attr['excerpt'][0]['enable']) && $attr['excerpt'][0]['enable']  ? true : false;
         $postExcerptColor = $postExcerpt && $attr['excerpt'][0]['color'] ? $attr['excerpt'][0]['color'] : "";
         $metaStyleColor = isset($attr['meta_style'][0]['color']) && $attr['meta_style'][0]['color']  ? $attr['meta_style'][0]['color'] : "";
+        $metaStyleFontSize = isset($attr['meta_style'][0]['fontSize']) && $attr['meta_style'][0]['fontSize']  ? $attr['meta_style'][0]['fontSize'] : "";
         $metashowCate = isset($attr['showCate'][0]['enable']) && $attr['showCate'][0]['enable']  ? true : false;
         $metashowshowTag = isset($attr['showTag'][0]['enable']) && $attr['showTag'][0]['enable']  ? true : false;
         // height and width       
@@ -67,7 +68,7 @@ function mytheme_blocks_render_post_slider($attr)
                 $postHtml .= '<div class="zita-slider-image-container" style="background-image: url(' . get_the_post_thumbnail_url() . ');"></div>';
                 $postHtml .= "<div class='zita-slider-text' style='background-color:" . $sliderPara["overlayColor"] . ";'>";
                 $postHtml .= "<div class='slider-post-content'>";
-                $postHtml .= "<div class='post-wrapper'>";
+                $postHtml .= "<div class='post-wrapper content-align-" . $sliderPara["contentAlign"] . "'>";
                 $postHtml .= "<div class='post-content'>";
 
                 $postHtml .= "<" . $attr['heading'][0]['tag'] . " style='color:" . $attr['heading'][0]['color'] . "' class='post-heading'>";
@@ -78,8 +79,12 @@ function mytheme_blocks_render_post_slider($attr)
                     $postHtml .= '<p class="post-category">';
                     $category_ = get_the_category();
                     if (!empty($category_)) {
+                        $catestyle = '';
+                        if ($attr['showCate'][0]['customColor']) {
+                            $catestyle = 'font-size:' . $attr['showCate'][0]['fontSize'] . 'px;background-color:' . $attr['showCate'][0]['backgroundColor'] . ';color:' . $attr['showCate'][0]['color'] . ';';
+                        }
                         foreach ($category_ as $cateValue) {
-                            $postHtml .= '<span>';
+                            $postHtml .= '<span style="' . $catestyle . '">';
                             $postHtml .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
                             $postHtml .= '</span>';
                         }
@@ -89,28 +94,28 @@ function mytheme_blocks_render_post_slider($attr)
                 // category
                 $postHtml .= '<div class="post-meta-all">';
                 if ($postAuthor) {
-                    $postHtml .= "<p style='color:" . $metaStyleColor . "' class='post-author'>";
+                    $postHtml .= "<p style='color:" . $metaStyleColor . ";font-size:" . $metaStyleFontSize . "px;' class='post-author'>";
                     $postHtml .= "<a target='_blank' href='" . get_author_posts_url(get_the_author_meta('ID')) . "'>";
                     $postHtml .=  get_the_author();
                     $postHtml .= "</a></p>";
                 }
 
                 if ($postDate) {
-                    $postHtml .= '<span class="slash">/</span>';
+                    $postHtml .= '<span style="font-size:' . $metaStyleFontSize . 'px;" class="slash">/</span>';
                     $dateYear =   get_the_date('Y');
                     $dateMonth =   get_the_date('m');
                     $dateDay =   get_the_date('j');
-                    $postHtml .= "<p style='color:" . $metaStyleColor . "' class='post-date'>";
+                    $postHtml .= "<p style='color:" . $metaStyleColor . ";font-size:" . $metaStyleFontSize . "px;' class='post-date'>";
                     $postHtml .= "<a target='_blank' href='" . get_day_link($dateYear, $dateMonth, $dateDay) . "'>";
                     $postHtml .=  get_the_date();
                     $postHtml .= "</a></p>";
                 }
                 if ($postDateModify) {
-                    $postHtml .= '<span class="slash">/</span>';
+                    $postHtml .= '<span style="font-size:' . $metaStyleFontSize . 'px;" class="slash">/</span>';
                     $dateYear =   get_the_modified_date('Y');
                     $dateMonth =   get_the_modified_date('m');
                     $dateDay =   get_the_modified_date('j');
-                    $postHtml .= "<p style='color:" . $metaStyleColor . "' class='post-date-last-modified'>";
+                    $postHtml .= "<p style='color:" . $metaStyleColor . ";font-size:" . $metaStyleFontSize . "px;' class='post-date-last-modified'>";
                     $postHtml .= "Modified:<a target='_blank' href='" . get_day_link($dateYear, $dateMonth, $dateDay) . "'>";
                     $postHtml .=  get_the_modified_date();
                     $postHtml .= "</a></p>";
@@ -135,8 +140,12 @@ function mytheme_blocks_render_post_slider($attr)
                     $tags = get_the_tags(get_the_ID());
                     $postHtml .= '<p class="post-tags">';
                     if (!empty($tags)) {
+                        $Tagstyle = '';
+                        if ($attr['showTag'][0]['customColor']) {
+                            $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
+                        }
                         foreach ($tags as $tagValue) {
-                            $postHtml .= '<span>';
+                            $postHtml .= '<span style="' . $Tagstyle . '">';
                             $postHtml .= "<a href='" . get_category_link($tagValue->term_id) . "'>" . $tagValue->name . "</a>";
                             $postHtml .= '</span>';
                         }

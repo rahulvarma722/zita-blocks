@@ -868,7 +868,7 @@
   letter-spacing: 1.2px;
 }
 .block-post-article .post-content p.post-date, .block-post-article .post-content p.post-date-last-modified {
-  letter-spacing: 1.2px;
+  letter-spacing: 0.03em;
   font-size: 14px;
   display: flex;
 }
@@ -928,6 +928,24 @@
 .zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper {
   padding: 30px;
 }
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-center .post-heading,
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-center .post-excerpt,
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-center .post-category {
+  text-align: center;
+}
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-center .post-meta-all,
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-center .post-tags {
+  justify-content: center;
+}
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-right .post-heading,
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-right .post-excerpt,
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-right .post-category {
+  text-align: right;
+}
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-right .post-meta-all,
+.zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-wrapper.content-align-right .post-tags {
+  justify-content: flex-end;
+}
 .zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-content .post-meta-all {
   display: flex;
   flex-wrap: wrap;
@@ -965,6 +983,7 @@
   background: #ff5e00;
   font-size: 13px;
   text-transform: capitalize;
+  line-height: 1;
 }
 .zita-slider-ul-slides .zita-slider-content-wrapper div.slider-post-content .post-content p.post-category span:nth-child(n+2) {
   background: #1a609c;
