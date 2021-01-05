@@ -127,8 +127,12 @@ function mytheme_blocks_render_latest_post_block($attr)
                     $tags = get_the_tags(get_the_ID());
                     $postHtml .= '<p class="post-tags">';
                     if (!empty($tags)) {
+                        $Tagstyle = '';
+                        if ($attr['showTag'][0]['customColor']) {
+                            $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
+                        }
                         foreach ($tags as $tagValue) {
-                            $postHtml .= '<span>';
+                            $postHtml .= '<span style="' . $Tagstyle . '">';
                             $postHtml .= "<a href='" . get_category_link($tagValue->term_id) . "'>" . $tagValue->name . "</a>";
                             $postHtml .= '</span>';
                         }
@@ -224,8 +228,12 @@ function mytheme_blocks_render_latest_post_block($attr)
                     $tags = get_the_tags(get_the_ID());
                     $postHtml .= '<p class="post-tags">';
                     if (!empty($tags)) {
+                        $Tagstyle = '';
+                        if ($attr['showTag'][0]['customColor']) {
+                            $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
+                        }
                         foreach ($tags as $tagValue) {
-                            $postHtml .= '<span>';
+                            $postHtml .= '<span style="' . $Tagstyle . '">';
                             $postHtml .= "<a href='" . get_category_link($tagValue->term_id) . "'>" . $tagValue->name . "</a>";
                             $postHtml .= '</span>';
                         }

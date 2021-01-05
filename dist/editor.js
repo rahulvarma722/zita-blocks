@@ -7466,8 +7466,21 @@ var Edit = /*#__PURE__*/function (_Component) {
       }
 
       if (returR.length) {
+        var getTagStyle = _this.props.attributes.showTag;
+        var putTagStyle = null;
+
+        if (getTagStyle[0].customColor) {
+          putTagStyle = {
+            color: getTagStyle[0].color,
+            backgroundColor: getTagStyle[0].backgroundColor,
+            fontSize: getTagStyle[0].fontSize + "px"
+          };
+        }
+
         return returR.map(function (returnH) {
-          return wp.element.createElement("span", null, returnH);
+          return wp.element.createElement("span", {
+            style: putTagStyle && putTagStyle
+          }, returnH);
         });
       }
     });
@@ -7785,14 +7798,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }), wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Meta Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Meta Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Author/Dates Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: meta_style_.fontSize,
         min: 1,
         max: 25,
         onChange: function onChange(e) {
           _this2.updateObj("meta_style", "fontSize", meta_style, e);
         }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Author/Dates Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
         value: "color" in meta_style_ ? meta_style_.color : "",
         onChange: function onChange(color) {
           return _this2.updateObj("meta_style", "color", meta_style, color);
@@ -7823,6 +7836,33 @@ var Edit = /*#__PURE__*/function (_Component) {
           var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
 
           _this2.updateObj("showCate", "backgroundColor", showCate, color);
+        }
+      }))), showTag_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
+        class: "block-inside"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Enable", "zita-blocks"),
+        checked: showTag_.customColor,
+        onChange: function onChange(e) {
+          return _this2.updateObj("showTag", "customColor", showTag, e);
+        }
+      }), showTag_.customColor && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: showTag_.fontSize,
+        min: 1,
+        max: 30,
+        onChange: function onChange(e) {
+          _this2.updateObj("showTag", "fontSize", showTag, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: showTag_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("showTag", "color", showTag, color);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Background Color", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ColorPicker"], {
+        color: showTag_.backgroundColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateObj("showTag", "backgroundColor", showTag, color);
         }
       }))))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
         className: "zita-block-post"
@@ -7911,9 +7951,6 @@ var Edit = /*#__PURE__*/function (_Component) {
           },
           className: "post-excerpt"
         }, _this2.excerptWords(excerpt_.words, post.excerpt.rendered)), showTag_.enable && wp.element.createElement("p", {
-          style: {
-            color: meta_style_.color
-          },
           className: "post-tags"
         }, _this2.showTagsFn(post.tags))))) : wp.element.createElement("article", {
           className: "block-post-article",
@@ -7975,9 +8012,6 @@ var Edit = /*#__PURE__*/function (_Component) {
           },
           className: "post-excerpt"
         }, _this2.excerptWords(excerpt_.words, post.excerpt.rendered)), showTag_.enable && wp.element.createElement("p", {
-          style: {
-            color: meta_style_.color
-          },
           className: "post-tags"
         }, _this2.showTagsFn(post.tags)))));
       }))) : wp.element.createElement("div", null, !posts ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("No Post Found", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Loding...", "zita-blocks")));

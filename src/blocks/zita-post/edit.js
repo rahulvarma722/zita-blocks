@@ -74,7 +74,6 @@ class Edit extends Component {
     if (returR.length) {
       let getCateStyle = this.props.attributes.showCate;
       let putCateStyle = null;
-
       if (getCateStyle[0].customColor) {
         putCateStyle = {
           color: getCateStyle[0].color,
@@ -100,7 +99,16 @@ class Edit extends Component {
       });
     }
     if (returR.length) {
-      return returR.map((returnH) => <span>{returnH}</span>);
+      let getTagStyle = this.props.attributes.showTag;
+      let putTagStyle = null;
+      if (getTagStyle[0].customColor) {
+        putTagStyle = {
+          color: getTagStyle[0].color,
+          backgroundColor: getTagStyle[0].backgroundColor,
+          fontSize: getTagStyle[0].fontSize + "px",
+        };
+      }
+      return returR.map((returnH) => <span style={putTagStyle && putTagStyle}>{returnH}</span>);
     }
   };
   // autor
@@ -496,7 +504,7 @@ class Edit extends Component {
             />
             <p class="block-inside">{__("Meta Style", "zita-blocks")}</p>
             <p>
-              <strong>{__("Font Size", "zita-blocks")}</strong>
+              <strong>{__("Author/Dates Font Size", "zita-blocks")}</strong>
             </p>
             <RangeControl
               value={meta_style_.fontSize}
@@ -507,7 +515,7 @@ class Edit extends Component {
               }}
             />
             <p>
-              <strong>{__("Color", "zita-blocks")}</strong>
+              <strong>{__("Author/Dates Color", "zita-blocks")}</strong>
             </p>
             <ColorPalette
               value={"color" in meta_style_ ? meta_style_.color : ""}
@@ -560,6 +568,59 @@ class Edit extends Component {
                           "showCate",
                           "backgroundColor",
                           showCate,
+                          color
+                        );
+                      }}
+                    />
+                  </>
+                )}
+              </>
+            )}
+            {showTag_.enable && (
+              <>
+                <p class="block-inside">
+                  {__("Tags Custom Style", "zita-blocks")}
+                </p>
+                <ToggleControl
+                  label={__("Enable", "zita-blocks")}
+                  checked={showTag_.customColor}
+                  onChange={(e) =>
+                    this.updateObj("showTag", "customColor", showTag, e)
+                  }
+                />
+                {showTag_.customColor && (
+                  <>
+                    <p>
+                      <strong>{__("Font Size", "zita-blocks")}</strong>
+                    </p>
+                    <RangeControl
+                      value={showTag_.fontSize}
+                      min={1}
+                      max={30}
+                      onChange={(e) => {
+                        this.updateObj("showTag", "fontSize", showTag, e);
+                      }}
+                    />
+                    <p>
+                      <strong>{__("Color", "zita-blocks")}</strong>
+                    </p>
+                    <ColorPalette
+                      value={showTag_.color}
+                      onChange={(color) =>
+                        this.updateObj("showTag", "color", showTag, color)
+                      }
+                    />
+                    <p>
+                      <strong>{__("Background Color", "zita-blocks")}</strong>
+                    </p>
+                    <ColorPicker
+                      color={showTag_.backgroundColor}
+                      onChangeComplete={(colorBg) => {
+                        let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                        this.updateObj(
+                          "showTag",
+                          "backgroundColor",
+                          showTag,
                           color
                         );
                       }}
@@ -703,10 +764,7 @@ class Edit extends Component {
                           </p>
                         )}
                         {showTag_.enable && (
-                          <p
-                            style={{ color: meta_style_.color }}
-                            className="post-tags"
-                          >
+                          <p className="post-tags">
                             {this.showTagsFn(post.tags)}
                           </p>
                         )}
@@ -812,10 +870,7 @@ class Edit extends Component {
                           </p>
                         )}
                         {showTag_.enable && (
-                          <p
-                            style={{ color: meta_style_.color }}
-                            className="post-tags"
-                          >
+                          <p className="post-tags">
                             {this.showTagsFn(post.tags)}
                           </p>
                         )}
