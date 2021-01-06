@@ -22,7 +22,7 @@ class Edit extends Component {
     super(props);
     this.state = { slideIndex: 0, trigger: "linear" };
   }
-  dateFormate = (date) => {
+  dateFormate = (date, style_) => {
     let date_ = date.split("T")[0];
     let dateObj = new Date(date_);
     const monthNames = [
@@ -45,7 +45,7 @@ class Edit extends Component {
       dateObj.getDate() +
       ", " +
       dateObj.getFullYear();
-    return <RichText.Content tag="span" value={dateArr} />;
+    return <RichText.Content style={style_} tag="span" value={dateArr} />;
   };
   excerptWords = (words, words_) => {
     words_ = decodeEntities(words_);
@@ -540,6 +540,116 @@ class Edit extends Component {
             </>
           )}
         </PanelBody>
+        <PanelBody title="Block Title" initialOpen={false}>
+          <ToggleControl
+            label={
+              title_.enable
+                ? __("Hide", "zita-blocks")
+                : __("Show", "zita-blocks")
+            }
+            checked={title_.enable}
+            onChange={(e) => this.updateObj("title", "enable", title, e)}
+          />
+          {title_.enable && (
+            <>
+              <p>
+                <strong>{__("Title Alignment", "zita-blocks")}</strong>
+              </p>
+              <div className="zita-alignment">
+                <div>
+                  <span
+                    onClick={() => {
+                      this.updateObj("title", "align", title, "left");
+                    }}
+                    className={`dashicons dashicons-editor-alignleft ${
+                      title_.align == "left" && "active"
+                    }`}
+                  ></span>
+                </div>
+                <div>
+                  <span
+                    onClick={() => {
+                      this.updateObj("title", "align", title, "center");
+                    }}
+                    className={`dashicons dashicons-editor-aligncenter ${
+                      title_.align == "center" && "active"
+                    }`}
+                  ></span>
+                </div>
+                <div>
+                  <span
+                    onClick={() => {
+                      this.updateObj("title", "align", title, "flex-end");
+                    }}
+                    className={`dashicons dashicons-editor-alignright ${
+                      title_.align == "flex-end" && "active"
+                    }`}
+                  ></span>
+                </div>
+              </div>
+
+              <RangeControl
+                label={__("Font Size", "zita-blocks")}
+                value={title_.fontSize}
+                min={5}
+                max={50}
+                onChange={(e) => {
+                  this.updateObj("title", "fontSize", title, e);
+                }}
+              />
+              <p>
+                <strong>{__("Color", "zita-blocks")}</strong>
+              </p>
+              <ColorPalette
+                value={title_.color}
+                onChange={(color) =>
+                  this.updateObj("title", "color", title, color)
+                }
+              />
+              <p>
+                <strong>{__("Background Color", "zita-blocks")}</strong>
+              </p>
+              <ColorPicker
+                color={title_.backgroundColor}
+                onChangeComplete={(colorBg) => {
+                  let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                  this.updateObj("title", "backgroundColor", title, color);
+                }}
+              />
+              {/* font weight */}
+              <div className="flex-section">
+                <p>Font Weight</p>
+                <select
+                  value={title_.fontWeight}
+                  onChange={(e) => {
+                    this.updateObj(
+                      "title",
+                      "fontWeight",
+                      title,
+                      e.target.value
+                    );
+                  }}
+                >
+                  <option value="400">400</option>
+                  <option value="600">600</option>
+                  <option value="700">700</option>
+                </select>
+              </div>
+              {/* font weight */}
+              <p>
+                <strong>{__("Max Width %", "zita-blocks")}</strong>
+              </p>
+              <RangeControl
+                value={title_.width}
+                min={1}
+                max={100}
+                onChange={(e) => {
+                  this.updateObj("title", "width", title, e);
+                }}
+              />
+            </>
+          )}
+        </PanelBody>
         <PanelBody title="Heading" initialOpen={false}>
           <p>
             <strong>Heading Tag</strong>
@@ -792,6 +902,30 @@ class Edit extends Component {
         </PanelBody>
       </InspectorControls>,
       <div className="zita-block-slide-wrapper">
+        {title_.enable && (
+          <div
+            className="zita-block-post-title"
+            style={{
+              justifyContent: title_.align,
+              borderColor: title_.backgroundColor,
+            }}
+          >
+            <RichText
+              key="editable"
+              tagName="h1"
+              placeholder={__("My block title", "zita-blocks")}
+              value={title_.value}
+              style={{
+                fontSize: title_.fontSize + "px",
+                color: title_.color,
+                backgroundColor: title_.backgroundColor,
+                fontWeight: title_.fontWeight,
+                width: title_.width + "%",
+              }}
+              onChange={(e) => this.updateObj("title", "value", title, e)}
+            />
+          </div>
+        )}
         <div className="zita-slider-bullet">
           <ul className="zita-slider-ul-bullet">
             {posts &&
@@ -918,7 +1052,11 @@ class Edit extends Component {
                                             }}
                                             className="post-date"
                                           >
-                                            {this.dateFormate(post.date)}
+                                            {this.dateFormate(post.date, {
+                                              color: meta_style_.color,
+                                              fontSize:
+                                                meta_style_.fontSize + "px",
+                                            })}
                                           </p>
                                         </>
                                       )}
@@ -944,7 +1082,11 @@ class Edit extends Component {
                                             className="post-date-last-modified"
                                           >
                                             <span>Modified: </span>
-                                            {this.dateFormate(post.modified)}
+                                            {this.dateFormate(post.modified, {
+                                              color: meta_style_.color,
+                                              fontSize:
+                                                meta_style_.fontSize + "px",
+                                            })}
                                           </p>
                                         </>
                                       )}

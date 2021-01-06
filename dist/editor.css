@@ -823,20 +823,6 @@
 .zita-block-post .column-count.column-count-1 .featured-image img {
   width: 100%;
 }
-.zita-block-post .zita-block-post-title {
-  display: flex;
-  margin: 6px 0;
-  border-bottom: 2px solid;
-}
-.zita-block-post .zita-block-post-title h1 {
-  text-align: center;
-  line-height: 1.5;
-  margin: 0;
-  letter-spacing: 1px;
-  font-weight: 600;
-  min-width: fit-content;
-  padding: 0 8px;
-}
 
 .block-post-article .post-content .post-heading {
   margin: 5px 0;
@@ -910,6 +896,22 @@
 }
 .block-post-article .post-content p.post-tags span:first-child {
   margin: 1px 0;
+}
+
+.zita-block-post-title {
+  display: flex;
+  margin: 6px 0;
+  border-bottom: 2px solid;
+}
+.zita-block-post-title h1 {
+  font-family: "Catamaran-Regular", sans-serif;
+  text-align: center;
+  line-height: 1.5;
+  margin: 0 !important;
+  letter-spacing: 1px;
+  font-weight: 600;
+  min-width: fit-content;
+  padding: 0 8px;
 }
 .block-editor-block-list__block[data-type="zita-blocks/zita-post-slider"] {
   margin: auto;

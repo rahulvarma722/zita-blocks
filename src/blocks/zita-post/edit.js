@@ -108,7 +108,9 @@ class Edit extends Component {
           fontSize: getTagStyle[0].fontSize + "px",
         };
       }
-      return returR.map((returnH) => <span style={putTagStyle && putTagStyle}>{returnH}</span>);
+      return returR.map((returnH) => (
+        <span style={putTagStyle && putTagStyle}>{returnH}</span>
+      ));
     }
   };
   // autor
@@ -254,13 +256,9 @@ class Edit extends Component {
                       );
                     }}
                   >
-                    <option value="100">100</option>
                     <option value="400">400</option>
-                    <option value="500">500</option>
+                    <option value="600">600</option>
                     <option value="700">700</option>
-                    <option value="900">900</option>
-                    <option value="bold">Bold</option>
-                    <option value="bolder">Bolder</option>
                   </select>
                 </div>
                 {/* font weight */}

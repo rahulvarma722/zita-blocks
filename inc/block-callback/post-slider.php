@@ -40,6 +40,17 @@ function mytheme_blocks_render_post_slider($attr)
         $sliderEffect = isset($sliderPara["sliderEffect"]) ? $sliderPara["sliderEffect"] : "fadeEffect";
         $slidersetting = json_encode($slidersetting);
         $postHtml .= '<div class="zita-block-slide-wrapper" id="zita-block-slide-wrapper">';
+
+        // post title
+        if (isset($attr['title'][0]['enable']) && $attr['title'][0]['enable']) {
+            $titleHeadingStyle = "style='background-color:" . $attr['title'][0]['backgroundColor'] . ";color:" . $attr['title'][0]['color'] . ";font-size:" . $attr['title'][0]['fontSize'] . "px;font-weight:" . $attr['title'][0]['fontWeight'] . ";'";
+            $postHtml .= '<div style="justify-content:' . $attr['title'][0]['align'] . ';border-color:' . $attr['title'][0]['backgroundColor'] . ';" class="zita-block-post-title" id="zita-block-post-title">';
+            $postHtml .= '<h1 ' . $titleHeadingStyle . ' >';
+            $postHtml .= $attr['title'][0]['value'];
+            $postHtml .= '</h1>';
+            $postHtml .= "</div>";
+        }
+
         $postHtml .= "<div class='zita-slider-container' sliderDelay='" . $sliderDelay . "'>";
         // next previous
         if (isset($sliderPara["leftRightTrigger"]['enable']) && $sliderPara["leftRightTrigger"]['enable']) {
