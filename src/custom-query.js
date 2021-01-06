@@ -3,6 +3,18 @@
     int: function () {
       fns.bind();
     },
+    _ajaxFunction: function (data_, datatyle_ = false) {
+      let ajaxObj = {
+        method: "POST",
+        url: zita_ajax_url.admin_ajax,
+        data: data_,
+      };
+      if (datatyle_ == "json") {
+        ajaxObj["dataType"] = "json";
+        ajaxObj["async"] = false;
+      }
+      return jQuery.ajax(ajaxObj);
+    },
     zita_post_next_prev: function () {
       let thisBtn = $(this);
       let getDataWrapper = thisBtn.closest(".zita-two-post-wrapper");
@@ -28,7 +40,7 @@
         loader_.addClass("active");
         let returnData = fns._ajaxFunction(data_);
         returnData.success(function (response) {
-          // console.log("response->" + response);
+          console.log("response3->" + response);
           // response
           loader_.removeClass("active");
           let nxtPrev = thisBtn.closest(".zita-two-post-wrapper-next-prev");
@@ -53,18 +65,6 @@
           // response
         });
       }
-    },
-    _ajaxFunction: function (data_, datatyle_ = false) {
-      let ajaxObj = {
-        method: "POST",
-        url: zita_ajax_url.admin_ajax,
-        data: data_,
-      };
-      if (datatyle_ == "json") {
-        ajaxObj["dataType"] = "json";
-        ajaxObj["async"] = false;
-      }
-      return jQuery.ajax(ajaxObj);
     },
     chooseCate: function (e) {
       e.preventDefault();

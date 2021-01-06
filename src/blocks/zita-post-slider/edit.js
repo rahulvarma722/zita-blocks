@@ -347,7 +347,6 @@ class Edit extends Component {
               <span
                 onClick={() => {
                   this.updateGlobalSlide("right", "contentAlign");
-                  this.updateObj("title", "align", title, "flex-end");
                 }}
                 className={`dashicons dashicons-editor-alignright ${
                   sliderSetting.contentAlign == "right" && "active"

@@ -433,7 +433,7 @@ class Edit extends Component {
     return (
       <>
         <InspectorControls>
-          <PanelBody title="Block Title" initialOpen={false}>
+          <PanelBody title="Block Title / Navigation" initialOpen={false}>
             <div class="zita-switcher-button-section">
               <span
                 onClick={() => this.setState({ blockTitle: "title" })}

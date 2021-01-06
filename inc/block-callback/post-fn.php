@@ -62,9 +62,9 @@ function mytheme_blocks_render_latest_post_block($attr)
                     $postHtml .= '<p class="post-category">';
                     $category_ = get_the_category();
                     if (!empty($category_)) {
-                        $catestyle = '';
+                        $catestyle = 'font-size:' . $attr['showCate'][0]['fontSize'] . 'px;';
                         if ($attr['showCate'][0]['customColor']) {
-                            $catestyle = 'font-size:' . $attr['showCate'][0]['fontSize'] . 'px;background-color:' . $attr['showCate'][0]['backgroundColor'] . ';color:' . $attr['showCate'][0]['color'] . ';';
+                            $catestyle .= 'background-color:' . $attr['showCate'][0]['backgroundColor'] . ';color:' . $attr['showCate'][0]['color'] . ';';
                         }
                         foreach ($category_ as $cateValue) {
                             $postHtml .= '<span style="' . $catestyle . '">';
@@ -127,7 +127,6 @@ function mytheme_blocks_render_latest_post_block($attr)
                     $tags = get_the_tags(get_the_ID());
                     $postHtml .= '<p class="post-tags">';
                     if (!empty($tags)) {
-                        $Tagstyle = '';
                         $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
                         foreach ($tags as $tagValue) {
                             $postHtml .= '<span style="' . $Tagstyle . '">';
@@ -161,9 +160,9 @@ function mytheme_blocks_render_latest_post_block($attr)
                     $postHtml .= '<p class="post-category">';
                     $category_ = get_the_category();
                     if (!empty($category_)) {
-                        $catestyle = '';
+                        $catestyle = 'font-size:' . $attr['showCate'][0]['fontSize'] . 'px;';
                         if ($attr['showCate'][0]['customColor']) {
-                            $catestyle = 'font-size:' . $attr['showCate'][0]['fontSize'] . 'px;background-color:' . $attr['showCate'][0]['backgroundColor'] . ';color:' . $attr['showCate'][0]['color'] . ';';
+                            $catestyle .= 'background-color:' . $attr['showCate'][0]['backgroundColor'] . ';color:' . $attr['showCate'][0]['color'] . ';';
                         }
                         foreach ($category_ as $cateValue) {
                             $postHtml .= '<span style="' . $catestyle . '">';
@@ -226,10 +225,7 @@ function mytheme_blocks_render_latest_post_block($attr)
                     $tags = get_the_tags(get_the_ID());
                     $postHtml .= '<p class="post-tags">';
                     if (!empty($tags)) {
-                        $Tagstyle = '';
-                        if ($attr['showTag'][0]['customColor']) {
-                            $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
-                        }
+                        $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
                         foreach ($tags as $tagValue) {
                             $postHtml .= '<span style="' . $Tagstyle . '">';
                             $postHtml .= "<a href='" . get_category_link($tagValue->term_id) . "'>" . $tagValue->name . "</a>";

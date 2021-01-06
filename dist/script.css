@@ -924,6 +924,7 @@
 .zita-two-col-container .navigation_ {
   display: flex;
   border-bottom: 2px solid #dddddd;
+  align-items: flex-end;
 }
 .zita-two-col-container .navigation_ .nav-heading p {
   margin: 0 !important;
@@ -1002,6 +1003,7 @@
   height: 0;
   opacity: 0;
   transition: 0.5s all linear;
+  z-index: 1000;
 }
 
 .zita-post-two-column {
@@ -1101,6 +1103,7 @@
   background: #ff5e00;
   font-size: 13px;
   text-transform: capitalize;
+  line-height: 1;
 }
 .zita-post-two-column #post-wrapper .post-content p.post-category span:nth-child(2) {
   background: #1a609c;

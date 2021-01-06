@@ -6086,8 +6086,6 @@ var Edit = /*#__PURE__*/function (_Component) {
       })), wp.element.createElement("div", null, wp.element.createElement("span", {
         onClick: function onClick() {
           _this2.updateGlobalSlide("right", "contentAlign");
-
-          _this2.updateObj("title", "align", title, "flex-end");
         },
         className: "dashicons dashicons-editor-alignright ".concat(sliderSetting.contentAlign == "right" && "active")
       }))), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Slider Dimension ", "zita-blocks"), wp.element.createElement("small", {
@@ -7134,7 +7132,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
 
       return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
-        title: "Block Title",
+        title: "Block Title / Navigation",
         initialOpen: false
       }, wp.element.createElement("div", {
         class: "zita-switcher-button-section"

@@ -53,36 +53,29 @@ function zita_two_column_block($attr)
         $postHtml .= "<div class='navigation_' style='border-color:" . $titleAttrs["bgColor"] . ";'>";
         if ($titleAttrs["enable"]) {
             $postHtml .= '<div class="nav-heading">';
-            $postHtml .= '<p style="background-color: ' . $titleAttrs["bgColor"] . '; color:' . $titleAttrs["color"] . ';">';
+            $postHtml .= '<p style="background-color: ' . $titleAttrs["bgColor"] . '; color:' . $titleAttrs["color"] . ';font-size:' . $titleAttrs["fontSize"] . ';">';
             $postHtml .= $titleAttrs['value'];
             $postHtml .= '</p></div>';
         }
         if (count($innerITem) > 0) {
+            $navItemStyle = 'font-size:' . $attr["categorynav"][0]['fontSize'] . 'px;color:' . $attr["categorynav"][0]['color'] . ';background-color:' . $attr["categorynav"][0]['backgroundColor'] . ';';
             // linear items
             $postHtml .= "<div class='zita-block-nav-items nav-linear-items'>";
             $postHtml .= "<ul>";
-            $postHtml .= '<li class="cat-item cat-item-all"><a href="#">all</a></li>';
-            $category_in = wp_list_categories(array(
-                'orderby'    => 'name',
-                'include'    => $innerITem,
-                "title_li" => false,
-                "echo" => false
-            ));
-            $postHtml .= $category_in;
+            $postHtml .= '<li class="cat-item cat-item-all"><a style="' . $navItemStyle . '" href="#">all</a></li>';
+            foreach ($innerITem as $innerITem_value) {
+                $postHtml .= '<li class="cat-item cat-item-' . $innerITem_value . '"><a style="' . $navItemStyle . '" href="#">' . get_cat_name($innerITem_value) . '</a></li>';
+            }
             $postHtml .= "</ul>";
             $postHtml .= "</div>";
             // dropdown items
             if (!empty($outerItem)) {
                 $postHtml .= "<div class='zita-block-nav-items nav-drop-items'>";
-                $postHtml .= "<span class='more-opener'>More<i class='fas fa-chevron-down'></i></span>";
+                $postHtml .= "<span style='" . $navItemStyle . "' class='more-opener'>More<i class='fas fa-chevron-down'></i></span>";
                 $postHtml .= "<ul>";
-                $category_in = wp_list_categories(array(
-                    'orderby'    => 'name',
-                    'include'    => $outerItem,
-                    "title_li" => false,
-                    "echo" => false
-                ));
-                $postHtml .= $category_in;
+                foreach ($outerItem as $outerItem_value) {
+                    $postHtml .= '<li class="cat-item cat-item-' . $outerItem_value . '"><a style="' . $navItemStyle . '" href="#">' . get_cat_name($outerItem_value) . '</a></li>';
+                }
                 $postHtml .= "</ul>";
                 $postHtml .= "</div>";
             }
@@ -107,7 +100,12 @@ function zita_two_column_block($attr)
         $postExcerpt2 = isset($attr['excerpt2'][0]['enable']) && $attr['excerpt2'][0]['enable']  ? true : false;
         $postExcerpt2Color = $postExcerpt2 && $attr['excerpt2'][0]['color'] ? $attr['excerpt2'][0]['color'] : "";
         $postThumbnail = isset($attr['thumbnail'][0]['enable']) && $attr['thumbnail'][0]['enable']  ? true : false;
+        $postThumbnail2 = isset($attr['thumbnail2'][0]['enable']) && $attr['thumbnail2'][0]['enable']  ? true : false;
         $metaStyleColor = isset($attr['meta_style'][0]['color']) && $attr['meta_style'][0]['color']  ? $attr['meta_style'][0]['color'] : "";
+        $metaStyleFont = isset($attr['meta_style'][0]['fontSize']) && $attr['meta_style'][0]['fontSize']  ? $attr['meta_style'][0]['fontSize'] : "";
+        $metaStyleColor2 = isset($attr['meta_style2'][0]['color']) && $attr['meta_style2'][0]['color']  ? $attr['meta_style2'][0]['color'] : "";
+        $metaStyleFont2 = isset($attr['meta_style2'][0]['fontSize']) && $attr['meta_style2'][0]['fontSize']  ? $attr['meta_style2'][0]['fontSize'] : "";
+
         // $metaLeftBorder = isset($attr['meta_style'][0]['left_border']) && $attr['meta_style'][0]['left_border']  ? "left-border" : "";
         $metashowCate = isset($attr['showCate'][0]['enable']) && $attr['showCate'][0]['enable']  ? true : false;
         $metashowCate2 = isset($attr['showCate2'][0]['enable']) && $attr['showCate2'][0]['enable']  ? true : false;
@@ -135,8 +133,12 @@ function zita_two_column_block($attr)
                     $postHtmlCl1 .= '<p class="post-category">';
                     $category_ = get_the_category();
                     if (!empty($category_)) {
+                        $catestyle = 'font-size:' . $attr['showCate'][0]['fontSize'] . 'px;';
+                        if ($attr['showCate'][0]['customColor']) {
+                            $catestyle .= 'background-color:' . $attr['showCate'][0]['backgroundColor'] . ';color:' . $attr['showCate'][0]['color'] . ';';
+                        }
                         foreach ($category_ as $cateValue) {
-                            $postHtmlCl1 .= '<span>';
+                            $postHtmlCl1 .= '<span style="' . $catestyle . '">';
                             $postHtmlCl1 .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
                             $postHtmlCl1 .= '</span>';
                         }
@@ -149,27 +151,27 @@ function zita_two_column_block($attr)
                 $postHtmlCl1 .= "</" . $attr['heading'][0]['tag'] . ">";
                 $postHtmlCl1 .= '<div class="post-meta-all">';
                 if ($postAuthor) {
-                    $postHtmlCl1 .= "<p style='color:" . $metaStyleColor . "' class='post-author'>";
+                    $postHtmlCl1 .= "<p style='color:" . $metaStyleColor . ";font-size:" . $metaStyleFont . "px;' class='post-author'>";
                     $postHtmlCl1 .= "<a target='_blank' href='" . get_author_posts_url(get_the_author_meta('ID')) . "'>";
                     $postHtmlCl1 .=  get_the_author();
                     $postHtmlCl1 .= "</a></p>";
                 }
                 if ($postDate) {
-                    $postHtmlCl1 .= $postAuthor ? '<span class="slash">/</span>' : '';
+                    $postHtmlCl1 .= $postAuthor ? '<span style="color:' . $metaStyleColor . ';font-size:' . $metaStyleFont . 'px;" class="slash">/</span>' : '';
                     $dateYear =   get_the_date('Y');
                     $dateMonth =   get_the_date('m');
                     $dateDay =   get_the_date('j');
-                    $postHtmlCl1 .= "<p style='color:" . $metaStyleColor . "' class='post-date'>";
+                    $postHtmlCl1 .= "<p style='color:" . $metaStyleColor . ";font-size:" . $metaStyleFont . "px;' class='post-date'>";
                     $postHtmlCl1 .= "<a target='_blank' href='" . get_day_link($dateYear, $dateMonth, $dateDay) . "'>";
                     $postHtmlCl1 .=  get_the_date();
                     $postHtmlCl1 .= "</a></p>";
                 }
                 if ($postDateModify) {
-                    $postHtmlCl1 .= ($postDate || $postAuthor) ? '<span class="slash">/</span>' : '';
+                    $postHtmlCl1 .= ($postDate || $postAuthor) ? '<span style="color:' . $metaStyleColor . ';font-size:' . $metaStyleFont . 'px;" class="slash">/</span>' : '';
                     $dateYear =   get_the_modified_date('Y');
                     $dateMonth =   get_the_modified_date('m');
                     $dateDay =   get_the_modified_date('j');
-                    $postHtmlCl1 .= "<p style='color:" . $metaStyleColor . "' class='post-date-last-modified'>";
+                    $postHtmlCl1 .= "<p style='color:" . $metaStyleColor . ";font-size:" . $metaStyleFont . "px;' class='post-date-last-modified'>";
                     $postHtmlCl1 .= "Modified:<a target='_blank' href='" . get_day_link($dateYear, $dateMonth, $dateDay) . "'>";
                     $postHtmlCl1 .=  get_the_modified_date();
                     $postHtmlCl1 .= "</a></p>";
@@ -194,8 +196,9 @@ function zita_two_column_block($attr)
                     $tags = get_the_tags(get_the_ID());
                     $postHtmlCl1 .= '<p class="post-tags">';
                     if (!empty($tags)) {
+                        $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
                         foreach ($tags as $tagValue) {
-                            $postHtmlCl1 .= '<span>';
+                            $postHtmlCl1 .= '<span style="' . $Tagstyle . '">';
                             $postHtmlCl1 .= "<a href='" . get_category_link($tagValue->term_id) . "'>" . $tagValue->name . "</a>";
                             $postHtmlCl1 .= '</span>';
                         }
@@ -209,9 +212,9 @@ function zita_two_column_block($attr)
             } else {
                 $postHtmlCl2 .= "<article class='block-post-article'>";
                 $postHtmlCl2 .= "<div class='post-wrapper' id='post-wrapper'>";
-                if ($postThumbnail) {
+                if ($postThumbnail2) {
                     if (get_the_post_thumbnail_url()) {
-                        $postThumbRadius = isset($attr['thumbnail'][0]['borderRadius']) && $attr['thumbnail'][0]['borderRadius']  ? $attr['thumbnail'][0]['borderRadius'] : false;
+                        $postThumbRadius = isset($attr['thumbnail2'][0]['borderRadius']) && $attr['thumbnail2'][0]['borderRadius']  ? $attr['thumbnail2'][0]['borderRadius'] : false;
                         $postHtmlCl2 .= '<div class="featured-image">';
                         $postHtmlCl2 .= "<a href='" . esc_url(get_the_permalink()) . "'>";
                         $postHtmlCl2 .= '<img style="border-radius:' . $postThumbRadius . 'px" src="' . get_the_post_thumbnail_url() . '"/>';
@@ -225,8 +228,12 @@ function zita_two_column_block($attr)
                     $postHtmlCl2 .= '<p class="post-category">';
                     $category_ = get_the_category();
                     if (!empty($category_)) {
+                        $catestyle2 = 'font-size:' . $attr['showCate2'][0]['fontSize'] . 'px;';
+                        if ($attr['showCate2'][0]['customColor']) {
+                            $catestyle2 .= 'background-color:' . $attr['showCate2'][0]['backgroundColor'] . ';color:' . $attr['showCate2'][0]['color'] . ';';
+                        }
                         foreach ($category_ as $cateValue) {
-                            $postHtmlCl2 .= '<span>';
+                            $postHtmlCl2 .= '<span style="' . $catestyle2 . '">';
                             $postHtmlCl2 .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
                             $postHtmlCl2 .= '</span>';
                         }
@@ -239,27 +246,27 @@ function zita_two_column_block($attr)
                 $postHtmlCl2 .= "</" . $attr['heading2'][0]['tag'] . ">";
                 $postHtmlCl2 .= '<div class="post-meta-all">';
                 if ($postAuthor2) {
-                    $postHtmlCl2 .= "<p style='color:" . $metaStyleColor . "' class='post-author'>";
+                    $postHtmlCl2 .= "<p style='color:" . $metaStyleColor2 . ";font-size:" . $metaStyleFont2 . "px;' class='post-author'>";
                     $postHtmlCl2 .= "<a target='_blank' href='" . get_author_posts_url(get_the_author_meta('ID')) . "'>";
                     $postHtmlCl2 .=  get_the_author();
                     $postHtmlCl2 .= "</a></p>";
                 }
                 if ($postDate2) {
-                    $postHtmlCl2 .= $postAuthor2 ? '<span class="slash">/</span>' : '';
+                    $postHtmlCl2 .= $postAuthor2 ? '<span style="color:' . $metaStyleColor2 . ';font-size:' . $metaStyleFont2 . 'px;" class="slash">/</span>' : '';
                     $dateYear =   get_the_date('Y');
                     $dateMonth =   get_the_date('m');
                     $dateDay =   get_the_date('j');
-                    $postHtmlCl2 .= "<p style='color:" . $metaStyleColor . "' class='post-date'>";
+                    $postHtmlCl2 .= "<p style='color:" . $metaStyleColor2 . ";font-size:" . $metaStyleFont2 . "px;' class='post-date'>";
                     $postHtmlCl2 .= "<a target='_blank' href='" . get_day_link($dateYear, $dateMonth, $dateDay) . "'>";
                     $postHtmlCl2 .=  get_the_date();
                     $postHtmlCl2 .= "</a></p>";
                 }
                 if ($postDateModify2) {
-                    $postHtmlCl2 .= ($postDate2 || $postAuthor2) ? '<span class="slash">/</span>' : '';
+                    $postHtmlCl2 .= ($postDate2 || $postAuthor2) ? '<span style="color:' . $metaStyleColor2 . ';font-size:' . $metaStyleFont2 . 'px;" class="slash">/</span>' : '';
                     $dateYear =   get_the_modified_date('Y');
                     $dateMonth =   get_the_modified_date('m');
                     $dateDay =   get_the_modified_date('j');
-                    $postHtmlCl2 .= "<p style='color:" . $metaStyleColor . "' class='post-date-last-modified'>";
+                    $postHtmlCl2 .= "<p style='color:" . $metaStyleColor2 . ";font-size:" . $metaStyleFont2 . "px;' class='post-date-last-modified'>";
                     $postHtmlCl2 .= "Modified:<a target='_blank' href='" . get_day_link($dateYear, $dateMonth, $dateDay) . "'>";
                     $postHtmlCl2 .=  get_the_modified_date();
                     $postHtmlCl2 .= "</a></p>";
