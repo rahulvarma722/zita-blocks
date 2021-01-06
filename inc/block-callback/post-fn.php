@@ -88,7 +88,7 @@ function mytheme_blocks_render_latest_post_block($attr)
                 }
 
                 if ($postDate) {
-                    $postHtml .= $postAuthor ? '<span style="font-size:' . $metaStyleFontSize . ';" class="slash">/</span>' : '';
+                    $postHtml .= $postAuthor ? '<span style="font-size:' . $metaStyleFontSize . ';color:' . $metaStyleColor . ';" class="slash">/</span>' : '';
                     $dateYear =   get_the_date('Y');
                     $dateMonth =   get_the_date('m');
                     $dateDay =   get_the_date('j');
@@ -98,7 +98,7 @@ function mytheme_blocks_render_latest_post_block($attr)
                     $postHtml .= "</a></p>";
                 }
                 if ($postDateModify) {
-                    $postHtml .= $postAuthor || $postDate ? '<span style="font-size:' . $metaStyleFontSize . ';" class="slash">/</span>' : '';
+                    $postHtml .= $postAuthor || $postDate ? '<span style="font-size:' . $metaStyleFontSize . ';color:' . $metaStyleColor . ';" class="slash">/</span>' : '';
                     $dateYear =   get_the_modified_date('Y');
                     $dateMonth =   get_the_modified_date('m');
                     $dateDay =   get_the_modified_date('j');
@@ -128,9 +128,7 @@ function mytheme_blocks_render_latest_post_block($attr)
                     $postHtml .= '<p class="post-tags">';
                     if (!empty($tags)) {
                         $Tagstyle = '';
-                        if ($attr['showTag'][0]['customColor']) {
-                            $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
-                        }
+                        $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
                         foreach ($tags as $tagValue) {
                             $postHtml .= '<span style="' . $Tagstyle . '">';
                             $postHtml .= "<a href='" . get_category_link($tagValue->term_id) . "'>" . $tagValue->name . "</a>";
@@ -189,7 +187,7 @@ function mytheme_blocks_render_latest_post_block($attr)
                 }
 
                 if ($postDate) {
-                    $postHtml .= $postAuthor ? '<span style="font-size:' . $metaStyleFontSize . ';" class="slash">/</span>' : '';
+                    $postHtml .= $postAuthor ? '<span style="font-size:' . $metaStyleFontSize . 'color:' . $metaStyleColor . ';;" class="slash">/</span>' : '';
                     $dateYear =   get_the_date('Y');
                     $dateMonth =   get_the_date('m');
                     $dateDay =   get_the_date('j');
@@ -199,7 +197,7 @@ function mytheme_blocks_render_latest_post_block($attr)
                     $postHtml .= "</a></p>";
                 }
                 if ($postDateModify) {
-                    $postHtml .= $postAuthor || $postDate ? '<span style="font-size:' . $metaStyleFontSize . ';" class="slash">/</span>' : '';
+                    $postHtml .= $postAuthor || $postDate ? '<span style="font-size:' . $metaStyleFontSize . ';color:' . $metaStyleColor . ';" class="slash">/</span>' : '';
                     $dateYear =   get_the_modified_date('Y');
                     $dateMonth =   get_the_modified_date('m');
                     $dateDay =   get_the_modified_date('j');

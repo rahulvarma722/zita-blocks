@@ -77,7 +77,7 @@ wpgt_register_block_fn('zita-post',  [
             "type" => "array",
             "default" => [[
                 "enable" => true,
-                "customColor" => false,
+                // "customColor" => false,
                 "color" => "white",
                 "backgroundColor" => "black",
                 "fontSize" => 12

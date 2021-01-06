@@ -68,13 +68,10 @@ class Edit extends Component {
     }
     if (returR.length) {
       let getCateStyle = this.props.attributes.showCate;
-      let putCateStyle = null;
+      let putCateStyle = { fontSize: getCateStyle[0].fontSize + "px" };
       if (getCateStyle[0].customColor) {
-        putCateStyle = {
-          color: getCateStyle[0].color,
-          backgroundColor: getCateStyle[0].backgroundColor,
-          fontSize: getCateStyle[0].fontSize + "px",
-        };
+        putCateStyle["color"] = getCateStyle[0].color;
+        putCateStyle["backgroundColor"] = getCateStyle[0].backgroundColor;
       }
       return returR.map((returnH) => (
         <span style={putCateStyle && putCateStyle}>{returnH}</span>
@@ -96,14 +93,9 @@ class Edit extends Component {
     }
     if (returR.length) {
       let getTagStyle = this.props.attributes.showTag;
-      let putTagStyle = null;
-      if (getTagStyle[0].customColor) {
-        putTagStyle = {
-          color: getTagStyle[0].color,
-          backgroundColor: getTagStyle[0].backgroundColor,
-          fontSize: getTagStyle[0].fontSize + "px",
-        };
-      }
+      let putTagStyle = { color: getTagStyle[0].color };
+      putTagStyle["color"] = getTagStyle[0].color;
+      putTagStyle["backgroundColor"] = getTagStyle[0].backgroundColor;
       return returR.map((returnH) => (
         <span style={putTagStyle && putTagStyle}>{returnH}</span>
       ));
@@ -192,6 +184,116 @@ class Edit extends Component {
 
     return [
       <InspectorControls>
+        <PanelBody title="Block Title" initialOpen={false}>
+          <ToggleControl
+            label={
+              title_.enable
+                ? __("Hide", "zita-blocks")
+                : __("Show", "zita-blocks")
+            }
+            checked={title_.enable}
+            onChange={(e) => this.updateObj("title", "enable", title, e)}
+          />
+          {title_.enable && (
+            <>
+              <p>
+                <strong>{__("Title Alignment", "zita-blocks")}</strong>
+              </p>
+              <div className="zita-alignment">
+                <div>
+                  <span
+                    onClick={() => {
+                      this.updateObj("title", "align", title, "left");
+                    }}
+                    className={`dashicons dashicons-editor-alignleft ${
+                      title_.align == "left" && "active"
+                    }`}
+                  ></span>
+                </div>
+                <div>
+                  <span
+                    onClick={() => {
+                      this.updateObj("title", "align", title, "center");
+                    }}
+                    className={`dashicons dashicons-editor-aligncenter ${
+                      title_.align == "center" && "active"
+                    }`}
+                  ></span>
+                </div>
+                <div>
+                  <span
+                    onClick={() => {
+                      this.updateObj("title", "align", title, "flex-end");
+                    }}
+                    className={`dashicons dashicons-editor-alignright ${
+                      title_.align == "flex-end" && "active"
+                    }`}
+                  ></span>
+                </div>
+              </div>
+
+              <RangeControl
+                label={__("Font Size", "zita-blocks")}
+                value={title_.fontSize}
+                min={5}
+                max={50}
+                onChange={(e) => {
+                  this.updateObj("title", "fontSize", title, e);
+                }}
+              />
+              <p>
+                <strong>{__("Color", "zita-blocks")}</strong>
+              </p>
+              <ColorPalette
+                value={title_.color}
+                onChange={(color) =>
+                  this.updateObj("title", "color", title, color)
+                }
+              />
+              <p>
+                <strong>{__("Background Color", "zita-blocks")}</strong>
+              </p>
+              <ColorPicker
+                color={title_.backgroundColor}
+                onChangeComplete={(colorBg) => {
+                  let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                  this.updateObj("title", "backgroundColor", title, color);
+                }}
+              />
+              {/* font weight */}
+              <div className="flex-section">
+                <p>Font Weight</p>
+                <select
+                  value={title_.fontWeight}
+                  onChange={(e) => {
+                    this.updateObj(
+                      "title",
+                      "fontWeight",
+                      title,
+                      e.target.value
+                    );
+                  }}
+                >
+                  <option value="400">400</option>
+                  <option value="600">600</option>
+                  <option value="700">700</option>
+                </select>
+              </div>
+              {/* font weight */}
+              <p>
+                <strong>{__("Max Width %", "zita-blocks")}</strong>
+              </p>
+              <RangeControl
+                value={title_.width}
+                min={1}
+                max={100}
+                onChange={(e) => {
+                  this.updateObj("title", "width", title, e);
+                }}
+              />
+            </>
+          )}
+        </PanelBody>
         <PanelBody
           title={__("Post Slider Setting", "zita-blocks")}
           initialOpen={false}
@@ -255,7 +357,7 @@ class Edit extends Component {
           </div>
           <p>
             <strong>
-              {__("Slider Dimension", "zita-blocks")}
+              {__("Slider Dimension ", "zita-blocks")}
               <small className="dull_grey">
                 ({__("custom Height", "zita-blocks")}/
                 {__("Width", "zita-blocks")})
@@ -540,116 +642,6 @@ class Edit extends Component {
             </>
           )}
         </PanelBody>
-        <PanelBody title="Block Title" initialOpen={false}>
-          <ToggleControl
-            label={
-              title_.enable
-                ? __("Hide", "zita-blocks")
-                : __("Show", "zita-blocks")
-            }
-            checked={title_.enable}
-            onChange={(e) => this.updateObj("title", "enable", title, e)}
-          />
-          {title_.enable && (
-            <>
-              <p>
-                <strong>{__("Title Alignment", "zita-blocks")}</strong>
-              </p>
-              <div className="zita-alignment">
-                <div>
-                  <span
-                    onClick={() => {
-                      this.updateObj("title", "align", title, "left");
-                    }}
-                    className={`dashicons dashicons-editor-alignleft ${
-                      title_.align == "left" && "active"
-                    }`}
-                  ></span>
-                </div>
-                <div>
-                  <span
-                    onClick={() => {
-                      this.updateObj("title", "align", title, "center");
-                    }}
-                    className={`dashicons dashicons-editor-aligncenter ${
-                      title_.align == "center" && "active"
-                    }`}
-                  ></span>
-                </div>
-                <div>
-                  <span
-                    onClick={() => {
-                      this.updateObj("title", "align", title, "flex-end");
-                    }}
-                    className={`dashicons dashicons-editor-alignright ${
-                      title_.align == "flex-end" && "active"
-                    }`}
-                  ></span>
-                </div>
-              </div>
-
-              <RangeControl
-                label={__("Font Size", "zita-blocks")}
-                value={title_.fontSize}
-                min={5}
-                max={50}
-                onChange={(e) => {
-                  this.updateObj("title", "fontSize", title, e);
-                }}
-              />
-              <p>
-                <strong>{__("Color", "zita-blocks")}</strong>
-              </p>
-              <ColorPalette
-                value={title_.color}
-                onChange={(color) =>
-                  this.updateObj("title", "color", title, color)
-                }
-              />
-              <p>
-                <strong>{__("Background Color", "zita-blocks")}</strong>
-              </p>
-              <ColorPicker
-                color={title_.backgroundColor}
-                onChangeComplete={(colorBg) => {
-                  let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                  this.updateObj("title", "backgroundColor", title, color);
-                }}
-              />
-              {/* font weight */}
-              <div className="flex-section">
-                <p>Font Weight</p>
-                <select
-                  value={title_.fontWeight}
-                  onChange={(e) => {
-                    this.updateObj(
-                      "title",
-                      "fontWeight",
-                      title,
-                      e.target.value
-                    );
-                  }}
-                >
-                  <option value="400">400</option>
-                  <option value="600">600</option>
-                  <option value="700">700</option>
-                </select>
-              </div>
-              {/* font weight */}
-              <p>
-                <strong>{__("Max Width %", "zita-blocks")}</strong>
-              </p>
-              <RangeControl
-                value={title_.width}
-                min={1}
-                max={100}
-                onChange={(e) => {
-                  this.updateObj("title", "width", title, e);
-                }}
-              />
-            </>
-          )}
-        </PanelBody>
         <PanelBody title="Heading" initialOpen={false}>
           <p>
             <strong>Heading Tag</strong>
@@ -772,7 +764,7 @@ class Edit extends Component {
             checked={showTag_.enable}
             onChange={(e) => this.updateObj("showTag", "enable", showTag, e)}
           />
-          <p class="block-inside">{__("Meta Style", "zita-blocks")}</p>
+          <p class="block-inside">{__("Meta Custom Style", "zita-blocks")}</p>
           <p>
             <strong>{__("Author/Dates Font Size", "zita-blocks")}</strong>
           </p>
@@ -798,8 +790,23 @@ class Edit extends Component {
               <p class="block-inside">
                 {__("Category Custom Style", "zita-blocks")}
               </p>
+              <p>
+                <strong>{__("Font Size", "zita-blocks")}</strong>
+              </p>
+              <RangeControl
+                value={showCate_.fontSize}
+                min={1}
+                max={30}
+                onChange={(e) => {
+                  this.updateObj("showCate", "fontSize", showCate, e);
+                }}
+              />
               <ToggleControl
-                label={__("Enable", "zita-blocks")}
+                label={
+                  showCate_.customColor
+                    ? __("Custom Style", "zita-blocks")
+                    : __("Default Style", "zita-blocks")
+                }
                 checked={showCate_.customColor}
                 onChange={(e) =>
                   this.updateObj("showCate", "customColor", showCate, e)
@@ -807,17 +814,6 @@ class Edit extends Component {
               />
               {showCate_.customColor && (
                 <>
-                  <p>
-                    <strong>{__("Font Size", "zita-blocks")}</strong>
-                  </p>
-                  <RangeControl
-                    value={showCate_.fontSize}
-                    min={1}
-                    max={30}
-                    onChange={(e) => {
-                      this.updateObj("showCate", "fontSize", showCate, e);
-                    }}
-                  />
                   <p>
                     <strong>{__("Color", "zita-blocks")}</strong>
                   </p>
@@ -851,52 +847,36 @@ class Edit extends Component {
               <p class="block-inside">
                 {__("Tags Custom Style", "zita-blocks")}
               </p>
-              <ToggleControl
-                label={__("Enable", "zita-blocks")}
-                checked={showTag_.customColor}
-                onChange={(e) =>
-                  this.updateObj("showTag", "customColor", showTag, e)
+              <p>
+                <strong>{__("Font Size", "zita-blocks")}</strong>
+              </p>
+              <RangeControl
+                value={showTag_.fontSize}
+                min={1}
+                max={30}
+                onChange={(e) => {
+                  this.updateObj("showTag", "fontSize", showTag, e);
+                }}
+              />
+              <p>
+                <strong>{__("Color", "zita-blocks")}</strong>
+              </p>
+              <ColorPalette
+                value={showTag_.color}
+                onChange={(color) =>
+                  this.updateObj("showTag", "color", showTag, color)
                 }
               />
-              {showTag_.customColor && (
-                <>
-                  <p>
-                    <strong>{__("Font Size", "zita-blocks")}</strong>
-                  </p>
-                  <RangeControl
-                    value={showTag_.fontSize}
-                    min={1}
-                    max={30}
-                    onChange={(e) => {
-                      this.updateObj("showTag", "fontSize", showTag, e);
-                    }}
-                  />
-                  <p>
-                    <strong>{__("Color", "zita-blocks")}</strong>
-                  </p>
-                  <ColorPalette
-                    value={showTag_.color}
-                    onChange={(color) =>
-                      this.updateObj("showTag", "color", showTag, color)
-                    }
-                  />
-                  <p>
-                    <strong>{__("Background Color", "zita-blocks")}</strong>
-                  </p>
-                  <ColorPicker
-                    color={showTag_.backgroundColor}
-                    onChangeComplete={(colorBg) => {
-                      let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                      this.updateObj(
-                        "showTag",
-                        "backgroundColor",
-                        showTag,
-                        color
-                      );
-                    }}
-                  />
-                </>
-              )}
+              <p>
+                <strong>{__("Background Color", "zita-blocks")}</strong>
+              </p>
+              <ColorPicker
+                color={showTag_.backgroundColor}
+                onChangeComplete={(colorBg) => {
+                  let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                  this.updateObj("showTag", "backgroundColor", showTag, color);
+                }}
+              />
             </>
           )}
         </PanelBody>
@@ -1036,6 +1016,7 @@ class Edit extends Component {
                                           {postAuthor && (
                                             <span
                                               style={{
+                                                color: meta_style_.color,
                                                 fontSize:
                                                   meta_style_.fontSize + "px",
                                               }}
@@ -1065,6 +1046,7 @@ class Edit extends Component {
                                           {(postAuthor || date_.enable) && (
                                             <span
                                               style={{
+                                                color: meta_style_.color,
                                                 fontSize:
                                                   meta_style_.fontSize + "px",
                                               }}

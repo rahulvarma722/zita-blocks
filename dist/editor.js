@@ -5827,14 +5827,13 @@ var Edit = /*#__PURE__*/function (_Component) {
 
       if (returR.length) {
         var getCateStyle = _this.props.attributes.showCate;
-        var putCateStyle = null;
+        var putCateStyle = {
+          fontSize: getCateStyle[0].fontSize + "px"
+        };
 
         if (getCateStyle[0].customColor) {
-          putCateStyle = {
-            color: getCateStyle[0].color,
-            backgroundColor: getCateStyle[0].backgroundColor,
-            fontSize: getCateStyle[0].fontSize + "px"
-          };
+          putCateStyle["color"] = getCateStyle[0].color;
+          putCateStyle["backgroundColor"] = getCateStyle[0].backgroundColor;
         }
 
         return returR.map(function (returnH) {
@@ -5861,16 +5860,11 @@ var Edit = /*#__PURE__*/function (_Component) {
 
       if (returR.length) {
         var getTagStyle = _this.props.attributes.showTag;
-        var putTagStyle = null;
-
-        if (getTagStyle[0].customColor) {
-          putTagStyle = {
-            color: getTagStyle[0].color,
-            backgroundColor: getTagStyle[0].backgroundColor,
-            fontSize: getTagStyle[0].fontSize + "px"
-          };
-        }
-
+        var putTagStyle = {
+          color: getTagStyle[0].color
+        };
+        putTagStyle["color"] = getTagStyle[0].color;
+        putTagStyle["backgroundColor"] = getTagStyle[0].backgroundColor;
         return returR.map(function (returnH) {
           return wp.element.createElement("span", {
             style: putTagStyle && putTagStyle
@@ -5993,6 +5987,72 @@ var Edit = /*#__PURE__*/function (_Component) {
         width: sliderSetting.linearTrigger.fontSize + "px"
       };
       return [wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
+        title: "Block Title",
+        initialOpen: false
+      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
+        label: title_.enable ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Hide", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Show", "zita-blocks"),
+        checked: title_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("title", "enable", title, e);
+        }
+      }), title_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Title Alignment", "zita-blocks"))), wp.element.createElement("div", {
+        className: "zita-alignment"
+      }, wp.element.createElement("div", null, wp.element.createElement("span", {
+        onClick: function onClick() {
+          _this2.updateObj("title", "align", title, "left");
+        },
+        className: "dashicons dashicons-editor-alignleft ".concat(title_.align == "left" && "active")
+      })), wp.element.createElement("div", null, wp.element.createElement("span", {
+        onClick: function onClick() {
+          _this2.updateObj("title", "align", title, "center");
+        },
+        className: "dashicons dashicons-editor-aligncenter ".concat(title_.align == "center" && "active")
+      })), wp.element.createElement("div", null, wp.element.createElement("span", {
+        onClick: function onClick() {
+          _this2.updateObj("title", "align", title, "flex-end");
+        },
+        className: "dashicons dashicons-editor-alignright ".concat(title_.align == "flex-end" && "active")
+      }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"),
+        value: title_.fontSize,
+        min: 5,
+        max: 50,
+        onChange: function onChange(e) {
+          _this2.updateObj("title", "fontSize", title, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
+        value: title_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("title", "color", title, color);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Background Color", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ColorPicker"], {
+        color: title_.backgroundColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateObj("title", "backgroundColor", title, color);
+        }
+      }), wp.element.createElement("div", {
+        className: "flex-section"
+      }, wp.element.createElement("p", null, "Font Weight"), wp.element.createElement("select", {
+        value: title_.fontWeight,
+        onChange: function onChange(e) {
+          _this2.updateObj("title", "fontWeight", title, e.target.value);
+        }
+      }, wp.element.createElement("option", {
+        value: "400"
+      }, "400"), wp.element.createElement("option", {
+        value: "600"
+      }, "600"), wp.element.createElement("option", {
+        value: "700"
+      }, "700"))), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Max Width %", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        value: title_.width,
+        min: 1,
+        max: 100,
+        onChange: function onChange(e) {
+          _this2.updateObj("title", "width", title, e);
+        }
+      }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
         title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Post Slider Setting", "zita-blocks"),
         initialOpen: false
       }, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Number Of Post Display", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
@@ -6030,7 +6090,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           _this2.updateObj("title", "align", title, "flex-end");
         },
         className: "dashicons dashicons-editor-alignright ".concat(sliderSetting.contentAlign == "right" && "active")
-      }))), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Slider Dimension", "zita-blocks"), wp.element.createElement("small", {
+      }))), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Slider Dimension ", "zita-blocks"), wp.element.createElement("small", {
         className: "dull_grey"
       }, "(", Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("custom Height", "zita-blocks"), "/", Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Width", "zita-blocks"), ")"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
         label: sliderSetting.dimension.width ? "Custom Width" : "Auto Width",
@@ -6190,72 +6250,6 @@ var Edit = /*#__PURE__*/function (_Component) {
           return _this2.updateGlobalSlide(e, "autoTrigger", "delay");
         }
       }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
-        title: "Block Title",
-        initialOpen: false
-      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
-        label: title_.enable ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Hide", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Show", "zita-blocks"),
-        checked: title_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("title", "enable", title, e);
-        }
-      }), title_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Title Alignment", "zita-blocks"))), wp.element.createElement("div", {
-        className: "zita-alignment"
-      }, wp.element.createElement("div", null, wp.element.createElement("span", {
-        onClick: function onClick() {
-          _this2.updateObj("title", "align", title, "left");
-        },
-        className: "dashicons dashicons-editor-alignleft ".concat(title_.align == "left" && "active")
-      })), wp.element.createElement("div", null, wp.element.createElement("span", {
-        onClick: function onClick() {
-          _this2.updateObj("title", "align", title, "center");
-        },
-        className: "dashicons dashicons-editor-aligncenter ".concat(title_.align == "center" && "active")
-      })), wp.element.createElement("div", null, wp.element.createElement("span", {
-        onClick: function onClick() {
-          _this2.updateObj("title", "align", title, "flex-end");
-        },
-        className: "dashicons dashicons-editor-alignright ".concat(title_.align == "flex-end" && "active")
-      }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"),
-        value: title_.fontSize,
-        min: 5,
-        max: 50,
-        onChange: function onChange(e) {
-          _this2.updateObj("title", "fontSize", title, e);
-        }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
-        value: title_.color,
-        onChange: function onChange(color) {
-          return _this2.updateObj("title", "color", title, color);
-        }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Background Color", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ColorPicker"], {
-        color: title_.backgroundColor,
-        onChangeComplete: function onChangeComplete(colorBg) {
-          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
-
-          _this2.updateObj("title", "backgroundColor", title, color);
-        }
-      }), wp.element.createElement("div", {
-        className: "flex-section"
-      }, wp.element.createElement("p", null, "Font Weight"), wp.element.createElement("select", {
-        value: title_.fontWeight,
-        onChange: function onChange(e) {
-          _this2.updateObj("title", "fontWeight", title, e.target.value);
-        }
-      }, wp.element.createElement("option", {
-        value: "400"
-      }, "400"), wp.element.createElement("option", {
-        value: "600"
-      }, "600"), wp.element.createElement("option", {
-        value: "700"
-      }, "700"))), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Max Width %", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
-        value: title_.width,
-        min: 1,
-        max: 100,
-        onChange: function onChange(e) {
-          _this2.updateObj("title", "width", title, e);
-        }
-      }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
         title: "Heading",
         initialOpen: false
       }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Heading Tag")), wp.element.createElement("select", {
@@ -6364,7 +6358,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }), wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Meta Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Author/Dates Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Meta Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Author/Dates Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
         value: meta_style_.fontSize,
         min: 1,
         max: 25,
@@ -6378,20 +6372,20 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }), showCate_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Enable", "zita-blocks"),
-        checked: showCate_.customColor,
-        onChange: function onChange(e) {
-          return _this2.updateObj("showCate", "customColor", showCate, e);
-        }
-      }), showCate_.customColor && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
         value: showCate_.fontSize,
         min: 1,
         max: 30,
         onChange: function onChange(e) {
           _this2.updateObj("showCate", "fontSize", showCate, e);
         }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
+        label: showCate_.customColor ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Custom Style", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Default Style", "zita-blocks"),
+        checked: showCate_.customColor,
+        onChange: function onChange(e) {
+          return _this2.updateObj("showCate", "customColor", showCate, e);
+        }
+      }), showCate_.customColor && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
         value: showCate_.color,
         onChange: function onChange(color) {
           return _this2.updateObj("showCate", "color", showCate, color);
@@ -6405,13 +6399,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }))), showTag_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Enable", "zita-blocks"),
-        checked: showTag_.customColor,
-        onChange: function onChange(e) {
-          return _this2.updateObj("showTag", "customColor", showTag, e);
-        }
-      }), showTag_.customColor && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
         value: showTag_.fontSize,
         min: 1,
         max: 30,
@@ -6430,7 +6418,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           _this2.updateObj("showTag", "backgroundColor", showTag, color);
         }
-      }))))), wp.element.createElement("div", {
+      })))), wp.element.createElement("div", {
         className: "zita-block-slide-wrapper"
       }, title_.enable && wp.element.createElement("div", {
         className: "zita-block-post-title",
@@ -6532,6 +6520,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           className: "post-author"
         }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, postAuthor && wp.element.createElement("span", {
           style: {
+            color: meta_style_.color,
             fontSize: meta_style_.fontSize + "px"
           },
           className: "slash"
@@ -6546,6 +6535,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           fontSize: meta_style_.fontSize + "px"
         }))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (postAuthor || date_.enable) && wp.element.createElement("span", {
           style: {
+            color: meta_style_.color,
             fontSize: meta_style_.fontSize + "px"
           },
           className: "slash"
@@ -6741,6 +6731,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/html-entities */ "@wordpress/html-entities");
 /* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -6776,6 +6768,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -6826,7 +6819,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       return words_;
     });
 
-    _defineProperty(_assertThisInitialized(_this), "showCateFn", function (categories) {
+    _defineProperty(_assertThisInitialized(_this), "showCateFn", function (categories, cate_) {
       var returR = [];
 
       if ("category" in _this.props && _this.props.category && categories.length) {
@@ -6841,13 +6834,25 @@ var Edit = /*#__PURE__*/function (_Component) {
       }
 
       if (returR.length) {
+        // let getCateStyle = this.props.attributes.showCate;
+        var putCateStyle = {
+          fontSize: cate_.fontSize + "px"
+        };
+
+        if (cate_.customColor) {
+          putCateStyle["color"] = cate_.color;
+          putCateStyle["backgroundColor"] = cate_.backgroundColor;
+        }
+
         return returR.map(function (returnH) {
-          return wp.element.createElement("span", null, returnH);
+          return wp.element.createElement("span", {
+            style: putCateStyle
+          }, returnH);
         });
       }
     });
 
-    _defineProperty(_assertThisInitialized(_this), "showTagsFn", function (tags_) {
+    _defineProperty(_assertThisInitialized(_this), "showTagsFn", function (tags_, tag_r) {
       var returR = [];
 
       if ("tags" in _this.props && _this.props.tags && tags_.length) {
@@ -6862,8 +6867,15 @@ var Edit = /*#__PURE__*/function (_Component) {
       }
 
       if (returR.length) {
+        var putTagStyle = {
+          color: tag_r.color
+        };
+        putTagStyle["color"] = tag_r.color;
+        putTagStyle["backgroundColor"] = tag_r.backgroundColor;
         return returR.map(function (returnH) {
-          return wp.element.createElement("span", null, returnH);
+          return wp.element.createElement("span", {
+            style: putTagStyle
+          }, returnH);
         });
       }
     });
@@ -6901,7 +6913,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         className: "post-content"
       }, showCate_ && showCate_.enable && wp.element.createElement("p", {
         className: "post-category"
-      }, _this.showCateFn(post.categories)), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
+      }, _this.showCateFn(post.categories, showCate_)), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
         className: "post-heading",
         tagName: heading_.tag,
         value: post.title.rendered,
@@ -6913,21 +6925,32 @@ var Edit = /*#__PURE__*/function (_Component) {
         className: "post-meta-all"
       }, postAuthor && wp.element.createElement("p", {
         style: {
-          color: meta_style_.color
+          color: meta_style_.color,
+          fontSize: meta_style_.fontSize
         },
         className: "post-author"
       }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, postAuthor && wp.element.createElement("span", {
+        style: {
+          color: meta_style_.color,
+          fontSize: meta_style_.fontSize
+        },
         className: "slash"
       }, "/"), wp.element.createElement("p", {
         style: {
-          color: meta_style_.color
+          color: meta_style_.color,
+          fontSize: meta_style_.fontSize
         },
         className: "post-date"
       }, _this.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (date_.enable || postAuthor) && wp.element.createElement("span", {
+        style: {
+          color: meta_style_.color,
+          fontSize: meta_style_.fontSize
+        },
         className: "slash"
       }, "/"), wp.element.createElement("p", {
         style: {
-          color: meta_style_.color
+          color: meta_style_.color,
+          fontSize: meta_style_.fontSize
         },
         className: "post-date-last-modified"
       }, wp.element.createElement("span", null, "Modified: "), _this.dateFormate(post.modified)))), excerpt_ && excerpt_.enable && wp.element.createElement("p", {
@@ -6942,7 +6965,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           color: meta_style_.color
         },
         className: "post-tags"
-      }, _this.showTagsFn(post.tags)))));
+      }, _this.showTagsFn(post.tags, showTag_)))));
     });
 
     _defineProperty(_assertThisInitialized(_this), "navCategory", function (cateTrue, title_) {
@@ -6951,7 +6974,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
       if (category_ && category_.length || title_.enable) {
         // choosen category only show in nav
-        if (cateTrue && category_ && category_.length) {
+        if (cateTrue.enable && category_ && category_.length) {
           if (_this.props.attributes.postCategories.length) {
             _this.props.attributes.postCategories.map(function (choosenCate) {
               category_.map(function (existCate) {
@@ -6983,23 +7006,39 @@ var Edit = /*#__PURE__*/function (_Component) {
           value: title_.value,
           style: {
             backgroundColor: title_.bgColor,
-            color: title_.color
+            color: title_.color,
+            fontSize: title_.fontSize
           }
-        })), cateTrue && makingCate.length && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
+        })), cateTrue.enable && makingCate.length && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
           class: "nav-linear-items"
         }, wp.element.createElement("ul", null, wp.element.createElement("li", {
           class: "cat-item cat-item-all"
         }, wp.element.createElement("a", {
+          style: {
+            fontSize: cateTrue.fontSize + "px",
+            color: cateTrue.color,
+            backgroundColor: cateTrue.backgroundColor
+          },
           href: "#"
         }, "all")), makingCate.map(function (cateV, cKey) {
           return cKey <= 3 && wp.element.createElement("li", {
             class: "cat-item"
           }, wp.element.createElement("a", {
+            style: {
+              fontSize: cateTrue.fontSize + "px",
+              color: cateTrue.color,
+              backgroundColor: cateTrue.backgroundColor
+            },
             href: "#"
           }, cateV.name));
         }))), makingCate.length >= 5 && wp.element.createElement("div", {
           class: "nav-drop-items"
         }, wp.element.createElement("span", {
+          style: {
+            fontSize: cateTrue.fontSize + "px",
+            color: cateTrue.color,
+            backgroundColor: cateTrue.backgroundColor
+          },
           class: "more-opener"
         }, "More", wp.element.createElement("i", {
           class: "fas fa-chevron-down"
@@ -7007,6 +7046,11 @@ var Edit = /*#__PURE__*/function (_Component) {
           return cKey >= 4 && wp.element.createElement("li", {
             class: "cat-item"
           }, wp.element.createElement("a", {
+            style: {
+              fontSize: cateTrue.fontSize + "px",
+              color: cateTrue.color,
+              backgroundColor: cateTrue.backgroundColor
+            },
             href: "#"
           }, cateV.name));
         })))));
@@ -7016,7 +7060,9 @@ var Edit = /*#__PURE__*/function (_Component) {
     _this.state = {
       metaChoose: "primary",
       excerpt: "primary",
-      heading: "primary"
+      heading: "primary",
+      thumbnail: "primary",
+      blockTitle: "title"
     };
     return _this;
   }
@@ -7049,14 +7095,18 @@ var Edit = /*#__PURE__*/function (_Component) {
           showCate2 = attributes.showCate2,
           postCategories = attributes.postCategories,
           meta_style = attributes.meta_style,
+          meta_style2 = attributes.meta_style2,
+          thumbnail2 = attributes.thumbnail2,
           title = attributes.title,
           categorynav = attributes.categorynav;
       var heading_ = heading[0];
       var thumbnail_ = thumbnail[0];
+      var thumbnail2_ = thumbnail2[0];
       var excerpt_ = excerpt[0];
       var date_ = date[0];
       var author_ = author[0];
       var meta_style_ = meta_style[0];
+      var meta_style2_ = meta_style2[0];
       var title_ = title[0];
       var showTag_ = showTag[0];
       var showCate_ = showCate[0]; // secondary
@@ -7084,17 +7134,80 @@ var Edit = /*#__PURE__*/function (_Component) {
 
 
       return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
-        title: "Post Layout",
+        title: "Block Title",
         initialOpen: false
-      }, wp.element.createElement("p", {
-        className: "block-inside"
-      }, "Show Category Navigation"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+      }, wp.element.createElement("div", {
+        class: "zita-switcher-button-section"
+      }, wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.setState({
+            blockTitle: "title"
+          });
+        },
+        className: this.state.blockTitle == "title" ? "selected" : ""
+      }, "Title"), wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.setState({
+            blockTitle: "nav"
+          });
+        },
+        className: this.state.blockTitle == "nav" ? "selected" : ""
+      }, "Navigation")), this.state.blockTitle == "title" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: title_.enable ? "Hide" : "Show",
+        checked: title_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("title", "enable", title, e);
+        }
+      }), title_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        label: "Font Size",
+        value: title_.fontSize,
+        min: 5,
+        max: 50,
+        onChange: function onChange(e) {
+          _this2.updateObj("title", "fontSize", title, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: title_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("title", "color", title, color);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Background Color")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ColorPicker"], {
+        color: title_.bgColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateObj("title", "bgColor", title, color);
+        }
+      }))) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
         label: categorynav[0].enable ? "Hide" : "Show",
         checked: categorynav[0].enable,
         onChange: function onChange(e) {
           return _this2.updateObj("categorynav", "enable", categorynav, e);
         }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "No of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }), categorynav[0].enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        label: "Font Size",
+        value: categorynav[0].fontSize,
+        min: 5,
+        max: 50,
+        onChange: function onChange(e) {
+          _this2.updateObj("categorynav", "fontSize", categorynav, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: categorynav[0].color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("categorynav", "color", categorynav, color);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Background Color")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ColorPicker"], {
+        color: categorynav[0].bgColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateObj("categorynav", "backgroundColor", categorynav, color);
+        }
+      })))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+        title: "Post Layout",
+        initialOpen: false
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "No of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: numberOfPosts,
         min: 1,
         max: 20,
@@ -7103,193 +7216,7 @@ var Edit = /*#__PURE__*/function (_Component) {
             numberOfPosts: e
           });
         }
-      }), wp.element.createElement("p", {
-        className: "block-inside"
-      }, "Featured Image"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: thumbnail_.enable ? "Hide" : "Show",
-        checked: thumbnail_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("thumbnail", "enable", thumbnail, e);
-        }
-      }), thumbnail_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Border Radius")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
-        value: thumbnail_.borderRadius,
-        min: 0,
-        max: 80,
-        onChange: function onChange(e) {
-          return _this2.updateObj("thumbnail", "borderRadius", thumbnail, e);
-        }
-      }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
-        title: "Post Navigation",
-        initialOpen: false
-      }, wp.element.createElement("p", {
-        className: "block-inside"
-      }, "Block Title"), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: title_.enable ? "Hide" : "Show",
-        checked: title_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("title", "enable", title, e);
-        }
-      }), title_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
-        value: title_.color,
-        onChange: function onChange(color) {
-          return _this2.updateObj("title", "color", title, color);
-        }
-      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Background Color & Underline Color")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ColorPicker"], {
-        color: title_.bgColor,
-        onChangeComplete: function onChangeComplete(colorBg) {
-          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
-
-          _this2.updateObj("title", "bgColor", title, color);
-        }
       })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
-        title: "Post Meta",
-        initialOpen: false
-      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Choose Category")), wp.element.createElement("div", {
-        className: "zita-multiple-select"
-      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
-        multiple: true,
-        value: postCategories.length ? postCategories : ["all"],
-        onChange: function onChange(choosen) {
-          var chooseAll = choosen.filter(function (choose) {
-            if (choose == "all") return true;
-          });
-          if (chooseAll.length) choosen = [];
-          setAttributes({
-            postCategories: choosen
-          });
-        },
-        options: cateGory
-      })), wp.element.createElement("div", {
-        class: "zita-switcher-button-section"
-      }, wp.element.createElement("span", {
-        onClick: function onClick() {
-          return _this2.setState({
-            metaChoose: "primary"
-          });
-        },
-        className: this.state.metaChoose == "primary" ? "selected" : ""
-      }, "Primary"), wp.element.createElement("span", {
-        onClick: function onClick() {
-          return _this2.setState({
-            metaChoose: "secondary"
-          });
-        },
-        className: this.state.metaChoose == "secondary" ? "selected" : ""
-      }, "Secondary")), this.state.metaChoose == "primary" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: "Author",
-        checked: author_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("author", "enable", author, e);
-        }
-      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: "Date",
-        checked: date_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("date", "enable", date, e);
-        }
-      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: "Categories",
-        checked: showCate_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("showCate", "enable", showCate, e);
-        }
-      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: "Last Modified Date",
-        checked: date_.last_modified,
-        onChange: function onChange(e) {
-          return _this2.updateObj("date", "last_modified", date, e);
-        }
-      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: "Tag",
-        checked: showTag_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("showTag", "enable", showTag, e);
-        }
-      })) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: "Author",
-        checked: author2_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("author2", "enable", author2, e);
-        }
-      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: "Date",
-        checked: date2_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("date2", "enable", date2, e);
-        }
-      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: "Categories",
-        checked: showCate2_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("showCate2", "enable", showCate2, e);
-        }
-      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: "Last Modified Date",
-        checked: date2_.last_modified,
-        onChange: function onChange(e) {
-          return _this2.updateObj("date2", "last_modified", date2, e);
-        }
-      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
-        value: "color" in meta_style_ ? meta_style_.color : "",
-        onChange: function onChange(color) {
-          return _this2.updateObj("meta_style", "color", meta_style, color);
-        }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Category Navigation"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
-        title: "Excerpt",
-        initialOpen: false
-      }, wp.element.createElement("div", {
-        class: "zita-switcher-button-section"
-      }, wp.element.createElement("span", {
-        onClick: function onClick() {
-          return _this2.setState({
-            excerpt: "primary"
-          });
-        },
-        className: this.state.excerpt == "primary" ? "selected" : ""
-      }, "Primary"), wp.element.createElement("span", {
-        onClick: function onClick() {
-          return _this2.setState({
-            excerpt: "secondary"
-          });
-        },
-        className: this.state.excerpt == "secondary" ? "selected" : ""
-      }, "Secondary")), this.state.excerpt == "primary" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: excerpt_.enable ? "Hide" : "Show",
-        checked: excerpt_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("excerpt", "enable", excerpt, e);
-        }
-      }), excerpt_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Number of words")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
-        value: excerpt_.words,
-        min: 1,
-        max: 200,
-        onChange: function onChange(e) {
-          return _this2.updateObj("excerpt", "words", excerpt, e);
-        }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
-        value: excerpt_.color,
-        onChange: function onChange(color) {
-          return _this2.updateObj("excerpt", "color", excerpt, color);
-        }
-      }))) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: excerpt2_.enable ? "Hide" : "Show",
-        checked: excerpt2_.enable,
-        onChange: function onChange(e) {
-          return _this2.updateObj("excerpt2", "enable", excerpt2, e);
-        }
-      }), excerpt2_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Number of words")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
-        value: excerpt2_.words,
-        min: 1,
-        max: 200,
-        onChange: function onChange(e) {
-          return _this2.updateObj("excerpt2", "words", excerpt2, e);
-        }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
-        value: excerpt2_.color,
-        onChange: function onChange(color) {
-          return _this2.updateObj("excerpt2", "color", excerpt2, color);
-        }
-      })))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Heading",
         initialOpen: false
       }, wp.element.createElement("div", {
@@ -7378,16 +7305,307 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(color) {
           return _this2.updateObj("heading2", "color", heading2, color);
         }
-      })))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
+      }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+        title: "Excerpt / Content",
+        initialOpen: false
+      }, wp.element.createElement("div", {
+        class: "zita-switcher-button-section"
+      }, wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.setState({
+            excerpt: "primary"
+          });
+        },
+        className: this.state.excerpt == "primary" ? "selected" : ""
+      }, "Primary"), wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.setState({
+            excerpt: "secondary"
+          });
+        },
+        className: this.state.excerpt == "secondary" ? "selected" : ""
+      }, "Secondary")), this.state.excerpt == "primary" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: excerpt_.enable ? "Hide" : "Show",
+        checked: excerpt_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt", "enable", excerpt, e);
+        }
+      }), excerpt_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Number of words")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: excerpt_.words,
+        min: 1,
+        max: 200,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt", "words", excerpt, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: excerpt_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("excerpt", "color", excerpt, color);
+        }
+      }))) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: excerpt2_.enable ? "Hide" : "Show",
+        checked: excerpt2_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt2", "enable", excerpt2, e);
+        }
+      }), excerpt2_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Number of words")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: excerpt2_.words,
+        min: 1,
+        max: 200,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt2", "words", excerpt2, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: excerpt2_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("excerpt2", "color", excerpt2, color);
+        }
+      })))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+        title: "Featured Image",
+        initialOpen: false
+      }, wp.element.createElement("div", {
+        class: "zita-switcher-button-section"
+      }, wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.setState({
+            thumbnail: "primary"
+          });
+        },
+        className: this.state.thumbnail == "primary" ? "selected" : ""
+      }, "Primary"), wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.setState({
+            thumbnail: "secondary"
+          });
+        },
+        className: this.state.thumbnail == "secondary" ? "selected" : ""
+      }, "Secondary")), this.state.thumbnail == "primary" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: thumbnail_.enable ? "Hide" : "Show",
+        checked: thumbnail_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("thumbnail", "enable", thumbnail, e);
+        }
+      }), thumbnail_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Border Radius")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: thumbnail_.borderRadius,
+        min: 0,
+        max: 80,
+        onChange: function onChange(e) {
+          return _this2.updateObj("thumbnail", "borderRadius", thumbnail, e);
+        }
+      }))) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: thumbnail2_.enable ? "Hide" : "Show",
+        checked: thumbnail2_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("thumbnail2", "enable", thumbnail2, e);
+        }
+      }), thumbnail2_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Border Radius")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: thumbnail2_.borderRadius,
+        min: 0,
+        max: 80,
+        onChange: function onChange(e) {
+          return _this2.updateObj("thumbnail2", "borderRadius", thumbnail2, e);
+        }
+      })))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+        title: "Post Meta",
+        initialOpen: false
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Choose Category")), wp.element.createElement("div", {
+        className: "zita-multiple-select"
+      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+        multiple: true,
+        value: postCategories.length ? postCategories : ["all"],
+        onChange: function onChange(choosen) {
+          var chooseAll = choosen.filter(function (choose) {
+            if (choose == "all") return true;
+          });
+          if (chooseAll.length) choosen = [];
+          setAttributes({
+            postCategories: choosen
+          });
+        },
+        options: cateGory
+      })), wp.element.createElement("div", {
+        class: "zita-switcher-button-section"
+      }, wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.setState({
+            metaChoose: "primary"
+          });
+        },
+        className: this.state.metaChoose == "primary" ? "selected" : ""
+      }, "Primary"), wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.setState({
+            metaChoose: "secondary"
+          });
+        },
+        className: this.state.metaChoose == "secondary" ? "selected" : ""
+      }, "Secondary")), this.state.metaChoose == "primary" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Author",
+        checked: author_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("author", "enable", author, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Date",
+        checked: date_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("date", "enable", date, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Categories",
+        checked: showCate_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("showCate", "enable", showCate, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Last Modified Date",
+        checked: date_.last_modified,
+        onChange: function onChange(e) {
+          return _this2.updateObj("date", "last_modified", date, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Tag",
+        checked: showTag_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("showTag", "enable", showTag, e);
+        }
+      }), wp.element.createElement("p", {
+        class: "block-inside"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Meta Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Author/Dates Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: meta_style_.fontSize,
+        min: 1,
+        max: 25,
+        onChange: function onChange(e) {
+          _this2.updateObj("meta_style", "fontSize", meta_style, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Author/Dates Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: "color" in meta_style_ ? meta_style_.color : "",
+        onChange: function onChange(color) {
+          return _this2.updateObj("meta_style", "color", meta_style, color);
+        }
+      }), showCate_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
+        class: "block-inside"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: showCate_.fontSize,
+        min: 1,
+        max: 30,
+        onChange: function onChange(e) {
+          _this2.updateObj("showCate", "fontSize", showCate, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: showCate_.customColor ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Custom Style", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Default Style", "zita-blocks"),
+        checked: showCate_.customColor,
+        onChange: function onChange(e) {
+          return _this2.updateObj("showCate", "customColor", showCate, e);
+        }
+      }), showCate_.customColor && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: showCate_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("showCate", "color", showCate, color);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Background Color", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ColorPicker"], {
+        color: showCate_.backgroundColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateObj("showCate", "backgroundColor", showCate, color);
+        }
+      }))), showTag_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
+        class: "block-inside"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: showTag_.fontSize,
+        min: 1,
+        max: 30,
+        onChange: function onChange(e) {
+          _this2.updateObj("showTag", "fontSize", showTag, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: showTag_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("showTag", "color", showTag, color);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Background Color", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ColorPicker"], {
+        color: showTag_.backgroundColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateObj("showTag", "backgroundColor", showTag, color);
+        }
+      }))) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Author",
+        checked: author2_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("author2", "enable", author2, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Date",
+        checked: date2_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("date2", "enable", date2, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Categories",
+        checked: showCate2_.enable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("showCate2", "enable", showCate2, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: "Last Modified Date",
+        checked: date2_.last_modified,
+        onChange: function onChange(e) {
+          return _this2.updateObj("date2", "last_modified", date2, e);
+        }
+      }), wp.element.createElement("p", {
+        class: "block-inside"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Meta Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Author/Dates Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: meta_style2_.fontSize,
+        min: 1,
+        max: 25,
+        onChange: function onChange(e) {
+          _this2.updateObj("meta_style2", "fontSize", meta_style2, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Author/Dates Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: "color" in meta_style2_ ? meta_style2_.color : "",
+        onChange: function onChange(color) {
+          return _this2.updateObj("meta_style2", "color", meta_style2, color);
+        }
+      }), showCate2_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
+        class: "block-inside"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: showCate2_.fontSize,
+        min: 1,
+        max: 30,
+        onChange: function onChange(e) {
+          _this2.updateObj("showCate2", "fontSize", showCate2, e);
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: showCate2_.customColor ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Custom Style", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Default Style", "zita-blocks"),
+        checked: showCate2_.customColor,
+        onChange: function onChange(e) {
+          return _this2.updateObj("showCate2", "customColor", showCate2, e);
+        }
+      }), showCate2_.customColor && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+        value: showCate2_.color,
+        onChange: function onChange(color) {
+          return _this2.updateObj("showCate2", "color", showCate2, color);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Background Color", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ColorPicker"], {
+        color: showCate2_.backgroundColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateObj("showCate2", "backgroundColor", showCate2, color);
+        }
+      })))))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
         className: "zita-two-post-wrapper"
-      }, (categorynav[0].enable || title_.enable) && this.navCategory(categorynav[0].enable, title_), wp.element.createElement("div", {
+      }, (categorynav[0].enable || title_.enable) && this.navCategory(categorynav[0], title_), wp.element.createElement("div", {
         className: "zita-post-two-column"
       }, wp.element.createElement("div", {
         className: "column-one"
       }, this.returnHtml(posts[0], heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_)), wp.element.createElement("div", {
         className: "column-two"
       }, posts.length > 1 && posts.map(function (post, index__) {
-        return index__ != 0 && _this2.returnHtml(post, heading2_, author2_, date2_, meta_style_, thumbnail_, showCate2_, excerpt2_, false);
+        return index__ != 0 && _this2.returnHtml(post, heading2_, author2_, date2_, meta_style2_, thumbnail2_, showCate2_, excerpt2_, false);
       }))), posts && posts.length > 0 && "getMedia_" in posts[0] && totalPost > posts.length && wp.element.createElement("div", {
         className: "zita-two-post-wrapper-next-prev"
       }, wp.element.createElement("div", null, wp.element.createElement("i", {
@@ -7645,19 +7863,18 @@ var Edit = /*#__PURE__*/function (_Component) {
 
       if (returR.length) {
         var getCateStyle = _this.props.attributes.showCate;
-        var putCateStyle = null;
+        var putCateStyle = {
+          fontSize: getCateStyle[0].fontSize + "px"
+        };
 
         if (getCateStyle[0].customColor) {
-          putCateStyle = {
-            color: getCateStyle[0].color,
-            backgroundColor: getCateStyle[0].backgroundColor,
-            fontSize: getCateStyle[0].fontSize + "px"
-          };
+          putCateStyle["color"] = getCateStyle[0].color;
+          putCateStyle["backgroundColor"] = getCateStyle[0].backgroundColor;
         }
 
         return returR.map(function (returnH) {
           return wp.element.createElement("span", {
-            style: putCateStyle && putCateStyle
+            style: putCateStyle
           }, returnH);
         });
       }
@@ -7679,19 +7896,14 @@ var Edit = /*#__PURE__*/function (_Component) {
 
       if (returR.length) {
         var getTagStyle = _this.props.attributes.showTag;
-        var putTagStyle = null;
-
-        if (getTagStyle[0].customColor) {
-          putTagStyle = {
-            color: getTagStyle[0].color,
-            backgroundColor: getTagStyle[0].backgroundColor,
-            fontSize: getTagStyle[0].fontSize + "px"
-          };
-        }
-
+        var putTagStyle = {
+          color: getTagStyle[0].color
+        };
+        putTagStyle["color"] = getTagStyle[0].color;
+        putTagStyle["backgroundColor"] = getTagStyle[0].backgroundColor;
         return returR.map(function (returnH) {
           return wp.element.createElement("span", {
-            style: putTagStyle && putTagStyle
+            style: putTagStyle
           }, returnH);
         });
       }
@@ -7768,7 +7980,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         title: "Block Title",
         initialOpen: false
       }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: title_.enable ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Hide", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Show", "zita-blocks"),
+        label: title_.enable ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Show", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Hide", "zita-blocks"),
         checked: title_.enable,
         onChange: function onChange(e) {
           return _this2.updateObj("title", "enable", title, e);
@@ -7911,7 +8123,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Excerpt / Content", "zita-blocks"),
         initialOpen: false
       }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: excerpt_.enable ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Hide", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Show", "zita-blocks"),
+        label: excerpt_.enable ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Show", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Hide", "zita-blocks"),
         checked: excerpt_.enable,
         onChange: function onChange(e) {
           return _this2.updateObj("excerpt", "enable", excerpt, e);
@@ -8002,7 +8214,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }), wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Meta Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Author/Dates Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Meta Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Author/Dates Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: meta_style_.fontSize,
         min: 1,
         max: 25,
@@ -8016,20 +8228,20 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }), showCate_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Enable", "zita-blocks"),
-        checked: showCate_.customColor,
-        onChange: function onChange(e) {
-          return _this2.updateObj("showCate", "customColor", showCate, e);
-        }
-      }), showCate_.customColor && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: showCate_.fontSize,
         min: 1,
         max: 30,
         onChange: function onChange(e) {
           _this2.updateObj("showCate", "fontSize", showCate, e);
         }
-      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: showCate_.customColor ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Custom Style", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Default Style", "zita-blocks"),
+        checked: showCate_.customColor,
+        onChange: function onChange(e) {
+          return _this2.updateObj("showCate", "customColor", showCate, e);
+        }
+      }), showCate_.customColor && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
         value: showCate_.color,
         onChange: function onChange(color) {
           return _this2.updateObj("showCate", "color", showCate, color);
@@ -8043,13 +8255,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }))), showTag_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Enable", "zita-blocks"),
-        checked: showTag_.customColor,
-        onChange: function onChange(e) {
-          return _this2.updateObj("showTag", "customColor", showTag, e);
-        }
-      }), showTag_.customColor && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: showTag_.fontSize,
         min: 1,
         max: 30,
@@ -8068,7 +8274,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           _this2.updateObj("showTag", "backgroundColor", showTag, color);
         }
-      }))))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
+      })))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
         className: "zita-block-post"
       }, title_.enable && wp.element.createElement("div", {
         className: "zita-block-post-title",
@@ -8129,6 +8335,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           className: "post-author"
         }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, postAuthor && wp.element.createElement("span", {
           style: {
+            color: meta_style_.color,
             fontSize: meta_style_.fontSize
           },
           className: "slash"
@@ -8140,6 +8347,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           className: "post-date"
         }, _this2.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (postAuthor || date_.enable) && wp.element.createElement("span", {
           style: {
+            color: meta_style_.color,
             fontSize: meta_style_.fontSize
           },
           className: "slash"
@@ -8190,6 +8398,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           className: "post-author"
         }, postAuthor), date_.enable && wp.element.createElement(wp.element.Fragment, null, postAuthor && wp.element.createElement("span", {
           style: {
+            color: meta_style_.color,
             fontSize: meta_style_.fontSize
           },
           className: "slash"
@@ -8201,6 +8410,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           className: "post-date"
         }, _this2.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (postAuthor || date_.enable) && wp.element.createElement("span", {
           style: {
+            color: meta_style_.color,
             fontSize: meta_style_.fontSize
           },
           className: "slash"

@@ -73,16 +73,13 @@ class Edit extends Component {
     }
     if (returR.length) {
       let getCateStyle = this.props.attributes.showCate;
-      let putCateStyle = null;
+      let putCateStyle = { fontSize: getCateStyle[0].fontSize + "px" };
       if (getCateStyle[0].customColor) {
-        putCateStyle = {
-          color: getCateStyle[0].color,
-          backgroundColor: getCateStyle[0].backgroundColor,
-          fontSize: getCateStyle[0].fontSize + "px",
-        };
+        putCateStyle["color"] = getCateStyle[0].color;
+        putCateStyle["backgroundColor"] = getCateStyle[0].backgroundColor;
       }
       return returR.map((returnH) => (
-        <span style={putCateStyle && putCateStyle}>{returnH}</span>
+        <span style={putCateStyle}>{returnH}</span>
       ));
     }
   };
@@ -100,16 +97,11 @@ class Edit extends Component {
     }
     if (returR.length) {
       let getTagStyle = this.props.attributes.showTag;
-      let putTagStyle = null;
-      if (getTagStyle[0].customColor) {
-        putTagStyle = {
-          color: getTagStyle[0].color,
-          backgroundColor: getTagStyle[0].backgroundColor,
-          fontSize: getTagStyle[0].fontSize + "px",
-        };
-      }
+      let putTagStyle = { color: getTagStyle[0].color };
+      putTagStyle["color"] = getTagStyle[0].color;
+      putTagStyle["backgroundColor"] = getTagStyle[0].backgroundColor;
       return returR.map((returnH) => (
-        <span style={putTagStyle && putTagStyle}>{returnH}</span>
+        <span style={putTagStyle}>{returnH}</span>
       ));
     }
   };
@@ -170,8 +162,8 @@ class Edit extends Component {
             <ToggleControl
               label={
                 title_.enable
-                  ? __("Hide", "zita-blocks")
-                  : __("Show", "zita-blocks")
+                  ? __("Show", "zita-blocks")
+                  : __("Hide", "zita-blocks")
               }
               checked={title_.enable}
               onChange={(e) => this.updateObj("title", "enable", title, e)}
@@ -381,8 +373,8 @@ class Edit extends Component {
             <ToggleControl
               label={
                 excerpt_.enable
-                  ? __("Hide", "zita-blocks")
-                  : __("Show", "zita-blocks")
+                  ? __("Show", "zita-blocks")
+                  : __("Hide", "zita-blocks")
               }
               checked={excerpt_.enable}
               onChange={(e) => this.updateObj("excerpt", "enable", excerpt, e)}
@@ -500,7 +492,7 @@ class Edit extends Component {
               checked={showTag_.enable}
               onChange={(e) => this.updateObj("showTag", "enable", showTag, e)}
             />
-            <p class="block-inside">{__("Meta Style", "zita-blocks")}</p>
+            <p class="block-inside">{__("Meta Custom Style", "zita-blocks")}</p>
             <p>
               <strong>{__("Author/Dates Font Size", "zita-blocks")}</strong>
             </p>
@@ -526,8 +518,23 @@ class Edit extends Component {
                 <p class="block-inside">
                   {__("Category Custom Style", "zita-blocks")}
                 </p>
+                <p>
+                  <strong>{__("Font Size", "zita-blocks")}</strong>
+                </p>
+                <RangeControl
+                  value={showCate_.fontSize}
+                  min={1}
+                  max={30}
+                  onChange={(e) => {
+                    this.updateObj("showCate", "fontSize", showCate, e);
+                  }}
+                />
                 <ToggleControl
-                  label={__("Enable", "zita-blocks")}
+                  label={
+                    showCate_.customColor
+                      ? __("Custom Style", "zita-blocks")
+                      : __("Default Style", "zita-blocks")
+                  }
                   checked={showCate_.customColor}
                   onChange={(e) =>
                     this.updateObj("showCate", "customColor", showCate, e)
@@ -535,17 +542,6 @@ class Edit extends Component {
                 />
                 {showCate_.customColor && (
                   <>
-                    <p>
-                      <strong>{__("Font Size", "zita-blocks")}</strong>
-                    </p>
-                    <RangeControl
-                      value={showCate_.fontSize}
-                      min={1}
-                      max={30}
-                      onChange={(e) => {
-                        this.updateObj("showCate", "fontSize", showCate, e);
-                      }}
-                    />
                     <p>
                       <strong>{__("Color", "zita-blocks")}</strong>
                     </p>
@@ -579,52 +575,41 @@ class Edit extends Component {
                 <p class="block-inside">
                   {__("Tags Custom Style", "zita-blocks")}
                 </p>
-                <ToggleControl
-                  label={__("Enable", "zita-blocks")}
-                  checked={showTag_.customColor}
-                  onChange={(e) =>
-                    this.updateObj("showTag", "customColor", showTag, e)
+                <p>
+                  <strong>{__("Font Size", "zita-blocks")}</strong>
+                </p>
+                <RangeControl
+                  value={showTag_.fontSize}
+                  min={1}
+                  max={30}
+                  onChange={(e) => {
+                    this.updateObj("showTag", "fontSize", showTag, e);
+                  }}
+                />
+                <p>
+                  <strong>{__("Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPalette
+                  value={showTag_.color}
+                  onChange={(color) =>
+                    this.updateObj("showTag", "color", showTag, color)
                   }
                 />
-                {showTag_.customColor && (
-                  <>
-                    <p>
-                      <strong>{__("Font Size", "zita-blocks")}</strong>
-                    </p>
-                    <RangeControl
-                      value={showTag_.fontSize}
-                      min={1}
-                      max={30}
-                      onChange={(e) => {
-                        this.updateObj("showTag", "fontSize", showTag, e);
-                      }}
-                    />
-                    <p>
-                      <strong>{__("Color", "zita-blocks")}</strong>
-                    </p>
-                    <ColorPalette
-                      value={showTag_.color}
-                      onChange={(color) =>
-                        this.updateObj("showTag", "color", showTag, color)
-                      }
-                    />
-                    <p>
-                      <strong>{__("Background Color", "zita-blocks")}</strong>
-                    </p>
-                    <ColorPicker
-                      color={showTag_.backgroundColor}
-                      onChangeComplete={(colorBg) => {
-                        let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                        this.updateObj(
-                          "showTag",
-                          "backgroundColor",
-                          showTag,
-                          color
-                        );
-                      }}
-                    />
-                  </>
-                )}
+                <p>
+                  <strong>{__("Background Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPicker
+                  color={showTag_.backgroundColor}
+                  onChangeComplete={(colorBg) => {
+                    let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                    this.updateObj(
+                      "showTag",
+                      "backgroundColor",
+                      showTag,
+                      color
+                    );
+                  }}
+                />
               </>
             )}
           </PanelBody>
@@ -710,7 +695,10 @@ class Edit extends Component {
                             <>
                               {postAuthor && (
                                 <span
-                                  style={{ fontSize: meta_style_.fontSize }}
+                                  style={{
+                                    color: meta_style_.color,
+                                    fontSize: meta_style_.fontSize,
+                                  }}
                                   className="slash"
                                 >
                                   /
@@ -731,7 +719,10 @@ class Edit extends Component {
                             <>
                               {(postAuthor || date_.enable) && (
                                 <span
-                                  style={{ fontSize: meta_style_.fontSize }}
+                                  style={{
+                                    color: meta_style_.color,
+                                    fontSize: meta_style_.fontSize,
+                                  }}
                                   className="slash"
                                 >
                                   /
@@ -816,7 +807,10 @@ class Edit extends Component {
                             <>
                               {postAuthor && (
                                 <span
-                                  style={{ fontSize: meta_style_.fontSize }}
+                                  style={{
+                                    color: meta_style_.color,
+                                    fontSize: meta_style_.fontSize,
+                                  }}
                                   className="slash"
                                 >
                                   /
@@ -837,7 +831,10 @@ class Edit extends Component {
                             <>
                               {(postAuthor || date_.enable) && (
                                 <span
-                                  style={{ fontSize: meta_style_.fontSize }}
+                                  style={{
+                                    color: meta_style_.color,
+                                    fontSize: meta_style_.fontSize,
+                                  }}
                                   className="slash"
                                 >
                                   /

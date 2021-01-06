@@ -1034,6 +1034,7 @@
 .zita-two-post-wrapper .navigation_ {
   display: flex;
   border-bottom: 2px solid #dddddd;
+  align-items: flex-end;
 }
 .zita-two-post-wrapper .navigation_ .nav-heading p {
   margin: 0;

@@ -112,7 +112,7 @@ function mytheme_blocks_render_post_slider($attr)
                 }
 
                 if ($postDate) {
-                    $postHtml .= '<span style="font-size:' . $metaStyleFontSize . 'px;" class="slash">/</span>';
+                    $postHtml .= '<span style="font-size:' . $metaStyleFontSize . 'px;color:' . $metaStyleColor . ';" class="slash">/</span>';
                     $dateYear =   get_the_date('Y');
                     $dateMonth =   get_the_date('m');
                     $dateDay =   get_the_date('j');
@@ -122,7 +122,7 @@ function mytheme_blocks_render_post_slider($attr)
                     $postHtml .= "</a></p>";
                 }
                 if ($postDateModify) {
-                    $postHtml .= '<span style="font-size:' . $metaStyleFontSize . 'px;" class="slash">/</span>';
+                    $postHtml .= '<span style="font-size:' . $metaStyleFontSize . 'px;color:' . $metaStyleColor . ';" class="slash">/</span>';
                     $dateYear =   get_the_modified_date('Y');
                     $dateMonth =   get_the_modified_date('m');
                     $dateDay =   get_the_modified_date('j');

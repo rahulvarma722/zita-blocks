@@ -12,8 +12,8 @@ wpgt_register_block_fn('zita-post-tc',  [
                 'enable' => true,
                 "value" => "My block title",
                 "color" => "black",
-                "bgColor"=>"grey"
-                // "fontSize" => 30
+                "bgColor" => "grey",
+                "fontSize" => 30
             ]]
         ],
         "thumbnail" => [
@@ -35,6 +35,7 @@ wpgt_register_block_fn('zita-post-tc',  [
             "type" => "array",
             "default" => [[
                 "color" => "#8e8c8d",
+                "fontSize" => 14
                 // "left_border" => true
             ]]
         ],
@@ -52,13 +53,20 @@ wpgt_register_block_fn('zita-post-tc',  [
         'showCate' => [
             "type" => "array",
             "default" => [[
-                "enable" => true
+                "enable" => true,
+                "customColor" => false,
+                "color" => "white",
+                "backgroundColor" => "black",
+                "fontSize" => 12
             ]]
         ],
         'showTag' => [
             "type" => "array",
             "default" => [[
-                "enable" => true
+                "enable" => true,
+                "color" => "white",
+                "backgroundColor" => "black",
+                "fontSize" => 12
             ]]
         ],
         'excerpt' => [
@@ -70,6 +78,20 @@ wpgt_register_block_fn('zita-post-tc',  [
             ]]
         ],
         // secondary section
+        "thumbnail2" => [
+            "type" => "array",
+            "default" => [[
+                "enable" => true,
+                "borderRadius" => 10
+            ]]
+        ],
+        "meta_style2" => [
+            "type" => "array",
+            "default" => [[
+                "color" => "#8e8c8d",
+                "fontSize" => 14
+            ]]
+        ],
         'heading2' => [
             'type' => "array",
             "default" => [[
@@ -100,7 +122,11 @@ wpgt_register_block_fn('zita-post-tc',  [
         'showCate2' => [
             "type" => "array",
             "default" => [[
-                "enable" => true
+                "enable" => true,
+                "customColor" => false,
+                "color" => "white",
+                "backgroundColor" => "black",
+                "fontSize" => 12
             ]]
         ],
         "postCategories" => [
@@ -109,7 +135,7 @@ wpgt_register_block_fn('zita-post-tc',  [
         ],
         "categorynav" => [
             "type" => "array",
-            "default" => [["enable" => true,]]
+            "default" => [["enable" => true, "color" => "#757575", "backgroundColor" => "#f1f1f1", "fontSize" => 14]]
         ]
     ]
 ]);
