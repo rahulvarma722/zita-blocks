@@ -44,7 +44,7 @@ function post_tc_html($args, $attr, $showNextPrev = false)
     // echo 
     // print_r($attr['thumbnail2']);
     $query = new WP_Query($args);
-    $postHtml = "<div class='zita-post-two-column'>";
+    $postHtml = "<div class='zita-post-two-column column-layout-" . $attr['meta_style'][0]["layoutPostion"] . "'>";
     $postHtmlCl1 = '<div class="column-one">';
     $postHtmlCl2 = '<div class="column-two">';
     if ($query->have_posts()) {

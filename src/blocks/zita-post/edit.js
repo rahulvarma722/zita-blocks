@@ -120,7 +120,7 @@ class Edit extends Component {
   };
   render() {
     const { posts, attributes, setAttributes, category } = this.props;
-    console.log("this.props post block ->", this.props);
+    // console.log("this.props post block ->", this.props);
     let {
       heading,
       author,

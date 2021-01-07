@@ -135,7 +135,7 @@ class Edit extends Component {
   render() {
     let { attributes, setAttributes, posts, category } = this.props;
     let { slideIndex } = this.state;
-    console.log("zita slider this.props", this.props);
+    // console.log("zita slider this.props", this.props);
     let {
       heading,
       author,

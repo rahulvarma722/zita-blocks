@@ -1009,6 +1009,9 @@
 .zita-post-two-column {
   display: flex;
 }
+.zita-post-two-column.column-layout-right {
+  flex-direction: row-reverse;
+}
 .zita-post-two-column > div {
   flex: 1;
   padding: 10px;

@@ -5267,8 +5267,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category;
-      console.log("this.props", this.props); // if number of post sum
+          category = _this$props.category; // console.log("this.props", this.props);
+      // if number of post sum
 
       if (numberOfPosts == 3 || numberOfPosts == 5) {
         this.setState({
@@ -5932,8 +5932,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes = _this$props.setAttributes,
           posts = _this$props.posts,
           category = _this$props.category;
-      var slideIndex = this.state.slideIndex;
-      console.log("zita slider this.props", this.props);
+      var slideIndex = this.state.slideIndex; // console.log("zita slider this.props", this.props);
+
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
@@ -7076,7 +7076,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes = _this$props.setAttributes,
           category = _this$props.category,
           totalPost = _this$props.totalPost;
-      console.log("this.props", this.props); // return <h1>This is Two Column Block</h1>;
+      console.log("two section", this.props); // return <h1>This is Two Column Block</h1>;
 
       var heading = attributes.heading,
           author = attributes.author,
@@ -7151,7 +7151,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         },
         className: this.state.blockTitle == "nav" ? "selected" : ""
       }, "Navigation")), this.state.blockTitle == "title" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: title_.enable ? "Hide" : "Show",
+        label: title_.enable ? "Show" : "Hide",
         checked: title_.enable,
         onChange: function onChange(e) {
           return _this2.updateObj("title", "enable", title, e);
@@ -7177,7 +7177,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           _this2.updateObj("title", "bgColor", title, color);
         }
       }))) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: categorynav[0].enable ? "Hide" : "Show",
+        label: categorynav[0].enable ? "Show" : "Hide",
         checked: categorynav[0].enable,
         onChange: function onChange(e) {
           return _this2.updateObj("categorynav", "enable", categorynav, e);
@@ -7202,10 +7202,23 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           _this2.updateObj("categorynav", "backgroundColor", categorynav, color);
         }
-      })))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+      }))), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Under Line")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: meta_style_.underLine ? "Show" : "Hide",
+        checked: meta_style_.underLine,
+        onChange: function onChange(e) {
+          return _this2.updateObj("meta_style", "underLine", meta_style, e);
+        }
+      }), meta_style_.underLine && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ColorPicker"], {
+        color: meta_style_.underLineColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateObj("meta_style", "underLineColor", meta_style, color);
+        }
+      }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Post Layout",
         initialOpen: false
-      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "No of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Number of Post Display")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: numberOfPosts,
         min: 1,
         max: 20,
@@ -7214,7 +7227,19 @@ var Edit = /*#__PURE__*/function (_Component) {
             numberOfPosts: e
           });
         }
-      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Layout Position")), wp.element.createElement("div", {
+        class: "zita-switcher-button-section"
+      }, wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.updateObj("meta_style", "layoutPostion", meta_style, "left");
+        },
+        className: meta_style_.layoutPostion == "left" ? "selected" : ""
+      }, "Left"), wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.updateObj("meta_style", "layoutPostion", meta_style, "right");
+        },
+        className: meta_style_.layoutPostion == "right" ? "selected" : ""
+      }, "Right"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Heading",
         initialOpen: false
       }, wp.element.createElement("div", {
@@ -7323,7 +7348,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         },
         className: this.state.excerpt == "secondary" ? "selected" : ""
       }, "Secondary")), this.state.excerpt == "primary" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: excerpt_.enable ? "Hide" : "Show",
+        label: excerpt_.enable ? "Show" : "Hide",
         checked: excerpt_.enable,
         onChange: function onChange(e) {
           return _this2.updateObj("excerpt", "enable", excerpt, e);
@@ -7341,7 +7366,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           return _this2.updateObj("excerpt", "color", excerpt, color);
         }
       }))) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: excerpt2_.enable ? "Hide" : "Show",
+        label: excerpt2_.enable ? "Show" : "Hide",
         checked: excerpt2_.enable,
         onChange: function onChange(e) {
           return _this2.updateObj("excerpt2", "enable", excerpt2, e);
@@ -7378,7 +7403,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         },
         className: this.state.thumbnail == "secondary" ? "selected" : ""
       }, "Secondary")), this.state.thumbnail == "primary" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: thumbnail_.enable ? "Hide" : "Show",
+        label: thumbnail_.enable ? "Show" : "Hide",
         checked: thumbnail_.enable,
         onChange: function onChange(e) {
           return _this2.updateObj("thumbnail", "enable", thumbnail, e);
@@ -7391,7 +7416,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           return _this2.updateObj("thumbnail", "borderRadius", thumbnail, e);
         }
       }))) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: thumbnail2_.enable ? "Hide" : "Show",
+        label: thumbnail2_.enable ? "Show" : "Hide",
         checked: thumbnail2_.enable,
         onChange: function onChange(e) {
           return _this2.updateObj("thumbnail2", "enable", thumbnail2, e);
@@ -7597,7 +7622,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       })))))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
         className: "zita-two-post-wrapper"
       }, (categorynav[0].enable || title_.enable) && this.navCategory(categorynav[0], title_), wp.element.createElement("div", {
-        className: "zita-post-two-column"
+        className: "zita-post-two-column column-layout-".concat(meta_style_.layoutPostion)
       }, wp.element.createElement("div", {
         className: "column-one"
       }, this.returnHtml(posts[0], heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_)), wp.element.createElement("div", {
@@ -7935,8 +7960,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category;
-      console.log("this.props post block ->", this.props);
+          category = _this$props.category; // console.log("this.props post block ->", this.props);
+
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,

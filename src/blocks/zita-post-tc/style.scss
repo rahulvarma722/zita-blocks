@@ -7,10 +7,10 @@
     display: flex;
     border-bottom: 2px solid #dddddd;
     align-items: flex-end;
-    .nav-heading{
-      p{
-        margin: 0!important;
-        line-height: 1!important;
+    .nav-heading {
+      p {
+        margin: 0 !important;
+        line-height: 1 !important;
         font-size: 21px;
         background: #d4d4d4;
         padding: 10px;
@@ -98,6 +98,9 @@
 }
 .zita-post-two-column {
   display: flex;
+  &.column-layout-right {
+    flex-direction: row-reverse;
+  }
   > div {
     flex: 1;
     padding: 10px;

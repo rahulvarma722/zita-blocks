@@ -377,7 +377,7 @@ class Edit extends Component {
       category,
       totalPost,
     } = this.props;
-    console.log("this.props", this.props);
+    console.log("two section", this.props);
     // return <h1>This is Two Column Block</h1>;
     let {
       heading,
@@ -451,7 +451,7 @@ class Edit extends Component {
             {this.state.blockTitle == "title" ? (
               <>
                 <ToggleControl
-                  label={title_.enable ? "Hide" : "Show"}
+                  label={title_.enable ? "Show" : "Hide"}
                   checked={title_.enable}
                   onChange={(e) => this.updateObj("title", "enable", title, e)}
                 />
@@ -491,7 +491,7 @@ class Edit extends Component {
             ) : (
               <>
                 <ToggleControl
-                  label={categorynav[0].enable ? "Hide" : "Show"}
+                  label={categorynav[0].enable ? "Show" : "Hide"}
                   checked={categorynav[0].enable}
                   onChange={(e) =>
                     this.updateObj("categorynav", "enable", categorynav, e)
@@ -546,20 +546,40 @@ class Edit extends Component {
                 )}
               </>
             )}
-            {/* <p>
-              <strong>Underline Color</strong>
+            {/* under line */}
+            <p>
+              <strong>Under Line</strong>
             </p>
-            <ColorPicker
-              color={title_.bgColor}
-              onChangeComplete={(colorBg) => {
-                let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                this.updateObj("title", "bgColor", title, color);
-              }}
-            /> */}
+            <ToggleControl
+              label={meta_style_.underLine ? "Show" : "Hide"}
+              checked={meta_style_.underLine}
+              onChange={(e) =>
+                this.updateObj("meta_style", "underLine", meta_style, e)
+              }
+            />
+            {meta_style_.underLine && (
+              <>
+                <p>
+                  <strong>Color</strong>
+                </p>
+                <ColorPicker
+                  color={meta_style_.underLineColor}
+                  onChangeComplete={(colorBg) => {
+                    let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                    this.updateObj(
+                      "meta_style",
+                      "underLineColor",
+                      meta_style,
+                      color
+                    );
+                  }}
+                />
+              </>
+            )}
           </PanelBody>
           <PanelBody title="Post Layout" initialOpen={false}>
             <p>
-              <strong>No of Post Display</strong>
+              <strong>Number of Post Display</strong>
             </p>
             <RangeControl
               value={numberOfPosts}
@@ -569,6 +589,41 @@ class Edit extends Component {
                 setAttributes({ numberOfPosts: e });
               }}
             />
+            <p>
+              <strong>Layout Position</strong>
+            </p>
+            <div class="zita-switcher-button-section">
+              <span
+                onClick={() =>
+                  this.updateObj(
+                    "meta_style",
+                    "layoutPostion",
+                    meta_style,
+                    "left"
+                  )
+                }
+                className={
+                  meta_style_.layoutPostion == "left" ? "selected" : ""
+                }
+              >
+                Left
+              </span>
+              <span
+                onClick={() =>
+                  this.updateObj(
+                    "meta_style",
+                    "layoutPostion",
+                    meta_style,
+                    "right"
+                  )
+                }
+                className={
+                  meta_style_.layoutPostion == "right" ? "selected" : ""
+                }
+              >
+                Right
+              </span>
+            </div>
           </PanelBody>
           <PanelBody title="Heading" initialOpen={false}>
             <div class="zita-switcher-button-section">
@@ -705,7 +760,7 @@ class Edit extends Component {
             {this.state.excerpt == "primary" ? (
               <>
                 <ToggleControl
-                  label={excerpt_.enable ? "Hide" : "Show"}
+                  label={excerpt_.enable ? "Show" : "Hide"}
                   checked={excerpt_.enable}
                   onChange={(e) =>
                     this.updateObj("excerpt", "enable", excerpt, e)
@@ -739,7 +794,7 @@ class Edit extends Component {
             ) : (
               <>
                 <ToggleControl
-                  label={excerpt2_.enable ? "Hide" : "Show"}
+                  label={excerpt2_.enable ? "Show" : "Hide"}
                   checked={excerpt2_.enable}
                   onChange={(e) =>
                     this.updateObj("excerpt2", "enable", excerpt2, e)
@@ -792,7 +847,7 @@ class Edit extends Component {
             {this.state.thumbnail == "primary" ? (
               <>
                 <ToggleControl
-                  label={thumbnail_.enable ? "Hide" : "Show"}
+                  label={thumbnail_.enable ? "Show" : "Hide"}
                   checked={thumbnail_.enable}
                   onChange={(e) =>
                     this.updateObj("thumbnail", "enable", thumbnail, e)
@@ -822,7 +877,7 @@ class Edit extends Component {
             ) : (
               <>
                 <ToggleControl
-                  label={thumbnail2_.enable ? "Hide" : "Show"}
+                  label={thumbnail2_.enable ? "Show" : "Hide"}
                   checked={thumbnail2_.enable}
                   onChange={(e) =>
                     this.updateObj("thumbnail2", "enable", thumbnail2, e)
@@ -1200,7 +1255,9 @@ class Edit extends Component {
           <div className="zita-two-post-wrapper">
             {(categorynav[0].enable || title_.enable) &&
               this.navCategory(categorynav[0], title_)}
-            <div className="zita-post-two-column">
+            <div
+              className={`zita-post-two-column column-layout-${meta_style_.layoutPostion}`}
+            >
               <div className="column-one">
                 {this.returnHtml(
                   posts[0],

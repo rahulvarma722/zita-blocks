@@ -112,7 +112,7 @@ class Edit extends Component {
     // ++++++++++++++===============
 
     const { posts, attributes, setAttributes, category } = this.props;
-    console.log("this.props", this.props);
+    // console.log("this.props", this.props);
     // if number of post sum
     if (numberOfPosts == 3 || numberOfPosts == 5) {
       this.setState({
