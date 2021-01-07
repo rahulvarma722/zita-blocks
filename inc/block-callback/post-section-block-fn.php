@@ -5,8 +5,6 @@ function zita_section_block($attr)
     // echo "<pre>";
     // print_r($attr);
     // echo "</pre>";
-
-
     $args = [
         'post_type' => 'post',
         "posts_per_page" => $attr['numberOfPosts'],

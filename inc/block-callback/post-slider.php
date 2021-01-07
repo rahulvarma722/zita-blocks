@@ -151,10 +151,7 @@ function mytheme_blocks_render_post_slider($attr)
                     $tags = get_the_tags(get_the_ID());
                     $postHtml .= '<p class="post-tags">';
                     if (!empty($tags)) {
-                        $Tagstyle = '';
-                        if ($attr['showTag'][0]['customColor']) {
-                            $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
-                        }
+                        $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
                         foreach ($tags as $tagValue) {
                             $postHtml .= '<span style="' . $Tagstyle . '">';
                             $postHtml .= "<a href='" . get_category_link($tagValue->term_id) . "'>" . $tagValue->name . "</a>";

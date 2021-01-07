@@ -167,7 +167,7 @@ class Edit extends Component {
               tagName={heading_.tag}
               value={post.title.rendered}
               style={{
-                fontSize: heading_.fontSize,
+                fontSize: heading_.fontSize + "px",
                 color: heading_.color,
               }}
             />
@@ -176,7 +176,7 @@ class Edit extends Component {
                 <p
                   style={{
                     color: meta_style_.color,
-                    fontSize: meta_style_.fontSize,
+                    fontSize: meta_style_.fontSize + "px",
                   }}
                   className="post-author"
                 >
@@ -189,7 +189,7 @@ class Edit extends Component {
                     <span
                       style={{
                         color: meta_style_.color,
-                        fontSize: meta_style_.fontSize,
+                        fontSize: meta_style_.fontSize + "px",
                       }}
                       className="slash"
                     >
@@ -199,7 +199,7 @@ class Edit extends Component {
                   <p
                     style={{
                       color: meta_style_.color,
-                      fontSize: meta_style_.fontSize,
+                      fontSize: meta_style_.fontSize + "px",
                     }}
                     className="post-date"
                   >
@@ -213,7 +213,7 @@ class Edit extends Component {
                     <span
                       style={{
                         color: meta_style_.color,
-                        fontSize: meta_style_.fontSize,
+                        fontSize: meta_style_.fontSize + "px",
                       }}
                       className="slash"
                     >
@@ -223,7 +223,7 @@ class Edit extends Component {
                   <p
                     style={{
                       color: meta_style_.color,
-                      fontSize: meta_style_.fontSize,
+                      fontSize: meta_style_.fontSize + "px",
                     }}
                     className="post-date-last-modified"
                   >
@@ -254,6 +254,11 @@ class Edit extends Component {
     let makingCate = [];
     if ((category_ && category_.length) || title_.enable) {
       // choosen category only show in nav
+      let mUnderLine = this.props.attributes.meta_style[0];
+      let mUnderLineSt = mUnderLine.underLine
+        ? { borderColor: mUnderLine.underLineColor }
+        : null;
+      // under line
       if (cateTrue.enable && category_ && category_.length) {
         if (this.props.attributes.postCategories.length) {
           this.props.attributes.postCategories.map((choosenCate) => {
@@ -269,7 +274,7 @@ class Edit extends Component {
         }
       }
       return (
-        <div className="navigation_" style={{ borderColor: title_.bgColor }}>
+        <div className="navigation_" style={mUnderLineSt}>
           {title_.enable && (
             <div className="nav-heading">
               <RichText
@@ -288,7 +293,7 @@ class Edit extends Component {
                 style={{
                   backgroundColor: title_.bgColor,
                   color: title_.color,
-                  fontSize: title_.fontSize,
+                  fontSize: title_.fontSize + "px",
                 }}
               />
             </div>
@@ -547,33 +552,37 @@ class Edit extends Component {
               </>
             )}
             {/* under line */}
-            <p>
-              <strong>Under Line</strong>
-            </p>
-            <ToggleControl
-              label={meta_style_.underLine ? "Show" : "Hide"}
-              checked={meta_style_.underLine}
-              onChange={(e) =>
-                this.updateObj("meta_style", "underLine", meta_style, e)
-              }
-            />
-            {meta_style_.underLine && (
+            {(title_.enable || categorynav[0].enable) && (
               <>
                 <p>
-                  <strong>Color</strong>
+                  <strong>Under Line</strong>
                 </p>
-                <ColorPicker
-                  color={meta_style_.underLineColor}
-                  onChangeComplete={(colorBg) => {
-                    let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                    this.updateObj(
-                      "meta_style",
-                      "underLineColor",
-                      meta_style,
-                      color
-                    );
-                  }}
+                <ToggleControl
+                  label={meta_style_.underLine ? "Show" : "Hide"}
+                  checked={meta_style_.underLine}
+                  onChange={(e) =>
+                    this.updateObj("meta_style", "underLine", meta_style, e)
+                  }
                 />
+                {meta_style_.underLine && (
+                  <>
+                    <p>
+                      <strong>Color</strong>
+                    </p>
+                    <ColorPicker
+                      color={meta_style_.underLineColor}
+                      onChangeComplete={(colorBg) => {
+                        let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                        this.updateObj(
+                          "meta_style",
+                          "underLineColor",
+                          meta_style,
+                          color
+                        );
+                      }}
+                    />
+                  </>
+                )}
               </>
             )}
           </PanelBody>
@@ -597,13 +606,13 @@ class Edit extends Component {
                 onClick={() =>
                   this.updateObj(
                     "meta_style",
-                    "layoutPostion",
+                    "layoutPosition",
                     meta_style,
                     "left"
                   )
                 }
                 className={
-                  meta_style_.layoutPostion == "left" ? "selected" : ""
+                  meta_style_.layoutPosition == "left" ? "selected" : ""
                 }
               >
                 Left
@@ -612,18 +621,28 @@ class Edit extends Component {
                 onClick={() =>
                   this.updateObj(
                     "meta_style",
-                    "layoutPostion",
+                    "layoutPosition",
                     meta_style,
                     "right"
                   )
                 }
                 className={
-                  meta_style_.layoutPostion == "right" ? "selected" : ""
+                  meta_style_.layoutPosition == "right" ? "selected" : ""
                 }
               >
                 Right
               </span>
             </div>
+            <p>
+              <strong>Block Background Color</strong>
+            </p>
+            <ColorPicker
+              color={meta_style_.blockBgColor}
+              onChangeComplete={(colorBg) => {
+                let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                this.updateObj("meta_style", "blockBgColor", meta_style, color);
+              }}
+            />
           </PanelBody>
           <PanelBody title="Heading" initialOpen={false}>
             <div class="zita-switcher-button-section">
@@ -1229,34 +1248,59 @@ class Edit extends Component {
                 )}
               </>
             )}
-            {/* secondary  */}
-            {/* <p>
-              <strong>Color</strong>
-            </p>
-            <ColorPalette
-              value={"color" in meta_style_ ? meta_style_.color : ""}
-              onChange={(color) =>
-                this.updateObj("meta_style", "color", meta_style, color)
-              }
-            /> */}
-            {/* <p>
-              <strong>Category Navigation</strong>
-            </p> */}
-            {/* <ToggleControl
-              label="Last Modified Date"
-              checked={date2_.last_modified}
-              onChange={(e) =>
-                this.updateObj("date2", "last_modified", date2, e)
-              }
-            /> */}
           </PanelBody>
+          {posts &&
+            posts.length > 0 &&
+            "getMedia_" in posts[0] &&
+            totalPost > posts.length && (
+              <PanelBody title="Next / Previous Button" initialOpen={false}>
+                <p>
+                  <strong>{__("Font Size", "zita-blocks")}</strong>
+                </p>
+                <RangeControl
+                  value={meta_style_.npBgfontSize}
+                  min={1}
+                  max={30}
+                  onChange={(e) => {
+                    this.updateObj("meta_style", "npBgfontSize", meta_style, e);
+                  }}
+                />
+                <p>
+                  <strong>{__("Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPalette
+                  value={meta_style_.npColor}
+                  onChange={(color) =>
+                    this.updateObj("meta_style", "npColor", meta_style, color)
+                  }
+                />
+                <p>
+                  <strong>{__("Background Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPicker
+                  color={meta_style_.npBgColor}
+                  onChangeComplete={(colorBg) => {
+                    let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                    this.updateObj(
+                      "meta_style",
+                      "npBgColor",
+                      meta_style,
+                      color
+                    );
+                  }}
+                />
+              </PanelBody>
+            )}
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
-          <div className="zita-two-post-wrapper">
+          <div
+            className="zita-two-post-wrapper"
+            style={{ backgroundColor: meta_style_.blockBgColor }}
+          >
             {(categorynav[0].enable || title_.enable) &&
               this.navCategory(categorynav[0], title_)}
             <div
-              className={`zita-post-two-column column-layout-${meta_style_.layoutPostion}`}
+              className={`zita-post-two-column column-layout-${meta_style_.layoutPosition}`}
             >
               <div className="column-one">
                 {this.returnHtml(
@@ -1296,10 +1340,23 @@ class Edit extends Component {
               "getMedia_" in posts[0] &&
               totalPost > posts.length && (
                 <div className="zita-two-post-wrapper-next-prev">
-                  <div>
+                  {/* npBgfontSize npColor npBgColor */}
+                  <div
+                    style={{
+                      fontSize: meta_style_.npBgfontSize,
+                      color: meta_style_.npColor,
+                      backgroundColor: meta_style_.npBgColor,
+                    }}
+                  >
                     <i class="fas fa-chevron-left"></i>
                   </div>
-                  <div>
+                  <div
+                    style={{
+                      fontSize: meta_style_.npBgfontSize,
+                      color: meta_style_.npColor,
+                      backgroundColor: meta_style_.npBgColor,
+                    }}
+                  >
                     <i class="fas fa-chevron-right"></i>
                   </div>
                 </div>

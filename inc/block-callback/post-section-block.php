@@ -11,9 +11,13 @@ wpgt_register_block_fn('zita-post-section',  [
             "default" => [[
                 'enable' => true,
                 "value" => "My block title",
-                "color" => "black",
-                "bgColor" => "grey"
-                // "fontSize" => 30
+                "fontSize" => 30,
+                "color" => "white",
+                "backgroundColor" => "black",
+                "align" => "left",
+                // "customWidth" => false,
+                "width" => 10,
+                "fontWeight" => 600
             ]]
         ],
         "thumbnail" => [
@@ -35,6 +39,7 @@ wpgt_register_block_fn('zita-post-section',  [
             "type" => "array",
             "default" => [[
                 "color" => "white",
+                "fontSize" => 14,
                 // "left_border" => true
             ]]
         ],
@@ -52,13 +57,20 @@ wpgt_register_block_fn('zita-post-section',  [
         'showCate' => [
             "type" => "array",
             "default" => [[
-                "enable" => true
+                "enable" => true,
+                "customColor" => false,
+                "color" => "white",
+                "backgroundColor" => "black",
+                "fontSize" => 12
             ]]
         ],
         'showTag' => [
             "type" => "array",
             "default" => [[
-                "enable" => true
+                "enable" => true,
+                "color" => "white",
+                "backgroundColor" => "black",
+                "fontSize" => 12
             ]]
         ],
         'excerpt' => [
@@ -70,6 +82,13 @@ wpgt_register_block_fn('zita-post-section',  [
             ]]
         ],
         // secondary section
+        "meta_style2" => [
+            "type" => "array",
+            "default" => [[
+                "color" => "#8e8c8d",
+                "fontSize" => 14
+            ]]
+        ],
         'heading2' => [
             'type' => "array",
             "default" => [[
@@ -100,7 +119,11 @@ wpgt_register_block_fn('zita-post-section',  [
         'showCate2' => [
             "type" => "array",
             "default" => [[
-                "enable" => true
+                "enable" => true,
+                "customColor" => false,
+                "color" => "white",
+                "backgroundColor" => "black",
+                "fontSize" => 12
             ]]
         ],
         "postCategories" => [

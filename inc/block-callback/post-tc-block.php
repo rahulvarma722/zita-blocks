@@ -11,9 +11,9 @@ wpgt_register_block_fn('zita-post-tc',  [
             "default" => [[
                 'enable' => true,
                 "value" => "My block title",
-                "color" => "black",
-                "bgColor" => "grey",
-                "fontSize" => 30
+                "bgColor" => "#f1f1f1",
+                "fontSize" => 14,
+                "color" => "#757575",
             ]]
         ],
         "thumbnail" => [
@@ -38,7 +38,11 @@ wpgt_register_block_fn('zita-post-tc',  [
                 "fontSize" => 14,
                 "layoutPosition" => 'left',
                 "underLine" => true,
-                "underLineColor" => "black"
+                "underLineColor" => "black",
+                "blockBgColor" => "white",
+                "npColor" => '#adadad',
+                "npBgColor" => 'white',
+                "npBgfontSize" => '16',
             ]]
         ],
         "author" => [

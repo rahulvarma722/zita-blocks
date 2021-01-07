@@ -1033,7 +1033,7 @@
 }
 .zita-two-post-wrapper .navigation_ {
   display: flex;
-  border-bottom: 2px solid #dddddd;
+  border-bottom: 2px solid transparent;
   align-items: flex-end;
 }
 .zita-two-post-wrapper .navigation_ .nav-heading p {
@@ -1041,7 +1041,7 @@
   line-height: 1;
   font-size: 21px;
   background: #d4d4d4;
-  padding: 10px;
+  padding: 8px;
   color: white;
   letter-spacing: 1px;
 }
@@ -1057,6 +1057,7 @@
 .zita-two-post-wrapper .navigation_ .nav-linear-items ul li {
   list-style: none;
   margin: 0 !important;
+  line-height: 1 !important;
 }
 .zita-two-post-wrapper .navigation_ .nav-linear-items ul li a {
   display: block;
@@ -1088,8 +1089,8 @@
   background: #f3f3f3;
   display: flex;
   align-items: center;
-  line-height: 1.8;
   font-size: 14px;
+  line-height: 1;
   cursor: pointer;
 }
 .zita-two-post-wrapper .navigation_ .nav-drop-items .more-opener i {
@@ -1103,7 +1104,7 @@
   margin: 0;
   position: absolute;
   right: 0;
-  top: 42px;
+  top: 30px;
   overflow: hidden;
   height: 0;
   opacity: 0;
@@ -1172,12 +1173,14 @@
   display: flex;
 }
 .zita-two-post-wrapper-next-prev > div {
-  border: 1px solid #d8d7d7;
+  border: 1px solid;
   margin: 7px;
-  padding: 0px 8px;
+  padding: 4px 8px;
+  color: #adadad;
+  line-height: 1;
 }
 .zita-two-post-wrapper-next-prev > div i {
-  color: #adadad;
+  color: inherit;
 }
 
 .components-panel__body p {

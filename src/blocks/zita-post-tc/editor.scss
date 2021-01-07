@@ -4,7 +4,7 @@
   }
   .navigation_ {
     display: flex;
-    border-bottom: 2px solid #dddddd;
+    border-bottom: 2px solid transparent;
     align-items: flex-end;
     .nav-heading {
       p {
@@ -12,7 +12,7 @@
         line-height: 1;
         font-size: 21px;
         background: #d4d4d4;
-        padding: 10px;
+        padding: 8px;
         color: white;
         letter-spacing: 1px;
       }
@@ -28,6 +28,7 @@
         li {
           list-style: none;
           margin: 0 !important;
+          line-height: 1 !important;
           a {
             display: block;
             padding: 8px 26px;
@@ -63,8 +64,8 @@
         background: #f3f3f3;
         display: flex;
         align-items: center;
-        line-height: 1.8;
         font-size: 14px;
+        line-height: 1;
         cursor: pointer;
         i {
           margin-left: 10px;
@@ -78,7 +79,7 @@
         margin: 0;
         position: absolute;
         right: 0;
-        top: 42px;
+        top: 30px;
         overflow: hidden;
         height: 0;
         opacity: 0;
@@ -152,11 +153,13 @@
 .zita-two-post-wrapper-next-prev {
   display: flex;
   > div {
-    border: 1px solid #d8d7d7;
+    border: 1px solid;
     margin: 7px;
-    padding: 0px 8px;
+    padding: 4px 8px;
+    color: #adadad;
+    line-height: 1;
     i {
-      color: #adadad;
+      color: inherit;
     }
   }
 }

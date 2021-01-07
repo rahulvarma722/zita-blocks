@@ -41,7 +41,7 @@ function zita_two_column_block($attr)
     $currentPage = json_encode(array("current" => 1, "total" => $pagesOfPost));
     $postSetting = json_encode($attr);
     // }
-    $postHtml = "<div class='zita-two-col-container'>";
+    $postHtml = "<div class='zita-two-col-container' style='background-color:" . $attr['meta_style'][0]['blockBgColor'] . ";'>";
     // loader
     $postHtml .= "<div class='zita-block-loader linear-bubble'>";
     $postHtml .= "<div><span></span></div>";
@@ -50,10 +50,11 @@ function zita_two_column_block($attr)
 
     if (count($innerITem) > 0 || $attr['title'][0]["enable"]) {
         $titleAttrs = $attr['title'][0];
-        $postHtml .= "<div class='navigation_' style='border-color:" . $titleAttrs["bgColor"] . ";'>";
+        $borderStyle = $attr['meta_style'][0]['underLine'] ? "border-color:" . $attr['meta_style'][0]['underLineColor'] . ";" : '';
+        $postHtml .= "<div class='navigation_' style='" . $borderStyle . "'>";
         if ($titleAttrs["enable"]) {
             $postHtml .= '<div class="nav-heading">';
-            $postHtml .= '<p style="background-color: ' . $titleAttrs["bgColor"] . '; color:' . $titleAttrs["color"] . ';font-size:' . $titleAttrs["fontSize"] . ';">';
+            $postHtml .= '<p style="background-color: ' . $titleAttrs["bgColor"] . '; color:' . $titleAttrs["color"] . ';font-size:' . $titleAttrs["fontSize"] . 'px;">';
             $postHtml .= $titleAttrs['value'];
             $postHtml .= '</p></div>';
         }
@@ -84,7 +85,7 @@ function zita_two_column_block($attr)
         $postHtml .= "</div>";
     }
     // category navigation
-    $postHtml .= "<div class='zita-two-post-wrapper' data-setting='" . $postSetting . "' data-currentpage='" . $currentPage . "'><div class='zita-post-two-column column-layout-" . $attr['meta_style'][0]["layoutPostion"] . "'>";
+    $postHtml .= "<div class='zita-two-post-wrapper' data-setting='" . $postSetting . "' data-currentpage='" . $currentPage . "'><div class='zita-post-two-column column-layout-" . $attr['meta_style'][0]["layoutPosition"] . "'>";
     $postHtmlCl1 = '<div class="column-one">';
     $postHtmlCl2 = '<div class="column-two">';
     // echo "<pre>";
@@ -298,11 +299,12 @@ function zita_two_column_block($attr)
         $postHtml .= '</div>';
         // if ($totalPosts > $attr['numberOfPosts']) {
         $keepDisable = $totalPosts <= $attr['numberOfPosts'] ? "disable" : '';
+        $nextPrevStyle = "font-size:" . $attr['meta_style'][0]['npBgfontSize'] . "px;color:" . $attr['meta_style'][0]['npColor'] . ";background-color:" . $attr['meta_style'][0]['npBgColor'] . ";";
         $postHtml .= "<div class='zita-two-post-wrapper-next-prev " . $keepDisable . "'>
-                            <div class='zita-post-NP-btn disable prev'>
+                            <div style='" . $nextPrevStyle . "' class='zita-post-NP-btn disable prev'>
                                 <i class='fas fa-chevron-left'></i>
                             </div>
-                            <div class='zita-post-NP-btn next'>
+                            <div style='" . $nextPrevStyle . "' class='zita-post-NP-btn next'>
                                 <i class='fas fa-chevron-right'></i>
                             </div>
                         </div>";

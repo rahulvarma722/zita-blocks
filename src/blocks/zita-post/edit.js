@@ -316,6 +316,16 @@ class Edit extends Component {
                 this.updateObj("meta_style", "left_border", meta_style, e)
               }
             />
+            <p>
+              <strong>Block Background Color</strong>
+            </p>
+            <ColorPicker
+              color={meta_style_.blockBgColor}
+              onChangeComplete={(colorBg) => {
+                let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                this.updateObj("meta_style", "blockBgColor", meta_style, color);
+              }}
+            />
           </PanelBody>
           <PanelBody title={__("Heading", "zita-blocks")} initialOpen={false}>
             <p>
@@ -615,7 +625,10 @@ class Edit extends Component {
           </PanelBody>
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
-          <div className="zita-block-post">
+          <div
+            className="zita-block-post"
+            style={{ backgroundColor: meta_style_.blockBgColor }}
+          >
             {title_.enable && (
               <div
                 className="zita-block-post-title"
@@ -697,7 +710,7 @@ class Edit extends Component {
                                 <span
                                   style={{
                                     color: meta_style_.color,
-                                    fontSize: meta_style_.fontSize,
+                                    fontSize: meta_style_.fontSize + "px",
                                   }}
                                   className="slash"
                                 >

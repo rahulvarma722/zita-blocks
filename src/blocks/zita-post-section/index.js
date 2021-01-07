@@ -3,7 +3,7 @@ import { registerBlockType } from "@wordpress/blocks";
 import Edit from "./edit";
 const attrSave = {};
 registerBlockType("zita-blocks/zita-post-section", {
-  title: "Post Sections",
+  title: "Post Image Layout",
   icon: "tagcloud",
   category: "zita-category",
   getEditWrapperProps(attributes) {

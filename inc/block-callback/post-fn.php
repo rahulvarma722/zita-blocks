@@ -29,7 +29,7 @@ function mytheme_blocks_render_latest_post_block($attr)
         $metashowCate = isset($attr['showCate'][0]['enable']) && $attr['showCate'][0]['enable']  ? true : false;
         $metashowshowTag = isset($attr['showTag'][0]['enable']) && $attr['showTag'][0]['enable']  ? true : false;
 
-        $postHtml .= '<div class="zita-block-post" id="zita-block-post">';
+        $postHtml .= '<div class="zita-block-post" id="zita-block-post" style="background-color:' . $attr['meta_style'][0]['blockBgColor'] . '">';
         // post title
         if (isset($attr['title'][0]['enable']) && $attr['title'][0]['enable']) {
             $titleHeadingStyle = "style='background-color:" . $attr['title'][0]['backgroundColor'] . ";color:" . $attr['title'][0]['color'] . ";font-size:" . $attr['title'][0]['fontSize'] . "px;font-weight:" . $attr['title'][0]['fontWeight'] . ";'";
