@@ -27,7 +27,8 @@ function wpgt_register_block_fn($blockName, $extraFeature = [])
         ), $extraFeature)
     );
 }
-include "block-callback/post-fn.php";
+// block call back function
+include "block-callback/post-list-grid-layout-c.php";
 include "block-callback/post-slider.php";
-include "block-callback/post-tc.php";
-include "block-callback/post-section-block-fn.php";
+include "block-callback/post-category-layout-c.php";
+include "block-callback/post-image-layout-c.php";

@@ -2,10 +2,6 @@
 // zita post callback function
 function mytheme_blocks_render_latest_post_block($attr)
 {
-
-    // echo "<pre>";
-    // print_r($attr);
-    // echo "</pre>";
     $args = [
         "posts_per_page" => $attr['numberOfPosts']
     ];

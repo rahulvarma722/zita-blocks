@@ -112,6 +112,119 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/blocks/post-category-layout/script.js":
+/*!***************************************************!*\
+  !*** ./src/blocks/post-category-layout/script.js ***!
+  \***************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/post-category-layout/style.scss");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
+ // import axios from "axios";
+// console.log("dafhoiahfiohf");
+// let stateCheck__ = setInterval(() => {
+//   if (document.readyState === "complete") {
+//     clearInterval(stateCheck__);
+//     const nextBtn = document.querySelector(".zita-post-NP-btn");
+//     // console.log(nextBtn);
+//     nextBtn.addEventListener("click", (e) => {
+//       console.log("wordking");
+//       console.log("zita_ajax_url", zita_ajax_url);
+//       axios.post(zita_ajax_url.admin_ajax, { action: "hello", param: "one" }).then(res=>{
+//           console.log(res);
+//       });
+//     });
+//     // nextBtn.addEventListener("click", (e) => {
+//     //   console.log("wordking");
+//     //   console.log("zita_ajax_url", zita_ajax_url);
+//     //   var request = new XMLHttpRequest();
+//     //   // Instantiating the request object
+//     //   request.open("POST", zita_ajax_url.admin_ajax, true);
+//     //   // Defining event listener for readystatechange event
+//     //   request.onreadystatechange = function () {
+//     //     // Check if the request is compete and was successful
+//     //     if (this.readyState === 4 && this.status === 200) {
+//     //       // Inserting the response from server into an HTML element
+//     //       //   document.getElementById("result").innerHTML = this.responseText;
+//     //       console.log("response", this.responseText);
+//     //     }
+//     //   };
+//     //   // Sending the request to the server
+//     //   request.send("action=hello&name=binny");
+//     // });
+//     // ready
+//   }
+// }, 100);
+// console.log("dafshoihafihfihf");
+
+/***/ }),
+
+/***/ "./src/blocks/post-category-layout/style.scss":
+/*!****************************************************!*\
+  !*** ./src/blocks/post-category-layout/style.scss ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/blocks/post-image-layout/script.js":
+/*!************************************************!*\
+  !*** ./src/blocks/post-image-layout/script.js ***!
+  \************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/post-image-layout/style.scss");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/***/ }),
+
+/***/ "./src/blocks/post-image-layout/style.scss":
+/*!*************************************************!*\
+  !*** ./src/blocks/post-image-layout/style.scss ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/blocks/post-list-grid-layout/script.js":
+/*!****************************************************!*\
+  !*** ./src/blocks/post-list-grid-layout/script.js ***!
+  \****************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/post-list-grid-layout/style.scss");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/***/ }),
+
+/***/ "./src/blocks/post-list-grid-layout/style.scss":
+/*!*****************************************************!*\
+  !*** ./src/blocks/post-list-grid-layout/style.scss ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "./src/blocks/pricing-table/script.js":
 /*!********************************************!*\
   !*** ./src/blocks/pricing-table/script.js ***!
@@ -632,32 +745,6 @@ var stateCheck = setInterval(function () {
 
 /***/ }),
 
-/***/ "./src/blocks/zita-post-section/script.js":
-/*!************************************************!*\
-  !*** ./src/blocks/zita-post-section/script.js ***!
-  \************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/zita-post-section/style.scss");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
-
-
-/***/ }),
-
-/***/ "./src/blocks/zita-post-section/style.scss":
-/*!*************************************************!*\
-  !*** ./src/blocks/zita-post-section/style.scss ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "./src/blocks/zita-post-slider/script.js":
 /*!***********************************************!*\
   !*** ./src/blocks/zita-post-slider/script.js ***!
@@ -684,93 +771,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/blocks/zita-post-tc/script.js":
-/*!*******************************************!*\
-  !*** ./src/blocks/zita-post-tc/script.js ***!
-  \*******************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/zita-post-tc/style.scss");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
- // import axios from "axios";
-// console.log("dafhoiahfiohf");
-// let stateCheck__ = setInterval(() => {
-//   if (document.readyState === "complete") {
-//     clearInterval(stateCheck__);
-//     const nextBtn = document.querySelector(".zita-post-NP-btn");
-//     // console.log(nextBtn);
-//     nextBtn.addEventListener("click", (e) => {
-//       console.log("wordking");
-//       console.log("zita_ajax_url", zita_ajax_url);
-//       axios.post(zita_ajax_url.admin_ajax, { action: "hello", param: "one" }).then(res=>{
-//           console.log(res);
-//       });
-//     });
-//     // nextBtn.addEventListener("click", (e) => {
-//     //   console.log("wordking");
-//     //   console.log("zita_ajax_url", zita_ajax_url);
-//     //   var request = new XMLHttpRequest();
-//     //   // Instantiating the request object
-//     //   request.open("POST", zita_ajax_url.admin_ajax, true);
-//     //   // Defining event listener for readystatechange event
-//     //   request.onreadystatechange = function () {
-//     //     // Check if the request is compete and was successful
-//     //     if (this.readyState === 4 && this.status === 200) {
-//     //       // Inserting the response from server into an HTML element
-//     //       //   document.getElementById("result").innerHTML = this.responseText;
-//     //       console.log("response", this.responseText);
-//     //     }
-//     //   };
-//     //   // Sending the request to the server
-//     //   request.send("action=hello&name=binny");
-//     // });
-//     // ready
-//   }
-// }, 100);
-// console.log("dafshoihafihfihf");
-
-/***/ }),
-
-/***/ "./src/blocks/zita-post-tc/style.scss":
-/*!********************************************!*\
-  !*** ./src/blocks/zita-post-tc/style.scss ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "./src/blocks/zita-post/script.js":
-/*!****************************************!*\
-  !*** ./src/blocks/zita-post/script.js ***!
-  \****************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/zita-post/style.scss");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
-
-
-/***/ }),
-
-/***/ "./src/blocks/zita-post/style.scss":
-/*!*****************************************!*\
-  !*** ./src/blocks/zita-post/style.scss ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "./src/script.js":
 /*!***********************!*\
   !*** ./src/script.js ***!
@@ -786,10 +786,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_progress_bar_script__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./blocks/progress-bar/script */ "./src/blocks/progress-bar/script.js");
 /* harmony import */ var _blocks_progress_bar_pie_script__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blocks/progress-bar-pie/script */ "./src/blocks/progress-bar-pie/script.js");
 /* harmony import */ var _blocks_zita_block_slider_script__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./blocks/zita-block-slider/script */ "./src/blocks/zita-block-slider/script.js");
-/* harmony import */ var _blocks_zita_post_script__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./blocks/zita-post/script */ "./src/blocks/zita-post/script.js");
+/* harmony import */ var _blocks_post_list_grid_layout_script__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./blocks/post-list-grid-layout/script */ "./src/blocks/post-list-grid-layout/script.js");
 /* harmony import */ var _blocks_zita_post_slider_script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./blocks/zita-post-slider/script */ "./src/blocks/zita-post-slider/script.js");
-/* harmony import */ var _blocks_zita_post_tc_script__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./blocks/zita-post-tc/script */ "./src/blocks/zita-post-tc/script.js");
-/* harmony import */ var _blocks_zita_post_section_script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./blocks/zita-post-section/script */ "./src/blocks/zita-post-section/script.js");
+/* harmony import */ var _blocks_post_category_layout_script__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./blocks/post-category-layout/script */ "./src/blocks/post-category-layout/script.js");
+/* harmony import */ var _blocks_post_image_layout_script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./blocks/post-image-layout/script */ "./src/blocks/post-image-layout/script.js");
 
 
 
