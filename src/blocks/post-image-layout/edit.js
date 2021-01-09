@@ -868,6 +868,30 @@ class Edit extends Component {
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
           <div className="zita-section-post">
+            {title_.enable && (
+              <div
+                className="zita-block-post-title"
+                style={{
+                  justifyContent: title_.align,
+                  borderColor: title_.backgroundColor,
+                }}
+              >
+                <RichText
+                  key="editable"
+                  tagName="h1"
+                  placeholder={__("My block title", "zita-blocks")}
+                  value={title_.value}
+                  style={{
+                    fontSize: title_.fontSize + "px",
+                    color: title_.color,
+                    backgroundColor: title_.backgroundColor,
+                    fontWeight: title_.fontWeight,
+                    width: title_.width + "%",
+                  }}
+                  onChange={(e) => this.updateObj("title", "value", title, e)}
+                />
+              </div>
+            )}
             {(posts.length == 1 ||
               posts.length == 2 ||
               posts.length == 4 ||

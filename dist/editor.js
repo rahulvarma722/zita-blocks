@@ -1137,8 +1137,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
           category = _this$props.category,
-          totalPost = _this$props.totalPost;
-      console.log("two section", this.props); // return <h1>This is Two Column Block</h1>;
+          totalPost = _this$props.totalPost; // console.log("two section", this.props);
+      // return <h1>This is Two Column Block</h1>;
 
       var heading = attributes.heading,
           author = attributes.author,
@@ -2620,7 +2620,28 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
         className: "zita-section-post"
-      }, (posts.length == 1 || posts.length == 2 || posts.length == 4 || posts.length == 6) && wp.element.createElement("div", {
+      }, title_.enable && wp.element.createElement("div", {
+        className: "zita-block-post-title",
+        style: {
+          justifyContent: title_.align,
+          borderColor: title_.backgroundColor
+        }
+      }, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["RichText"], {
+        key: "editable",
+        tagName: "h1",
+        placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("My block title", "zita-blocks"),
+        value: title_.value,
+        style: {
+          fontSize: title_.fontSize + "px",
+          color: title_.color,
+          backgroundColor: title_.backgroundColor,
+          fontWeight: title_.fontWeight,
+          width: title_.width + "%"
+        },
+        onChange: function onChange(e) {
+          return _this2.updateObj("title", "value", title, e);
+        }
+      })), (posts.length == 1 || posts.length == 2 || posts.length == 4 || posts.length == 6) && wp.element.createElement("div", {
         className: "column-count column-count-".concat(posts.length == 2 || posts.length == 4 ? 2 : posts.length == 6 ? 3 : 1)
       }, posts.map(function (post) {
         return "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_);
@@ -2949,8 +2970,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category; // console.log("this.props post block ->", this.props);
-
+          category = _this$props.category;
+      console.log("post list grid layout ->", this.props);
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
@@ -3324,6 +3345,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       }, posts.map(function (post) {
         var postAuthor = author_.enable && "name" in _this2.authorFn(post.author) ? _this2.authorFn(post.author).name : false;
         return thumbnail_.typeShow == "1" && "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ ? wp.element.createElement("article", {
+          all: "ddj",
           className: "block-post-article",
           key: post.id
         }, wp.element.createElement("div", {
@@ -3386,7 +3408,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           className: "post-excerpt"
         }, _this2.excerptWords(excerpt_.words, post.excerpt.rendered)), showTag_.enable && wp.element.createElement("p", {
           className: "post-tags"
-        }, _this2.showTagsFn(post.tags))))) : wp.element.createElement("article", {
+        }, _this2.showTagsFn(post.tags))))) : thumbnail_.typeShow != "1" ? wp.element.createElement("article", {
           className: "block-post-article",
           key: post.id
         }, wp.element.createElement("div", {
@@ -3449,7 +3471,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           className: "post-excerpt"
         }, _this2.excerptWords(excerpt_.words, post.excerpt.rendered)), showTag_.enable && wp.element.createElement("p", {
           className: "post-tags"
-        }, _this2.showTagsFn(post.tags)))));
+        }, _this2.showTagsFn(post.tags))))) : "";
       }))) : wp.element.createElement("div", null, !posts ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("No Post Found", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Loding...", "zita-blocks")));
     }
   }]);

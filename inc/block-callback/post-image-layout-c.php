@@ -33,6 +33,15 @@ function zita_section_block($attr)
         $metashowCate2 = isset($attr['showCate2'][0]['enable']) && $attr['showCate2'][0]['enable']  ? true : false;
         $metashowshowTag = isset($attr['showTag'][0]['enable']) && $attr['showTag'][0]['enable']  ? true : false;
         $postHtml = "<div class='zita-section-post' id='zita-section-post'>";
+        // post title
+        if (isset($attr['title'][0]['enable']) && $attr['title'][0]['enable']) {
+            $titleHeadingStyle = "style='background-color:" . $attr['title'][0]['backgroundColor'] . ";color:" . $attr['title'][0]['color'] . ";font-size:" . $attr['title'][0]['fontSize'] . "px;font-weight:" . $attr['title'][0]['fontWeight'] . ";'";
+            $postHtml .= '<div style="justify-content:' . $attr['title'][0]['align'] . ';border-color:' . $attr['title'][0]['backgroundColor'] . ';" class="zita-block-post-title" id="zita-block-post-title">';
+            $postHtml .= '<h1 ' . $titleHeadingStyle . ' >';
+            $postHtml .= $attr['title'][0]['value'];
+            $postHtml .= '</h1>';
+            $postHtml .= "</div>";
+        }
         if ($attr['numberOfPosts'] == 1 || $attr['numberOfPosts'] == 2 || $attr['numberOfPosts'] == 4 || $attr['numberOfPosts'] == 6) {
             $numberOfColumn = $attr['numberOfPosts'] == 2 || $attr['numberOfPosts'] == 4 ? 2 : 3;
             if ($attr['numberOfPosts'] == 1) {
@@ -41,7 +50,9 @@ function zita_section_block($attr)
             $postHtml .= "<div class='column-count column-count-" . $numberOfColumn . "'>";
             while ($query->have_posts()) {
                 $query->the_post();
-                $postHtml .= returnHtmlPost($postThumbnail, $metashowCate, $attr['heading'], $postAuthor, $metaStyleColor, $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $metashowshowTag);
+                if (get_the_post_thumbnail_url()) {
+                    $postHtml .= returnHtmlPost($metashowCate, $attr['heading'], $postAuthor, $metaStyleColor, $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $metashowshowTag);
+                }
             }
             $postHtml .= "</div>";
         } else if ($attr['numberOfPosts'] == 3 || $attr['numberOfPosts'] == 5) {
@@ -52,11 +63,18 @@ function zita_section_block($attr)
             $columnTwo = '<div><div class="column-count column-count-' . $numberOfColumn . '">';
             while ($query->have_posts()) {
                 $query->the_post();
-                if ($checkFirst) {
-                    $checkFirst = false;
-                    $columnOne .= returnHtmlPost($postThumbnail, $metashowCate, $attr['heading'], $postAuthor, $metaStyleColor, $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $metashowshowTag);
-                } else {
-                    $columnTwo .= returnHtmlPost($postThumbnail, $metashowCate2, $attr['heading2'], $postAuthor2, $metaStyleColor, $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $metashowshowTag);
+                if (get_the_post_thumbnail_url()) {
+                    if ($checkFirst) {
+                        $checkFirst = false;
+                        $columnOne .= returnHtmlPost($metashowCate, $attr['heading'], $postAuthor, $metaStyleColor, $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $metashowshowTag);
+                    } else {
+                        if ($checkFirst) {
+                            $checkFirst = false;
+                            $columnOne .= returnHtmlPost($metashowCate, $attr['heading'], $postAuthor, $metaStyleColor, $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $metashowshowTag);
+                        } else {
+                            $columnTwo .= returnHtmlPost($metashowCate2, $attr['heading2'], $postAuthor2, $metaStyleColor, $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $metashowshowTag);
+                        }
+                    }
                 }
             }
             $columnOne .= "</div></div>";
@@ -76,19 +94,17 @@ function zita_section_block($attr)
 
 // echo 'hello'. $koooo;
 // fnnn
-function returnHtmlPost($postThumbnail, $metashowCate, $heading__, $postAuthor, $metaStyleColor, $postDate, $postExcerpt, $postExcerpt__, $postDateModify, $postExcerptColor, $metashowshowTag)
+function returnHtmlPost($metashowCate, $heading__, $postAuthor, $metaStyleColor, $postDate, $postExcerpt, $postExcerpt__, $postDateModify, $postExcerptColor, $metashowshowTag)
 {
     $postHtmlCl1 = "<article class='block-post-article'>";
     $postHtmlCl1 .= "<div class='post-wrapper' id='post-wrapper'>";
-    if ($postThumbnail) {
-        if (get_the_post_thumbnail_url()) {
-            $postHtmlCl1 .= '<div class="featured-image">';
-            $postHtmlCl1 .= "<a href='" . esc_url(get_the_permalink()) . "'>";
-            $postHtmlCl1 .= '<img src="' . get_the_post_thumbnail_url() . '"/>';
-            $postHtmlCl1 .= '</a>';
-            $postHtmlCl1 .= '</div>';
-        }
-    }
+    // if (get_the_post_thumbnail_url()) {
+    $postHtmlCl1 .= '<div class="featured-image">';
+    $postHtmlCl1 .= "<a href='" . esc_url(get_the_permalink()) . "'>";
+    $postHtmlCl1 .= '<img src="' . get_the_post_thumbnail_url() . '"/>';
+    $postHtmlCl1 .= '</a>';
+    $postHtmlCl1 .= '</div>';
+    // }
     $postHtmlCl1 .= "<div class='post-content'>";
     // category
     if ($metashowCate) {

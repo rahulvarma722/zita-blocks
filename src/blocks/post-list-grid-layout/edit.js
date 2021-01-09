@@ -120,7 +120,7 @@ class Edit extends Component {
   };
   render() {
     const { posts, attributes, setAttributes, category } = this.props;
-    // console.log("this.props post block ->", this.props);
+    console.log("post list grid layout ->", this.props);
     let {
       heading,
       author,
@@ -667,7 +667,11 @@ class Edit extends Component {
                   "getMedia_" in post &&
                   post.getMedia_ &&
                   "guid" in post.getMedia_ ? (
-                  <article className="block-post-article" key={post.id}>
+                  <article
+                    all="ddj"
+                    className="block-post-article"
+                    key={post.id}
+                  >
                     <div className="post-wrapper">
                       <div className="featured-image">
                         <img
@@ -773,7 +777,7 @@ class Edit extends Component {
                       </div>
                     </div>
                   </article>
-                ) : (
+                ) : thumbnail_.typeShow != "1" ? (
                   <article className="block-post-article" key={post.id}>
                     <div className="post-wrapper">
                       {"getMedia_" in post &&
@@ -885,6 +889,8 @@ class Edit extends Component {
                       </div>
                     </div>
                   </article>
+                ) : (
+                  ""
                 );
               })}
             </div>

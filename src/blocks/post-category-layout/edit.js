@@ -382,7 +382,7 @@ class Edit extends Component {
       category,
       totalPost,
     } = this.props;
-    console.log("two section", this.props);
+    // console.log("two section", this.props);
     // return <h1>This is Two Column Block</h1>;
     let {
       heading,
