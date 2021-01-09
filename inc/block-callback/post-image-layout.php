@@ -126,6 +126,15 @@ wpgt_register_block_fn('zita-post-section',  [
                 "fontSize" => 12
             ]]
         ],
+        'showTag2' => [
+            "type" => "array",
+            "default" => [[
+                "enable" => true,
+                "color" => "white",
+                "backgroundColor" => "black",
+                "fontSize" => 12
+            ]]
+        ],
         "postCategories" => [
             "type" => "array",
             "default" => []

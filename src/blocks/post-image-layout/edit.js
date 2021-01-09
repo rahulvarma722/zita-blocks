@@ -103,6 +103,7 @@ class Edit extends Component {
       let putTagStyle = { color: tag_r.color };
       putTagStyle["color"] = tag_r.color;
       putTagStyle["backgroundColor"] = tag_r.backgroundColor;
+      putTagStyle["fontSize"] = tag_r.fontSize + "px";
       return returR.map((returnH) => (
         <span style={putTagStyle}>{returnH}</span>
       ));
@@ -153,6 +154,7 @@ class Edit extends Component {
       heading2,
       excerpt2,
       showCate2,
+      showTag2,
       date2,
       author2,
     } = attributes;
@@ -170,6 +172,7 @@ class Edit extends Component {
     let heading2_ = heading2[0];
     let excerpt2_ = excerpt2[0];
     let showCate2_ = showCate2[0];
+    let showTag2_ = showTag2[0];
     let date2_ = date2[0];
     let author2_ = author2[0];
     // category init
@@ -311,103 +314,6 @@ class Edit extends Component {
               }}
             />
           </PanelBody>
-          <PanelBody title={__("Excerpt", "zita-blocks")} initialOpen={false}>
-            {(numberOfPosts == 3 || numberOfPosts == 5) && (
-              <div className="zita-switcher-button-section">
-                <span
-                  onClick={() => this.setState({ excerpt: "primary" })}
-                  className={this.state.excerpt == "primary" ? "selected" : ""}
-                >
-                  {__("Primary", "zita-blocks")}
-                </span>
-                <span
-                  onClick={() => this.setState({ excerpt: "secondary" })}
-                  className={
-                    this.state.excerpt == "secondary" ? "selected" : ""
-                  }
-                >
-                  {__("Secondary", "zita-blocks")}
-                </span>
-              </div>
-            )}
-            {this.state.excerpt == "primary" ? (
-              <>
-                <ToggleControl
-                  label={
-                    excerpt_.enable
-                      ? __("Hide", "zita-blocks")
-                      : __("Show", "zita-blocks")
-                  }
-                  checked={excerpt_.enable}
-                  onChange={(e) =>
-                    this.updateObj("excerpt", "enable", excerpt, e)
-                  }
-                />
-                {excerpt_.enable && (
-                  <>
-                    <p>
-                      <strong>{__("Number of words", "zita-blocks")}</strong>
-                    </p>
-                    <RangeControl
-                      value={excerpt_.words}
-                      min={1}
-                      max={200}
-                      onChange={(e) =>
-                        this.updateObj("excerpt", "words", excerpt, e)
-                      }
-                    />
-                    <p>
-                      <strong>{__("Color", "zita-blocks")}</strong>
-                    </p>
-                    <ColorPalette
-                      value={excerpt_.color}
-                      onChange={(color) =>
-                        this.updateObj("excerpt", "color", excerpt, color)
-                      }
-                    />
-                  </>
-                )}
-              </>
-            ) : (
-              <>
-                <ToggleControl
-                  label={
-                    excerpt2_.enable
-                      ? __("Hide", "zita-blocks")
-                      : __("Show", "zita-blocks")
-                  }
-                  checked={excerpt2_.enable}
-                  onChange={(e) =>
-                    this.updateObj("excerpt2", "enable", excerpt2, e)
-                  }
-                />
-                {excerpt2_.enable && (
-                  <>
-                    <p>
-                      <strong>{__("Number of words", "zita-blocks")}</strong>
-                    </p>
-                    <RangeControl
-                      value={excerpt2_.words}
-                      min={1}
-                      max={200}
-                      onChange={(e) =>
-                        this.updateObj("excerpt2", "words", excerpt2, e)
-                      }
-                    />
-                    <p>
-                      <strong>{__("Color", "zita-blocks")}</strong>
-                    </p>
-                    <ColorPalette
-                      value={excerpt2_.color}
-                      onChange={(color) =>
-                        this.updateObj("excerpt2", "color", excerpt2, color)
-                      }
-                    />
-                  </>
-                )}
-              </>
-            )}
-          </PanelBody>
           <PanelBody title={__("Heading", "zita-blocks")} initialOpen={false}>
             {(numberOfPosts == 3 || numberOfPosts == 5) && (
               <div class="zita-switcher-button-section">
@@ -526,6 +432,106 @@ class Edit extends Component {
                     this.updateObj("heading2", "color", heading2, color)
                   }
                 />
+              </>
+            )}
+          </PanelBody>
+          <PanelBody
+            title={__("Excerpt / Content", "zita-blocks")}
+            initialOpen={false}
+          >
+            {(numberOfPosts == 3 || numberOfPosts == 5) && (
+              <div className="zita-switcher-button-section">
+                <span
+                  onClick={() => this.setState({ excerpt: "primary" })}
+                  className={this.state.excerpt == "primary" ? "selected" : ""}
+                >
+                  {__("Primary", "zita-blocks")}
+                </span>
+                <span
+                  onClick={() => this.setState({ excerpt: "secondary" })}
+                  className={
+                    this.state.excerpt == "secondary" ? "selected" : ""
+                  }
+                >
+                  {__("Secondary", "zita-blocks")}
+                </span>
+              </div>
+            )}
+            {this.state.excerpt == "primary" ? (
+              <>
+                <ToggleControl
+                  label={
+                    excerpt_.enable
+                      ? __("Hide", "zita-blocks")
+                      : __("Show", "zita-blocks")
+                  }
+                  checked={excerpt_.enable}
+                  onChange={(e) =>
+                    this.updateObj("excerpt", "enable", excerpt, e)
+                  }
+                />
+                {excerpt_.enable && (
+                  <>
+                    <p>
+                      <strong>{__("Number of words", "zita-blocks")}</strong>
+                    </p>
+                    <RangeControl
+                      value={excerpt_.words}
+                      min={1}
+                      max={200}
+                      onChange={(e) =>
+                        this.updateObj("excerpt", "words", excerpt, e)
+                      }
+                    />
+                    <p>
+                      <strong>{__("Color", "zita-blocks")}</strong>
+                    </p>
+                    <ColorPalette
+                      value={excerpt_.color}
+                      onChange={(color) =>
+                        this.updateObj("excerpt", "color", excerpt, color)
+                      }
+                    />
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <ToggleControl
+                  label={
+                    excerpt2_.enable
+                      ? __("Hide", "zita-blocks")
+                      : __("Show", "zita-blocks")
+                  }
+                  checked={excerpt2_.enable}
+                  onChange={(e) =>
+                    this.updateObj("excerpt2", "enable", excerpt2, e)
+                  }
+                />
+                {excerpt2_.enable && (
+                  <>
+                    <p>
+                      <strong>{__("Number of words", "zita-blocks")}</strong>
+                    </p>
+                    <RangeControl
+                      value={excerpt2_.words}
+                      min={1}
+                      max={200}
+                      onChange={(e) =>
+                        this.updateObj("excerpt2", "words", excerpt2, e)
+                      }
+                    />
+                    <p>
+                      <strong>{__("Color", "zita-blocks")}</strong>
+                    </p>
+                    <ColorPalette
+                      value={excerpt2_.color}
+                      onChange={(color) =>
+                        this.updateObj("excerpt2", "color", excerpt2, color)
+                      }
+                    />
+                  </>
+                )}
               </>
             )}
           </PanelBody>
@@ -765,6 +771,13 @@ class Edit extends Component {
                     this.updateObj("date2", "last_modified", date2, e)
                   }
                 />
+                <ToggleControl
+                  label={__("Tag", "zita-blocks")}
+                  checked={showTag2_.enable}
+                  onChange={(e) =>
+                    this.updateObj("showTag2", "enable", showTag2, e)
+                  }
+                />
                 <p class="block-inside">
                   {__("Meta Custom Style", "zita-blocks")}
                 </p>
@@ -850,6 +863,48 @@ class Edit extends Component {
                         />
                       </>
                     )}
+                  </>
+                )}
+                {showTag2_.enable && (
+                  <>
+                    <p class="block-inside">
+                      {__("Tags Custom Style", "zita-blocks")}
+                    </p>
+                    <p>
+                      <strong>{__("Font Size", "zita-blocks")}</strong>
+                    </p>
+                    <RangeControl
+                      value={showTag2_.fontSize}
+                      min={1}
+                      max={30}
+                      onChange={(e) => {
+                        this.updateObj("showTag2", "fontSize", showTag2, e);
+                      }}
+                    />
+                    <p>
+                      <strong>{__("Color", "zita-blocks")}</strong>
+                    </p>
+                    <ColorPalette
+                      value={showTag2_.color}
+                      onChange={(color) =>
+                        this.updateObj("showTag2", "color", showTag2, color)
+                      }
+                    />
+                    <p>
+                      <strong>{__("Background Color", "zita-blocks")}</strong>
+                    </p>
+                    <ColorPicker
+                      color={showTag2_.backgroundColor}
+                      onChangeComplete={(colorBg) => {
+                        let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                        this.updateObj(
+                          "showTag",
+                          "backgroundColor",
+                          showTag2,
+                          color
+                        );
+                      }}
+                    />
                   </>
                 )}
               </>
@@ -970,7 +1025,7 @@ class Edit extends Component {
                           thumbnail_,
                           showCate2_,
                           excerpt2_,
-                          false
+                          showTag2_
                         )
                       );
                     })}

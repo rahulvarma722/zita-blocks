@@ -107,6 +107,7 @@ class Edit extends Component {
       let putTagStyle = { color: tag_r.color };
       putTagStyle["color"] = tag_r.color;
       putTagStyle["backgroundColor"] = tag_r.backgroundColor;
+      putTagStyle["fontSize"] = tag_r.fontSize + "px";
       return returR.map((returnH) => (
         <span style={putTagStyle}>{returnH}</span>
       ));

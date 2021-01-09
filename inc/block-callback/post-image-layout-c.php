@@ -28,10 +28,6 @@ function zita_section_block($attr)
         $postExcerpt2 = isset($attr['excerpt2'][0]['enable']) && $attr['excerpt2'][0]['enable']  ? true : false;
         $postExcerpt2Color = $postExcerpt2 && $attr['excerpt2'][0]['color'] ? $attr['excerpt2'][0]['color'] : "";
         $postThumbnail = isset($attr['thumbnail'][0]['enable']) && $attr['thumbnail'][0]['enable']  ? true : false;
-        $metaStyleColor = isset($attr['meta_style'][0]['color']) && $attr['meta_style'][0]['color']  ? $attr['meta_style'][0]['color'] : "";
-        $metashowCate = isset($attr['showCate'][0]['enable']) && $attr['showCate'][0]['enable']  ? true : false;
-        $metashowCate2 = isset($attr['showCate2'][0]['enable']) && $attr['showCate2'][0]['enable']  ? true : false;
-        $metashowshowTag = isset($attr['showTag'][0]['enable']) && $attr['showTag'][0]['enable']  ? true : false;
         $postHtml = "<div class='zita-section-post' id='zita-section-post'>";
         // post title
         if (isset($attr['title'][0]['enable']) && $attr['title'][0]['enable']) {
@@ -51,7 +47,7 @@ function zita_section_block($attr)
             while ($query->have_posts()) {
                 $query->the_post();
                 if (get_the_post_thumbnail_url()) {
-                    $postHtml .= returnHtmlPost($metashowCate, $attr['heading'], $postAuthor, $metaStyleColor, $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $metashowshowTag);
+                    $postHtml .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag']);
                 }
             }
             $postHtml .= "</div>";
@@ -66,13 +62,13 @@ function zita_section_block($attr)
                 if (get_the_post_thumbnail_url()) {
                     if ($checkFirst) {
                         $checkFirst = false;
-                        $columnOne .= returnHtmlPost($metashowCate, $attr['heading'], $postAuthor, $metaStyleColor, $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $metashowshowTag);
+                        $columnOne .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag']);
                     } else {
                         if ($checkFirst) {
                             $checkFirst = false;
-                            $columnOne .= returnHtmlPost($metashowCate, $attr['heading'], $postAuthor, $metaStyleColor, $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $metashowshowTag);
+                            $columnOne .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag']);
                         } else {
-                            $columnTwo .= returnHtmlPost($metashowCate2, $attr['heading2'], $postAuthor2, $metaStyleColor, $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $metashowshowTag);
+                            $columnTwo .= returnHtmlPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2']);
                         }
                     }
                 }
@@ -94,7 +90,7 @@ function zita_section_block($attr)
 
 // echo 'hello'. $koooo;
 // fnnn
-function returnHtmlPost($metashowCate, $heading__, $postAuthor, $metaStyleColor, $postDate, $postExcerpt, $postExcerpt__, $postDateModify, $postExcerptColor, $metashowshowTag)
+function returnHtmlPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $postExcerpt, $postExcerpt__, $postDateModify, $postExcerptColor, $tags_)
 {
     $postHtmlCl1 = "<article class='block-post-article'>";
     $postHtmlCl1 .= "<div class='post-wrapper' id='post-wrapper'>";
@@ -107,12 +103,16 @@ function returnHtmlPost($metashowCate, $heading__, $postAuthor, $metaStyleColor,
     // }
     $postHtmlCl1 .= "<div class='post-content'>";
     // category
-    if ($metashowCate) {
+    if ($cate_[0]['enable']) {
         $postHtmlCl1 .= '<p class="post-category">';
         $category_ = get_the_category();
         if (!empty($category_)) {
+            $catestyle = 'font-size:' . $cate_[0]['fontSize'] . 'px;';
+            if ($cate_[0]['customColor']) {
+                $catestyle .= 'background-color:' . $cate_[0]['backgroundColor'] . ';color:' . $cate_[0]['color'] . ';';
+            }
             foreach ($category_ as $cateValue) {
-                $postHtmlCl1 .= '<span>';
+                $postHtmlCl1 .= '<span style="' . $catestyle . '">';
                 $postHtmlCl1 .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
                 $postHtmlCl1 .= '</span>';
             }
@@ -124,28 +124,29 @@ function returnHtmlPost($metashowCate, $heading__, $postAuthor, $metaStyleColor,
     $postHtmlCl1 .= "<a href='" . esc_url(get_the_permalink()) . "'>" . get_the_title() . "</a>";
     $postHtmlCl1 .= "</" . $heading__[0]['tag'] . ">";
     $postHtmlCl1 .= '<div class="post-meta-all">';
+    $metaStyle = "color:" . $meta_[0]['color'] . ";font-size:" . $meta_[0]['fontSize'] . ";";
     if ($postAuthor) {
-        $postHtmlCl1 .= "<p style='color:" . $metaStyleColor . "' class='post-author'>";
+        $postHtmlCl1 .= "<p style='" . $metaStyle . "' class='post-author'>";
         $postHtmlCl1 .= "<a target='_blank' href='" . get_author_posts_url(get_the_author_meta('ID')) . "'>";
         $postHtmlCl1 .=  get_the_author();
         $postHtmlCl1 .= "</a></p>";
     }
     if ($postDate) {
-        $postHtmlCl1 .= $postAuthor ? '<span class="slash">/</span>' : '';
+        $postHtmlCl1 .= $postAuthor ? '<span style="' . $metaStyle . '" class="slash">/</span>' : '';
         $dateYear =   get_the_date('Y');
         $dateMonth =   get_the_date('m');
         $dateDay =   get_the_date('j');
-        $postHtmlCl1 .= "<p style='color:" . $metaStyleColor . "' class='post-date'>";
+        $postHtmlCl1 .= "<p style='" . $metaStyle . "' class='post-date'>";
         $postHtmlCl1 .= "<a target='_blank' href='" . get_day_link($dateYear, $dateMonth, $dateDay) . "'>";
         $postHtmlCl1 .=  get_the_date();
         $postHtmlCl1 .= "</a></p>";
     }
     if ($postDateModify) {
-        $postHtmlCl1 .= ($postDate || $postAuthor) ? '<span class="slash">/</span>' : '';
+        $postHtmlCl1 .= ($postDate || $postAuthor) ? '<span style="' . $metaStyle . '" class="slash">/</span>' : '';
         $dateYear =   get_the_modified_date('Y');
         $dateMonth =   get_the_modified_date('m');
         $dateDay =   get_the_modified_date('j');
-        $postHtmlCl1 .= "<p style='color:" . $metaStyleColor . "' class='post-date-last-modified'>";
+        $postHtmlCl1 .= "<p style='" . $metaStyle . "' class='post-date-last-modified'>";
         $postHtmlCl1 .= "Modified:<a target='_blank' href='" . get_day_link($dateYear, $dateMonth, $dateDay) . "'>";
         $postHtmlCl1 .=  get_the_modified_date();
         $postHtmlCl1 .= "</a></p>";
@@ -168,12 +169,13 @@ function returnHtmlPost($metashowCate, $heading__, $postAuthor, $metaStyleColor,
         $postHtmlCl1 .= "</p>";
     }
     // tags
-    if ($metashowshowTag) {
+    if (isset($tags_[0]['enable']) && $tags_[0]['enable']) {
         $tags = get_the_tags(get_the_ID());
         $postHtmlCl1 .= '<p class="post-tags">';
         if (!empty($tags)) {
+            $Tagstyle = 'font-size:' . $tags_[0]['fontSize'] . 'px;background-color:' . $tags_[0]['backgroundColor'] . ';color:' . $tags_[0]['color'] . ';';
             foreach ($tags as $tagValue) {
-                $postHtmlCl1 .= '<span>';
+                $postHtmlCl1 .= '<span style="' . $Tagstyle . '">';
                 $postHtmlCl1 .= "<a href='" . get_category_link($tagValue->term_id) . "'>" . $tagValue->name . "</a>";
                 $postHtmlCl1 .= '</span>';
             }

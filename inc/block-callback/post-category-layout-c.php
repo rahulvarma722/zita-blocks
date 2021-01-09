@@ -25,7 +25,7 @@ function zita_two_column_block($attr)
     // inner and outer making
     $innerITem = $outerItem = [];
     if (isset($attr["categorynav"][0]['enable']) && $attr["categorynav"][0]['enable'] && count($fourAndMoreNav) > 0) {
-        if (count($fourAndMoreNav) <= 5) {
+        if (count($fourAndMoreNav) <= 4) {
             $innerITem = $fourAndMoreNav;
         } else {
             $innerITem = array_slice($fourAndMoreNav, 0, 4);
@@ -113,6 +113,7 @@ function zita_two_column_block($attr)
         $metashowshowTag = isset($attr['showTag'][0]['enable']) && $attr['showTag'][0]['enable']  ? true : false;
         $checkFirst = true;
         while ($query->have_posts()) {
+            
             $query->the_post();
             if ($checkFirst) {
                 $checkFirst = false;
