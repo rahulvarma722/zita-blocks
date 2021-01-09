@@ -947,7 +947,6 @@ class Edit extends Component {
             </div>
             {/* category */}
             {/* primery and secondary */}
-
             <div class="zita-switcher-button-section">
               <span
                 onClick={() => this.setState({ metaChoose: "primary" })}
@@ -1364,7 +1363,20 @@ class Edit extends Component {
               )}
           </div>
         ) : (
-          <div>{!posts ? "No Post Found" : "Loding..."}</div>
+          <div>
+            {!posts ? (
+              "No Post Found"
+            ) : (
+              <div className="post-loader">
+                <div className="active linear-bubble zita-block-loader">
+                  Post Loading...
+                  <div>
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         )}
       </>
     );

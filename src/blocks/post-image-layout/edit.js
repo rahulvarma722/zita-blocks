@@ -1036,9 +1036,18 @@ class Edit extends Component {
           </div>
         ) : (
           <div>
-            {!posts
-              ? __("No Post Found", "zita-blocks")
-              : __("Loding...", "zita-blocks")}
+            {!posts ? (
+              __("No Post Found", "zita-blocks")
+            ) : (
+              <div className="post-loader">
+                <div className="active linear-bubble zita-block-loader">
+                  {__("Post Loading...", "zita-blocks")}
+                  <div>
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </>

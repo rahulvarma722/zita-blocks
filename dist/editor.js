@@ -1742,7 +1742,11 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }, wp.element.createElement("i", {
         class: "fas fa-chevron-right"
-      })))) : wp.element.createElement("div", null, !posts ? "No Post Found" : "Loding..."));
+      })))) : wp.element.createElement("div", null, !posts ? "No Post Found" : wp.element.createElement("div", {
+        className: "post-loader"
+      }, wp.element.createElement("div", {
+        className: "active linear-bubble zita-block-loader"
+      }, "Post Loading...", wp.element.createElement("div", null, wp.element.createElement("span", null))))));
     }
   }]);
 
@@ -2684,7 +2688,11 @@ var Edit = /*#__PURE__*/function (_Component) {
         className: "column-count column-count-".concat(posts.length == 3 ? 1 : 2)
       }, posts.map(function (post, in_) {
         return in_ != 0 && "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading2_, author2_, date2_, meta_style2_, thumbnail_, showCate2_, excerpt2_, showTag2_);
-      }))))) : wp.element.createElement("div", null, !posts ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("No Post Found", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Loding...", "zita-blocks"))); // ++++++++++++++===============
+      }))))) : wp.element.createElement("div", null, !posts ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("No Post Found", "zita-blocks") : wp.element.createElement("div", {
+        className: "post-loader"
+      }, wp.element.createElement("div", {
+        className: "active linear-bubble zita-block-loader"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Post Loading...", "zita-blocks"), wp.element.createElement("div", null, wp.element.createElement("span", null)))))); // ++++++++++++++===============
     }
   }]);
 
@@ -3504,7 +3512,11 @@ var Edit = /*#__PURE__*/function (_Component) {
         }, _this2.excerptWords(excerpt_.words, post.excerpt.rendered)), showTag_.enable && wp.element.createElement("p", {
           className: "post-tags"
         }, _this2.showTagsFn(post.tags))))) : "";
-      }))) : wp.element.createElement("div", null, !posts ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("No Post Found", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Loding...", "zita-blocks")));
+      }))) : wp.element.createElement("div", null, !posts ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("No Post Found", "zita-blocks") : wp.element.createElement("div", {
+        className: "post-loader"
+      }, wp.element.createElement("div", {
+        className: "active linear-bubble zita-block-loader"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Post Loading...", "zita-blocks"), wp.element.createElement("div", null, wp.element.createElement("span", null))))));
     }
   }]);
 

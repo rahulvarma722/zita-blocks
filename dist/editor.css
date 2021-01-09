@@ -1187,6 +1187,46 @@
   background: #efefff;
   padding: 5px;
 }
+
+.post-loader {
+  height: 100px;
+  width: 80%;
+  margin: auto;
+  background: #0c5790;
+  position: relative;
+  border-radius: 21px;
+}
+.post-loader .zita-block-loader.active {
+  position: absolute;
+  width: 100%;
+  background: #f9fcffe6;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  flex-direction: column;
+  font-family: "Catamaran-Regular", sans-serif;
+  letter-spacing: 1px;
+}
+.post-loader .zita-block-loader.active > div span {
+  border-radius: 50%;
+  display: block;
+  border: 5px solid;
+  animation: round 1.5s linear 0s infinite forwards;
+  width: 30px;
+  height: 30px;
+  border-color: white #3f51b5 #3f51b5;
+}
+
+@keyframes round {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .zita-section-post * {
   font-family: "Catamaran-Regular", sans-serif;
   box-sizing: border-box;
