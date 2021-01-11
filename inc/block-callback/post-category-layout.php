@@ -63,7 +63,8 @@ wpgt_register_block_fn('zita-post-tc',  [
                 "customColor" => false,
                 "color" => "white",
                 "backgroundColor" => "black",
-                "fontSize" => 12
+                "fontSize" => 12,
+                "count" => 2
             ]]
         ],
         'showTag' => [
@@ -72,6 +73,7 @@ wpgt_register_block_fn('zita-post-tc',  [
                 "enable" => true,
                 "color" => "white",
                 "backgroundColor" => "black",
+                "count" => 2,
                 "fontSize" => 12
             ]]
         ],
@@ -132,7 +134,8 @@ wpgt_register_block_fn('zita-post-tc',  [
                 "customColor" => false,
                 "color" => "white",
                 "backgroundColor" => "black",
-                "fontSize" => 12
+                "fontSize" => 12,
+                "count" => 2
             ]]
         ],
         "postCategories" => [

@@ -89,7 +89,8 @@ wpgt_register_block_fn('zita-post-slider',  [
                 "customColor" => false,
                 "color" => "white",
                 "backgroundColor" => "black",
-                "fontSize" => 12
+                "fontSize" => 12,
+                "count" => 2,
             ]]
         ],
         'showTag' => [
@@ -99,7 +100,8 @@ wpgt_register_block_fn('zita-post-slider',  [
                 // "customColor" => false,
                 "color" => "white",
                 "backgroundColor" => "black",
-                "fontSize" => 12
+                "fontSize" => 12,
+                "count" => 2,
             ]]
         ],
         'excerpt' => [

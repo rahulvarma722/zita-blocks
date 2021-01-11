@@ -89,15 +89,32 @@ function mytheme_blocks_render_post_slider($attr)
                 if ($metashowCate) {
                     $postHtml .= '<p class="post-category">';
                     $category_ = get_the_category();
+                    $category_ = json_encode($category_);
+                    $category_ = json_decode($category_, true);
                     if (!empty($category_)) {
-                        $catestyle = '';
+                        $catestyle = 'font-size:' . $attr['showCate'][0]['fontSize'] . 'px;';
                         if ($attr['showCate'][0]['customColor']) {
-                            $catestyle = 'font-size:' . $attr['showCate'][0]['fontSize'] . 'px;background-color:' . $attr['showCate'][0]['backgroundColor'] . ';color:' . $attr['showCate'][0]['color'] . ';';
+                            $catestyle .= 'background-color:' . $attr['showCate'][0]['backgroundColor'] . ';color:' . $attr['showCate'][0]['color'] . ';';
                         }
+                        // 
+                        if (isset($args['category__in'])) {
+                            foreach ($args['category__in'] as $newArraycate) {
+                                foreach ($category_ as $cateValue_) {
+                                    if ($newArraycate == $cateValue_['term_id']) {
+                                        array_unshift($category_, ['name' => $cateValue_['name'], 'term_id' => $cateValue_['term_id']]);
+                                    }
+                                }
+                            }
+                        }
+                        $countCate = 0;
+                        $termId_ = '';
                         foreach ($category_ as $cateValue) {
+                            if ($attr['showCate'][0]['count'] == $countCate || $cateValue['term_id'] == $termId_) break;
                             $postHtml .= '<span style="' . $catestyle . '">';
-                            $postHtml .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
+                            $postHtml .= "<a href='" . get_category_link($cateValue['term_id']) . "'>" . $cateValue['name'] . "</a>";
                             $postHtml .= '</span>';
+                            $countCate++;
+                            $termId_ = $cateValue['term_id'];
                         }
                     }
                     $postHtml .= '</p>';
@@ -112,7 +129,7 @@ function mytheme_blocks_render_post_slider($attr)
                 }
 
                 if ($postDate) {
-                    $postHtml .= '<span style="font-size:' . $metaStyleFontSize . 'px;color:' . $metaStyleColor . ';" class="slash">/</span>';
+                    $postHtml .= $postAuthor ? '<span style="font-size:' . $metaStyleFontSize . 'px;color:' . $metaStyleColor . ';" class="slash">/</span>' : '';
                     $dateYear =   get_the_date('Y');
                     $dateMonth =   get_the_date('m');
                     $dateDay =   get_the_date('j');
@@ -122,7 +139,7 @@ function mytheme_blocks_render_post_slider($attr)
                     $postHtml .= "</a></p>";
                 }
                 if ($postDateModify) {
-                    $postHtml .= '<span style="font-size:' . $metaStyleFontSize . 'px;color:' . $metaStyleColor . ';" class="slash">/</span>';
+                    $postHtml .= $postAuthor || $postDate ? '<span style="font-size:' . $metaStyleFontSize . 'px;color:' . $metaStyleColor . ';" class="slash">/</span>' : '';
                     $dateYear =   get_the_modified_date('Y');
                     $dateMonth =   get_the_modified_date('m');
                     $dateDay =   get_the_modified_date('j');
@@ -152,10 +169,13 @@ function mytheme_blocks_render_post_slider($attr)
                     $postHtml .= '<p class="post-tags">';
                     if (!empty($tags)) {
                         $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
+                        $tagCount = 0;
                         foreach ($tags as $tagValue) {
+                            if ($attr['showTag'][0]['count'] == $tagCount) break;
                             $postHtml .= '<span style="' . $Tagstyle . '">';
                             $postHtml .= "<a href='" . get_category_link($tagValue->term_id) . "'>" . $tagValue->name . "</a>";
                             $postHtml .= '</span>';
+                            $tagCount++;
                         }
                     }
                     $postHtml .= '</p>';

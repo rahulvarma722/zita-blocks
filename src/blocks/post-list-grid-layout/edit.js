@@ -62,7 +62,19 @@ class Edit extends Component {
   showCateFn = (categories) => {
     let returR = [];
     if ("category" in this.props && this.props.category && categories.length) {
+      let countCate = this.props.attributes.showCate[0].count;
+      let postCate_ = this.props.attributes.postCategories;
+      if (postCate_.length) {
+        postCate_.map((ev) => {
+          let MkInt = parseInt(ev);
+          if (categories.includes(MkInt)) categories.unshift(MkInt);
+        });
+        categories = [...new Set(categories)];
+      }
       categories.forEach((cate) => {
+        if (returR.length == countCate) {
+          return;
+        }
         this.props.category.forEach((searchCate) => {
           if (cate == searchCate.id) {
             returR.push(searchCate.name);
@@ -86,7 +98,11 @@ class Edit extends Component {
   showTagsFn = (tags_) => {
     let returR = [];
     if ("tags" in this.props && this.props.tags && tags_.length) {
+      let countTag = this.props.attributes.showTag[0].count;
       tags_.forEach((tag) => {
+        if (returR.length == countTag) {
+          return;
+        }
         this.props.tags.forEach((searchtag) => {
           if (tag == searchtag.id) {
             returR.push(searchtag.name);
@@ -300,7 +316,7 @@ class Edit extends Component {
             )}
 
             <p>
-              <strong>{__("No of Post Display", "zita-blocks")}</strong>
+              <strong>{__("Number of Post Display", "zita-blocks")}</strong>
             </p>
             <RangeControl
               value={numberOfPosts}
@@ -328,9 +344,12 @@ class Edit extends Component {
               }}
             />
           </PanelBody>
-          <PanelBody title={__("Heading", "zita-blocks")} initialOpen={false}>
+          <PanelBody
+            title={__("Post Title", "zita-blocks")}
+            initialOpen={false}
+          >
             <p>
-              <strong>{__("Heading Tag", "zita-blocks")}</strong>
+              <strong>{__("Post Title Tag", "zita-blocks")}</strong>
             </p>
             <select
               value={heading_.tag}
@@ -416,7 +435,7 @@ class Edit extends Component {
             />
           </PanelBody>
           <PanelBody
-            title={__("Featured Image", "zita-blocks")}
+            title={__("Post Featured Image", "zita-blocks")}
             initialOpen={false}
           >
             <select
@@ -530,6 +549,19 @@ class Edit extends Component {
                   {__("Category Custom Style", "zita-blocks")}
                 </p>
                 <p>
+                  <strong>
+                    {__("Number Category Per Post", "zita-blocks")}
+                  </strong>
+                </p>
+                <RangeControl
+                  value={showCate_.count}
+                  min={1}
+                  max={10}
+                  onChange={(e) => {
+                    this.updateObj("showCate", "count", showCate, e);
+                  }}
+                />
+                <p>
                   <strong>{__("Font Size", "zita-blocks")}</strong>
                 </p>
                 <RangeControl
@@ -586,6 +618,17 @@ class Edit extends Component {
                 <p class="block-inside">
                   {__("Tags Custom Style", "zita-blocks")}
                 </p>
+                <p>
+                  <strong>{__("Number Tags Per Post", "zita-blocks")}</strong>
+                </p>
+                <RangeControl
+                  value={showTag_.count}
+                  min={1}
+                  max={10}
+                  onChange={(e) => {
+                    this.updateObj("showTag", "count", showTag, e);
+                  }}
+                />
                 <p>
                   <strong>{__("Font Size", "zita-blocks")}</strong>
                 </p>

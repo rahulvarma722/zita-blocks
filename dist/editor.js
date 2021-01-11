@@ -880,7 +880,22 @@ var Edit = /*#__PURE__*/function (_Component) {
       var returR = [];
 
       if ("category" in _this.props && _this.props.category && categories.length) {
+        var countCate = cate_.count;
+        var postCate_ = _this.props.attributes.postCategories;
+
+        if (postCate_.length) {
+          postCate_.map(function (ev) {
+            var MkInt = parseInt(ev);
+            if (categories.includes(MkInt)) categories.unshift(MkInt);
+          });
+          categories = _toConsumableArray(new Set(categories));
+        }
+
         categories.forEach(function (cate) {
+          if (returR.length == countCate) {
+            return;
+          }
+
           _this.props.category.forEach(function (searchCate) {
             if (cate == searchCate.id) {
               returR.push(searchCate.name);
@@ -913,7 +928,12 @@ var Edit = /*#__PURE__*/function (_Component) {
       var returR = [];
 
       if ("tags" in _this.props && _this.props.tags && tags_.length) {
+        var countTag = tag_r.count;
         tags_.forEach(function (tag) {
+          if (returR.length == countTag) {
+            return;
+          }
+
           _this.props.tags.forEach(function (searchtag) {
             if (tag == searchtag.id) {
               returR.push(searchtag.name);
@@ -1310,7 +1330,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           _this2.updateObj("meta_style", "blockBgColor", meta_style, color);
         }
       })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
-        title: "Heading",
+        title: "Post Title",
         initialOpen: false
       }, wp.element.createElement("div", {
         class: "zita-switcher-button-section"
@@ -1328,7 +1348,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           });
         },
         className: this.state.heading == "secondary" ? "selected" : ""
-      }, "Secondary")), this.state.heading == "primary" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Heading Tag")), wp.element.createElement("select", {
+      }, "Secondary")), this.state.heading == "primary" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Post Title Tag")), wp.element.createElement("select", {
         value: heading_.tag,
         className: "zita-block-select",
         onChange: function onChange(e) {
@@ -1578,7 +1598,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }), showCate_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Number Category Per Post", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: showCate_.count,
+        min: 1,
+        max: 10,
+        onChange: function onChange(e) {
+          _this2.updateObj("showCate", "count", showCate, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: showCate_.fontSize,
         min: 1,
         max: 30,
@@ -1605,7 +1632,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }))), showTag_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Number Tags Per Post", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: showTag_.count,
+        min: 1,
+        max: 10,
+        onChange: function onChange(e) {
+          _this2.updateObj("showTag", "count", showTag, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: showTag_.fontSize,
         min: 1,
         max: 30,
@@ -1664,7 +1698,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }), showCate2_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Number Category Per Post", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: showCate2_.count,
+        min: 1,
+        max: 10,
+        onChange: function onChange(e) {
+          _this2.updateObj("showCate2", "count", showCate2, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: showCate2_.fontSize,
         min: 1,
         max: 30,
@@ -1985,7 +2026,22 @@ var Edit = /*#__PURE__*/function (_Component) {
       var returR = [];
 
       if ("category" in _this.props && _this.props.category && categories.length) {
+        var countCate = cate_.count;
+        var postCate_ = _this.props.attributes.postCategories;
+
+        if (postCate_.length) {
+          postCate_.map(function (ev) {
+            var MkInt = parseInt(ev);
+            if (categories.includes(MkInt)) categories.unshift(MkInt);
+          });
+          categories = _toConsumableArray(new Set(categories));
+        }
+
         categories.forEach(function (cate) {
+          if (returR.length == countCate) {
+            return;
+          }
+
           _this.props.category.forEach(function (searchCate) {
             if (cate == searchCate.id) {
               returR.push(searchCate.name);
@@ -1996,7 +2052,6 @@ var Edit = /*#__PURE__*/function (_Component) {
       }
 
       if (returR.length) {
-        // let getCateStyle = this.props.attributes.showCate;
         var putCateStyle = {
           fontSize: cate_.fontSize + "px"
         };
@@ -2018,7 +2073,12 @@ var Edit = /*#__PURE__*/function (_Component) {
       var returR = [];
 
       if ("tags" in _this.props && _this.props.tags && tags_.length) {
+        var countTag = tag_r.count;
         tags_.forEach(function (tag) {
+          if (returR.length == countTag) {
+            return;
+          }
+
           _this.props.tags.forEach(function (searchtag) {
             if (tag == searchtag.id) {
               returR.push(searchtag.name);
@@ -2277,7 +2337,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
         title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Post Layout", "zita-blocks"),
         initialOpen: false
-      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("No of Post Display", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Number of Post Display", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
         value: numberOfPosts,
         min: 1,
         max: 6,
@@ -2287,7 +2347,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           });
         }
       })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
-        title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Heading", "zita-blocks"),
+        title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Post Title", "zita-blocks"),
         initialOpen: false
       }, (numberOfPosts == 3 || numberOfPosts == 5) && wp.element.createElement("div", {
         class: "zita-switcher-button-section"
@@ -2305,7 +2365,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           });
         },
         className: this.state.heading == "secondary" ? "selected" : ""
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Secondary", "zita-blocks"))), this.state.heading == "primary" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Heading Tag", "zita-blocks"))), wp.element.createElement("select", {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Secondary", "zita-blocks"))), this.state.heading == "primary" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Post Title Tag", "zita-blocks"))), wp.element.createElement("select", {
         value: heading_.tag,
         className: "zita-block-select",
         onChange: function onChange(e) {
@@ -2510,7 +2570,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }), showCate_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Number Category Per Post", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
+        value: showCate_.count,
+        min: 1,
+        max: 10,
+        onChange: function onChange(e) {
+          _this2.updateObj("showCate", "count", showCate, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
         value: showCate_.fontSize,
         min: 1,
         max: 30,
@@ -2537,7 +2604,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }))), showTag_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Number Tags Per Post", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
+        value: showTag_.count,
+        min: 1,
+        max: 10,
+        onChange: function onChange(e) {
+          _this2.updateObj("showTag", "count", showTag, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
         value: showTag_.fontSize,
         min: 1,
         max: 30,
@@ -2602,7 +2676,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }), showCate2_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Number Category Per Post", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
+        value: showCate2_.count,
+        min: 1,
+        max: 10,
+        onChange: function onChange(e) {
+          _this2.updateObj("showCate2", "count", showCate2, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
         value: showCate2_.fontSize,
         min: 1,
         max: 30,
@@ -2629,7 +2710,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }))), showTag2_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Number Tags Per Post", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
+        value: showTag2_.count,
+        min: 1,
+        max: 10,
+        onChange: function onChange(e) {
+          _this2.updateObj("showTag2", "count", showTag2, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
         value: showTag2_.fontSize,
         min: 1,
         max: 30,
@@ -2923,7 +3011,22 @@ var Edit = /*#__PURE__*/function (_Component) {
       var returR = [];
 
       if ("category" in _this.props && _this.props.category && categories.length) {
+        var countCate = _this.props.attributes.showCate[0].count;
+        var postCate_ = _this.props.attributes.postCategories;
+
+        if (postCate_.length) {
+          postCate_.map(function (ev) {
+            var MkInt = parseInt(ev);
+            if (categories.includes(MkInt)) categories.unshift(MkInt);
+          });
+          categories = _toConsumableArray(new Set(categories));
+        }
+
         categories.forEach(function (cate) {
+          if (returR.length == countCate) {
+            return;
+          }
+
           _this.props.category.forEach(function (searchCate) {
             if (cate == searchCate.id) {
               returR.push(searchCate.name);
@@ -2956,7 +3059,12 @@ var Edit = /*#__PURE__*/function (_Component) {
       var returR = [];
 
       if ("tags" in _this.props && _this.props.tags && tags_.length) {
+        var countTag = _this.props.attributes.showTag[0].count;
         tags_.forEach(function (tag) {
+          if (returR.length == countTag) {
+            return;
+          }
+
           _this.props.tags.forEach(function (searchtag) {
             if (tag == searchtag.id) {
               returR.push(searchtag.name);
@@ -3139,7 +3247,7 @@ var Edit = /*#__PURE__*/function (_Component) {
             numberOfColumn: e
           });
         }
-      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("No of Post Display", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Number of Post Display", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: numberOfPosts,
         min: 1,
         max: 20,
@@ -3162,9 +3270,9 @@ var Edit = /*#__PURE__*/function (_Component) {
           _this2.updateObj("meta_style", "blockBgColor", meta_style, color);
         }
       })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
-        title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Heading", "zita-blocks"),
+        title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Post Title", "zita-blocks"),
         initialOpen: false
-      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Heading Tag", "zita-blocks"))), wp.element.createElement("select", {
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Post Title Tag", "zita-blocks"))), wp.element.createElement("select", {
         value: heading_.tag,
         className: "zita-block-select",
         onChange: function onChange(e) {
@@ -3221,7 +3329,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           return _this2.updateObj("excerpt", "color", excerpt, color);
         }
       })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
-        title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Featured Image", "zita-blocks"),
+        title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Post Featured Image", "zita-blocks"),
         initialOpen: false
       }, wp.element.createElement("select", {
         value: thumbnail_.typeShow,
@@ -3308,7 +3416,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }), showCate_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Number Category Per Post", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: showCate_.count,
+        min: 1,
+        max: 10,
+        onChange: function onChange(e) {
+          _this2.updateObj("showCate", "count", showCate, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: showCate_.fontSize,
         min: 1,
         max: 30,
@@ -3335,7 +3450,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }))), showTag_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Number Tags Per Post", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: showTag_.count,
+        min: 1,
+        max: 10,
+        onChange: function onChange(e) {
+          _this2.updateObj("showTag", "count", showTag, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: showTag_.fontSize,
         min: 1,
         max: 30,
@@ -8005,7 +8127,22 @@ var Edit = /*#__PURE__*/function (_Component) {
       var returR = [];
 
       if ("category" in _this.props && _this.props.category && categories.length) {
+        var countCate = _this.props.attributes.showCate[0].count;
+        var postCate_ = _this.props.attributes.postCategories;
+
+        if (postCate_.length) {
+          postCate_.map(function (ev) {
+            var MkInt = parseInt(ev);
+            if (categories.includes(MkInt)) categories.unshift(MkInt);
+          });
+          categories = _toConsumableArray(new Set(categories));
+        }
+
         categories.forEach(function (cate) {
+          if (returR.length == countCate) {
+            return;
+          }
+
           _this.props.category.forEach(function (searchCate) {
             if (cate == searchCate.id) {
               returR.push(searchCate.name);
@@ -8038,7 +8175,12 @@ var Edit = /*#__PURE__*/function (_Component) {
       var returR = [];
 
       if ("tags" in _this.props && _this.props.tags && tags_.length) {
+        var countTag = _this.props.attributes.showTag[0].count;
         tags_.forEach(function (tag) {
+          if (returR.length == countTag) {
+            return;
+          }
+
           _this.props.tags.forEach(function (searchtag) {
             if (tag == searchtag.id) {
               returR.push(searchtag.name);
@@ -8438,9 +8580,9 @@ var Edit = /*#__PURE__*/function (_Component) {
           return _this2.updateGlobalSlide(e, "autoTrigger", "delay");
         }
       }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
-        title: "Heading",
+        title: "Post Title",
         initialOpen: false
-      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Heading Tag")), wp.element.createElement("select", {
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Post Title Tag")), wp.element.createElement("select", {
         value: heading_.tag,
         className: "zita-block-select",
         onChange: function onChange(e) {
@@ -8560,7 +8702,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }), showCate_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Category Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Number Category Per Post", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        value: showCate_.count,
+        min: 1,
+        max: 10,
+        onChange: function onChange(e) {
+          _this2.updateObj("showCate", "count", showCate, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
         value: showCate_.fontSize,
         min: 1,
         max: 30,
@@ -8587,7 +8736,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }))), showTag_.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", {
         class: "block-inside"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Tags Custom Style", "zita-blocks")), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Number Tags Per Post", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        value: showTag_.count,
+        min: 1,
+        max: 10,
+        onChange: function onChange(e) {
+          _this2.updateObj("showTag", "count", showTag, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
         value: showTag_.fontSize,
         min: 1,
         max: 30,

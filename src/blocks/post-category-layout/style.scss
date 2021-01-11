@@ -206,13 +206,13 @@
             font-size: 13px;
             text-transform: capitalize;
             line-height: 1;
-            &:nth-child(2) {
+            &:nth-child(n + 1) {
               background: #1a609c;
             }
-            &:nth-child(3) {
+            &:nth-child(2n + 1) {
               background: #9e710c;
             }
-            &:nth-child(4) {
+            &:nth-child(3n + 1) {
               background: #6a7f6a;
             }
             &:first-child {

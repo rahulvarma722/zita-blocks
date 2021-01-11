@@ -70,7 +70,19 @@ class Edit extends Component {
   showCateFn = (categories, cate_) => {
     let returR = [];
     if ("category" in this.props && this.props.category && categories.length) {
+      let countCate = cate_.count;
+      let postCate_ = this.props.attributes.postCategories;
+      if (postCate_.length) {
+        postCate_.map((ev) => {
+          let MkInt = parseInt(ev);
+          if (categories.includes(MkInt)) categories.unshift(MkInt);
+        });
+        categories = [...new Set(categories)];
+      }
       categories.forEach((cate) => {
+        if (returR.length == countCate) {
+          return;
+        }
         this.props.category.forEach((searchCate) => {
           if (cate == searchCate.id) {
             returR.push(searchCate.name);
@@ -94,7 +106,11 @@ class Edit extends Component {
   showTagsFn = (tags_, tag_r) => {
     let returR = [];
     if ("tags" in this.props && this.props.tags && tags_.length) {
+      let countTag = tag_r.count;
       tags_.forEach((tag) => {
+        if (returR.length == countTag) {
+          return;
+        }
         this.props.tags.forEach((searchtag) => {
           if (tag == searchtag.id) {
             returR.push(searchtag.name);
@@ -645,7 +661,7 @@ class Edit extends Component {
               }}
             />
           </PanelBody>
-          <PanelBody title="Heading" initialOpen={false}>
+          <PanelBody title="Post Title" initialOpen={false}>
             <div class="zita-switcher-button-section">
               <span
                 onClick={() => this.setState({ heading: "primary" })}
@@ -663,7 +679,7 @@ class Edit extends Component {
             {this.state.heading == "primary" ? (
               <>
                 <p>
-                  <strong>Heading Tag</strong>
+                  <strong>Post Title Tag</strong>
                 </p>
                 <select
                   value={heading_.tag}
@@ -1031,6 +1047,19 @@ class Edit extends Component {
                       {__("Category Custom Style", "zita-blocks")}
                     </p>
                     <p>
+                      <strong>
+                        {__("Number Category Per Post", "zita-blocks")}
+                      </strong>
+                    </p>
+                    <RangeControl
+                      value={showCate_.count}
+                      min={1}
+                      max={10}
+                      onChange={(e) => {
+                        this.updateObj("showCate", "count", showCate, e);
+                      }}
+                    />
+                    <p>
                       <strong>{__("Font Size", "zita-blocks")}</strong>
                     </p>
                     <RangeControl
@@ -1089,6 +1118,19 @@ class Edit extends Component {
                     <p class="block-inside">
                       {__("Tags Custom Style", "zita-blocks")}
                     </p>
+                    <p>
+                      <strong>
+                        {__("Number Tags Per Post", "zita-blocks")}
+                      </strong>
+                    </p>
+                    <RangeControl
+                      value={showTag_.count}
+                      min={1}
+                      max={10}
+                      onChange={(e) => {
+                        this.updateObj("showTag", "count", showTag, e);
+                      }}
+                    />
                     <p>
                       <strong>{__("Font Size", "zita-blocks")}</strong>
                     </p>
@@ -1187,6 +1229,19 @@ class Edit extends Component {
                     <p class="block-inside">
                       {__("Category Custom Style", "zita-blocks")}
                     </p>
+                    <p>
+                      <strong>
+                        {__("Number Category Per Post", "zita-blocks")}
+                      </strong>
+                    </p>
+                    <RangeControl
+                      value={showCate2_.count}
+                      min={1}
+                      max={10}
+                      onChange={(e) => {
+                        this.updateObj("showCate2", "count", showCate2, e);
+                      }}
+                    />
                     <p>
                       <strong>{__("Font Size", "zita-blocks")}</strong>
                     </p>

@@ -113,7 +113,6 @@ function zita_two_column_block($attr)
         $metashowshowTag = isset($attr['showTag'][0]['enable']) && $attr['showTag'][0]['enable']  ? true : false;
         $checkFirst = true;
         while ($query->have_posts()) {
-            
             $query->the_post();
             if ($checkFirst) {
                 $checkFirst = false;
@@ -134,15 +133,30 @@ function zita_two_column_block($attr)
                 if ($metashowCate) {
                     $postHtmlCl1 .= '<p class="post-category">';
                     $category_ = get_the_category();
+                    $category_ = json_encode($category_);
+                    $category_ = json_decode($category_, true);
                     if (!empty($category_)) {
                         $catestyle = 'font-size:' . $attr['showCate'][0]['fontSize'] . 'px;';
-                        if ($attr['showCate'][0]['customColor']) {
+                        if ($attr['showCate'][0]['customColor'] == "true") {
                             $catestyle .= 'background-color:' . $attr['showCate'][0]['backgroundColor'] . ';color:' . $attr['showCate'][0]['color'] . ';';
                         }
+                        if (isset($args['category__in'])) {
+                            foreach ($args['category__in'] as $newArraycate) {
+                                foreach ($category_ as $cateKKey => $cateValue_) {
+                                    if ($newArraycate == $cateValue_['term_id']) {
+                                        unset($category_[$cateKKey]);
+                                        array_unshift($category_, ['name' => $cateValue_['name'], 'term_id' => $cateValue_['term_id']]);
+                                    }
+                                }
+                            }
+                        }
+                        $countCate = 0;
                         foreach ($category_ as $cateValue) {
+                            if ($attr['showCate'][0]['count'] == $countCate) break;
                             $postHtmlCl1 .= '<span style="' . $catestyle . '">';
-                            $postHtmlCl1 .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
+                            $postHtmlCl1 .= "<a href='" . get_category_link($cateValue["term_id"]) . "'>" . $cateValue['name'] . "</a>";
                             $postHtmlCl1 .= '</span>';
+                            $countCate++;
                         }
                     }
                     $postHtmlCl1 .= '</p>';
@@ -199,10 +213,13 @@ function zita_two_column_block($attr)
                     $postHtmlCl1 .= '<p class="post-tags">';
                     if (!empty($tags)) {
                         $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
+                        $tagCount = 0;
                         foreach ($tags as $tagValue) {
+                            if ($attr['showTag'][0]['count'] == $tagCount) break;
                             $postHtmlCl1 .= '<span style="' . $Tagstyle . '">';
                             $postHtmlCl1 .= "<a href='" . get_category_link($tagValue->term_id) . "'>" . $tagValue->name . "</a>";
                             $postHtmlCl1 .= '</span>';
+                            $tagCount++;
                         }
                     }
                     $postHtmlCl1 .= '</p>';
@@ -229,15 +246,31 @@ function zita_two_column_block($attr)
                 if ($metashowCate2) {
                     $postHtmlCl2 .= '<p class="post-category">';
                     $category_ = get_the_category();
+                    $category_ = json_encode($category_);
+                    $category_ = json_decode($category_, true);
                     if (!empty($category_)) {
                         $catestyle2 = 'font-size:' . $attr['showCate2'][0]['fontSize'] . 'px;';
                         if ($attr['showCate2'][0]['customColor']) {
                             $catestyle2 .= 'background-color:' . $attr['showCate2'][0]['backgroundColor'] . ';color:' . $attr['showCate2'][0]['color'] . ';';
                         }
+                        if (isset($args['category__in'])) {
+                            foreach ($args['category__in'] as $newArraycate) {
+                                foreach ($category_ as $cateKKey => $cateValue_) {
+                                    if ($newArraycate == $cateValue_['term_id']) {
+                                        unset($category_[$cateKKey]);
+                                        array_unshift($category_, ['name' => $cateValue_['name'], 'term_id' => $cateValue_['term_id']]);
+                                    }
+                                }
+                            }
+                        }
+                        // print_r($category_);
+                        $countCate2 = 0;
                         foreach ($category_ as $cateValue) {
+                            if ($attr['showCate2'][0]['count'] == $countCate2) break;
                             $postHtmlCl2 .= '<span style="' . $catestyle2 . '">';
-                            $postHtmlCl2 .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
+                            $postHtmlCl2 .= "<a href='" . get_category_link($cateValue["term_id"]) . "'>" . $cateValue['name'] . "</a>";
                             $postHtmlCl2 .= '</span>';
+                            $countCate2++;
                         }
                     }
                     $postHtmlCl2 .= '</p>';

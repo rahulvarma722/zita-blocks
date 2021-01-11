@@ -61,6 +61,7 @@ wpgt_register_block_fn('zita-post-section',  [
                 "customColor" => false,
                 "color" => "white",
                 "backgroundColor" => "black",
+                "count" => 2,
                 "fontSize" => 12
             ]]
         ],
@@ -70,7 +71,8 @@ wpgt_register_block_fn('zita-post-section',  [
                 "enable" => true,
                 "color" => "white",
                 "backgroundColor" => "black",
-                "fontSize" => 12
+                "fontSize" => 12,
+                "count" => 2,
             ]]
         ],
         'excerpt' => [
@@ -123,6 +125,7 @@ wpgt_register_block_fn('zita-post-section',  [
                 "customColor" => false,
                 "color" => "white",
                 "backgroundColor" => "black",
+                "count" => 2,
                 "fontSize" => 12
             ]]
         ],
@@ -132,6 +135,7 @@ wpgt_register_block_fn('zita-post-section',  [
                 "enable" => true,
                 "color" => "white",
                 "backgroundColor" => "black",
+                "count" => 2,
                 "fontSize" => 12
             ]]
         ],

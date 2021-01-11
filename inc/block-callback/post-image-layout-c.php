@@ -47,7 +47,7 @@ function zita_section_block($attr)
             while ($query->have_posts()) {
                 $query->the_post();
                 if (get_the_post_thumbnail_url()) {
-                    $postHtml .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag']);
+                    $postHtml .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"]);
                 }
             }
             $postHtml .= "</div>";
@@ -62,13 +62,13 @@ function zita_section_block($attr)
                 if (get_the_post_thumbnail_url()) {
                     if ($checkFirst) {
                         $checkFirst = false;
-                        $columnOne .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag']);
+                        $columnOne .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"]);
                     } else {
                         if ($checkFirst) {
                             $checkFirst = false;
-                            $columnOne .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag']);
+                            $columnOne .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"]);
                         } else {
-                            $columnTwo .= returnHtmlPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2']);
+                            $columnTwo .= returnHtmlPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"]);
                         }
                     }
                 }
@@ -90,31 +90,46 @@ function zita_section_block($attr)
 
 // echo 'hello'. $koooo;
 // fnnn
-function returnHtmlPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $postExcerpt, $postExcerpt__, $postDateModify, $postExcerptColor, $tags_)
+function returnHtmlPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $postExcerpt, $postExcerpt__, $postDateModify, $postExcerptColor, $tags_, $category__in)
 {
     $postHtmlCl1 = "<article class='block-post-article'>";
     $postHtmlCl1 .= "<div class='post-wrapper' id='post-wrapper'>";
-    // if (get_the_post_thumbnail_url()) {
-    $postHtmlCl1 .= '<div class="featured-image">';
-    $postHtmlCl1 .= "<a href='" . esc_url(get_the_permalink()) . "'>";
-    $postHtmlCl1 .= '<img src="' . get_the_post_thumbnail_url() . '"/>';
-    $postHtmlCl1 .= '</a>';
-    $postHtmlCl1 .= '</div>';
-    // }
+    if (get_the_post_thumbnail_url()) {
+        $postHtmlCl1 .= '<div class="featured-image">';
+        $postHtmlCl1 .= "<a href='" . esc_url(get_the_permalink()) . "'>";
+        $postHtmlCl1 .= '<img src="' . get_the_post_thumbnail_url() . '"/>';
+        $postHtmlCl1 .= '</a>';
+        $postHtmlCl1 .= '</div>';
+    }
     $postHtmlCl1 .= "<div class='post-content'>";
     // category
     if ($cate_[0]['enable']) {
         $postHtmlCl1 .= '<p class="post-category">';
         $category_ = get_the_category();
+        $category_ = json_encode($category_);
+        $category_ = json_decode($category_, true);
         if (!empty($category_)) {
             $catestyle = 'font-size:' . $cate_[0]['fontSize'] . 'px;';
             if ($cate_[0]['customColor']) {
                 $catestyle .= 'background-color:' . $cate_[0]['backgroundColor'] . ';color:' . $cate_[0]['color'] . ';';
             }
+            if (empty($category__in)) {
+                foreach ($category__in as $newArraycate) {
+                    foreach ($category_ as $cateKKey => $cateValue_) {
+                        if ($newArraycate == $cateValue_['term_id']) {
+                            unset($category_[$cateKKey]);
+                            array_unshift($category_, ['name' => $cateValue_['name'], 'term_id' => $cateValue_['term_id']]);
+                        }
+                    }
+                }
+            }
+            $countCate = 0;
             foreach ($category_ as $cateValue) {
+                if ($cate_[0]['count'] == $countCate) break;
                 $postHtmlCl1 .= '<span style="' . $catestyle . '">';
-                $postHtmlCl1 .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
+                $postHtmlCl1 .= "<a href='" . get_category_link($cateValue['term_id']) . "'>" . $cateValue['name'] . "</a>";
                 $postHtmlCl1 .= '</span>';
+                $countCate++;
             }
         }
         $postHtmlCl1 .= '</p>';
@@ -174,10 +189,13 @@ function returnHtmlPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $pos
         $postHtmlCl1 .= '<p class="post-tags">';
         if (!empty($tags)) {
             $Tagstyle = 'font-size:' . $tags_[0]['fontSize'] . 'px;background-color:' . $tags_[0]['backgroundColor'] . ';color:' . $tags_[0]['color'] . ';';
+            $tagCount = 0;
             foreach ($tags as $tagValue) {
+                if ($tags_[0]['count'] == $tagCount) break;
                 $postHtmlCl1 .= '<span style="' . $Tagstyle . '">';
                 $postHtmlCl1 .= "<a href='" . get_category_link($tagValue->term_id) . "'>" . $tagValue->name . "</a>";
                 $postHtmlCl1 .= '</span>';
+                $tagCount++;
             }
         }
         $postHtmlCl1 .= '</p>';

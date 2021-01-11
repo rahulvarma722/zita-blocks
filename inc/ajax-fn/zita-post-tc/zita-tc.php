@@ -3,8 +3,8 @@ function post_tc_block()
 {
     $pageNo = $_POST['trigger'] == "next" ? $_POST['page'] + 1 : $_POST['page'] - 1;
     $attr = $_POST['attr'];
-    // echo "inside ajax->";
-    // print_r($attr);
+    echo "inside ajax->";
+    print_r($attr);
     $args = [
         'post_type' => 'post',
         "posts_per_page" => $attr['numberOfPosts'],
@@ -74,6 +74,7 @@ function post_tc_html($args, $attr, $showNextPrev = false)
             $query->the_post();
             if ($checkFirst) {
                 $checkFirst = false;
+                // $postHtmlCl1 .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"]);
                 $postHtmlCl1 .= "<article class='block-post-article'>";
                 $postHtmlCl1 .= "<div class='post-wrapper' id='post-wrapper'>";
                 if ($postThumbnail) {
@@ -91,15 +92,33 @@ function post_tc_html($args, $attr, $showNextPrev = false)
                 if ($metashowCate) {
                     $postHtmlCl1 .= '<p class="post-category">';
                     $category_ = get_the_category();
+                    $category_ = json_encode($category_);
+                    $category_ = json_decode($category_, true);
                     if (!empty($category_)) {
                         $catestyle = 'font-size:' . $attr['showCate'][0]['fontSize'] . 'px;';
-                        if ($attr['showCate'][0]['customColor']) {
+                        if ($attr['showCate'][0]['customColor'] == "true") {
                             $catestyle .= 'background-color:' . $attr['showCate'][0]['backgroundColor'] . ';color:' . $attr['showCate'][0]['color'] . ';';
                         }
+                        if (isset($attr['postCategories'])) {
+                            foreach ($attr['postCategories'] as $newArraycate) {
+                                foreach ($category_ as $cateKKey => $cateValue_) {
+                                    if ($newArraycate == $cateValue_['term_id']) {
+                                        unset($category_[$cateKKey]);
+                                        array_unshift($category_, ['name' => $cateValue_['name'], 'term_id' => $cateValue_['term_id']]);
+                                    }
+                                }
+                            }
+                        }
+                        $countCate = 0;
+                        // $termId_ = '';
                         foreach ($category_ as $cateValue) {
+                            if ($attr['showCate'][0]['count'] == $countCate) break;
+                            // if ($cateValue['term_id'] == $termId_) continue;
                             $postHtmlCl1 .= '<span style="' . $catestyle . '">';
-                            $postHtmlCl1 .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
+                            $postHtmlCl1 .= "<a href='" . get_category_link($cateValue["term_id"]) . "'>" . $cateValue['name'] . "</a>";
                             $postHtmlCl1 .= '</span>';
+                            $countCate++;
+                            // $termId_ = $cateValue['term_id'];
                         }
                     }
                     $postHtmlCl1 .= '</p>';
@@ -158,10 +177,13 @@ function post_tc_html($args, $attr, $showNextPrev = false)
                     $postHtmlCl1 .= '<p class="post-tags">';
                     if (!empty($tags)) {
                         $Tagstyle = 'font-size:' . $attr['showTag'][0]['fontSize'] . 'px;background-color:' . $attr['showTag'][0]['backgroundColor'] . ';color:' . $attr['showTag'][0]['color'] . ';';
+                        $tagCount = 0;
                         foreach ($tags as $tagValue) {
+                            if ($attr['showTag'][0]['count'] == $tagCount) break;
                             $postHtmlCl1 .= '<span style="' . $Tagstyle . '">';
                             $postHtmlCl1 .= "<a href='" . get_category_link($tagValue->term_id) . "'>" . $tagValue->name . "</a>";
                             $postHtmlCl1 .= '</span>';
+                            $tagCount++;
                         }
                     }
                     $postHtmlCl1 .= '</p>';
@@ -171,6 +193,7 @@ function post_tc_html($args, $attr, $showNextPrev = false)
                 $postHtmlCl1 .= "</div>";
                 $postHtmlCl1 .= "</article>";
             } else {
+                // $postHtmlCl2 .= returnHtmlPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"]);
                 $postHtmlCl2 .= "<article class='block-post-article'>";
                 $postHtmlCl2 .= "<div class='post-wrapper' id='post-wrapper'>";
                 if ($postThumbnail2) {
@@ -187,15 +210,32 @@ function post_tc_html($args, $attr, $showNextPrev = false)
                 if ($metashowCate2) {
                     $postHtmlCl2 .= '<p class="post-category">';
                     $category_ = get_the_category();
+                    $category_ = json_encode($category_);
+                    $category_ = json_decode($category_, true);
                     if (!empty($category_)) {
                         $catestyle2 = 'font-size:' . $attr['showCate2'][0]['fontSize'] . 'px;';
-                        if ($attr['showCate2'][0]['customColor']) {
+                        if ($attr['showCate2'][0]['customColor'] == "true") {
                             $catestyle2 .= 'background-color:' . $attr['showCate2'][0]['backgroundColor'] . ';color:' . $attr['showCate2'][0]['color'] . ';';
                         }
+                        if (isset($attr['postCategories'])) {
+                            foreach ($attr['postCategories'] as $newArraycate) {
+                                foreach ($category_ as $cateValue_) {
+                                    if ($newArraycate == $cateValue_['term_id']) {
+                                        array_unshift($category_, ['name' => $cateValue_['name'], 'term_id' => $cateValue_['term_id']]);
+                                    }
+                                }
+                            }
+                        }
+                        $countCate = 0;
+                        $termId_ = '';
                         foreach ($category_ as $cateValue) {
+                            if ($attr['showCate2'][0]['count'] == $countCate2) break;
+                            if ($cateValue['term_id'] == $termId2_) continue;
                             $postHtmlCl2 .= '<span style="' . $catestyle2 . '">';
-                            $postHtmlCl2 .= "<a href='" . get_category_link($cateValue->term_id) . "'>" . $cateValue->name . "</a>";
+                            $postHtmlCl2 .= "<a href='" . get_category_link($cateValue["term_id"]) . "'>" . $cateValue['name'] . "</a>";
                             $postHtmlCl2 .= '</span>';
+                            $countCate++;
+                            $termId_ = $cateValue['term_id'];
                         }
                     }
                     $postHtmlCl2 .= '</p>';
