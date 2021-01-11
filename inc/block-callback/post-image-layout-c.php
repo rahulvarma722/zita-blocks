@@ -110,7 +110,7 @@ function returnHtmlPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $pos
         $category_ = json_decode($category_, true);
         if (!empty($category_)) {
             $catestyle = 'font-size:' . $cate_[0]['fontSize'] . 'px;';
-            if ($cate_[0]['customColor']) {
+            if ($cate_[0]['customColor'] == "true") {
                 $catestyle .= 'background-color:' . $cate_[0]['backgroundColor'] . ';color:' . $cate_[0]['color'] . ';';
             }
             if (empty($category__in)) {
