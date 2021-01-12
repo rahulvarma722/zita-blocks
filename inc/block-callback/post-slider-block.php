@@ -9,86 +9,86 @@ wpgt_register_block_fn('zita-post-slider',  [
                 [
                     "dimension" => [
                         "width" => false,
-                        "custom_width" => 580,
+                        "custom_width" => 900,
                         "height" => false,
                         "custom_height" => 360,
                     ],
-                    "sliderEffect" => "fadeEffect",
+                    "sliderEffect" => "slideEffect",
                     "linearTrigger" => [
                         "enable" => true,
-                        "fontSize" => 20,
-                        "color" => "rgba(231,192,192,1)",
-                        "activeColor" => "rgba(68,222,68,1)",
+                        "fontSize" => 10,
+                        "color" => "white",
+                        "activeColor" => "#652efd",
                         "trigger" => "bullet",
                         "place" => "in"
                     ],
                     "leftRightTrigger" => [
                         "enable" => true,
-                        "fontSize" => 20,
-                        "color" => "rgba(231,192,192,1)",
-                        "backgroundColor" => "rgb(128, 128, 128)",
+                        "fontSize" => 14,
+                        "color" => "#652efd",
+                        "backgroundColor" => "transparent",
                     ],
                     "autoTrigger" => [
                         "enable" => true,
-                        "delay" => 4,
+                        "delay" => 3,
                     ],
-                    "overlayColor" => "#717167c7",
-                    "contentAlign" => "left"
+                    "overlayColor" => "rgba(112,112,112,0.35)",
+                    "contentAlign" => "center"
                 ],
             ],
         ],
         'numberOfPosts' => [
             'type' => "number",
-            "default" => 3
+            "default" => 2
         ],
         "title" => [
             "type" => "array",
             "default" => [[
                 'enable' => true,
                 "value" => "My block title",
-                "fontSize" => 30,
+                "fontSize" => 16,
                 "color" => "white",
-                "backgroundColor" => "black",
+                "backgroundColor" => "#652efd",
                 "align" => "left",
                 // "customWidth" => false,
                 "width" => 10,
-                "fontWeight" => 600
+                "fontWeight" => 400
             ]]
         ],
         'heading' => [
             'type' => "array",
             "default" => [[
-                "tag" => 'h1',
-                "fontSize" => 30,
-                "color" => '',
+                "tag" => 'h2',
+                "fontSize" => 32,
+                "color" => '#fffff',
             ]]
         ],
         "meta_style" => [
             "type" => "array",
             "default" => [[
-                "color" => "white",
+                "color" => "#ffffff",
                 "left_border" => true,
-                "fontSize" => 14
+                "fontSize" => 12
             ]]
         ],
         "author" => [
             "type" => "array",
-            "default" => [["enable" => true]]
+            "default" => [["enable" => false]]
         ],
         'date' => [
             "type" => "array",
             "default" => [[
                 "enable" => true,
-                "last_modified" => true
+                "last_modified" => false
             ]]
         ],
         'showCate' => [
             "type" => "array",
             "default" => [[
                 "enable" => true,
-                "customColor" => false,
-                "color" => "white",
-                "backgroundColor" => "black",
+                "customColor" => true,
+                "color" => "#ffffff",
+                "backgroundColor" => "rgba(54,26,234,0.45)",
                 "fontSize" => 12,
                 "count" => 2,
             ]]
@@ -96,10 +96,10 @@ wpgt_register_block_fn('zita-post-slider',  [
         'showTag' => [
             "type" => "array",
             "default" => [[
-                "enable" => true,
+                "enable" => false,
                 // "customColor" => false,
-                "color" => "white",
-                "backgroundColor" => "black",
+                "color" => "#dfdfdf",
+                "backgroundColor" => "transparent",
                 "fontSize" => 12,
                 "count" => 2,
             ]]
@@ -107,9 +107,9 @@ wpgt_register_block_fn('zita-post-slider',  [
         'excerpt' => [
             'type' => "array",
             "default" => [[
-                "enable" => true,
-                "words" => 17,
-                "color" => '',
+                "enable" => false,
+                "words" => 25,
+                "color" => '#E2E2E2',
             ]]
         ],
         "postCategories" => [

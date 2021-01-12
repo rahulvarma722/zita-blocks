@@ -305,7 +305,7 @@ class Edit extends Component {
                   )
                 }
                 className="post-heading"
-                tagName="p"
+                tagName="h4"
                 value={title_.value}
                 style={{
                   backgroundColor: title_.bgColor,

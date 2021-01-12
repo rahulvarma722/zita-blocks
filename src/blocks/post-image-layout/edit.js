@@ -1003,7 +1003,7 @@ class Edit extends Component {
               >
                 <RichText
                   key="editable"
-                  tagName="h1"
+                  tagName="h4"
                   placeholder={__("My block title", "zita-blocks")}
                   value={title_.value}
                   style={{

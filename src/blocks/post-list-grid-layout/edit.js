@@ -137,7 +137,7 @@ class Edit extends Component {
   };
   render() {
     const { posts, attributes, setAttributes, category } = this.props;
-    console.log("post list grid layout ->", this.props);
+    // console.log("post list grid layout ->", this.props);
     let {
       heading,
       author,
@@ -683,7 +683,7 @@ class Edit extends Component {
               >
                 <RichText
                   key="editable"
-                  tagName="h1"
+                  tagName="h4"
                   placeholder={__("My block title", "zita-blocks")}
                   value={title_.value}
                   style={{

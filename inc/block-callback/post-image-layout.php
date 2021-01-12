@@ -30,7 +30,7 @@ wpgt_register_block_fn('zita-post-section',  [
         'heading' => [
             'type' => "array",
             "default" => [[
-                "tag" => 'h1',
+                "tag" => 'h2',
                 "fontSize" => 30,
                 "color" => 'white',
             ]]

@@ -658,7 +658,7 @@
   letter-spacing: 1.2px;
 }
 #zita-block-post #post-wrapper .post-content p.post-date, #zita-block-post #post-wrapper .post-content p.post-date-last-modified {
-  letter-spacing: 0.03em;
+  letter-spacing: 0.5px;
   font-size: 14px;
   display: flex;
 }
@@ -708,7 +708,7 @@
   margin: 0;
   border-bottom: 2px solid;
 }
-#zita-block-post-title h1 {
+#zita-block-post-title h4 {
   font-family: "Catamaran-Regular", sans-serif;
   text-align: center;
   line-height: 1.5;
@@ -926,7 +926,7 @@
   border-bottom: 2px solid transparent;
   align-items: flex-end;
 }
-.zita-two-col-container .navigation_ .nav-heading p {
+.zita-two-col-container .navigation_ .nav-heading h4 {
   margin: 0 !important;
   line-height: 1 !important;
   font-size: 21px;

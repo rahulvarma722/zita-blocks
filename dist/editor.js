@@ -1083,7 +1083,7 @@ var Edit = /*#__PURE__*/function (_Component) {
             return _this.updateObj("title", "value", _this.props.attributes.title, e);
           },
           className: "post-heading",
-          tagName: "p",
+          tagName: "h4",
           value: title_.value,
           style: {
             backgroundColor: title_.bgColor,
@@ -2751,7 +2751,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["RichText"], {
         key: "editable",
-        tagName: "h1",
+        tagName: "h4",
         placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("My block title", "zita-blocks"),
         value: title_.value,
         style: {
@@ -3118,8 +3118,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category;
-      console.log("post list grid layout ->", this.props);
+          category = _this$props.category; // console.log("post list grid layout ->", this.props);
+
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
@@ -3489,7 +3489,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
         key: "editable",
-        tagName: "h1",
+        tagName: "h4",
         placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("My block title", "zita-blocks"),
         value: title_.value,
         style: {

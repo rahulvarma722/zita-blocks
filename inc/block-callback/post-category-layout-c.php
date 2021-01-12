@@ -54,9 +54,9 @@ function zita_two_column_block($attr)
         $postHtml .= "<div class='navigation_' style='" . $borderStyle . "'>";
         if ($titleAttrs["enable"]) {
             $postHtml .= '<div class="nav-heading">';
-            $postHtml .= '<p style="background-color: ' . $titleAttrs["bgColor"] . '; color:' . $titleAttrs["color"] . ';font-size:' . $titleAttrs["fontSize"] . 'px;">';
+            $postHtml .= '<h4 style="background-color: ' . $titleAttrs["bgColor"] . '; color:' . $titleAttrs["color"] . ';font-size:' . $titleAttrs["fontSize"] . 'px;">';
             $postHtml .= $titleAttrs['value'];
-            $postHtml .= '</p></div>';
+            $postHtml .= '</h4></div>';
         }
         if (count($innerITem) > 0) {
             $navItemStyle = 'font-size:' . $attr["categorynav"][0]['fontSize'] . 'px;color:' . $attr["categorynav"][0]['color'] . ';background-color:' . $attr["categorynav"][0]['backgroundColor'] . ';';
