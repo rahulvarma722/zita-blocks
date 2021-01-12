@@ -178,7 +178,7 @@ function returnHtmlPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $pos
             $postExcerpt = array_slice($postExcerpt, 0, $exLength);
             $postExcerpt = implode(" ", $postExcerpt);
         }
-        $postHtmlCl1 .= "<p style='color:" . $postExcerptColor . "' class='post-excerpt'>";
+        $postHtmlCl1 .= "<p style='color:" . $postExcerptColor . ";font-size:" . $postExcerpt__[0]['fontSize'] . "px;' class='post-excerpt'>";
         $postHtmlCl1 .= $postExcerpt;
         $postHtmlCl1 .= "<a class='read-more' href='" . esc_url(get_the_permalink()) . "'>Read More</a>";
         $postHtmlCl1 .= "</p>";

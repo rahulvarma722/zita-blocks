@@ -1033,7 +1033,8 @@ var Edit = /*#__PURE__*/function (_Component) {
         className: "post-date-last-modified"
       }, wp.element.createElement("span", null, "Modified: "), _this.dateFormate(post.modified)))), excerpt_ && excerpt_.enable && wp.element.createElement("p", {
         style: {
-          color: excerpt_.color
+          color: excerpt_.color,
+          fontSize: excerpt_.fontSize + "px"
         },
         className: "post-excerpt"
       }, _this.excerptWords(excerpt_.words, post.excerpt.rendered), wp.element.createElement("span", {
@@ -1450,6 +1451,13 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(e) {
           return _this2.updateObj("excerpt", "words", excerpt, e);
         }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Font Size")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: excerpt_.fontSize,
+        min: 1,
+        max: 25,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt", "fontSize", excerpt, e);
+        }
       }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
         value: excerpt_.color,
         onChange: function onChange(color) {
@@ -1467,6 +1475,13 @@ var Edit = /*#__PURE__*/function (_Component) {
         max: 200,
         onChange: function onChange(e) {
           return _this2.updateObj("excerpt2", "words", excerpt2, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Font Size")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: excerpt2_.fontSize,
+        min: 1,
+        max: 25,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt2", "fontSize", excerpt2, e);
         }
       }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
         value: excerpt2_.color,
@@ -2175,7 +2190,8 @@ var Edit = /*#__PURE__*/function (_Component) {
         className: "post-date-last-modified"
       }, wp.element.createElement("span", null, "Modified: "), _this.dateFormate(post.modified)))), excerpt_ && excerpt_.enable && wp.element.createElement("p", {
         style: {
-          color: excerpt_.color
+          color: excerpt_.color,
+          fontSize: excerpt_.fontSize + "px"
         },
         className: "post-excerpt"
       }, _this.excerptWords(excerpt_.words, post.excerpt.rendered), wp.element.createElement("span", {
@@ -2467,6 +2483,13 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(e) {
           return _this2.updateObj("excerpt", "words", excerpt, e);
         }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Font Size")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
+        value: excerpt_.fontSize,
+        min: 1,
+        max: 25,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt", "fontSize", excerpt, e);
+        }
       }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["ColorPalette"], {
         value: excerpt_.color,
         onChange: function onChange(color) {
@@ -2484,6 +2507,13 @@ var Edit = /*#__PURE__*/function (_Component) {
         max: 200,
         onChange: function onChange(e) {
           return _this2.updateObj("excerpt2", "words", excerpt2, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Font Size")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
+        value: excerpt2_.fontSize,
+        min: 1,
+        max: 25,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt2", "fontSize", excerpt2, e);
         }
       }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["ColorPalette"], {
         value: excerpt2_.color,
@@ -3323,12 +3353,19 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(e) {
           return _this2.updateObj("excerpt", "words", excerpt, e);
         }
-      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Font Size")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+        value: excerpt_.fontSize,
+        min: 1,
+        max: 25,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt", "fontSize", excerpt, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["ColorPalette"], {
         value: excerpt_.color,
         onChange: function onChange(color) {
           return _this2.updateObj("excerpt", "color", excerpt, color);
         }
-      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+      }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Post Featured Image", "zita-blocks"),
         initialOpen: false
       }, wp.element.createElement("select", {
@@ -3565,7 +3602,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           className: "post-date-last-modified"
         }, wp.element.createElement("span", null, "Modified: "), _this2.dateFormate(post.modified)))), excerpt_.enable && wp.element.createElement("p", {
           style: {
-            color: excerpt_.color
+            color: excerpt_.color,
+            fontSize: excerpt_.fontSize + "px"
           },
           className: "post-excerpt"
         }, _this2.excerptWords(excerpt_.words, post.excerpt.rendered)), showTag_.enable && wp.element.createElement("p", {
@@ -8633,12 +8671,19 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(e) {
           return _this2.updateObj("excerpt", "words", excerpt, e);
         }
-      })), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Font Size")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
+        value: excerpt_.fontSize,
+        min: 1,
+        max: 25,
+        onChange: function onChange(e) {
+          return _this2.updateObj("excerpt", "fontSize", excerpt, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Color")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
         value: excerpt_.color,
         onChange: function onChange(color) {
           return _this2.updateObj("excerpt", "color", excerpt, color);
         }
-      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
+      }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
         title: "Post Meta",
         initialOpen: false
       }, wp.element.createElement("p", null, wp.element.createElement("strong", null, "Choose Category")), wp.element.createElement("div", {
@@ -8894,7 +8939,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           fontSize: meta_style_.fontSize + "px"
         })))), excerpt_.enable && wp.element.createElement("p", {
           style: {
-            color: excerpt_.color
+            color: excerpt_.color,
+            fontSize: excerpt_.fontSize + "px"
           },
           className: "post-excerpt"
         }, _this2.excerptWords(excerpt_.words, post.excerpt.rendered)), showTag_.enable && wp.element.createElement("p", {

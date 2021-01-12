@@ -202,7 +202,7 @@ function zita_two_column_block($attr)
                         $postExcerpt = array_slice($postExcerpt, 0, $exLength);
                         $postExcerpt = implode(" ", $postExcerpt);
                     }
-                    $postHtmlCl1 .= "<p style='color:" . $postExcerptColor . "' class='post-excerpt'>";
+                    $postHtmlCl1 .= "<p style='color:" . $postExcerptColor . ";font-size:" . $attr['excerpt'][0]['fontSize'] . "px;' class='post-excerpt'>";
                     $postHtmlCl1 .= $postExcerpt;
                     $postHtmlCl1 .= "<a class='read-more' href='" . esc_url(get_the_permalink()) . "'>Read More</a>";
                     $postHtmlCl1 .= "</p>";
@@ -316,7 +316,7 @@ function zita_two_column_block($attr)
                         $postExcerpt2 = array_slice($postExcerpt2, 0, $exLength2);
                         $postExcerpt2 = implode(" ", $postExcerpt2);
                     }
-                    $postHtmlCl2 .= "<p style='color:" . $postExcerpt2Color . "' class='post-excerpt'>";
+                    $postHtmlCl2 .= "<p style='color:" . $postExcerpt2Color . ";font-size:" . $attr['excerpt2'][0]['fontSize'] . "px;' class='post-excerpt'>";
                     $postHtmlCl2 .= $postExcerpt2;
                     $postHtmlCl2 .= "<a class='read-more' href='" . esc_url(get_the_permalink()) . "'>Read More</a>";
                     $postHtmlCl2 .= "</p>";

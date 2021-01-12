@@ -131,7 +131,7 @@ function mytheme_blocks_render_latest_post_block($attr)
                             $postExcerpt = array_slice($postExcerpt, 0, $exLength);
                             $postExcerpt = implode(" ", $postExcerpt);
                         }
-                        $postHtml .= "<p style='color:" . $postExcerptColor . "' class='post-excerpt'>";
+                        $postHtml .= "<p style='color:" . $postExcerptColor . ";font-size:" . $attr['excerpt'][0]['fontSize'] . "px;' class='post-excerpt'>";
                         $postHtml .= $postExcerpt;
                         $postHtml .= "</p>";
                     }
@@ -249,7 +249,7 @@ function mytheme_blocks_render_latest_post_block($attr)
                         $postExcerpt = array_slice($postExcerpt, 0, $exLength);
                         $postExcerpt = implode(" ", $postExcerpt);
                     }
-                    $postHtml .= "<p style='color:" . $postExcerptColor . "' class='post-excerpt'>";
+                    $postHtml .= "<p style='color:" . $postExcerptColor . ";font-size:" . $attr['excerpt'][0]['fontSize'] . "px;' class='post-excerpt'>";
                     $postHtml .= $postExcerpt;
                     $postHtml .= "</p>";
                 }

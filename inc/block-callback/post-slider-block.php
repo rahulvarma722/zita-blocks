@@ -110,6 +110,7 @@ wpgt_register_block_fn('zita-post-slider',  [
                 "enable" => false,
                 "words" => 25,
                 "color" => '#E2E2E2',
+                "fontSize" => 12
             ]]
         ],
         "postCategories" => [

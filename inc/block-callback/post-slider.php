@@ -45,9 +45,9 @@ function mytheme_blocks_render_post_slider($attr)
         if (isset($attr['title'][0]['enable']) && $attr['title'][0]['enable']) {
             $titleHeadingStyle = "style='background-color:" . $attr['title'][0]['backgroundColor'] . ";color:" . $attr['title'][0]['color'] . ";font-size:" . $attr['title'][0]['fontSize'] . "px;font-weight:" . $attr['title'][0]['fontWeight'] . ";'";
             $postHtml .= '<div style="justify-content:' . $attr['title'][0]['align'] . ';border-color:' . $attr['title'][0]['backgroundColor'] . ';" class="zita-block-post-title" id="zita-block-post-title">';
-            $postHtml .= '<h1 ' . $titleHeadingStyle . ' >';
+            $postHtml .= '<h4 ' . $titleHeadingStyle . ' >';
             $postHtml .= $attr['title'][0]['value'];
-            $postHtml .= '</h1>';
+            $postHtml .= '</h4>';
             $postHtml .= "</div>";
         }
 
@@ -159,7 +159,7 @@ function mytheme_blocks_render_post_slider($attr)
                         $postExcerpt = array_slice($postExcerpt, 0, $exLength);
                         $postExcerpt = implode(" ", $postExcerpt);
                     }
-                    $postHtml .= "<p style='color:" . $postExcerptColor . "' class='post-excerpt'>";
+                    $postHtml .= "<p style='color:" . $postExcerptColor . ";font-size:" . $attr['excerpt'][0]['fontSize'] . "px;' class='post-excerpt'>";
                     $postHtml .= $postExcerpt;
                     $postHtml .= "</p>";
                 }

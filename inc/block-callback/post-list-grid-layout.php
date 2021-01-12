@@ -92,6 +92,7 @@ wpgt_register_block_fn('zita-post',  [
                 "enable" => false,
                 "words" => 8,
                 "color" => '#969696',
+                "fontSize" => 12
             ]]
         ],
         "postCategories" => [

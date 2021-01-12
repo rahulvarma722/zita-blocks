@@ -502,6 +502,17 @@ class Edit extends Component {
                       }
                     />
                     <p>
+                      <strong>Font Size</strong>
+                    </p>
+                    <RangeControl
+                      value={excerpt_.fontSize}
+                      min={1}
+                      max={25}
+                      onChange={(e) =>
+                        this.updateObj("excerpt", "fontSize", excerpt, e)
+                      }
+                    />
+                    <p>
                       <strong>{__("Color", "zita-blocks")}</strong>
                     </p>
                     <ColorPalette
@@ -537,6 +548,17 @@ class Edit extends Component {
                       max={200}
                       onChange={(e) =>
                         this.updateObj("excerpt2", "words", excerpt2, e)
+                      }
+                    />
+                    <p>
+                      <strong>Font Size</strong>
+                    </p>
+                    <RangeControl
+                      value={excerpt2_.fontSize}
+                      min={1}
+                      max={25}
+                      onChange={(e) =>
+                        this.updateObj("excerpt2", "fontSize", excerpt2, e)
                       }
                     />
                     <p>
@@ -1231,7 +1253,13 @@ class Edit extends Component {
               )}
             </div>
             {excerpt_ && excerpt_.enable && (
-              <p style={{ color: excerpt_.color }} className="post-excerpt">
+              <p
+                style={{
+                  color: excerpt_.color,
+                  fontSize: excerpt_.fontSize + "px",
+                }}
+                className="post-excerpt"
+              >
                 {this.excerptWords(excerpt_.words, post.excerpt.rendered)}
                 <span className="read-more">
                   {__("...Read More", "zita-blocks")}

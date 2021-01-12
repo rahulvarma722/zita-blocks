@@ -83,6 +83,7 @@ wpgt_register_block_fn('zita-post-tc',  [
                 "enable" => true,
                 "words" => 12,
                 "color" => '#737373',
+                "fontSize" => 12
             ]]
         ],
         // secondary section
@@ -114,6 +115,7 @@ wpgt_register_block_fn('zita-post-tc',  [
                 "enable" => false,
                 "words" => 5,
                 "color" => '#737373',
+                "fontSize" => 12
             ]]
         ],
         "author2" => [

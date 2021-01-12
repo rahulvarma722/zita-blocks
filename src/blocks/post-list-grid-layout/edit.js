@@ -422,17 +422,28 @@ class Edit extends Component {
                     this.updateObj("excerpt", "words", excerpt, e)
                   }
                 />
+                <p>
+                  <strong>Font Size</strong>
+                </p>
+                <RangeControl
+                  value={excerpt_.fontSize}
+                  min={1}
+                  max={25}
+                  onChange={(e) =>
+                    this.updateObj("excerpt", "fontSize", excerpt, e)
+                  }
+                />
+                <p>
+                  <strong>{__("Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPalette
+                  value={excerpt_.color}
+                  onChange={(color) =>
+                    this.updateObj("excerpt", "color", excerpt, color)
+                  }
+                />
               </>
             )}
-            <p>
-              <strong>{__("Color", "zita-blocks")}</strong>
-            </p>
-            <ColorPalette
-              value={excerpt_.color}
-              onChange={(color) =>
-                this.updateObj("excerpt", "color", excerpt, color)
-              }
-            />
           </PanelBody>
           <PanelBody
             title={__("Post Featured Image", "zita-blocks")}
@@ -804,7 +815,10 @@ class Edit extends Component {
                         </div>
                         {excerpt_.enable && (
                           <p
-                            style={{ color: excerpt_.color }}
+                            style={{
+                              color: excerpt_.color,
+                              fontSize: excerpt_.fontSize + "px",
+                            }}
                             className="post-excerpt"
                           >
                             {this.excerptWords(
