@@ -11,7 +11,8 @@ wpgt_register_block_fn('progress-block');
 wpgt_register_block_fn('progress-bar-pie');
 wpgt_register_block_fn('slide');
 // zita block dynamic blocks
-include_once "block-callback/post-list-grid-layout.php";
+include_once "block-callback/post-list-layout.php";
 include_once "block-callback/post-slider-block.php";
 include_once "block-callback/post-category-layout.php";
 include_once "block-callback/post-image-layout.php";
+include_once "block-callback/post-grid-layout.php";

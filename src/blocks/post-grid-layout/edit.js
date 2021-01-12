@@ -287,34 +287,16 @@ class Edit extends Component {
           </PanelBody>
           <PanelBody title="Post Layout" initialOpen={false}>
             <p>
-              <strong>{__("Layout", "zita-blocks")}</strong>
+              <strong>{__("Column", "zita-blocks")}</strong>
             </p>
-            <select
-              value={columnLayout}
-              className="zita-block-select"
+            <RangeControl
+              value={numberOfColumn}
+              min={2}
+              max={4}
               onChange={(e) => {
-                setAttributes({ columnLayout: e.target.value });
+                setAttributes({ numberOfColumn: e });
               }}
-            >
-              <option value="list">{__("List", "zita-blocks")}</option>
-              <option value="grid">{__("Grid", "zita-blocks")}</option>
-            </select>
-            {columnLayout == "grid" && (
-              <>
-                <p>
-                  <strong>{__("Column", "zita-blocks")}</strong>
-                </p>
-                <RangeControl
-                  value={numberOfColumn}
-                  min={1}
-                  max={4}
-                  onChange={(e) => {
-                    setAttributes({ numberOfColumn: e });
-                  }}
-                />
-              </>
-            )}
-
+            />
             <p>
               <strong>{__("Number of Post Display", "zita-blocks")}</strong>
             </p>
@@ -709,9 +691,9 @@ class Edit extends Component {
               </div>
             )}
             <div
-              className={`column-count column-count-${
-                columnLayout == "grid" ? numberOfColumn : 1
-              } ${meta_style_.left_border && "left-border"}`}
+              className={`column-count column-count-${numberOfColumn} ${
+                meta_style_.left_border && "left-border"
+              }`}
             >
               {posts.map((post) => {
                 let postAuthor =

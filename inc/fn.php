@@ -28,7 +28,8 @@ function wpgt_register_block_fn($blockName, $extraFeature = [])
     );
 }
 // block call back function
-include "block-callback/post-list-grid-layout-c.php";
 include "block-callback/post-slider.php";
+include "block-callback/post-list-layout-c.php";
 include "block-callback/post-category-layout-c.php";
 include "block-callback/post-image-layout-c.php";
+include "block-callback/post-grid-layout-c.php";
