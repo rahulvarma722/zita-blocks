@@ -888,9 +888,9 @@ var Edit = /*#__PURE__*/function (_Component) {
             var MkInt = parseInt(ev);
             if (categories.includes(MkInt)) categories.unshift(MkInt);
           });
-          categories = _toConsumableArray(new Set(categories));
         }
 
+        categories = _toConsumableArray(new Set(categories));
         categories.forEach(function (cate) {
           if (returR.length == countCate) {
             return;
@@ -2049,9 +2049,9 @@ var Edit = /*#__PURE__*/function (_Component) {
             var MkInt = parseInt(ev);
             if (categories.includes(MkInt)) categories.unshift(MkInt);
           });
-          categories = _toConsumableArray(new Set(categories));
         }
 
+        categories = _toConsumableArray(new Set(categories));
         categories.forEach(function (cate) {
           if (returR.length == countCate) {
             return;
@@ -2148,8 +2148,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category; // console.log("post list grid layout ->", this.props);
-
+          category = _this$props.category;
+      console.log("post list grid layout ->", this.props);
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
@@ -2906,9 +2906,9 @@ var Edit = /*#__PURE__*/function (_Component) {
             var MkInt = parseInt(ev);
             if (categories.includes(MkInt)) categories.unshift(MkInt);
           });
-          categories = _toConsumableArray(new Set(categories));
         }
 
+        categories = _toConsumableArray(new Set(categories));
         categories.forEach(function (cate) {
           if (returR.length == countCate) {
             return;
@@ -3906,9 +3906,9 @@ var Edit = /*#__PURE__*/function (_Component) {
             var MkInt = parseInt(ev);
             if (categories.includes(MkInt)) categories.unshift(MkInt);
           });
-          categories = _toConsumableArray(new Set(categories));
         }
 
+        categories = _toConsumableArray(new Set(categories));
         categories.forEach(function (cate) {
           if (returR.length == countCate) {
             return;
@@ -4532,7 +4532,7 @@ var Edit = /*#__PURE__*/function (_Component) {
     query["categories"] = postCategories.join(",");
   }
 
-  query['meta_key'] = '_thumbnail_id';
+  query["meta_key"] = "_thumbnail_id";
 
   var _select = select("core"),
       getMedia = _select.getMedia,
@@ -9012,9 +9012,9 @@ var Edit = /*#__PURE__*/function (_Component) {
             var MkInt = parseInt(ev);
             if (categories.includes(MkInt)) categories.unshift(MkInt);
           });
-          categories = _toConsumableArray(new Set(categories));
         }
 
+        categories = _toConsumableArray(new Set(categories));
         categories.forEach(function (cate) {
           if (returR.length == countCate) {
             return;
@@ -9829,9 +9829,8 @@ var Edit = /*#__PURE__*/function (_Component) {
   //     ),
   // )
   // query["meta_query"] = [{ key: "_thumbnail_id", compare: "EXIST" }];
+  // query["media"] = true;
 
-
-  query["media"] = true;
 
   var _select = select("core"),
       getMedia = _select.getMedia,

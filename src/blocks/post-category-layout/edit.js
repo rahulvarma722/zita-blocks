@@ -77,8 +77,8 @@ class Edit extends Component {
           let MkInt = parseInt(ev);
           if (categories.includes(MkInt)) categories.unshift(MkInt);
         });
-        categories = [...new Set(categories)];
       }
+      categories = [...new Set(categories)];
       categories.forEach((cate) => {
         if (returR.length == countCate) {
           return;

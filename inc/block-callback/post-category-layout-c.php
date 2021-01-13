@@ -21,6 +21,7 @@ function zita_two_column_block($attr)
                 'hide_empty' => true,
             )
         );
+        // echo "ress";
     }
     // inner and outer making
     $innerITem = $outerItem = [];
@@ -29,10 +30,9 @@ function zita_two_column_block($attr)
             $innerITem = $fourAndMoreNav;
         } else {
             $innerITem = array_slice($fourAndMoreNav, 0, 4);
-            $outerItem = array_slice($fourAndMoreNav, -2);
+            $outerItem = array_slice($fourAndMoreNav, 4);
         }
     }
-
     $query = new WP_Query($args);
     $currentPage = $postSetting = "";
     $totalPosts = $query->found_posts;

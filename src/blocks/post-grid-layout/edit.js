@@ -69,8 +69,8 @@ class Edit extends Component {
           let MkInt = parseInt(ev);
           if (categories.includes(MkInt)) categories.unshift(MkInt);
         });
-        categories = [...new Set(categories)];
       }
+      categories = [...new Set(categories)];
       categories.forEach((cate) => {
         if (returR.length == countCate) {
           return;
@@ -90,9 +90,9 @@ class Edit extends Component {
         putCateStyle["color"] = getCateStyle[0].color;
         putCateStyle["backgroundColor"] = getCateStyle[0].backgroundColor;
       }
-      return returR.map((returnH) => (
-        <span style={putCateStyle}>{returnH}</span>
-      ));
+      return returR.map((returnH) => {
+        return <span style={putCateStyle}>{returnH}</span>;
+      });
     }
   };
   showTagsFn = (tags_) => {
@@ -137,7 +137,7 @@ class Edit extends Component {
   };
   render() {
     const { posts, attributes, setAttributes, category } = this.props;
-    // console.log("post list grid layout ->", this.props);
+    console.log("post list grid layout ->", this.props);
     let {
       heading,
       author,
@@ -965,9 +965,11 @@ export default withSelect((select, props) => {
   }
   const { getMedia, getEntityRecords, getAuthors } = select("core");
   let getAllPost = getEntityRecords("postType", "post", query);
+
+  
+
   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
-
   let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
   if (getAllPost && getAllPost.length) {
     let returnArray = [];

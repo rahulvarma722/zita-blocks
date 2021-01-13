@@ -64,8 +64,8 @@ class Edit extends Component {
           let MkInt = parseInt(ev);
           if (categories.includes(MkInt)) categories.unshift(MkInt);
         });
-        categories = [...new Set(categories)];
       }
+      categories = [...new Set(categories)];
       categories.forEach((cate) => {
         if (returR.length == countCate) {
           return;
@@ -1226,7 +1226,7 @@ export default withSelect((select, props) => {
   //     ),
   // )
   // query["meta_query"] = [{ key: "_thumbnail_id", compare: "EXIST" }];
-  query["media"] = true;
+  // query["media"] = true;
 
   const { getMedia, getEntityRecords, getAuthors } = select("core");
   let getAllPost = getEntityRecords("postType", "post", query);
