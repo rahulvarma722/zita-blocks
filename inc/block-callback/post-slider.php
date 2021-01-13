@@ -3,7 +3,8 @@
 function mytheme_blocks_render_post_slider($attr)
 {
     $args = [
-        "posts_per_page" => $attr['numberOfPosts']
+        "posts_per_page" => $attr['numberOfPosts'],
+        'meta_key' => '_thumbnail_id'
     ];
     if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
         $args['category__in'] = $attr["postCategories"];

@@ -6,10 +6,10 @@ wpgt_register_block_fn('zita-post',  [
             'type' => "number",
             "default" => 6
         ],
-        "columnLayout" => [
-            "type" => "string",
-            "default" => "grid"
-        ],
+        // "columnLayout" => [
+        //     "type" => "string",
+        //     "default" => "grid"
+        // ],
         "numberOfColumn" => [
             "type" => "number",
             "default" => 3

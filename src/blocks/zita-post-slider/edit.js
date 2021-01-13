@@ -940,7 +940,7 @@ class Edit extends Component {
           >
             <RichText
               key="editable"
-              tagName="h1"
+              tagName="h4"
               placeholder={__("My block title", "zita-blocks")}
               value={title_.value}
               style={{
@@ -1217,8 +1217,21 @@ export default withSelect((select, props) => {
   if (postCategories && postCategories.length) {
     query["categories"] = postCategories.join(",");
   }
+  // query['meta_key'] = '_thumbnail_id';
+  // query["_embed"] = true;
+  //   'meta_query' => array(
+  //     array(
+  //      'key' => '_thumbnail_id',
+  //      'compare' => 'EXISTS'
+  //     ),
+  // )
+  // query["meta_query"] = [{ key: "_thumbnail_id", compare: "EXIST" }];
+  query["media"] = true;
+
   const { getMedia, getEntityRecords, getAuthors } = select("core");
   let getAllPost = getEntityRecords("postType", "post", query);
+
+  // console.log("getAllPost", getAllPost);
   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
   let arrayCatePost = { posts: true, category: cate_, tags: tags_ };

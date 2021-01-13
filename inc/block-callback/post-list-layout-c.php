@@ -35,7 +35,7 @@ function mytheme_blocks_render_latest_post_block($attr)
             $postHtml .= '</h4>';
             $postHtml .= "</div>";
         }
-        $gridColumn = $attr['columnLayout'] == "grid" ? $attr['numberOfColumn'] : 1;
+        $gridColumn = 1;
         $postHtml .= "<div class='column-count column-count-" . $gridColumn . " " . $metaLeftBorder . "'>";
         $postChecker = false;
         while ($query->have_posts()) {

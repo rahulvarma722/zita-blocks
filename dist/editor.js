@@ -4532,6 +4532,8 @@ var Edit = /*#__PURE__*/function (_Component) {
     query["categories"] = postCategories.join(",");
   }
 
+  query['meta_key'] = '_thumbnail_id';
+
   var _select = select("core"),
       getMedia = _select.getMedia,
       getEntityRecords = _select.getEntityRecords,
@@ -4543,7 +4545,8 @@ var Edit = /*#__PURE__*/function (_Component) {
   });
   var tags_ = getEntityRecords("taxonomy", "post_tag", {
     per_page: -1
-  });
+  }); // console.log("all post->", getAllPost);
+
   var arrayCatePost = {
     posts: true,
     category: cate_,
@@ -9653,7 +9656,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["RichText"], {
         key: "editable",
-        tagName: "h1",
+        tagName: "h4",
         placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("My block title", "zita-blocks"),
         value: title_.value,
         style: {
@@ -9817,14 +9820,26 @@ var Edit = /*#__PURE__*/function (_Component) {
 
   if (postCategories && postCategories.length) {
     query["categories"] = postCategories.join(",");
-  }
+  } // query['meta_key'] = '_thumbnail_id';
+  // query["_embed"] = true;
+  //   'meta_query' => array(
+  //     array(
+  //      'key' => '_thumbnail_id',
+  //      'compare' => 'EXISTS'
+  //     ),
+  // )
+  // query["meta_query"] = [{ key: "_thumbnail_id", compare: "EXIST" }];
+
+
+  query["media"] = true;
 
   var _select = select("core"),
       getMedia = _select.getMedia,
       getEntityRecords = _select.getEntityRecords,
       getAuthors = _select.getAuthors;
 
-  var getAllPost = getEntityRecords("postType", "post", query);
+  var getAllPost = getEntityRecords("postType", "post", query); // console.log("getAllPost", getAllPost);
+
   var cate_ = getEntityRecords("taxonomy", "category", {
     per_page: -1
   });

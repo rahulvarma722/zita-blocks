@@ -3,7 +3,8 @@
 function zita_post_grid_block($attr)
 {
     $args = [
-        "posts_per_page" => $attr['numberOfPosts']
+        "posts_per_page" => $attr['numberOfPosts'],
+        // 'meta_key' => '_thumbnail_id'
     ];
     if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
         $args['category__in'] = $attr["postCategories"];
@@ -39,6 +40,7 @@ function zita_post_grid_block($attr)
         $postHtml .= "<div class='column-count column-count-" . $gridColumn . " " . $metaLeftBorder . "'>";
         $postChecker = false;
         while ($query->have_posts()) {
+            // echo "count 1<br>";
             $query->the_post();
             if ($postThumbnail == "1") {
                 if (get_the_post_thumbnail_url()) {
