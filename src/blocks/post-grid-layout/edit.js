@@ -137,7 +137,7 @@ class Edit extends Component {
   };
   render() {
     const { posts, attributes, setAttributes, category } = this.props;
-    console.log("post list grid layout ->", this.props);
+    // console.log("post list grid layout ->", this.props);
     let {
       heading,
       author,
@@ -958,16 +958,61 @@ class Edit extends Component {
 // export default Edit;
 export default withSelect((select, props) => {
   const { attributes } = props;
-  let { numberOfPosts, postCategories } = attributes;
+  let { numberOfPosts, postCategories, thumbnail } = attributes;
   const query = { per_page: numberOfPosts };
+  const query2 = { per_page: -1 };
   if (postCategories && postCategories.length) {
-    query["categories"] = postCategories.join(",");
+    let cateCh = postCategories.join(",");
+    query["categories"] = cateCh;
+    query2["categories"] = cateCh;
   }
   const { getMedia, getEntityRecords, getAuthors } = select("core");
-  let getAllPost = getEntityRecords("postType", "post", query);
+  // let getTotalPost = getEntityRecords("postType", "post", query2);
+  /////////////////////////////////////////////////////////////////////////////
+  let getAllPost = [];
+  if (thumbnail[0].typeShow == "1") {
+    let getTotalPost = getEntityRecords("postType", "post", query2);
+    // console.log("getTotalPost", getTotalPost);
+    getAllPost = returnPostFn(numberOfPosts);
 
-  
+    function returnPostFn(numberOfPosts, check = false) {
+      let numberOfposts_ = check ? check : numberOfPosts;
+      // console.log("numberOfPosts_", numberOfposts_);
+      let new_query = {
+        per_page: numberOfposts_,
+      };
+      // console.log("numberOfPosts_", numberOfPosts_);
+      if (postCategories && postCategories.length) {
+        new_query["categories"] = postCategories.join(",");
+      }
+      // console.log("new_query", new_query);
+      let checkPost = select("core").getEntityRecords(
+        "postType",
+        "post",
+        new_query
+      );
+      // console.log("numberOfPosts_", numberOfPosts_);
+      if (checkPost && checkPost.length) {
+        let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
+        // console.log("numberOfPosts", numberOfPosts);
+        // console.log("newPostArray.length", newPostArray.length);
+        if (
+          newPostArray.length == numberOfPosts ||
+          getTotalPost.length == numberOfposts_
+        ) {
+          return newPostArray;
+        } else {
+          // console.log("numberOfPosts_");
+          return returnPostFn(numberOfPosts, numberOfposts_ + 1);
+        }
+      }
+    }
+    // console.log("getAllPost", getAllPost);
+  } else {
+    getAllPost = getEntityRecords("postType", "post", query);
+  }
 
+  ///////////////////////////////////////////////////////////////////////////////
   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
   let arrayCatePost = { posts: true, category: cate_, tags: tags_ };

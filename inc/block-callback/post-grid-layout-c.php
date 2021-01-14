@@ -4,7 +4,7 @@ function zita_post_grid_block($attr)
 {
     $args = [
         "posts_per_page" => $attr['numberOfPosts'],
-        // 'meta_key' => '_thumbnail_id'
+        'meta_key' => '_thumbnail_id'
     ];
     if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
         $args['category__in'] = $attr["postCategories"];

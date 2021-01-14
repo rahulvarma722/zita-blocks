@@ -2148,8 +2148,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category;
-      console.log("post list grid layout ->", this.props);
+          category = _this$props.category; // console.log("post list grid layout ->", this.props);
+
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
@@ -2675,21 +2675,70 @@ var Edit = /*#__PURE__*/function (_Component) {
 /* harmony default export */ __webpack_exports__["default"] = (Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["withSelect"])(function (select, props) {
   var attributes = props.attributes;
   var numberOfPosts = attributes.numberOfPosts,
-      postCategories = attributes.postCategories;
+      postCategories = attributes.postCategories,
+      thumbnail = attributes.thumbnail;
   var query = {
     per_page: numberOfPosts
   };
+  var query2 = {
+    per_page: -1
+  };
 
   if (postCategories && postCategories.length) {
-    query["categories"] = postCategories.join(",");
+    var cateCh = postCategories.join(",");
+    query["categories"] = cateCh;
+    query2["categories"] = cateCh;
   }
 
   var _select = select("core"),
       getMedia = _select.getMedia,
       getEntityRecords = _select.getEntityRecords,
-      getAuthors = _select.getAuthors;
+      getAuthors = _select.getAuthors; // let getTotalPost = getEntityRecords("postType", "post", query2);
+  /////////////////////////////////////////////////////////////////////////////
 
-  var getAllPost = getEntityRecords("postType", "post", query);
+
+  var getAllPost = [];
+
+  if (thumbnail[0].typeShow == "1") {
+    var getTotalPost = getEntityRecords("postType", "post", query2); // console.log("getTotalPost", getTotalPost);
+
+    getAllPost = returnPostFn(numberOfPosts);
+
+    function returnPostFn(numberOfPosts) {
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var numberOfposts_ = check ? check : numberOfPosts; // console.log("numberOfPosts_", numberOfposts_);
+
+      var new_query = {
+        per_page: numberOfposts_
+      }; // console.log("numberOfPosts_", numberOfPosts_);
+
+      if (postCategories && postCategories.length) {
+        new_query["categories"] = postCategories.join(",");
+      } // console.log("new_query", new_query);
+
+
+      var checkPost = select("core").getEntityRecords("postType", "post", new_query); // console.log("numberOfPosts_", numberOfPosts_);
+
+      if (checkPost && checkPost.length) {
+        var newPostArray = checkPost.filter(function (chv) {
+          return chv.featured_media > 0;
+        }); // console.log("numberOfPosts", numberOfPosts);
+        // console.log("newPostArray.length", newPostArray.length);
+
+        if (newPostArray.length == numberOfPosts || getTotalPost.length == numberOfposts_) {
+          return newPostArray;
+        } else {
+          // console.log("numberOfPosts_");
+          return returnPostFn(numberOfPosts, numberOfposts_ + 1);
+        }
+      }
+    } // console.log("getAllPost", getAllPost);
+
+  } else {
+    getAllPost = getEntityRecords("postType", "post", query);
+  } ///////////////////////////////////////////////////////////////////////////////
+
+
   var cate_ = getEntityRecords("taxonomy", "category", {
     per_page: -1
   });

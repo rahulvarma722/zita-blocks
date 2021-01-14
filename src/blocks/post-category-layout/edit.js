@@ -1479,7 +1479,6 @@ export default withSelect((select, props) => {
   const { getMedia, getEntityRecords, getAuthors } = select("core");
   let getTotalPost = getEntityRecords("postType", "post", query2);
   let getAllPost = getEntityRecords("postType", "post", query);
-
   let cate_ = getEntityRecords("taxonomy", "category", {
     per_page: -1,
     hide_empty: true,
