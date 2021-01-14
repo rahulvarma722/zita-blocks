@@ -2693,47 +2693,42 @@ var Edit = /*#__PURE__*/function (_Component) {
   var _select = select("core"),
       getMedia = _select.getMedia,
       getEntityRecords = _select.getEntityRecords,
-      getAuthors = _select.getAuthors; // let getTotalPost = getEntityRecords("postType", "post", query2);
-  /////////////////////////////////////////////////////////////////////////////
+      getAuthors = _select.getAuthors; /////////////////////////////////////////////////////////////////////////////
 
 
   var getAllPost = [];
 
   if (thumbnail[0].typeShow == "1") {
-    var getTotalPost = getEntityRecords("postType", "post", query2); // console.log("getTotalPost", getTotalPost);
-
+    var getTotalPost = getEntityRecords("postType", "post", query2);
     getAllPost = returnPostFn(numberOfPosts);
 
     function returnPostFn(numberOfPosts) {
       var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      var numberOfposts_ = check ? check : numberOfPosts; // console.log("numberOfPosts_", numberOfposts_);
-
+      var numberOfposts_ = check ? check : numberOfPosts;
       var new_query = {
         per_page: numberOfposts_
-      }; // console.log("numberOfPosts_", numberOfPosts_);
+      };
 
       if (postCategories && postCategories.length) {
         new_query["categories"] = postCategories.join(",");
-      } // console.log("new_query", new_query);
+      }
 
-
-      var checkPost = select("core").getEntityRecords("postType", "post", new_query); // console.log("numberOfPosts_", numberOfPosts_);
+      var checkPost = select("core").getEntityRecords("postType", "post", new_query);
 
       if (checkPost && checkPost.length) {
         var newPostArray = checkPost.filter(function (chv) {
           return chv.featured_media > 0;
-        }); // console.log("numberOfPosts", numberOfPosts);
-        // console.log("newPostArray.length", newPostArray.length);
+        });
 
         if (newPostArray.length == numberOfPosts || getTotalPost.length == numberOfposts_) {
           return newPostArray;
         } else {
-          // console.log("numberOfPosts_");
-          return returnPostFn(numberOfPosts, numberOfposts_ + 1);
+          if (newPostArray.length < numberOfPosts && getTotalPost.length) {
+            return returnPostFn(numberOfPosts, numberOfposts_ + 1);
+          }
         }
       }
-    } // console.log("getAllPost", getAllPost);
-
+    }
   } else {
     getAllPost = getEntityRecords("postType", "post", query);
   } ///////////////////////////////////////////////////////////////////////////////
@@ -3731,17 +3726,57 @@ var Edit = /*#__PURE__*/function (_Component) {
   var query = {
     per_page: numberOfPosts
   };
+  var query2 = {
+    per_page: -1
+  };
 
   if (postCategories && postCategories.length) {
-    query["categories"] = postCategories.join(",");
+    var cateCh = postCategories.join(",");
+    query["categories"] = cateCh;
+    query2["categories"] = cateCh;
   }
 
   var _select = select("core"),
       getMedia = _select.getMedia,
       getEntityRecords = _select.getEntityRecords,
-      getAuthors = _select.getAuthors;
+      getAuthors = _select.getAuthors; /////////////////////////////////////////////////////////////////////////////
 
-  var getAllPost = getEntityRecords("postType", "post", query);
+
+  var getTotalPost = getEntityRecords("postType", "post", query2);
+  var getAllPost = returnPostFn(numberOfPosts);
+
+  function returnPostFn(numberOfPosts) {
+    var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var numberOfposts_ = check ? check : numberOfPosts;
+    var new_query = {
+      per_page: numberOfposts_
+    };
+
+    if (postCategories && postCategories.length) {
+      new_query["categories"] = postCategories.join(",");
+    }
+
+    var checkPost = select("core").getEntityRecords("postType", "post", new_query);
+
+    if (checkPost && checkPost instanceof Array && checkPost.length > 0) {
+      var newPostArray = checkPost.filter(function (chv) {
+        return chv.featured_media > 0;
+      });
+
+      if (newPostArray.length >= numberOfPosts || numberOfposts_ == getTotalPost.length) {
+        return newPostArray;
+      } else {
+        if (newPostArray.length < numberOfPosts && getTotalPost.length) {
+          return returnPostFn(numberOfPosts, numberOfposts_ + 1);
+        }
+      }
+    } else {
+      return false;
+    }
+  } ///////////////////////////////////////////////////////////////////////////////
+  // let getAllPost = getEntityRecords("postType", "post", query);
+
+
   var cate_ = getEntityRecords("taxonomy", "category", {
     per_page: -1
   });
@@ -9866,27 +9901,57 @@ var Edit = /*#__PURE__*/function (_Component) {
   var query = {
     per_page: numberOfPosts
   };
+  var query2 = {
+    per_page: -1
+  };
 
   if (postCategories && postCategories.length) {
-    query["categories"] = postCategories.join(",");
-  } // query['meta_key'] = '_thumbnail_id';
-  // query["_embed"] = true;
-  //   'meta_query' => array(
-  //     array(
-  //      'key' => '_thumbnail_id',
-  //      'compare' => 'EXISTS'
-  //     ),
-  // )
-  // query["meta_query"] = [{ key: "_thumbnail_id", compare: "EXIST" }];
-  // query["media"] = true;
-
+    var cateCh = postCategories.join(",");
+    query["categories"] = cateCh;
+    query2["categories"] = cateCh;
+  }
 
   var _select = select("core"),
       getMedia = _select.getMedia,
       getEntityRecords = _select.getEntityRecords,
-      getAuthors = _select.getAuthors;
+      getAuthors = _select.getAuthors; /////////////////////////////////////////////////////////////////////////////
 
-  var getAllPost = getEntityRecords("postType", "post", query); // console.log("getAllPost", getAllPost);
+
+  var getTotalPost = getEntityRecords("postType", "post", query2);
+  var getAllPost = returnPostFn(numberOfPosts);
+
+  function returnPostFn(numberOfPosts) {
+    var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var numberOfposts_ = check ? check : numberOfPosts;
+    var new_query = {
+      per_page: numberOfposts_
+    };
+
+    if (postCategories && postCategories.length) {
+      new_query["categories"] = postCategories.join(",");
+    }
+
+    var checkPost = select("core").getEntityRecords("postType", "post", new_query);
+
+    if (checkPost && checkPost instanceof Array && checkPost.length > 0) {
+      var newPostArray = checkPost.filter(function (chv) {
+        return chv.featured_media > 0;
+      });
+
+      if (newPostArray.length >= numberOfPosts || numberOfposts_ == getTotalPost.length) {
+        return newPostArray;
+      } else {
+        if (newPostArray.length < numberOfPosts && getTotalPost.length) {
+          return returnPostFn(numberOfPosts, numberOfposts_ + 1);
+        }
+      }
+    } else {
+      return false;
+    }
+  } ///////////////////////////////////////////////////////////////////////////////
+  // let getAllPost = getEntityRecords("postType", "post", query);
+  // console.log("getAllPost", getAllPost);
+
 
   var cate_ = getEntityRecords("taxonomy", "category", {
     per_page: -1

@@ -1282,11 +1282,47 @@ export default withSelect((select, props) => {
   const { attributes } = props;
   let { numberOfPosts, postCategories } = attributes;
   const query = { per_page: numberOfPosts };
+  const query2 = { per_page: -1 };
   if (postCategories && postCategories.length) {
-    query["categories"] = postCategories.join(",");
+    let cateCh = postCategories.join(",");
+    query["categories"] = cateCh;
+    query2["categories"] = cateCh;
   }
   const { getMedia, getEntityRecords, getAuthors } = select("core");
-  let getAllPost = getEntityRecords("postType", "post", query);
+  /////////////////////////////////////////////////////////////////////////////
+  let getTotalPost = getEntityRecords("postType", "post", query2);
+  let getAllPost = returnPostFn(numberOfPosts);
+  function returnPostFn(numberOfPosts, check = false) {
+    let numberOfposts_ = check ? check : numberOfPosts;
+    let new_query = {
+      per_page: numberOfposts_,
+    };
+    if (postCategories && postCategories.length) {
+      new_query["categories"] = postCategories.join(",");
+    }
+    let checkPost = select("core").getEntityRecords(
+      "postType",
+      "post",
+      new_query
+    );
+    if (checkPost && checkPost instanceof Array && checkPost.length > 0) {
+      let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
+      if (
+        newPostArray.length >= numberOfPosts ||
+        numberOfposts_ == getTotalPost.length
+      ) {
+        return newPostArray;
+      } else {
+        if (newPostArray.length < numberOfPosts && getTotalPost.length) {
+          return returnPostFn(numberOfPosts, numberOfposts_ + 1);
+        }
+      }
+    } else {
+      return false;
+    }
+  }
+  ///////////////////////////////////////////////////////////////////////////////
+  // let getAllPost = getEntityRecords("postType", "post", query);
   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
   let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
