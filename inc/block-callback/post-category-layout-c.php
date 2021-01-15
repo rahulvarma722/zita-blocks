@@ -9,6 +9,11 @@ function zita_two_column_block($attr)
         'post_type' => 'post',
         "posts_per_page" => $attr['numberOfPosts'],
     ];
+    if ($attr['thumbnail'][0]['enable']) {
+        $args['meta_key'] = "_thumbnail_id";
+    }
+    // "meta_key" => '_thumbnail_id'
+
     $fourAndMoreNav = [];
     if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
         $args['category__in'] = $attr["postCategories"];
@@ -101,7 +106,7 @@ function zita_two_column_block($attr)
         $postExcerpt2 = isset($attr['excerpt2'][0]['enable']) && $attr['excerpt2'][0]['enable']  ? true : false;
         $postExcerpt2Color = $postExcerpt2 && $attr['excerpt2'][0]['color'] ? $attr['excerpt2'][0]['color'] : "";
         $postThumbnail = isset($attr['thumbnail'][0]['enable']) && $attr['thumbnail'][0]['enable']  ? true : false;
-        $postThumbnail2 = isset($attr['thumbnail2'][0]['enable']) && $attr['thumbnail2'][0]['enable']  ? true : false;
+        // $postThumbnail2 = isset($attr['thumbnail2'][0]['enable']) && $attr['thumbnail2'][0]['enable']  ? true : false;
         $metaStyleColor = isset($attr['meta_style'][0]['color']) && $attr['meta_style'][0]['color']  ? $attr['meta_style'][0]['color'] : "";
         $metaStyleFont = isset($attr['meta_style'][0]['fontSize']) && $attr['meta_style'][0]['fontSize']  ? $attr['meta_style'][0]['fontSize'] : "";
         $metaStyleColor2 = isset($attr['meta_style2'][0]['color']) && $attr['meta_style2'][0]['color']  ? $attr['meta_style2'][0]['color'] : "";
@@ -231,9 +236,9 @@ function zita_two_column_block($attr)
             } else {
                 $postHtmlCl2 .= "<article class='block-post-article'>";
                 $postHtmlCl2 .= "<div class='post-wrapper' id='post-wrapper'>";
-                if ($postThumbnail2) {
+                if ($postThumbnail) {
                     if (get_the_post_thumbnail_url()) {
-                        $postThumbRadius = isset($attr['thumbnail2'][0]['borderRadius']) && $attr['thumbnail2'][0]['borderRadius']  ? $attr['thumbnail2'][0]['borderRadius'] : false;
+                        $postThumbRadius = isset($attr['thumbnail'][0]['borderRadius']) && $attr['thumbnail'][0]['borderRadius']  ? $attr['thumbnail'][0]['borderRadius'] : false;
                         $postHtmlCl2 .= '<div class="featured-image">';
                         $postHtmlCl2 .= "<a href='" . esc_url(get_the_permalink()) . "'>";
                         $postHtmlCl2 .= '<img style="border-radius:' . $postThumbRadius . 'px" src="' . get_the_post_thumbnail_url() . '"/>';

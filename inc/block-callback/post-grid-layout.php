@@ -18,7 +18,7 @@ wpgt_register_block_fn('zita-post-grid',  [
             "type" => "array",
             "default" => [[
                 'enable' => true,
-                "value" => "My block title",
+                "value" => "Add Block Title",
                 "fontSize" => 16,
                 "color" => "white",
                 "backgroundColor" => "#22cb95",

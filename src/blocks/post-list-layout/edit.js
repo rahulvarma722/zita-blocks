@@ -145,6 +145,7 @@ class Edit extends Component {
       thumbnail,
       // numberOfColumn,
       // columnLayout,
+      dimension,
       date,
       showTag,
       showCate,
@@ -172,6 +173,15 @@ class Edit extends Component {
         });
       });
     }
+    // block width
+    let blockStyle = { backgroundColor: meta_style_.blockBgColor };
+    if (dimension[0].width) {
+      blockStyle = {
+        ...blockStyle,
+        ...{ maxWidth: dimension[0].custom_width + "px" },
+      };
+    }
+
     return (
       <>
         <InspectorControls>
@@ -286,6 +296,35 @@ class Edit extends Component {
             )}
           </PanelBody>
           <PanelBody title="Post Layout" initialOpen={false}>
+            <p>
+              <strong>{__("Block Width", "zita-blocks")}</strong>
+            </p>
+            <ToggleControl
+              label={
+                dimension[0].width
+                  ? __("Custom Width", "zita-blocks")
+                  : __("Auto Width", "zita-blocks")
+              }
+              checked={dimension[0].width}
+              onChange={(e) =>
+                this.updateObj("dimension", "width", dimension, e)
+              }
+            />
+            {dimension[0].width && (
+              <>
+                <p>
+                  <strong>{__("Max Width", "zita-blocks")}</strong>
+                </p>
+                <RangeControl
+                  value={dimension[0].custom_width}
+                  min={180}
+                  max={1000}
+                  onChange={(e) => {
+                    this.updateObj("dimension", "custom_width", dimension, e);
+                  }}
+                />
+              </>
+            )}
             <p>
               <strong>{__("Image Alignment", "zita-blocks")}</strong>
             </p>
@@ -695,10 +734,7 @@ class Edit extends Component {
           </PanelBody>
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
-          <div
-            className="zita-block-post list-layout"
-            style={{ backgroundColor: meta_style_.blockBgColor }}
-          >
+          <div className="zita-block-post list-layout" style={blockStyle}>
             {title_.enable && (
               <div
                 className="zita-block-post-title"
@@ -985,19 +1021,59 @@ class Edit extends Component {
 // export default Edit;
 export default withSelect((select, props) => {
   const { attributes } = props;
-  let { numberOfPosts, postCategories } = attributes;
+  let { numberOfPosts, postCategories, thumbnail } = attributes;
   const query = { per_page: numberOfPosts };
+  const query2 = { per_page: -1 };
   if (postCategories && postCategories.length) {
-    query["categories"] = postCategories.join(",");
+    let cateCh = postCategories.join(",");
+    query["categories"] = cateCh;
+    query2["categories"] = cateCh;
   }
-  query["meta_key"] = "_thumbnail_id";
   const { getMedia, getEntityRecords, getAuthors } = select("core");
-  let getAllPost = getEntityRecords("postType", "post", query);
+  /////////////////////////////////////////////////////////////////////////////
+  let getAllPost = [];
+  if (thumbnail[0].typeShow == "1") {
+    let getTotalPost = getEntityRecords("postType", "post", query2);
+    getAllPost =
+      getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
+    // console.log("outer fn ", getTotalPost);
+    function returnPostFn(numberOfPosts, check = false) {
+      // console.log("inner fn ", getTotalPost);
+      let numberOfposts_ = check ? check : numberOfPosts;
+      let new_query = {
+        per_page: numberOfposts_,
+      };
+      if (postCategories && postCategories.length) {
+        new_query["categories"] = postCategories.join(",");
+      }
+      let checkPost = select("core").getEntityRecords(
+        "postType",
+        "post",
+        new_query
+      );
+      if (checkPost && checkPost.length) {
+        let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
+        if (
+          newPostArray.length == numberOfPosts ||
+          getTotalPost.length == numberOfposts_
+        ) {
+          return newPostArray;
+        } else {
+          if (newPostArray.length < numberOfPosts && getTotalPost.length) {
+            return returnPostFn(numberOfPosts, numberOfposts_ + 1);
+          }
+        }
+      }
+    }
+  } else {
+    getAllPost = getEntityRecords("postType", "post", query);
+  }
+  ///////////////////////////////////////////////////////////////////////////////
+  // let getAllPost = getEntityRecords("postType", "post", query);
   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
 
   // console.log("all post->", getAllPost);
-
   let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
   if (getAllPost && getAllPost.length) {
     let returnArray = [];

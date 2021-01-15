@@ -10,9 +10,9 @@ wpgt_register_block_fn('zita-post-tc',  [
             "type" => "array",
             "default" => [[
                 'enable' => true,
-                "value" => "My block title",
+                "value" => "Add Block Title",
                 "bgColor" => "#fcb900",
-                "fontSize" => 15,
+                "fontSize" => 16,
                 "color" => "#ffffff",
             ]]
         ],

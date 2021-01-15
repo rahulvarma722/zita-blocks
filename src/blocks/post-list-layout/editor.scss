@@ -22,7 +22,7 @@
     font-family: "Catamaran-Regular", sans-serif;
   }
   &.list-layout {
-    max-width: 610px;
+    // max-width: 610px;
     margin: auto;
     .image-align-left {
       .post-wrapper {
@@ -30,6 +30,9 @@
         .featured-image {
           width: 48%;
           margin-right: 2%;
+        }
+        .post-content {
+          width: 50%;
         }
       }
     }

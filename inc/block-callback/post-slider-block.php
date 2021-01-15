@@ -44,8 +44,8 @@ wpgt_register_block_fn('zita-post-slider',  [
         "title" => [
             "type" => "array",
             "default" => [[
-                'enable' => true,
-                "value" => "My block title",
+                'enable' => false,
+                "value" => "Add Block Title",
                 "fontSize" => 16,
                 "color" => "white",
                 "backgroundColor" => "#652efd",

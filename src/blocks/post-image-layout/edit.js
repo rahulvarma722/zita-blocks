@@ -491,17 +491,6 @@ class Edit extends Component {
                 {excerpt_.enable && (
                   <>
                     <p>
-                      <strong>{__("Number of words", "zita-blocks")}</strong>
-                    </p>
-                    <RangeControl
-                      value={excerpt_.words}
-                      min={1}
-                      max={200}
-                      onChange={(e) =>
-                        this.updateObj("excerpt", "words", excerpt, e)
-                      }
-                    />
-                    <p>
                       <strong>Font Size</strong>
                     </p>
                     <RangeControl
@@ -510,6 +499,17 @@ class Edit extends Component {
                       max={25}
                       onChange={(e) =>
                         this.updateObj("excerpt", "fontSize", excerpt, e)
+                      }
+                    />
+                    <p>
+                      <strong>{__("Number of words", "zita-blocks")}</strong>
+                    </p>
+                    <RangeControl
+                      value={excerpt_.words}
+                      min={1}
+                      max={200}
+                      onChange={(e) =>
+                        this.updateObj("excerpt", "words", excerpt, e)
                       }
                     />
                     <p>
@@ -1291,7 +1291,8 @@ export default withSelect((select, props) => {
   const { getMedia, getEntityRecords, getAuthors } = select("core");
   ////////////////////////////////////////////////////////////////////////////////////////////
   let getTotalPost = getEntityRecords("postType", "post", query2);
-  let getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) :false;
+  let getAllPost =
+    getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
   function returnPostFn(numberOfPosts, check = false) {
     let numberOfposts_ = check ? check : numberOfPosts;
     let new_query = {

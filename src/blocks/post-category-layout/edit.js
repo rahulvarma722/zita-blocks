@@ -892,7 +892,29 @@ class Edit extends Component {
             )}
           </PanelBody>
           <PanelBody title="Featured Image" initialOpen={false}>
-            <div class="zita-switcher-button-section">
+            <ToggleControl
+              label={thumbnail_.enable ? "Show" : "Hide"}
+              checked={thumbnail_.enable}
+              onChange={(e) =>
+                this.updateObj("thumbnail", "enable", thumbnail, e)
+              }
+            />
+            {thumbnail_.enable && (
+              <>
+                <p>
+                  <strong>Border Radius</strong>
+                </p>
+                <RangeControl
+                  value={thumbnail_.borderRadius}
+                  min={0}
+                  max={80}
+                  onChange={(e) =>
+                    this.updateObj("thumbnail", "borderRadius", thumbnail, e)
+                  }
+                />
+              </>
+            )}
+            {/* <div class="zita-switcher-button-section">
               <span
                 onClick={() => this.setState({ thumbnail: "primary" })}
                 className={this.state.thumbnail == "primary" ? "selected" : ""}
@@ -968,7 +990,7 @@ class Edit extends Component {
                   </>
                 )}
               </>
-            )}
+            )} */}
           </PanelBody>
           <PanelBody title="Post Meta" initialOpen={false}>
             {/* category */}
@@ -1409,7 +1431,7 @@ class Edit extends Component {
                         author2_,
                         date2_,
                         meta_style2_,
-                        thumbnail2_,
+                        thumbnail_,
                         showCate2_,
                         excerpt2_,
                         false
@@ -1468,7 +1490,7 @@ class Edit extends Component {
 // export default Edit;
 export default withSelect((select, props) => {
   const { attributes } = props;
-  let { numberOfPosts, postCategories } = attributes;
+  let { numberOfPosts, postCategories, thumbnail } = attributes;
   const query = { per_page: numberOfPosts };
   const query2 = { per_page: -1 };
   if (postCategories && postCategories.length) {
@@ -1478,7 +1500,43 @@ export default withSelect((select, props) => {
   }
   const { getMedia, getEntityRecords, getAuthors } = select("core");
   let getTotalPost = getEntityRecords("postType", "post", query2);
-  let getAllPost = getEntityRecords("postType", "post", query);
+  /////////////////////////////////////////////////////////////////////////////
+  let getAllPost = [];
+  if (thumbnail[0].enable) {
+    getAllPost =
+      getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
+    function returnPostFn(numberOfPosts, check = false) {
+      let numberOfposts_ = check ? check : numberOfPosts;
+      let new_query = {
+        per_page: numberOfposts_,
+      };
+      if (postCategories && postCategories.length) {
+        new_query["categories"] = postCategories.join(",");
+      }
+      let checkPost = select("core").getEntityRecords(
+        "postType",
+        "post",
+        new_query
+      );
+      if (checkPost && checkPost.length) {
+        let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
+        if (
+          newPostArray.length == numberOfPosts ||
+          getTotalPost.length == numberOfposts_
+        ) {
+          return newPostArray;
+        } else {
+          if (newPostArray.length < numberOfPosts && getTotalPost.length) {
+            return returnPostFn(numberOfPosts, numberOfposts_ + 1);
+          }
+        }
+      }
+    }
+  } else {
+    getAllPost = getEntityRecords("postType", "post", query);
+  }
+  ///////////////////////////////////////////////////////////////////////////////
+  // let getAllPost = getEntityRecords("postType", "post", query);
   let cate_ = getEntityRecords("taxonomy", "category", {
     per_page: -1,
     hide_empty: true,

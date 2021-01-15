@@ -764,7 +764,6 @@
   font-family: "Catamaran-Regular", sans-serif;
 }
 .zita-block-post.list-layout {
-  max-width: 610px;
   margin: auto;
 }
 .zita-block-post.list-layout .image-align-left .post-wrapper {
@@ -773,6 +772,9 @@
 .zita-block-post.list-layout .image-align-left .post-wrapper .featured-image {
   width: 48%;
   margin-right: 2%;
+}
+.zita-block-post.list-layout .image-align-left .post-wrapper .post-content {
+  width: 50%;
 }
 .zita-block-post.list-layout .image-align-right .post-wrapper {
   display: flex;

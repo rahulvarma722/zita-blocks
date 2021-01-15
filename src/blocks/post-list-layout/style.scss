@@ -5,13 +5,16 @@
   }
   &.list-layout {
     // max-width: 610px;
-    // margin: auto;
+    margin: auto;
     .image-align-left {
       .post-wrapper {
         display: flex;
         .featured-image {
           width: 48%;
           margin-right: 2%;
+        }
+        .post-content {
+          width: 50%;
         }
       }
     }

@@ -38,6 +38,9 @@ add_action('wp_ajax_nopriv_post_tc_block_choose_cate', "post_tc_block_choose_cat
 // return html function
 function post_tc_html($args, $attr, $showNextPrev = false)
 {
+    if ($attr['thumbnail'][0]['enable'] == "true") {
+        $args['meta_key'] = "_thumbnail_id";
+    }
     $query = new WP_Query($args);
     $postHtml = "<div class='zita-post-two-column column-layout-" . $attr['meta_style'][0]["layoutPostion"] . "'>";
     $postHtmlCl1 = '<div class="column-one">';
@@ -58,9 +61,9 @@ function post_tc_html($args, $attr, $showNextPrev = false)
             $query->the_post();
             if ($checkFirst) {
                 $checkFirst = false;
-                $postHtmlCl1 .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"]);
+                $postHtmlCl1 .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['thumbnail']);
             } else {
-                $postHtmlCl2 .= returnHtmlPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"]);
+                $postHtmlCl2 .= returnHtmlPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['thumbnail']);
             }
         }
         $postHtmlCl1 .=  '</div>';

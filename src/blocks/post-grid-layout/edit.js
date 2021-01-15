@@ -443,9 +443,6 @@ class Edit extends Component {
               <option value="1">
                 {__("Only Featured Image Post", "zita-blocks")}
               </option>
-              <option value="2">
-                {__("Without Featured Image Post", "zita-blocks")}
-              </option>
             </select>
 
             {(thumbnail_.typeShow == "all" || thumbnail_.typeShow == "1") && (
