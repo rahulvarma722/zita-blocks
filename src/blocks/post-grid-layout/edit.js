@@ -971,8 +971,11 @@ export default withSelect((select, props) => {
   let getAllPost = [];
   if (thumbnail[0].typeShow == "1") {
     let getTotalPost = getEntityRecords("postType", "post", query2);
-    getAllPost = returnPostFn(numberOfPosts);
+    getAllPost =
+      getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
+    // console.log("outer fn ", getTotalPost);
     function returnPostFn(numberOfPosts, check = false) {
+      // console.log("inner fn ", getTotalPost);
       let numberOfposts_ = check ? check : numberOfPosts;
       let new_query = {
         per_page: numberOfposts_,

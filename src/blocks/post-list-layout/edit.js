@@ -696,7 +696,7 @@ class Edit extends Component {
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
           <div
-            className="zita-block-post"
+            className="zita-block-post list-layout"
             style={{ backgroundColor: meta_style_.blockBgColor }}
           >
             {title_.enable && (

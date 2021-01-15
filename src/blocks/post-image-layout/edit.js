@@ -1291,7 +1291,7 @@ export default withSelect((select, props) => {
   const { getMedia, getEntityRecords, getAuthors } = select("core");
   ////////////////////////////////////////////////////////////////////////////////////////////
   let getTotalPost = getEntityRecords("postType", "post", query2);
-  let getAllPost = returnPostFn(numberOfPosts);
+  let getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) :false;
   function returnPostFn(numberOfPosts, check = false) {
     let numberOfposts_ = check ? check : numberOfPosts;
     let new_query = {

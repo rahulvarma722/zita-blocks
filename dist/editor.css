@@ -760,29 +760,29 @@
   background: #efefef !important;
 }
 
-.zita-block-post {
-  max-width: 610px;
-  margin: auto;
-}
 .zita-block-post * {
   font-family: "Catamaran-Regular", sans-serif;
 }
-.zita-block-post .image-align-left .post-wrapper {
+.zita-block-post.list-layout {
+  max-width: 610px;
+  margin: auto;
+}
+.zita-block-post.list-layout .image-align-left .post-wrapper {
   display: flex;
 }
-.zita-block-post .image-align-left .post-wrapper .featured-image {
+.zita-block-post.list-layout .image-align-left .post-wrapper .featured-image {
   width: 48%;
   margin-right: 2%;
 }
-.zita-block-post .image-align-right .post-wrapper {
+.zita-block-post.list-layout .image-align-right .post-wrapper {
   display: flex;
   flex-direction: row-reverse;
 }
-.zita-block-post .image-align-right .post-wrapper .featured-image {
+.zita-block-post.list-layout .image-align-right .post-wrapper .featured-image {
   width: 48%;
   margin-left: 2%;
 }
-.zita-block-post .image-align-right .post-wrapper .post-content {
+.zita-block-post.list-layout .image-align-right .post-wrapper .post-content {
   width: 50%;
 }
 .zita-block-post .column-count:not(.column-count-1) {

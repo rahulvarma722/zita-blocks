@@ -2700,10 +2700,11 @@ var Edit = /*#__PURE__*/function (_Component) {
 
   if (thumbnail[0].typeShow == "1") {
     var getTotalPost = getEntityRecords("postType", "post", query2);
-    getAllPost = returnPostFn(numberOfPosts);
+    getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false; // console.log("outer fn ", getTotalPost);
 
     function returnPostFn(numberOfPosts) {
       var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      // console.log("inner fn ", getTotalPost);
       var numberOfposts_ = check ? check : numberOfPosts;
       var new_query = {
         per_page: numberOfposts_
@@ -3743,7 +3744,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
 
   var getTotalPost = getEntityRecords("postType", "post", query2);
-  var getAllPost = returnPostFn(numberOfPosts);
+  var getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
 
   function returnPostFn(numberOfPosts) {
     var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
@@ -4443,7 +4444,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           _this2.updateObj("showTag", "backgroundColor", showTag, color);
         }
       })))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
-        className: "zita-block-post",
+        className: "zita-block-post list-layout",
         style: {
           backgroundColor: meta_style_.blockBgColor
         }
@@ -9925,8 +9926,9 @@ var Edit = /*#__PURE__*/function (_Component) {
       getAuthors = _select.getAuthors; /////////////////////////////////////////////////////////////////////////////
 
 
-  var getTotalPost = getEntityRecords("postType", "post", query2);
-  var getAllPost = returnPostFn(numberOfPosts);
+  var getTotalPost = getEntityRecords("postType", "post", query2); // return;
+
+  var getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
 
   function returnPostFn(numberOfPosts) {
     var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
