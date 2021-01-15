@@ -21,7 +21,7 @@ function mytheme_blocks_render_latest_post_block($attr)
         $postThumbnail = $attr['thumbnail'][0]['typeShow'];
         $metaStyleColor = isset($attr['meta_style'][0]['color']) && $attr['meta_style'][0]['color']  ? $attr['meta_style'][0]['color'] : "";
         $metaStyleFontSize = isset($attr['meta_style'][0]['fontSize']) && $attr['meta_style'][0]['fontSize']  ? $attr['meta_style'][0]['fontSize'] : "";
-        $metaLeftBorder = isset($attr['meta_style'][0]['left_border']) && $attr['meta_style'][0]['left_border']  ? "left-border" : "";
+        // $metaLeftBorder = isset($attr['meta_style'][0]['left_border']) && $attr['meta_style'][0]['left_border']  ? "left-border" : "";
         $metashowCate = isset($attr['showCate'][0]['enable']) && $attr['showCate'][0]['enable']  ? true : false;
         $metashowshowTag = isset($attr['showTag'][0]['enable']) && $attr['showTag'][0]['enable']  ? true : false;
 
@@ -35,8 +35,8 @@ function mytheme_blocks_render_latest_post_block($attr)
             $postHtml .= '</h4>';
             $postHtml .= "</div>";
         }
-        $gridColumn = 1;
-        $postHtml .= "<div class='column-count column-count-" . $gridColumn . " " . $metaLeftBorder . "'>";
+        // $gridColumn = 1; image-align-${meta_style_.imageAlign}
+        $postHtml .= "<div class='column-count column-count-1 image-align-" . $attr['meta_style'][0]['imageAlign'] . "'>";
         $postChecker = false;
         while ($query->have_posts()) {
             $query->the_post();

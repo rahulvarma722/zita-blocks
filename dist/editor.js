@@ -3739,7 +3739,7 @@ var Edit = /*#__PURE__*/function (_Component) {
   var _select = select("core"),
       getMedia = _select.getMedia,
       getEntityRecords = _select.getEntityRecords,
-      getAuthors = _select.getAuthors; /////////////////////////////////////////////////////////////////////////////
+      getAuthors = _select.getAuthors; ////////////////////////////////////////////////////////////////////////////////////////////
 
 
   var getTotalPost = getEntityRecords("postType", "post", query2);
@@ -3773,7 +3773,7 @@ var Edit = /*#__PURE__*/function (_Component) {
     } else {
       return false;
     }
-  } ///////////////////////////////////////////////////////////////////////////////
+  } ///////////////////////////////////////////////////////////////////////////////////////////
   // let getAllPost = getEntityRecords("postType", "post", query);
 
 
@@ -4095,8 +4095,6 @@ var Edit = /*#__PURE__*/function (_Component) {
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
           thumbnail = attributes.thumbnail,
-          numberOfColumn = attributes.numberOfColumn,
-          columnLayout = attributes.columnLayout,
           date = attributes.date,
           showTag = attributes.showTag,
           showCate = attributes.showCate,
@@ -4197,7 +4195,24 @@ var Edit = /*#__PURE__*/function (_Component) {
       }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Post Layout",
         initialOpen: false
-      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Number of Post Display", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Image Alignment", "zita-blocks"))), wp.element.createElement("div", {
+        className: "zita-alignment"
+      }, wp.element.createElement("div", null, wp.element.createElement("span", {
+        onClick: function onClick() {
+          _this2.updateObj("meta_style", "imageAlign", meta_style, "left");
+        },
+        className: "dashicons dashicons-editor-alignleft ".concat(meta_style_.imageAlign == "left" && "active")
+      })), wp.element.createElement("div", null, wp.element.createElement("span", {
+        onClick: function onClick() {
+          _this2.updateObj("meta_style", "imageAlign", meta_style, "center");
+        },
+        className: "dashicons dashicons-editor-aligncenter ".concat(meta_style_.imageAlign == "center" && "active")
+      })), wp.element.createElement("div", null, wp.element.createElement("span", {
+        onClick: function onClick() {
+          _this2.updateObj("meta_style", "imageAlign", meta_style, "right");
+        },
+        className: "dashicons dashicons-editor-alignright ".concat(meta_style_.imageAlign == "right" && "active")
+      }))), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Number of Post Display", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: numberOfPosts,
         min: 1,
         max: 20,
@@ -4205,12 +4220,6 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes({
             numberOfPosts: e
           });
-        }
-      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Left Border", "zita-blocks"),
-        checked: meta_style_.left_border,
-        onChange: function onChange(e) {
-          return _this2.updateObj("meta_style", "left_border", meta_style, e);
         }
       }), wp.element.createElement("p", null, wp.element.createElement("strong", null, "Block Background Color")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ColorPicker"], {
         color: meta_style_.blockBgColor,
@@ -4460,11 +4469,10 @@ var Edit = /*#__PURE__*/function (_Component) {
           return _this2.updateObj("title", "value", title, e);
         }
       })), wp.element.createElement("div", {
-        className: "column-count column-count-".concat(columnLayout == "grid" ? numberOfColumn : 1, " ").concat(meta_style_.left_border && "left-border")
+        className: "column-count column-count-1 image-align-".concat(meta_style_.imageAlign)
       }, posts.map(function (post) {
         var postAuthor = author_.enable && "name" in _this2.authorFn(post.author) ? _this2.authorFn(post.author).name : false;
         return thumbnail_.typeShow == "1" && "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ ? wp.element.createElement("article", {
-          all: "ddj",
           className: "block-post-article",
           key: post.id
         }, wp.element.createElement("div", {

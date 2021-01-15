@@ -143,8 +143,8 @@ class Edit extends Component {
       author,
       numberOfPosts,
       thumbnail,
-      numberOfColumn,
-      columnLayout,
+      // numberOfColumn,
+      // columnLayout,
       date,
       showTag,
       showCate,
@@ -286,34 +286,56 @@ class Edit extends Component {
             )}
           </PanelBody>
           <PanelBody title="Post Layout" initialOpen={false}>
-            {/* <p>
-              <strong>{__("Layout", "zita-blocks")}</strong>
+            <p>
+              <strong>{__("Image Alignment", "zita-blocks")}</strong>
             </p>
-            <select
-              value={columnLayout}
-              className="zita-block-select"
-              onChange={(e) => {
-                setAttributes({ columnLayout: e.target.value });
-              }}
-            >
-              <option value="list">{__("List", "zita-blocks")}</option>
-              <option value="grid">{__("Grid", "zita-blocks")}</option>
-            </select>
-            {columnLayout == "grid" && (
-              <>
-                <p>
-                  <strong>{__("Column", "zita-blocks")}</strong>
-                </p>
-                <RangeControl
-                  value={numberOfColumn}
-                  min={1}
-                  max={4}
-                  onChange={(e) => {
-                    setAttributes({ numberOfColumn: e });
+            <div className="zita-alignment">
+              <div>
+                <span
+                  onClick={() => {
+                    this.updateObj(
+                      "meta_style",
+                      "imageAlign",
+                      meta_style,
+                      "left"
+                    );
                   }}
-                />
-              </>
-            )} */}
+                  className={`dashicons dashicons-editor-alignleft ${
+                    meta_style_.imageAlign == "left" && "active"
+                  }`}
+                ></span>
+              </div>
+              <div>
+                <span
+                  onClick={() => {
+                    this.updateObj(
+                      "meta_style",
+                      "imageAlign",
+                      meta_style,
+                      "center"
+                    );
+                  }}
+                  className={`dashicons dashicons-editor-aligncenter ${
+                    meta_style_.imageAlign == "center" && "active"
+                  }`}
+                ></span>
+              </div>
+              <div>
+                <span
+                  onClick={() => {
+                    this.updateObj(
+                      "meta_style",
+                      "imageAlign",
+                      meta_style,
+                      "right"
+                    );
+                  }}
+                  className={`dashicons dashicons-editor-alignright ${
+                    meta_style_.imageAlign == "right" && "active"
+                  }`}
+                ></span>
+              </div>
+            </div>
 
             <p>
               <strong>{__("Number of Post Display", "zita-blocks")}</strong>
@@ -325,13 +347,6 @@ class Edit extends Component {
               onChange={(e) => {
                 setAttributes({ numberOfPosts: e });
               }}
-            />
-            <ToggleControl
-              label={__("Left Border", "zita-blocks")}
-              checked={meta_style_.left_border}
-              onChange={(e) =>
-                this.updateObj("meta_style", "left_border", meta_style, e)
-              }
             />
             <p>
               <strong>Block Background Color</strong>
@@ -709,9 +724,7 @@ class Edit extends Component {
               </div>
             )}
             <div
-              className={`column-count column-count-${
-                columnLayout == "grid" ? numberOfColumn : 1
-              } ${meta_style_.left_border && "left-border"}`}
+              className={`column-count column-count-1 image-align-${meta_style_.imageAlign}`}
             >
               {posts.map((post) => {
                 let postAuthor =
@@ -722,11 +735,7 @@ class Edit extends Component {
                   "getMedia_" in post &&
                   post.getMedia_ &&
                   "guid" in post.getMedia_ ? (
-                  <article
-                    all="ddj"
-                    className="block-post-article"
-                    key={post.id}
-                  >
+                  <article className="block-post-article" key={post.id}>
                     <div className="post-wrapper">
                       <div className="featured-image">
                         <img

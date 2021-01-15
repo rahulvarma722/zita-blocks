@@ -8,14 +8,12 @@ function zita_section_block($attr)
     $args = [
         'post_type' => 'post',
         "posts_per_page" => $attr['numberOfPosts'],
+        "meta_key" => '_thumbnail_id'
     ];
     if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
         $args['category__in'] = $attr["postCategories"];
     }
     $query = new WP_Query($args);
-    // echo $attr['numberOfPosts'];
-    // return;
-    // echo "<pre>";
     if ($query->have_posts()) {
         $postAuthor = isset($attr['author'][0]['enable']) && $attr['author'][0]['enable']  ? true : false;
         $postAuthor2 = isset($attr['author2'][0]['enable']) && $attr['author2'][0]['enable']  ? true : false;

@@ -1289,7 +1289,7 @@ export default withSelect((select, props) => {
     query2["categories"] = cateCh;
   }
   const { getMedia, getEntityRecords, getAuthors } = select("core");
-  /////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////
   let getTotalPost = getEntityRecords("postType", "post", query2);
   let getAllPost = returnPostFn(numberOfPosts);
   function returnPostFn(numberOfPosts, check = false) {
@@ -1321,7 +1321,7 @@ export default withSelect((select, props) => {
       return false;
     }
   }
-  ///////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////
   // let getAllPost = getEntityRecords("postType", "post", query);
   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });

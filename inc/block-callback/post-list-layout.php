@@ -48,7 +48,7 @@ wpgt_register_block_fn('zita-post',  [
             "type" => "array",
             "default" => [[
                 "color" => "white",
-                "left_border" => false,
+                "imageAlign" => "center",
                 "fontSize" => 11,
                 "blockBgColor" => 'transparent'
             ]]

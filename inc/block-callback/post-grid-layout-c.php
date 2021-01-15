@@ -9,6 +9,7 @@ function zita_post_grid_block($attr)
     if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
         $args['category__in'] = $attr["postCategories"];
     }
+    // typeShow
     $query = new WP_Query($args);
     $postHtml = '';
     // echo "<pre>";
