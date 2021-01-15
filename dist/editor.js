@@ -1809,10 +1809,12 @@ var Edit = /*#__PURE__*/function (_Component) {
   var getAllPost = [];
 
   if (thumbnail[0].enable) {
+    // console.log("all post out", getTotalPost);
     getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
 
     function returnPostFn(numberOfPosts) {
       var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      // console.log("all post in", getTotalPost);
       var numberOfposts_ = check ? check : numberOfPosts;
       var new_query = {
         per_page: numberOfposts_
@@ -1829,10 +1831,13 @@ var Edit = /*#__PURE__*/function (_Component) {
           return chv.featured_media > 0;
         });
 
-        if (newPostArray.length == numberOfPosts || getTotalPost.length == numberOfposts_) {
+        if (newPostArray.length == numberOfPosts || getTotalPost.length <= numberOfposts_) {
           return newPostArray;
         } else {
-          if (newPostArray.length < numberOfPosts && getTotalPost.length) {
+          if (newPostArray.length < numberOfPosts && numberOfposts_ <= getTotalPost.length) {
+            // console.log("play fn numberOfposts_ -> ", numberOfposts_);
+            // console.log("play fn getTotalPost -> ", getTotalPost);
+            // console.log("play fn newPostArray -> ", newPostArray);
             return returnPostFn(numberOfPosts, numberOfposts_ + 1);
           }
         }
@@ -2729,10 +2734,10 @@ var Edit = /*#__PURE__*/function (_Component) {
           return chv.featured_media > 0;
         });
 
-        if (newPostArray.length == numberOfPosts || getTotalPost.length == numberOfposts_) {
+        if (newPostArray.length == numberOfPosts || getTotalPost.length <= numberOfposts_) {
           return newPostArray;
         } else {
-          if (newPostArray.length < numberOfPosts && getTotalPost.length) {
+          if (newPostArray.length < numberOfPosts && numberOfposts_ <= getTotalPost.length) {
             return returnPostFn(numberOfPosts, numberOfposts_ + 1);
           }
         }
@@ -3772,10 +3777,10 @@ var Edit = /*#__PURE__*/function (_Component) {
         return chv.featured_media > 0;
       });
 
-      if (newPostArray.length >= numberOfPosts || numberOfposts_ == getTotalPost.length) {
+      if (newPostArray.length == numberOfPosts || getTotalPost.length <= numberOfposts_) {
         return newPostArray;
       } else {
-        if (newPostArray.length < numberOfPosts && getTotalPost.length) {
+        if (newPostArray.length < numberOfPosts && numberOfposts_ <= getTotalPost.length) {
           return returnPostFn(numberOfPosts, numberOfposts_ + 1);
         }
       }
@@ -10025,12 +10030,13 @@ var Edit = /*#__PURE__*/function (_Component) {
     if (checkPost && checkPost instanceof Array && checkPost.length > 0) {
       var newPostArray = checkPost.filter(function (chv) {
         return chv.featured_media > 0;
-      });
+      }); // newPostArray.length >= numberOfPosts ||
+      //   numberOfposts_ == getTotalPost.length
 
-      if (newPostArray.length >= numberOfPosts || numberOfposts_ == getTotalPost.length) {
+      if (newPostArray.length == numberOfPosts || getTotalPost.length <= numberOfposts_) {
         return newPostArray;
       } else {
-        if (newPostArray.length < numberOfPosts && getTotalPost.length) {
+        if (newPostArray.length < numberOfPosts && numberOfposts_ <= getTotalPost.length) {
           return returnPostFn(numberOfPosts, numberOfposts_ + 1);
         }
       }

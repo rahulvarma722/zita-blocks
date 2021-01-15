@@ -1503,9 +1503,11 @@ export default withSelect((select, props) => {
   /////////////////////////////////////////////////////////////////////////////
   let getAllPost = [];
   if (thumbnail[0].enable) {
+    // console.log("all post out", getTotalPost);
     getAllPost =
       getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
     function returnPostFn(numberOfPosts, check = false) {
+      // console.log("all post in", getTotalPost);
       let numberOfposts_ = check ? check : numberOfPosts;
       let new_query = {
         per_page: numberOfposts_,
@@ -1522,11 +1524,17 @@ export default withSelect((select, props) => {
         let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
         if (
           newPostArray.length == numberOfPosts ||
-          getTotalPost.length == numberOfposts_
+          getTotalPost.length <= numberOfposts_
         ) {
           return newPostArray;
         } else {
-          if (newPostArray.length < numberOfPosts && getTotalPost.length) {
+          if (
+            newPostArray.length < numberOfPosts &&
+            numberOfposts_ <= getTotalPost.length
+          ) {
+            // console.log("play fn numberOfposts_ -> ", numberOfposts_);
+            // console.log("play fn getTotalPost -> ", getTotalPost);
+            // console.log("play fn newPostArray -> ", newPostArray);
             return returnPostFn(numberOfPosts, numberOfposts_ + 1);
           }
         }
