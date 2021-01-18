@@ -1251,6 +1251,7 @@
     transform: rotate(360deg);
   }
 }
+
 .zita-section-post * {
   font-family: "Catamaran-Regular", sans-serif;
   box-sizing: border-box;
@@ -1315,6 +1316,10 @@
   flex-direction: column;
   padding: 16px;
 }
+
+
+
+
 
 
 /*# sourceMappingURL=editor.css.map*/

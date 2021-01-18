@@ -1242,8 +1242,6 @@ export default withSelect((select, props) => {
     );
     if (checkPost && checkPost instanceof Array && checkPost.length > 0) {
       let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
-      // newPostArray.length >= numberOfPosts ||
-      //   numberOfposts_ == getTotalPost.length
       if (
         newPostArray.length == numberOfPosts ||
         getTotalPost.length <= numberOfposts_

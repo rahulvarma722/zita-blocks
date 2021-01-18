@@ -14,5 +14,11 @@ wpgt_register_block_fn('slide');
 include_once "block-callback/post-list-layout.php";
 include_once "block-callback/post-slider-block.php";
 include_once "block-callback/post-category-layout.php";
-include_once "block-callback/post-image-layout.php";
 include_once "block-callback/post-grid-layout.php";
+// post image layout
+include_once "block-callback/post-image-layout.php";
+include_once "block-callback/post-image-layout-two-post.php";
+include_once "block-callback/post-image-layout-three-post.php";
+include_once "block-callback/post-image-layout-four-post.php";
+include_once "block-callback/post-image-layout-five-post.php";
+include_once "block-callback/post-image-layout-six-post.php";
