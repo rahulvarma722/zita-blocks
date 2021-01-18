@@ -866,8 +866,8 @@
 .block-post-article .post-content h1,
 .block-post-article .post-content h2,
 .block-post-article .post-content h3 {
-  line-height: 1.5;
-  margin: 6px 0;
+  line-height: 1;
+  margin: 0 0 6px 0;
   letter-spacing: 1px;
 }
 .block-post-article .post-content p .read-more {

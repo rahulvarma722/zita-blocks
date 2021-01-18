@@ -126,8 +126,8 @@
       h1,
       h2,
       h3 {
-        line-height: 1.5;
-        margin: 6px 0;
+        line-height: 1;
+        margin: 0 0 6px 0;
         letter-spacing: 1px;
       }
       p {
@@ -145,7 +145,7 @@
         &.post-category {
           display: flex;
           flex-wrap: wrap;
-          margin: 10px 0;
+          // margin: 10px 0;
           span {
             margin: 1px 6px;
             padding: 3px 5px;
