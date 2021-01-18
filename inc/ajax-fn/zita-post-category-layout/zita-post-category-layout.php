@@ -3,8 +3,6 @@ function post_tc_block()
 {
     $pageNo = $_POST['trigger'] == "next" ? $_POST['page'] + 1 : $_POST['page'] - 1;
     $attr = $_POST['attr'];
-    // echo "inside ajax->";
-    // print_r($attr);
     $args = [
         'post_type' => 'post',
         "posts_per_page" => $attr['numberOfPosts'],

@@ -163,15 +163,7 @@ class Edit extends Component {
       excerpt,
       postCategories,
       meta_style,
-      meta_style2,
       title,
-      // secondary
-      heading2,
-      excerpt2,
-      showCate2,
-      showTag2,
-      date2,
-      author2,
     } = attributes;
     let heading_ = heading[0];
     let thumbnail_ = thumbnail[0];
@@ -179,17 +171,9 @@ class Edit extends Component {
     let date_ = date[0];
     let author_ = author[0];
     let meta_style_ = meta_style[0];
-    let meta_style2_ = meta_style2[0];
     let title_ = title[0];
     let showTag_ = showTag[0];
     let showCate_ = showCate[0];
-    // secondary
-    let heading2_ = heading2[0];
-    let excerpt2_ = excerpt2[0];
-    let showCate2_ = showCate2[0];
-    let showTag2_ = showTag2[0];
-    let date2_ = date2[0];
-    let author2_ = author2[0];
     // category init
     let cateGory = [{ value: "all", label: "All" }];
     if (category && category.length) {
@@ -333,245 +317,100 @@ class Edit extends Component {
             title={__("Post Title", "zita-blocks")}
             initialOpen={false}
           >
-            {(numberOfPosts == 3 || numberOfPosts == 5) && (
-              <div class="zita-switcher-button-section">
-                <span
-                  onClick={() => this.setState({ heading: "primary" })}
-                  className={this.state.heading == "primary" ? "selected" : ""}
-                >
-                  {__("Primary", "zita-blocks")}
-                </span>
-                <span
-                  onClick={() => this.setState({ heading: "secondary" })}
-                  className={
-                    this.state.heading == "secondary" ? "selected" : ""
-                  }
-                >
-                  {__("Secondary", "zita-blocks")}
-                </span>
-              </div>
-            )}
-            {this.state.heading == "primary" ? (
-              <>
-                <p>
-                  <strong>{__("Post Title Tag", "zita-blocks")}</strong>
-                </p>
-                <select
-                  value={heading_.tag}
-                  className="zita-block-select"
-                  onChange={(e) => {
-                    let value_ = e.target.value;
-                    let font_ =
-                      value_ == "h1"
-                        ? 30
-                        : value_ == "h2"
-                        ? 25
-                        : value_ == "h3"
-                        ? 20
-                        : 17;
-                    let newHeading = [...heading];
-                    newHeading[0]["tag"] = value_;
-                    newHeading[0]["fontSize"] = font_;
-                    setAttributes({ heading: newHeading });
-                  }}
-                >
-                  <option value="h1">H1</option>
-                  <option value="h2">H2</option>
-                  <option value="h3">H3</option>
-                  <option value="p">P</option>
-                </select>
-                <p>
-                  <strong>{__("Font Size", "zita-blocks")}</strong>
-                </p>
-                <RangeControl
-                  value={heading_.fontSize}
-                  min={1}
-                  max={50}
-                  onChange={(e) =>
-                    this.updateObj("heading", "fontSize", heading, e)
-                  }
-                />
-                <p>
-                  <strong>{__("Color", "zita-blocks")}</strong>
-                </p>
-                <ColorPalette
-                  value={heading_.color}
-                  onChange={(color) =>
-                    this.updateObj("heading", "color", heading, color)
-                  }
-                />
-              </>
-            ) : (
-              <>
-                <p>
-                  <strong>{__("Heading Tag", "zita-blocks")}</strong>
-                </p>
-                <select
-                  value={heading2_.tag}
-                  className="zita-block-select"
-                  onChange={(e) => {
-                    let value_ = e.target.value;
-                    let font_ =
-                      value_ == "h1"
-                        ? 30
-                        : value_ == "h2"
-                        ? 25
-                        : value_ == "h3"
-                        ? 20
-                        : 17;
-                    let newHeading = [...heading2];
-                    newHeading[0]["tag"] = value_;
-                    newHeading[0]["fontSize"] = font_;
-                    setAttributes({ heading2: newHeading });
-                  }}
-                >
-                  <option value="h1">H1</option>
-                  <option value="h2">H2</option>
-                  <option value="h3">H3</option>
-                  <option value="p">P</option>
-                </select>
-                <p>
-                  <strong>{__("Font Size", "zita-blocks")}</strong>
-                </p>
-                <RangeControl
-                  value={heading2_.fontSize}
-                  min={1}
-                  max={50}
-                  onChange={(e) =>
-                    this.updateObj("heading2", "fontSize", heading2, e)
-                  }
-                />
-                <p>
-                  <strong>{__("Color", "zita-blocks")}</strong>
-                </p>
-                <ColorPalette
-                  value={heading2_.color}
-                  onChange={(color) =>
-                    this.updateObj("heading2", "color", heading2, color)
-                  }
-                />
-              </>
-            )}
+            <p>
+              <strong>{__("Post Title Tag", "zita-blocks")}</strong>
+            </p>
+            <select
+              value={heading_.tag}
+              className="zita-block-select"
+              onChange={(e) => {
+                let value_ = e.target.value;
+                let font_ =
+                  value_ == "h1"
+                    ? 30
+                    : value_ == "h2"
+                    ? 25
+                    : value_ == "h3"
+                    ? 20
+                    : 17;
+                let newHeading = [...heading];
+                newHeading[0]["tag"] = value_;
+                newHeading[0]["fontSize"] = font_;
+                setAttributes({ heading: newHeading });
+              }}
+            >
+              <option value="h1">H1</option>
+              <option value="h2">H2</option>
+              <option value="h3">H3</option>
+              <option value="p">P</option>
+            </select>
+            <p>
+              <strong>{__("Font Size", "zita-blocks")}</strong>
+            </p>
+            <RangeControl
+              value={heading_.fontSize}
+              min={1}
+              max={50}
+              onChange={(e) =>
+                this.updateObj("heading", "fontSize", heading, e)
+              }
+            />
+            <p>
+              <strong>{__("Color", "zita-blocks")}</strong>
+            </p>
+            <ColorPalette
+              value={heading_.color}
+              onChange={(color) =>
+                this.updateObj("heading", "color", heading, color)
+              }
+            />
           </PanelBody>
           <PanelBody
             title={__("Excerpt / Content", "zita-blocks")}
             initialOpen={false}
           >
-            {(numberOfPosts == 3 || numberOfPosts == 5) && (
-              <div className="zita-switcher-button-section">
-                <span
-                  onClick={() => this.setState({ excerpt: "primary" })}
-                  className={this.state.excerpt == "primary" ? "selected" : ""}
-                >
-                  {__("Primary", "zita-blocks")}
-                </span>
-                <span
-                  onClick={() => this.setState({ excerpt: "secondary" })}
-                  className={
-                    this.state.excerpt == "secondary" ? "selected" : ""
-                  }
-                >
-                  {__("Secondary", "zita-blocks")}
-                </span>
-              </div>
-            )}
-            {this.state.excerpt == "primary" ? (
+            <ToggleControl
+              label={
+                excerpt_.enable
+                  ? __("Hide", "zita-blocks")
+                  : __("Show", "zita-blocks")
+              }
+              checked={excerpt_.enable}
+              onChange={(e) => this.updateObj("excerpt", "enable", excerpt, e)}
+            />
+            {excerpt_.enable && (
               <>
-                <ToggleControl
-                  label={
-                    excerpt_.enable
-                      ? __("Hide", "zita-blocks")
-                      : __("Show", "zita-blocks")
-                  }
-                  checked={excerpt_.enable}
+                <p>
+                  <strong>Font Size</strong>
+                </p>
+                <RangeControl
+                  value={excerpt_.fontSize}
+                  min={1}
+                  max={25}
                   onChange={(e) =>
-                    this.updateObj("excerpt", "enable", excerpt, e)
+                    this.updateObj("excerpt", "fontSize", excerpt, e)
                   }
                 />
-                {excerpt_.enable && (
-                  <>
-                    <p>
-                      <strong>Font Size</strong>
-                    </p>
-                    <RangeControl
-                      value={excerpt_.fontSize}
-                      min={1}
-                      max={25}
-                      onChange={(e) =>
-                        this.updateObj("excerpt", "fontSize", excerpt, e)
-                      }
-                    />
-                    <p>
-                      <strong>{__("Number of words", "zita-blocks")}</strong>
-                    </p>
-                    <RangeControl
-                      value={excerpt_.words}
-                      min={1}
-                      max={200}
-                      onChange={(e) =>
-                        this.updateObj("excerpt", "words", excerpt, e)
-                      }
-                    />
-                    <p>
-                      <strong>{__("Color", "zita-blocks")}</strong>
-                    </p>
-                    <ColorPalette
-                      value={excerpt_.color}
-                      onChange={(color) =>
-                        this.updateObj("excerpt", "color", excerpt, color)
-                      }
-                    />
-                  </>
-                )}
-              </>
-            ) : (
-              <>
-                <ToggleControl
-                  label={
-                    excerpt2_.enable
-                      ? __("Hide", "zita-blocks")
-                      : __("Show", "zita-blocks")
-                  }
-                  checked={excerpt2_.enable}
+                <p>
+                  <strong>{__("Number of words", "zita-blocks")}</strong>
+                </p>
+                <RangeControl
+                  value={excerpt_.words}
+                  min={1}
+                  max={200}
                   onChange={(e) =>
-                    this.updateObj("excerpt2", "enable", excerpt2, e)
+                    this.updateObj("excerpt", "words", excerpt, e)
                   }
                 />
-                {excerpt2_.enable && (
-                  <>
-                    <p>
-                      <strong>{__("Number of words", "zita-blocks")}</strong>
-                    </p>
-                    <RangeControl
-                      value={excerpt2_.words}
-                      min={1}
-                      max={200}
-                      onChange={(e) =>
-                        this.updateObj("excerpt2", "words", excerpt2, e)
-                      }
-                    />
-                    <p>
-                      <strong>Font Size</strong>
-                    </p>
-                    <RangeControl
-                      value={excerpt2_.fontSize}
-                      min={1}
-                      max={25}
-                      onChange={(e) =>
-                        this.updateObj("excerpt2", "fontSize", excerpt2, e)
-                      }
-                    />
-                    <p>
-                      <strong>{__("Color", "zita-blocks")}</strong>
-                    </p>
-                    <ColorPalette
-                      value={excerpt2_.color}
-                      onChange={(color) =>
-                        this.updateObj("excerpt2", "color", excerpt2, color)
-                      }
-                    />
-                  </>
-                )}
+                <p>
+                  <strong>{__("Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPalette
+                  value={excerpt_.color}
+                  onChange={(color) =>
+                    this.updateObj("excerpt", "color", excerpt, color)
+                  }
+                />
               </>
             )}
           </PanelBody>
@@ -594,405 +433,118 @@ class Edit extends Component {
                 options={cateGory}
               />
             </div>
-            {/* category */}
-            {/* primery and secondary */}
-            {(numberOfPosts == 3 || numberOfPosts == 5) && (
-              <div class="zita-switcher-button-section">
-                <span
-                  onClick={() => this.setState({ metaChoose: "primary" })}
-                  className={
-                    this.state.metaChoose == "primary" ? "selected" : ""
-                  }
-                >
-                  {__("Primary", "zita-blocks")}
-                </span>
-                <span
-                  onClick={() => this.setState({ metaChoose: "secondary" })}
-                  className={
-                    this.state.metaChoose == "secondary" ? "selected" : ""
-                  }
-                >
-                  {__("Secondary", "zita-blocks")}
-                </span>
-              </div>
-            )}
-            {/* show author */}
-            {this.state.metaChoose == "primary" ? (
+            <ToggleControl
+              label={__("Author", "zita-blocks")}
+              checked={author_.enable}
+              onChange={(e) => this.updateObj("author", "enable", author, e)}
+            />
+            {/* show date */}
+            <ToggleControl
+              label={__("Date", "zita-blocks")}
+              checked={date_.enable}
+              onChange={(e) => this.updateObj("date", "enable", date, e)}
+            />
+            <ToggleControl
+              label={__("Categories", "zita-blocks")}
+              checked={showCate_.enable}
+              onChange={(e) =>
+                this.updateObj("showCate", "enable", showCate, e)
+              }
+            />
+            {/* show last date */}
+            <ToggleControl
+              label={__("Last Modified Date", "zita-blocks")}
+              checked={date_.last_modified}
+              onChange={(e) => this.updateObj("date", "last_modified", date, e)}
+            />
+            <ToggleControl
+              label={__("Tag", "zita-blocks")}
+              checked={showTag_.enable}
+              onChange={(e) => this.updateObj("showTag", "enable", showTag, e)}
+            />
+            <p class="block-inside">{__("Meta Custom Style", "zita-blocks")}</p>
+            <p>
+              <strong>{__("Author/Dates Font Size", "zita-blocks")}</strong>
+            </p>
+            <RangeControl
+              value={meta_style_.fontSize}
+              min={1}
+              max={25}
+              onChange={(e) => {
+                this.updateObj("meta_style", "fontSize", meta_style, e);
+              }}
+            />
+            <p>
+              <strong>{__("Author/Dates Color", "zita-blocks")}</strong>
+            </p>
+            <ColorPalette
+              value={"color" in meta_style_ ? meta_style_.color : ""}
+              onChange={(color) =>
+                this.updateObj("meta_style", "color", meta_style, color)
+              }
+            />
+            {showCate_.enable && (
               <>
-                <ToggleControl
-                  label={__("Author", "zita-blocks")}
-                  checked={author_.enable}
-                  onChange={(e) =>
-                    this.updateObj("author", "enable", author, e)
-                  }
-                />
-                {/* show date */}
-                <ToggleControl
-                  label={__("Date", "zita-blocks")}
-                  checked={date_.enable}
-                  onChange={(e) => this.updateObj("date", "enable", date, e)}
-                />
-                <ToggleControl
-                  label={__("Categories", "zita-blocks")}
-                  checked={showCate_.enable}
-                  onChange={(e) =>
-                    this.updateObj("showCate", "enable", showCate, e)
-                  }
-                />
-                {/* show last date */}
-                <ToggleControl
-                  label={__("Last Modified Date", "zita-blocks")}
-                  checked={date_.last_modified}
-                  onChange={(e) =>
-                    this.updateObj("date", "last_modified", date, e)
-                  }
-                />
-                <ToggleControl
-                  label={__("Tag", "zita-blocks")}
-                  checked={showTag_.enable}
-                  onChange={(e) =>
-                    this.updateObj("showTag", "enable", showTag, e)
-                  }
-                />
                 <p class="block-inside">
-                  {__("Meta Custom Style", "zita-blocks")}
+                  {__("Category Custom Style", "zita-blocks")}
                 </p>
                 <p>
-                  <strong>{__("Author/Dates Font Size", "zita-blocks")}</strong>
+                  <strong>
+                    {__("Number Category Per Post", "zita-blocks")}
+                  </strong>
                 </p>
                 <RangeControl
-                  value={meta_style_.fontSize}
+                  value={showCate_.count}
                   min={1}
-                  max={25}
+                  max={10}
                   onChange={(e) => {
-                    this.updateObj("meta_style", "fontSize", meta_style, e);
+                    this.updateObj("showCate", "count", showCate, e);
                   }}
                 />
                 <p>
-                  <strong>{__("Author/Dates Color", "zita-blocks")}</strong>
+                  <strong>{__("Font Size", "zita-blocks")}</strong>
                 </p>
-                <ColorPalette
-                  value={"color" in meta_style_ ? meta_style_.color : ""}
-                  onChange={(color) =>
-                    this.updateObj("meta_style", "color", meta_style, color)
+                <RangeControl
+                  value={showCate_.fontSize}
+                  min={1}
+                  max={30}
+                  onChange={(e) => {
+                    this.updateObj("showCate", "fontSize", showCate, e);
+                  }}
+                />
+                <ToggleControl
+                  label={
+                    showCate_.customColor
+                      ? __("Custom Style", "zita-blocks")
+                      : __("Default Style", "zita-blocks")
+                  }
+                  checked={showCate_.customColor}
+                  onChange={(e) =>
+                    this.updateObj("showCate", "customColor", showCate, e)
                   }
                 />
-                {showCate_.enable && (
+                {showCate_.customColor && (
                   <>
-                    <p class="block-inside">
-                      {__("Category Custom Style", "zita-blocks")}
-                    </p>
-                    <p>
-                      <strong>
-                        {__("Number Category Per Post", "zita-blocks")}
-                      </strong>
-                    </p>
-                    <RangeControl
-                      value={showCate_.count}
-                      min={1}
-                      max={10}
-                      onChange={(e) => {
-                        this.updateObj("showCate", "count", showCate, e);
-                      }}
-                    />
-                    <p>
-                      <strong>{__("Font Size", "zita-blocks")}</strong>
-                    </p>
-                    <RangeControl
-                      value={showCate_.fontSize}
-                      min={1}
-                      max={30}
-                      onChange={(e) => {
-                        this.updateObj("showCate", "fontSize", showCate, e);
-                      }}
-                    />
-                    <ToggleControl
-                      label={
-                        showCate_.customColor
-                          ? __("Custom Style", "zita-blocks")
-                          : __("Default Style", "zita-blocks")
-                      }
-                      checked={showCate_.customColor}
-                      onChange={(e) =>
-                        this.updateObj("showCate", "customColor", showCate, e)
-                      }
-                    />
-                    {showCate_.customColor && (
-                      <>
-                        <p>
-                          <strong>{__("Color", "zita-blocks")}</strong>
-                        </p>
-                        <ColorPalette
-                          value={showCate_.color}
-                          onChange={(color) =>
-                            this.updateObj("showCate", "color", showCate, color)
-                          }
-                        />
-                        <p>
-                          <strong>
-                            {__("Background Color", "zita-blocks")}
-                          </strong>
-                        </p>
-                        <ColorPicker
-                          color={showCate_.backgroundColor}
-                          onChangeComplete={(colorBg) => {
-                            let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                            this.updateObj(
-                              "showCate",
-                              "backgroundColor",
-                              showCate,
-                              color
-                            );
-                          }}
-                        />
-                      </>
-                    )}
-                  </>
-                )}
-                {showTag_.enable && (
-                  <>
-                    <p class="block-inside">
-                      {__("Tags Custom Style", "zita-blocks")}
-                    </p>
-                    <p>
-                      <strong>
-                        {__("Number Tags Per Post", "zita-blocks")}
-                      </strong>
-                    </p>
-                    <RangeControl
-                      value={showTag_.count}
-                      min={1}
-                      max={10}
-                      onChange={(e) => {
-                        this.updateObj("showTag", "count", showTag, e);
-                      }}
-                    />
-                    <p>
-                      <strong>{__("Font Size", "zita-blocks")}</strong>
-                    </p>
-                    <RangeControl
-                      value={showTag_.fontSize}
-                      min={1}
-                      max={30}
-                      onChange={(e) => {
-                        this.updateObj("showTag", "fontSize", showTag, e);
-                      }}
-                    />
                     <p>
                       <strong>{__("Color", "zita-blocks")}</strong>
                     </p>
                     <ColorPalette
-                      value={showTag_.color}
+                      value={showCate_.color}
                       onChange={(color) =>
-                        this.updateObj("showTag", "color", showTag, color)
+                        this.updateObj("showCate", "color", showCate, color)
                       }
                     />
                     <p>
                       <strong>{__("Background Color", "zita-blocks")}</strong>
                     </p>
                     <ColorPicker
-                      color={showTag_.backgroundColor}
+                      color={showCate_.backgroundColor}
                       onChangeComplete={(colorBg) => {
                         let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
                         this.updateObj(
-                          "showTag",
+                          "showCate",
                           "backgroundColor",
-                          showTag,
-                          color
-                        );
-                      }}
-                    />
-                  </>
-                )}
-              </>
-            ) : (
-              <>
-                {/* secondary  */}
-                {/* show author */}
-                <ToggleControl
-                  label={__("Author", "zita-blocks")}
-                  checked={author2_.enable}
-                  onChange={(e) =>
-                    this.updateObj("author2", "enable", author2, e)
-                  }
-                />
-                {/* show date */}
-                <ToggleControl
-                  label={__("Date", "zita-blocks")}
-                  checked={date2_.enable}
-                  onChange={(e) => this.updateObj("date2", "enable", date2, e)}
-                />
-                <ToggleControl
-                  label={__("Categories", "zita-blocks")}
-                  checked={showCate2_.enable}
-                  onChange={(e) =>
-                    this.updateObj("showCate2", "enable", showCate2, e)
-                  }
-                />
-                {/* show last date */}
-                <ToggleControl
-                  label={__("Last Modified Date", "zita-blocks")}
-                  checked={date2_.last_modified}
-                  onChange={(e) =>
-                    this.updateObj("date2", "last_modified", date2, e)
-                  }
-                />
-                <ToggleControl
-                  label={__("Tag", "zita-blocks")}
-                  checked={showTag2_.enable}
-                  onChange={(e) =>
-                    this.updateObj("showTag2", "enable", showTag2, e)
-                  }
-                />
-                <p class="block-inside">
-                  {__("Meta Custom Style", "zita-blocks")}
-                </p>
-                <p>
-                  <strong>{__("Author/Dates Font Size", "zita-blocks")}</strong>
-                </p>
-                <RangeControl
-                  value={meta_style2_.fontSize}
-                  min={1}
-                  max={25}
-                  onChange={(e) => {
-                    this.updateObj("meta_style2", "fontSize", meta_style2, e);
-                  }}
-                />
-                <p>
-                  <strong>{__("Author/Dates Color", "zita-blocks")}</strong>
-                </p>
-                <ColorPalette
-                  value={"color" in meta_style2_ ? meta_style2_.color : ""}
-                  onChange={(color) =>
-                    this.updateObj("meta_style2", "color", meta_style2, color)
-                  }
-                />
-                {showCate2_.enable && (
-                  <>
-                    <p class="block-inside">
-                      {__("Category Custom Style", "zita-blocks")}
-                    </p>
-                    <p>
-                      <strong>
-                        {__("Number Category Per Post", "zita-blocks")}
-                      </strong>
-                    </p>
-                    <RangeControl
-                      value={showCate2_.count}
-                      min={1}
-                      max={10}
-                      onChange={(e) => {
-                        this.updateObj("showCate2", "count", showCate2, e);
-                      }}
-                    />
-                    <p>
-                      <strong>{__("Font Size", "zita-blocks")}</strong>
-                    </p>
-                    <RangeControl
-                      value={showCate2_.fontSize}
-                      min={1}
-                      max={30}
-                      onChange={(e) => {
-                        this.updateObj("showCate2", "fontSize", showCate2, e);
-                      }}
-                    />
-                    <ToggleControl
-                      label={
-                        showCate2_.customColor
-                          ? __("Custom Style", "zita-blocks")
-                          : __("Default Style", "zita-blocks")
-                      }
-                      checked={showCate2_.customColor}
-                      onChange={(e) =>
-                        this.updateObj("showCate2", "customColor", showCate2, e)
-                      }
-                    />
-                    {showCate2_.customColor && (
-                      <>
-                        <p>
-                          <strong>{__("Color", "zita-blocks")}</strong>
-                        </p>
-                        <ColorPalette
-                          value={showCate2_.color}
-                          onChange={(color) =>
-                            this.updateObj(
-                              "showCate2",
-                              "color",
-                              showCate2,
-                              color
-                            )
-                          }
-                        />
-                        <p>
-                          <strong>
-                            {__("Background Color", "zita-blocks")}
-                          </strong>
-                        </p>
-                        <ColorPicker
-                          color={showCate2_.backgroundColor}
-                          onChangeComplete={(colorBg) => {
-                            let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                            this.updateObj(
-                              "showCate2",
-                              "backgroundColor",
-                              showCate2,
-                              color
-                            );
-                          }}
-                        />
-                      </>
-                    )}
-                  </>
-                )}
-                {showTag2_.enable && (
-                  <>
-                    <p class="block-inside">
-                      {__("Tags Custom Style", "zita-blocks")}
-                    </p>
-                    <p>
-                      <strong>
-                        {__("Number Tags Per Post", "zita-blocks")}
-                      </strong>
-                    </p>
-                    <RangeControl
-                      value={showTag2_.count}
-                      min={1}
-                      max={10}
-                      onChange={(e) => {
-                        this.updateObj("showTag2", "count", showTag2, e);
-                      }}
-                    />
-                    <p>
-                      <strong>{__("Font Size", "zita-blocks")}</strong>
-                    </p>
-                    <RangeControl
-                      value={showTag2_.fontSize}
-                      min={1}
-                      max={30}
-                      onChange={(e) => {
-                        this.updateObj("showTag2", "fontSize", showTag2, e);
-                      }}
-                    />
-                    <p>
-                      <strong>{__("Color", "zita-blocks")}</strong>
-                    </p>
-                    <ColorPalette
-                      value={showTag2_.color}
-                      onChange={(color) =>
-                        this.updateObj("showTag2", "color", showTag2, color)
-                      }
-                    />
-                    <p>
-                      <strong>{__("Background Color", "zita-blocks")}</strong>
-                    </p>
-                    <ColorPicker
-                      color={showTag2_.backgroundColor}
-                      onChangeComplete={(colorBg) => {
-                        let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                        this.updateObj(
-                          "showTag",
-                          "backgroundColor",
-                          showTag2,
+                          showCate,
                           color
                         );
                       }}
@@ -1001,7 +553,59 @@ class Edit extends Component {
                 )}
               </>
             )}
-            {/* secondary  */}
+            {showTag_.enable && (
+              <>
+                <p class="block-inside">
+                  {__("Tags Custom Style", "zita-blocks")}
+                </p>
+                <p>
+                  <strong>{__("Number Tags Per Post", "zita-blocks")}</strong>
+                </p>
+                <RangeControl
+                  value={showTag_.count}
+                  min={1}
+                  max={10}
+                  onChange={(e) => {
+                    this.updateObj("showTag", "count", showTag, e);
+                  }}
+                />
+                <p>
+                  <strong>{__("Font Size", "zita-blocks")}</strong>
+                </p>
+                <RangeControl
+                  value={showTag_.fontSize}
+                  min={1}
+                  max={30}
+                  onChange={(e) => {
+                    this.updateObj("showTag", "fontSize", showTag, e);
+                  }}
+                />
+                <p>
+                  <strong>{__("Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPalette
+                  value={showTag_.color}
+                  onChange={(color) =>
+                    this.updateObj("showTag", "color", showTag, color)
+                  }
+                />
+                <p>
+                  <strong>{__("Background Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPicker
+                  color={showTag_.backgroundColor}
+                  onChangeComplete={(colorBg) => {
+                    let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                    this.updateObj(
+                      "showTag",
+                      "backgroundColor",
+                      showTag,
+                      color
+                    );
+                  }}
+                />
+              </>
+            )}
             <p>
               <strong>{__("Color", "zita-blocks")}</strong>
             </p>
@@ -1039,92 +643,26 @@ class Edit extends Component {
                 />
               </div>
             )}
-            {(posts.length == 1 ||
-              posts.length == 2 ||
-              posts.length == 4 ||
-              posts.length == 6) && (
-              <div
-                className={`column-count column-count-${
-                  posts.length == 2 || posts.length == 4
-                    ? 2
-                    : posts.length == 6
-                    ? 3
-                    : 1
-                }`}
-              >
-                {posts.map((post) => {
-                  return (
-                    "getMedia_" in post &&
-                    post.getMedia_ &&
-                    "guid" in post.getMedia_ &&
-                    this.returnHtml(
-                      post,
-                      heading_,
-                      author_,
-                      date_,
-                      meta_style_,
-                      thumbnail_,
-                      showCate_,
-                      excerpt_,
-                      showTag_
-                    )
-                  );
-                })}
-              </div>
-            )}
-            {(posts.length == 3 || posts.length == 5) && (
-              <div
-                className={`parent-column-two count-${
-                  posts.length == 3 ? 3 : 5
-                }`}
-              >
-                <div>
-                  <div className="column-count column-count-1">
-                    {"getMedia_" in posts[0] &&
-                      posts[0].getMedia_ &&
-                      "guid" in posts[0].getMedia_ &&
-                      this.returnHtml(
-                        posts[0],
-                        heading_,
-                        author_,
-                        date_,
-                        meta_style_,
-                        thumbnail_,
-                        showCate_,
-                        excerpt_,
-                        showTag_
-                      )}
-                  </div>
-                </div>
-                <div>
-                  <div
-                    className={`column-count column-count-${
-                      posts.length == 3 ? 1 : 2
-                    }`}
-                  >
-                    {posts.map((post, in_) => {
-                      return (
-                        in_ != 0 &&
-                        "getMedia_" in post &&
-                        post.getMedia_ &&
-                        "guid" in post.getMedia_ &&
-                        this.returnHtml(
-                          post,
-                          heading2_,
-                          author2_,
-                          date2_,
-                          meta_style2_,
-                          thumbnail_,
-                          showCate2_,
-                          excerpt2_,
-                          showTag2_
-                        )
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            )}
+            <div className="column-count column-count-2">
+              {posts.map((post) => {
+                return (
+                  "getMedia_" in post &&
+                  post.getMedia_ &&
+                  "guid" in post.getMedia_ &&
+                  this.returnHtml(
+                    post,
+                    heading_,
+                    author_,
+                    date_,
+                    meta_style_,
+                    thumbnail_,
+                    showCate_,
+                    excerpt_,
+                    showTag_
+                  )
+                );
+              })}
+            </div>
           </div>
         ) : (
           <div>
