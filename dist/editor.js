@@ -263,20 +263,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])("zit
       default: 79
     }
   },
-  // example: () => {
-  //   attributes: {
-  //   backgroundType: "gradient",
-  //   backgroundGradient:
-  //     "linear-gradient(-225deg, rgb(255, 5, 124) 0%, rgb(141, 11, 147) 50%, rgb(50, 21, 117) 100%)",
-  //   align: "center",
-  //   quoteStyle: "quotes",
-  //   paddingTop: 30,
-  //   paddingBottom: 30,
-  //   blockquoteAlign: "center",
-  //   textColor: "#FFFFFF",
-  //   content: "An inspiring quote...",
-  // },
-  // },
+  example: function example() {},
   // example: {
   // attributes: {
   //   backgroundType: "gradient",
@@ -1967,6 +1954,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   },
   keywords: ["post two section"],
   // attributes: attrSave,
+  example: function example() {},
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   save: function save() {
     return null;
@@ -2867,6 +2855,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   },
   keywords: ["post"],
   // attributes: attrSave,
+  example: function example() {},
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   save: function save() {
     return null;
@@ -3895,6 +3884,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   },
   keywords: ["post"],
   // attributes: attrSave,
+  example: function example() {},
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   save: function save() {
     return null;
@@ -4923,6 +4913,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   },
   keywords: ["post"],
   // attributes: attrSave,
+  example: function example() {},
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   save: function save() {
     return null;
@@ -5951,6 +5942,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   },
   keywords: ["post"],
   // attributes: attrSave,
+  example: function example() {},
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   save: function save() {
     return null;
@@ -7077,6 +7069,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   },
   keywords: ["post"],
   // attributes: attrSave,
+  example: function example() {},
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   save: function save() {
     return null;
@@ -7868,6 +7861,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   },
   keywords: ["post"],
   // attributes: attrSave,
+  example: function example() {},
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   save: function save() {
     return null;
@@ -8908,6 +8902,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   },
   keywords: ["post"],
   // attributes: attrSave,
+  example: function example() {},
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   save: function save() {
     return null;
@@ -9838,6 +9833,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   },
   keywords: ["post"],
   // attributes: attrSave,
+  example: function example() {},
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   save: function save() {
     return null;
@@ -10127,6 +10123,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])("zit
   parent: ["zita-blocks/pricing-table-section"],
   keywords: ["price", "pricebox"],
   attributes: attrS,
+  example: function example() {},
   edit: function edit(props) {
     var attributes = props.attributes,
         setAttributes = props.setAttributes;
@@ -11542,6 +11539,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   category: "zita-category",
   keywords: ["circular progress", "circular progress bar"],
   attributes: attrs_,
+  example: function example() {},
   edit: function edit(_ref) {
     var attributes = _ref.attributes,
         setAttributes = _ref.setAttributes;
@@ -11901,6 +11899,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   category: "zita-category",
   keywords: ["progress", "progress bar"],
   attributes: attrs_,
+  example: function example() {},
   edit: function edit(_ref) {
     var attributes = _ref.attributes,
         setAttributes = _ref.setAttributes;
@@ -12269,19 +12268,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__["registerBlockType"])("zit
   getEditWrapperProps: function getEditWrapperProps(attributes) {},
   keywords: ["service", "service-section"],
   attributes: attrSave,
-  example: {// attributes: {
-    //   backgroundType: "gradient",
-    //   backgroundGradient:
-    //     "linear-gradient(-225deg, rgb(255, 5, 124) 0%, rgb(141, 11, 147) 50%, rgb(50, 21, 117) 100%)",
-    //   align: "center",
-    //   quoteStyle: "quotes",
-    //   paddingTop: 30,
-    //   paddingBottom: 30,
-    //   blockquoteAlign: "center",
-    //   textColor: "#FFFFFF",
-    //   content: "An inspiring quote...",
-    // },
-  },
+  example: function example() {},
   edit: function edit(props) {
     var attributes = props.attributes,
         setAttributes = props.setAttributes;
@@ -14055,6 +14042,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   },
   keywords: ["slider", "slider section"],
   attributes: attrSave,
+  example: function example() {},
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   save: function save(props) {
     var _props$attributes = props.attributes,
@@ -15194,6 +15182,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   },
   keywords: ["post", "post slider"],
   // attributes: attrSave,
+  example: function example() {},
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   save: function save() {
     return null;

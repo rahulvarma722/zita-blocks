@@ -13,6 +13,7 @@ registerBlockType("zita-blocks/zita-post", {
   },
   keywords: ["post"],
   // attributes: attrSave,
+  example: () => {},
   edit: Edit,
   save: () => {
     return null;

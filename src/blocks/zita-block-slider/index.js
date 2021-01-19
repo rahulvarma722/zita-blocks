@@ -350,6 +350,7 @@ registerBlockType("zita-blocks/slide", {
   },
   keywords: ["slider", "slider section"],
   attributes: attrSave,
+  example: () => {},
   edit: Edit,
   save: (props) => {
     let { slides, sliderSetting } = props.attributes;

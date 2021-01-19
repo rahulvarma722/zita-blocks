@@ -27,6 +27,7 @@ registerBlockType("zita-blocks/progress-block", {
   category: "zita-category",
   keywords: ["progress", "progress bar"],
   attributes: attrs_,
+  example: () => {},
   edit: ({ attributes, setAttributes }) => {
     const {
       percent,

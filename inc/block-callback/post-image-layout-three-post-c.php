@@ -109,7 +109,7 @@ function returnHtmlPost_three_post($cate_, $heading__, $postAuthor, $meta_, $pos
 
     $postHtmlCl1 .= "<div class='post-content' style='background-color:" . $layout_['overlayColor'] . ";'>";
     // category
-    if ($cate_[0]['enable']) {
+    if ($cate_[0]['enable'] == "true") {
         $postHtmlCl1 .= '<p class="post-category">';
         $category_ = get_the_category();
         $category_ = json_encode($category_);
@@ -187,7 +187,7 @@ function returnHtmlPost_three_post($cate_, $heading__, $postAuthor, $meta_, $pos
         $postHtmlCl1 .= "</p>";
     }
     // tags
-    if (isset($tags_[0]['enable']) && $tags_[0]['enable']) {
+    if (isset($tags_[0]['enable']) && $tags_[0]['enable']  == "true") {
         $tags = get_the_tags(get_the_ID());
         $postHtmlCl1 .= '<p class="post-tags">';
         if (!empty($tags)) {

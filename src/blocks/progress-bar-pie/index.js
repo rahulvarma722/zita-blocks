@@ -48,6 +48,7 @@ registerBlockType("zita-blocks/progress-bar-pie", {
   category: "zita-category",
   keywords: ["circular progress", "circular progress bar"],
   attributes: attrs_,
+  example: () => {},
   edit: ({ attributes, setAttributes }) => {
     const {
       circleRadius,

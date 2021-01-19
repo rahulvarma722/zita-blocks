@@ -22,6 +22,7 @@ registerBlockType("zita-blocks/zita-post-slider", {
   },
   keywords: ["post", "post slider"],
   // attributes: attrSave,
+  example: () => {},
   edit: Edit,
   save: () => {
     return null;

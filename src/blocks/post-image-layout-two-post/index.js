@@ -12,6 +12,7 @@ registerBlockType("zita-blocks/zita-post-section-two-post", {
   },
   keywords: ["post"],
   // attributes: attrSave,
+  example: () => {},
   edit: Edit,
   save: () => {
     return null;

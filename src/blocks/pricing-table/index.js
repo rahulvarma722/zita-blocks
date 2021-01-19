@@ -204,6 +204,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
   parent: ["zita-blocks/pricing-table-section"],
   keywords: ["price", "pricebox"],
   attributes: attrS,
+  example: () => {},
   edit: (props) => {
     const { attributes, setAttributes } = props;
     const {
