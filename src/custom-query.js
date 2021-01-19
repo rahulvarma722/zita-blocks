@@ -22,7 +22,7 @@
       let trigger = thisBtn.hasClass("next") ? "next" : "prev";
       let currentPage = getDataWrapper.attr("data-currentpage");
       let data_ = {
-        action: "post_tc_block",
+        action: "post_category_layout_block",
         attr: getData,
         trigger: trigger,
       };
@@ -99,7 +99,7 @@
                 getData["postCategories"] = [getNumVAlue];
               }
               let data_ = {
-                action: "post_tc_block_choose_cate",
+                action: "post_category_layout_choose_category",
                 attr: getData,
               };
               // loader and active btn
@@ -140,6 +140,60 @@
         // has class active li
       }
     },
+    zita_post_next_prev: function () {
+      let thisBtn = $(this);
+      let getDataWrapper = thisBtn.closest(".zita-image-section");
+      let getData = getDataWrapper.find(".parent-column-two").data("setting");
+      let trigger = thisBtn.hasClass("next") ? "next" : "prev";
+      let currentPage = getDataWrapper
+        .find(".parent-column-two")
+        .attr("data-currentpage");
+      let data_ = {
+        action: "post_image_three_post",
+        attr: getData,
+        trigger: trigger,
+      };
+      currentPage = JSON.parse(currentPage);
+      if (
+        currentPage &&
+        "current" in currentPage &&
+        currentPage.current > 0 &&
+        (trigger == "prev" || currentPage.total >= currentPage.current + 1)
+      ) {
+        data_["page"] = currentPage.current;
+        console.log(data_);
+        let loader_ = getDataWrapper.find(".zita-block-loader");
+        loader_.addClass("active");
+        let returnData = fns._ajaxFunction(data_);
+        returnData.success(function (response) {
+          console.log("response3->" + response);
+          // response
+          loader_.removeClass("active");
+          let nxtPrev = thisBtn.closest(".zita-two-post-wrapper-next-prev");
+          nxtPrev.find(".zita-image-section-np").removeClass("disable");
+          let string_fy =
+            currentPage.current == 1 && trigger == "prev"
+              ? 1
+              : trigger == "next"
+              ? currentPage.current + 1
+              : currentPage.current - 1;
+          if (string_fy == 1) {
+            nxtPrev.find(".zita-image-section-np.prev").addClass("disable");
+          } else if (string_fy == currentPage.total) {
+            nxtPrev.find(".zita-image-section-np.next").addClass("disable");
+          }
+          string_fy = JSON.stringify({
+            current: string_fy,
+            total: currentPage.total,
+          });
+          getDataWrapper
+            .find(".parent-column-two")
+            .attr("data-currentpage", string_fy);
+          getDataWrapper.find(".parent-column-two").html(response);
+          // response
+        });
+      }
+    },
     bind: function () {
       $(document).on(
         "click",
@@ -150,6 +204,11 @@
         "click",
         ".zita-block-nav-items:not('.active') .cat-item a",
         fns.chooseCate
+      );
+      $(document).on(
+        "click",
+        ".zita-two-post-wrapper-next-prev:not('.disable') .zita-image-section-np:not('.disable')",
+        fns.zita_post_next_prev
       );
     },
   };

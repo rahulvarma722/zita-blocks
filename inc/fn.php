@@ -31,5 +31,6 @@ function wpgt_register_block_fn($blockName, $extraFeature = [])
 include "block-callback/post-slider.php";
 include "block-callback/post-list-layout-c.php";
 include "block-callback/post-category-layout-c.php";
-include "block-callback/post-image-layout-c.php";
 include "block-callback/post-grid-layout-c.php";
+include "block-callback/post-image-layout-c.php";
+include "block-callback/post-image-layout-three-post-c.php";

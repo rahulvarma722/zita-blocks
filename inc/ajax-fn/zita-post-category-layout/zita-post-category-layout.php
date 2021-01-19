@@ -14,8 +14,8 @@ function post_tc_block()
     echo post_tc_html($args, $attr) ? post_tc_html($args, $attr) : 0;
     die();
 }
-add_action('wp_ajax_post_tc_block', "post_tc_block");
-add_action('wp_ajax_nopriv_post_tc_block', "post_tc_block");
+add_action('wp_ajax_post_category_layout_block', "post_tc_block");
+add_action('wp_ajax_nopriv_post_category_layout_block', "post_tc_block");
 function post_tc_block_choose_cate()
 {
     $attr = $_POST['attr'];
@@ -30,8 +30,8 @@ function post_tc_block_choose_cate()
     echo post_tc_html($args, $attr) ? json_encode(post_tc_html($args, $attr, true)) : 0;
     die();
 }
-add_action('wp_ajax_post_tc_block_choose_cate', "post_tc_block_choose_cate");
-add_action('wp_ajax_nopriv_post_tc_block_choose_cate', "post_tc_block_choose_cate");
+add_action('wp_ajax_post_category_layout_choose_category', "post_tc_block_choose_cate");
+add_action('wp_ajax_nopriv_post_category_layout_choose_category', "post_tc_block_choose_cate");
 
 // return html function
 function post_tc_html($args, $attr, $showNextPrev = false)

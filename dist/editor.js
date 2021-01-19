@@ -263,6 +263,34 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])("zit
       default: 79
     }
   },
+  // example: () => {
+  //   attributes: {
+  //   backgroundType: "gradient",
+  //   backgroundGradient:
+  //     "linear-gradient(-225deg, rgb(255, 5, 124) 0%, rgb(141, 11, 147) 50%, rgb(50, 21, 117) 100%)",
+  //   align: "center",
+  //   quoteStyle: "quotes",
+  //   paddingTop: 30,
+  //   paddingBottom: 30,
+  //   blockquoteAlign: "center",
+  //   textColor: "#FFFFFF",
+  //   content: "An inspiring quote...",
+  // },
+  // },
+  // example: {
+  // attributes: {
+  //   backgroundType: "gradient",
+  //   backgroundGradient:
+  //     "linear-gradient(-225deg, rgb(255, 5, 124) 0%, rgb(141, 11, 147) 50%, rgb(50, 21, 117) 100%)",
+  //   align: "center",
+  //   quoteStyle: "quotes",
+  //   paddingTop: 30,
+  //   paddingBottom: 30,
+  //   blockquoteAlign: "center",
+  //   textColor: "#FFFFFF",
+  //   content: "An inspiring quote...",
+  // },
+  // },
   edit: function edit(_ref) {
     var attributes = _ref.attributes,
         setAttributes = _ref.setAttributes;
@@ -6225,20 +6253,9 @@ var Edit = /*#__PURE__*/function (_Component) {
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
           category = _this$props.category;
-      console.log("Three post layout", this.props); // if number of post sum
-
-      if (numberOfPosts == 3 || numberOfPosts == 5) {
-        this.setState({
-          metaChoose: "primary",
-          excerpt: "primary",
-          heading: "primary"
-        });
-      } // if number of post sum
-
-
+      console.log("Three post layout", this.props);
       var heading = attributes.heading,
           author = attributes.author,
-          numberOfPosts = attributes.numberOfPosts,
           layout = attributes.layout,
           date = attributes.date,
           showTag = attributes.showTag,
@@ -6284,7 +6301,19 @@ var Edit = /*#__PURE__*/function (_Component) {
             label: catt.name
           });
         });
-      }
+      } // if number of post sum
+
+
+      if (layout_.type == 3) {
+        if (this.state.metaChoose == "secondary" || this.state.excerpt == "secondary" || this.state.heading == "secondary") {
+          this.setState({
+            metaChoose: "primary",
+            excerpt: "primary",
+            heading: "primary"
+          });
+        }
+      } // if number of post sum
+
 
       return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
         title: "Block Title",
@@ -6355,25 +6384,23 @@ var Edit = /*#__PURE__*/function (_Component) {
       }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
         title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Post Layout", "zita-blocks"),
         initialOpen: false
-      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["ToggleControl"], {
-        label: "Layout One",
-        checked: layout_.type == 1,
+      }, wp.element.createElement("div", {
+        className: "flex-section"
+      }, wp.element.createElement("p", null, "Choose Layout"), wp.element.createElement("select", {
+        value: layout_.type,
         onChange: function onChange(e) {
-          return _this2.updateObj("layout", "type", layout, 1);
+          console.log(e.target.value);
+          var value_ = parseInt(e.target.value);
+
+          _this2.updateObj("layout", "type", layout, value_);
         }
-      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["ToggleControl"], {
-        label: "Layout Two",
-        checked: layout_.type == 2,
-        onChange: function onChange(e) {
-          return _this2.updateObj("layout", "type", layout, 2);
-        }
-      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["ToggleControl"], {
-        label: "Layout Three",
-        checked: layout_.type == 3,
-        onChange: function onChange(e) {
-          return _this2.updateObj("layout", "type", layout, 3);
-        }
-      }), layout_.type == 3 && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Content Placed", "zita-blocks"))), wp.element.createElement("div", {
+      }, wp.element.createElement("option", {
+        value: "1"
+      }, "Layout One"), wp.element.createElement("option", {
+        value: "2"
+      }, "Layout Two"), wp.element.createElement("option", {
+        value: "3"
+      }, "Layout Three"))), layout_.type == 3 && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Content Placed", "zita-blocks"))), wp.element.createElement("div", {
         class: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
@@ -6407,7 +6434,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
         title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Post Title", "zita-blocks"),
         initialOpen: false
-      }, (numberOfPosts == 3 || numberOfPosts == 5) && wp.element.createElement("div", {
+      }, layout_.type != 3 && wp.element.createElement("div", {
         class: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
@@ -6496,7 +6523,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
         title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Excerpt / Content", "zita-blocks"),
         initialOpen: false
-      }, (numberOfPosts == 3 || numberOfPosts == 5) && wp.element.createElement("div", {
+      }, layout_.type != 3 && wp.element.createElement("div", {
         className: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
@@ -6580,7 +6607,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           });
         },
         options: cateGory
-      })), (numberOfPosts == 3 || numberOfPosts == 5) && wp.element.createElement("div", {
+      })), layout_.type != 3 && wp.element.createElement("div", {
         class: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
@@ -6813,7 +6840,35 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(color) {
           return _this2.updateObj("meta_style", "color", meta_style, color);
         }
-      }))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
+      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
+        title: "Next / Previous Button",
+        initialOpen: false
+      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["ToggleControl"], {
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Enable", "zita-blocks"),
+        checked: meta_style_.npEnable,
+        onChange: function onChange(e) {
+          return _this2.updateObj("meta_style", "npEnable", meta_style, e);
+        }
+      }), meta_style_.npEnable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["RangeControl"], {
+        value: meta_style_.npBgfontSize,
+        min: 1,
+        max: 30,
+        onChange: function onChange(e) {
+          _this2.updateObj("meta_style", "npBgfontSize", meta_style, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Color", "zita-blocks"))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["ColorPalette"], {
+        value: meta_style_.npColor,
+        onChange: function onChange(color) {
+          return _this2.updateObj("meta_style", "npColor", meta_style, color);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Background Color", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["ColorPicker"], {
+        color: meta_style_.npBgColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateObj("meta_style", "npBgColor", meta_style, color);
+        }
+      })))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
         className: "zita-section-post"
       }, title_.enable && wp.element.createElement("div", {
         className: "zita-block-post-title",
@@ -6846,7 +6901,25 @@ var Edit = /*#__PURE__*/function (_Component) {
         className: "column-count column-count-1"
       }, posts.map(function (post, in_) {
         return in_ != 0 && "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading2_, author2_, date2_, meta_style2_, showCate2_, excerpt2_, showTag2_, layout_);
-      })))))) : wp.element.createElement("div", null, !posts ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("No Post Found", "zita-blocks") : wp.element.createElement("div", {
+      }))))), meta_style_.npEnable && wp.element.createElement("div", {
+        className: "zita-two-post-wrapper-next-prev"
+      }, wp.element.createElement("div", {
+        style: {
+          fontSize: meta_style_.npBgfontSize,
+          color: meta_style_.npColor,
+          backgroundColor: meta_style_.npBgColor
+        }
+      }, wp.element.createElement("i", {
+        class: "fas fa-chevron-left"
+      })), wp.element.createElement("div", {
+        style: {
+          fontSize: meta_style_.npBgfontSize,
+          color: meta_style_.npColor,
+          backgroundColor: meta_style_.npBgColor
+        }
+      }, wp.element.createElement("i", {
+        class: "fas fa-chevron-right"
+      })))) : wp.element.createElement("div", null, !posts ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("No Post Found", "zita-blocks") : wp.element.createElement("div", {
         className: "post-loader"
       }, wp.element.createElement("div", {
         className: "active linear-bubble zita-block-loader"
@@ -12196,6 +12269,19 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__["registerBlockType"])("zit
   getEditWrapperProps: function getEditWrapperProps(attributes) {},
   keywords: ["service", "service-section"],
   attributes: attrSave,
+  example: {// attributes: {
+    //   backgroundType: "gradient",
+    //   backgroundGradient:
+    //     "linear-gradient(-225deg, rgb(255, 5, 124) 0%, rgb(141, 11, 147) 50%, rgb(50, 21, 117) 100%)",
+    //   align: "center",
+    //   quoteStyle: "quotes",
+    //   paddingTop: 30,
+    //   paddingBottom: 30,
+    //   blockquoteAlign: "center",
+    //   textColor: "#FFFFFF",
+    //   content: "An inspiring quote...",
+    // },
+  },
   edit: function edit(props) {
     var attributes = props.attributes,
         setAttributes = props.setAttributes;

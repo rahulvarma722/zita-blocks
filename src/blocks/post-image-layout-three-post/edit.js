@@ -139,23 +139,12 @@ class Edit extends Component {
   };
   render() {
     // ++++++++++++++===============
-
     const { posts, attributes, setAttributes, category } = this.props;
     console.log("Three post layout", this.props);
-    // if number of post sum
-    if (numberOfPosts == 3 || numberOfPosts == 5) {
-      this.setState({
-        metaChoose: "primary",
-        excerpt: "primary",
-        heading: "primary",
-      });
-    }
-    // if number of post sum
 
     let {
       heading,
       author,
-      numberOfPosts,
       layout,
       date,
       showTag,
@@ -200,6 +189,21 @@ class Edit extends Component {
         });
       });
     }
+    // if number of post sum
+    if (layout_.type == 3) {
+      if (
+        this.state.metaChoose == "secondary" ||
+        this.state.excerpt == "secondary" ||
+        this.state.heading == "secondary"
+      ) {
+        this.setState({
+          metaChoose: "primary",
+          excerpt: "primary",
+          heading: "primary",
+        });
+      }
+    }
+    // if number of post sum
     return (
       <>
         <InspectorControls>
@@ -317,7 +321,22 @@ class Edit extends Component {
             title={__("Post Layout", "zita-blocks")}
             initialOpen={false}
           >
-            <ToggleControl
+            <div className="flex-section">
+              <p>Choose Layout</p>
+              <select
+                value={layout_.type}
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  let value_ = parseInt(e.target.value);
+                  this.updateObj("layout", "type", layout, value_);
+                }}
+              >
+                <option value="1">Layout One</option>
+                <option value="2">Layout Two</option>
+                <option value="3">Layout Three</option>
+              </select>
+            </div>
+            {/* <ToggleControl
               label="Layout One"
               checked={layout_.type == 1}
               onChange={(e) => this.updateObj("layout", "type", layout, 1)}
@@ -331,7 +350,7 @@ class Edit extends Component {
               label="Layout Three"
               checked={layout_.type == 3}
               onChange={(e) => this.updateObj("layout", "type", layout, 3)}
-            />
+            /> */}
             {layout_.type == 3 && (
               <>
                 <p>
@@ -407,7 +426,7 @@ class Edit extends Component {
             title={__("Post Title", "zita-blocks")}
             initialOpen={false}
           >
-            {(numberOfPosts == 3 || numberOfPosts == 5) && (
+            {layout_.type != 3 && (
               <div class="zita-switcher-button-section">
                 <span
                   onClick={() => this.setState({ heading: "primary" })}
@@ -531,7 +550,7 @@ class Edit extends Component {
             title={__("Excerpt / Content", "zita-blocks")}
             initialOpen={false}
           >
-            {(numberOfPosts == 3 || numberOfPosts == 5) && (
+            {layout_.type != 3 && (
               <div className="zita-switcher-button-section">
                 <span
                   onClick={() => this.setState({ excerpt: "primary" })}
@@ -670,7 +689,7 @@ class Edit extends Component {
             </div>
             {/* category */}
             {/* primery and secondary */}
-            {(numberOfPosts == 3 || numberOfPosts == 5) && (
+            {layout_.type != 3 && (
               <div class="zita-switcher-button-section">
                 <span
                   onClick={() => this.setState({ metaChoose: "primary" })}
@@ -1086,6 +1105,54 @@ class Edit extends Component {
               }
             />
           </PanelBody>
+          <PanelBody title="Next / Previous Button" initialOpen={false}>
+            <ToggleControl
+              label={__("Enable", "zita-blocks")}
+              checked={meta_style_.npEnable}
+              onChange={(e) =>
+                this.updateObj("meta_style", "npEnable", meta_style, e)
+              }
+            />
+            {meta_style_.npEnable && (
+              <>
+                <p>
+                  <strong>{__("Font Size", "zita-blocks")}</strong>
+                </p>
+                <RangeControl
+                  value={meta_style_.npBgfontSize}
+                  min={1}
+                  max={30}
+                  onChange={(e) => {
+                    this.updateObj("meta_style", "npBgfontSize", meta_style, e);
+                  }}
+                />
+                <p>
+                  <strong>{__("Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPalette
+                  value={meta_style_.npColor}
+                  onChange={(color) =>
+                    this.updateObj("meta_style", "npColor", meta_style, color)
+                  }
+                />
+                <p>
+                  <strong>{__("Background Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPicker
+                  color={meta_style_.npBgColor}
+                  onChangeComplete={(colorBg) => {
+                    let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                    this.updateObj(
+                      "meta_style",
+                      "npBgColor",
+                      meta_style,
+                      color
+                    );
+                  }}
+                />
+              </>
+            )}
+          </PanelBody>
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
           <div className="zita-section-post">
@@ -1182,6 +1249,29 @@ class Edit extends Component {
                 </>
               )}
             </div>
+            {meta_style_.npEnable && (
+              <div className="zita-two-post-wrapper-next-prev">
+                {/* npBgfontSize npColor npBgColor */}
+                <div
+                  style={{
+                    fontSize: meta_style_.npBgfontSize,
+                    color: meta_style_.npColor,
+                    backgroundColor: meta_style_.npBgColor,
+                  }}
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </div>
+                <div
+                  style={{
+                    fontSize: meta_style_.npBgfontSize,
+                    color: meta_style_.npColor,
+                    backgroundColor: meta_style_.npBgColor,
+                  }}
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div>

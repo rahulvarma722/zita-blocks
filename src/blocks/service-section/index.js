@@ -138,6 +138,20 @@ registerBlockType("zita-blocks/icon-image-content", {
   getEditWrapperProps(attributes) {},
   keywords: ["service", "service-section"],
   attributes: attrSave,
+  example: {
+    // attributes: {
+    //   backgroundType: "gradient",
+    //   backgroundGradient:
+    //     "linear-gradient(-225deg, rgb(255, 5, 124) 0%, rgb(141, 11, 147) 50%, rgb(50, 21, 117) 100%)",
+    //   align: "center",
+    //   quoteStyle: "quotes",
+    //   paddingTop: 30,
+    //   paddingBottom: 30,
+    //   blockquoteAlign: "center",
+    //   textColor: "#FFFFFF",
+    //   content: "An inspiring quote...",
+    // },
+  },
   edit: (props) => {
     const { attributes, setAttributes } = props;
     const {
@@ -748,12 +762,12 @@ registerBlockType("zita-blocks/icon-image-content", {
           <div>
             <RichText.Content
               tagName="h1"
-              value={__(title,"zita-blocks")}
+              value={__(title, "zita-blocks")}
               style={{ color: titleColor, fontSize: titleFontSize + "px" }}
             />
             <RichText.Content
               tagName="p"
-              value={__(description,"zita-blocks")}
+              value={__(description, "zita-blocks")}
               style={{
                 color: descriptionColor,
                 fontSize: descriptionFontSize + "px",

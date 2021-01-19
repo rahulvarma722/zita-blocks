@@ -12,7 +12,6 @@ function zita_two_column_block($attr)
     if ($attr['thumbnail'][0]['enable']) {
         $args['meta_key'] = "_thumbnail_id";
     }
-    // "meta_key" => '_thumbnail_id'
 
     $fourAndMoreNav = [];
     if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
@@ -39,13 +38,10 @@ function zita_two_column_block($attr)
         }
     }
     $query = new WP_Query($args);
-    $currentPage = $postSetting = "";
     $totalPosts = $query->found_posts;
-    // if ($totalPosts > $attr['numberOfPosts']) {
     $pagesOfPost = ceil($totalPosts / $attr['numberOfPosts']);
     $currentPage = json_encode(array("current" => 1, "total" => $pagesOfPost));
     $postSetting = json_encode($attr);
-    // }
     $postHtml = "<div class='zita-two-col-container' style='background-color:" . $attr['meta_style'][0]['blockBgColor'] . ";'>";
     // loader
     $postHtml .= "<div class='zita-block-loader linear-bubble'>";

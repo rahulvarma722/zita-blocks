@@ -7,5 +7,6 @@ import "./blocks/zita-block-slider/script";
 import "./blocks/post-list-layout/script";
 import "./blocks/zita-post-slider/script";
 import "./blocks/post-category-layout/script";
-import "./blocks/post-image-layout/script";
 import "./blocks/post-grid-layout/script";
+import "./blocks/post-image-layout/script";
+import "./blocks/post-image-layout-three-post/script";

@@ -1,6 +1,6 @@
 <?php
 wpgt_register_block_fn('zita-post-section-three-post',  [
-    "render_callback" => "zita_section_block",
+    "render_callback" => "zita_section_block_three_post",
     'attributes' => [
         'numberOfPosts' => [
             'type' => "number",
@@ -43,6 +43,11 @@ wpgt_register_block_fn('zita-post-section-three-post',  [
             "default" => [[
                 "color" => "white",
                 "fontSize" => 12,
+                "blockBgColor" => "transparent",
+                "npEnable" => true,
+                "npColor" => '#adadad',
+                "npBgColor" => 'white',
+                "npBgfontSize" => 15,
             ]]
         ],
         "author" => [
