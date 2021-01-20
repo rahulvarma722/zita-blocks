@@ -44,42 +44,33 @@ function zita_section_block_five_post($attr)
             $postHtml .= '</h4>';
             $postHtml .= "</div>";
         }
-        $postHtml .= "<div class='parent-column-two count-3 post-three-layout-" . $attr['layout'][0]['type'] . " content-align-" . $attr['layout'][0]['contentAlign'] . "  data-setting='" . $postSetting . "' data-currentpage='" . $currentPage . "'>";
-
-        if ($attr['layout'][0]['type'] == 3) {
-            while ($query->have_posts()) {
-                $query->the_post();
-                if (get_the_post_thumbnail_url()) {
-                    $postHtml .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
-                }
+        $postHtml .= "<div class='zita-post-five-post parent-column-two count-3 post-three-layout-" . $attr['layout'][0]['type'] . " content-align-" . $attr['layout'][0]['contentAlign'] . "'  data-setting='" . $postSetting . "' data-currentpage='" . $currentPage . "'>";
+        $checkFirst = true;
+        $columnOne = '<div><div class="column-count column-count-1">';
+        $columnTwo = '<div><div class="column-count column-count-2">';
+        while ($query->have_posts()) {
+            $query->the_post();
+            if ($checkFirst) {
+                $checkFirst = false;
+                $columnOne .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+            } else {
+                $columnTwo .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
             }
-        } else {
-            $checkFirst = true;
-            $columnOne = '<div><div class="column-count column-count-1">';
-            $columnTwo = '<div><div class="column-count column-count-1">';
-            while ($query->have_posts()) {
-                $query->the_post();
-                if ($checkFirst) {
-                    $checkFirst = false;
-                    $columnOne .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
-                } else {
-                    $columnTwo .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
-                }
-            }
-            $columnOne .= "</div></div>";
-            $columnTwo .= "</div></div>";
-            $postHtml .= $columnOne;
-            $postHtml .= $columnTwo;
         }
+        $columnOne .= "</div></div>";
+        $columnTwo .= "</div></div>";
+        $postHtml .= $columnOne;
+        $postHtml .= $columnTwo;
         $postHtml .= '</div>';
+
         if ($attr['meta_style'][0]['npEnable']) {
             $keepDisable = $totalPosts <= $attr['numberOfPosts'] ? "disable" : '';
             $nextPrevStyle = "font-size:" . $attr['meta_style'][0]['npBgfontSize'] . "px;color:" . $attr['meta_style'][0]['npColor'] . ";background-color:" . $attr['meta_style'][0]['npBgColor'] . ";";
             $postHtml .= "<div class='zita-two-post-wrapper-next-prev " . $keepDisable . "'>
-                            <div style='" . $nextPrevStyle . "' class='zita-image-section-np disable prev'>
+                            <div data-section='five-post' style='" . $nextPrevStyle . "' class='zita-image-section-np disable prev'>
                                 <i class='fas fa-chevron-left'></i>
                             </div>
-                            <div style='" . $nextPrevStyle . "' class='zita-image-section-np next'>
+                            <div data-section='five-post' style='" . $nextPrevStyle . "' class='zita-image-section-np next'>
                                 <i class='fas fa-chevron-right'></i>
                             </div>
                         </div>";

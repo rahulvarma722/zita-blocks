@@ -51,7 +51,7 @@ wpgt_register_block_fn('zita-post-section-five-post',  [
                 "color" => "white",
                 "fontSize" => 12,
                 "blockBgColor" => "transparent",
-                "npEnable" => false,
+                "npEnable" => true,
                 "npColor" => '#adadad',
                 "npBgColor" => 'white',
                 "npBgfontSize" => 15,

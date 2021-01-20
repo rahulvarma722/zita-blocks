@@ -151,6 +151,9 @@
       } else if (thisBtn.data("section") == "four-post") {
         getSettingsWrapReplace = getDataWrapper.find(".zita-post-four-post");
         action = "post_image_four_post";
+      } else if (thisBtn.data("section") == "five-post") {
+        getSettingsWrapReplace = getDataWrapper.find(".zita-post-five-post");
+        action = "post_image_five_post";
       }
       let getData = getSettingsWrapReplace.data("setting");
       let trigger = thisBtn.hasClass("next") ? "next" : "prev";
