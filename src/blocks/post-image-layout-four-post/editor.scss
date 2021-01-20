@@ -1,0 +1,42 @@
+.zita-section-post {
+  .post-four-layout-2 {
+    flex-direction: row-reverse;
+  }
+  &.zita-post-four-post {
+    .column-count {
+      // display: block;
+      > div {
+        flex: 1;
+        &.column-two {
+          display: block;
+          .post-content {
+            min-height: 196px;
+          }
+          > article {
+            // max-height: 200px;
+          }
+          > div {
+            display: flex;
+            > article {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+  .post-four-layout-3 {
+    &.content-placed-outer {
+      .post-wrapper {
+        flex-direction: column;
+      }
+      .post-content {
+        min-height: unset;
+      }
+      .featured-image {
+        position: relative;
+        min-height: 322px;
+      }
+    }
+  }
+}

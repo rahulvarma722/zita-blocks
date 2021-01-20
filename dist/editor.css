@@ -1318,30 +1318,59 @@
   width: 100%;
 }
 
-.parent-column-two.content-align-center .post-content {
+.zita-section-post .content-align-center .post-content {
   justify-content: center !important;
 }
-.parent-column-two.post-three-layout-2 {
+.zita-section-post .post-three-layout-2 {
   flex-direction: row-reverse;
 }
-.parent-column-two.post-three-layout-3 > article {
+.zita-section-post .post-three-layout-3 > article {
   flex: 1;
 }
-.parent-column-two.post-three-layout-3 > article:nth-child(2) {
+.zita-section-post .post-three-layout-3 > article:nth-child(2) {
   padding: 0 10px;
 }
-.parent-column-two.post-three-layout-3.content-placed-outer .post-wrapper {
+.zita-section-post .post-three-layout-3.content-placed-outer .post-wrapper {
   flex-direction: column;
 }
-.parent-column-two.post-three-layout-3.content-placed-outer .post-content {
+.zita-section-post .post-three-layout-3.content-placed-outer .post-content {
   min-height: unset;
 }
-.parent-column-two.post-three-layout-3.content-placed-outer .featured-image {
+.zita-section-post .post-three-layout-3.content-placed-outer .featured-image {
   position: relative;
   min-height: 322px;
 }
-
-
+.zita-section-post .post-four-layout-2 {
+  flex-direction: row-reverse;
+}
+.zita-section-post.zita-post-four-post .column-count > div {
+  flex: 1;
+}
+.zita-section-post.zita-post-four-post .column-count > div.column-two {
+  display: block;
+}
+.zita-section-post.zita-post-four-post .column-count > div.column-two .post-content {
+  min-height: 196px;
+}
+.zita-section-post.zita-post-four-post .column-count > div.column-two > div {
+  display: flex;
+}
+.zita-section-post.zita-post-four-post .column-count > div.column-two > div > article {
+  display: block;
+}
+.zita-section-post .post-four-layout-3.content-placed-outer .post-wrapper {
+  flex-direction: column;
+}
+.zita-section-post .post-four-layout-3.content-placed-outer .post-content {
+  min-height: unset;
+}
+.zita-section-post .post-four-layout-3.content-placed-outer .featured-image {
+  position: relative;
+  min-height: 322px;
+}
+.zita-section-post .post-five-layout-2 {
+  flex-direction: row-reverse;
+}
 
 
 /*# sourceMappingURL=editor.css.map*/

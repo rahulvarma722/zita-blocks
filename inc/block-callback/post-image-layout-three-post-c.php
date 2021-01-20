@@ -32,7 +32,7 @@ function zita_section_block_three_post($attr)
         $postExcerptColor = $postExcerpt && $attr['excerpt'][0]['color'] ? $attr['excerpt'][0]['color'] : "";
         $postExcerpt2 = isset($attr['excerpt2'][0]['enable']) && $attr['excerpt2'][0]['enable']  ? true : false;
         $postExcerpt2Color = $postExcerpt2 && $attr['excerpt2'][0]['color'] ? $attr['excerpt2'][0]['color'] : "";
-        $postHtml = "<div class='zita-section-post zita-image-section' id='zita-section-post'>";
+        $postHtml = "<div class='zita-section-post zita-three-post-section zita-image-section' id='zita-section-post'>";
         // loader
         $postHtml .= "<div class='zita-block-loader linear-bubble'>";
         $postHtml .= "<div><span></span></div>";
@@ -79,10 +79,10 @@ function zita_section_block_three_post($attr)
             $keepDisable = $totalPosts <= $attr['numberOfPosts'] ? "disable" : '';
             $nextPrevStyle = "font-size:" . $attr['meta_style'][0]['npBgfontSize'] . "px;color:" . $attr['meta_style'][0]['npColor'] . ";background-color:" . $attr['meta_style'][0]['npBgColor'] . ";";
             $postHtml .= "<div class='zita-two-post-wrapper-next-prev " . $keepDisable . "'>
-                            <div style='" . $nextPrevStyle . "' class='zita-image-section-np disable prev'>
+                            <div data-section='three-post' style='" . $nextPrevStyle . "' class='zita-image-section-np disable prev'>
                                 <i class='fas fa-chevron-left'></i>
                             </div>
-                            <div style='" . $nextPrevStyle . "' class='zita-image-section-np next'>
+                            <div data-section='three-post' style='" . $nextPrevStyle . "' class='zita-image-section-np next'>
                                 <i class='fas fa-chevron-right'></i>
                             </div>
                         </div>";
@@ -145,7 +145,7 @@ function returnHtmlPost_three_post($cate_, $heading__, $postAuthor, $meta_, $pos
     $postHtmlCl1 .= "<a href='" . esc_url(get_the_permalink()) . "'>" . get_the_title() . "</a>";
     $postHtmlCl1 .= "</" . $heading__[0]['tag'] . ">";
     $postHtmlCl1 .= '<div class="post-meta-all">';
-    $metaStyle = "color:" . $meta_[0]['color'] . ";font-size:" . $meta_[0]['fontSize'] . ";";
+    $metaStyle = "color:" . $meta_[0]['color'] . ";font-size:" . $meta_[0]['fontSize'] . "px;";
     if ($postAuthor) {
         $postHtmlCl1 .= "<p style='" . $metaStyle . "' class='post-author'>";
         $postHtmlCl1 .= "<a target='_blank' href='" . get_author_posts_url(get_the_author_meta('ID')) . "'>";

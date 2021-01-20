@@ -1440,5 +1440,33 @@
   position: relative;
   min-height: 322px;
 }
+#zita-section-post .post-four-layout-2 {
+  flex-direction: row-reverse;
+}
+#zita-section-post.zita-post-four-post .column-count > div {
+  flex: 1;
+}
+#zita-section-post.zita-post-four-post .column-count > div.column-two {
+  display: block;
+}
+#zita-section-post.zita-post-four-post .column-count > div.column-two .post-content {
+  min-height: 196px;
+}
+#zita-section-post.zita-post-four-post .column-count > div.column-two > div {
+  display: flex;
+}
+#zita-section-post.zita-post-four-post .column-count > div.column-two > div > article {
+  display: block;
+}
+#zita-section-post .post-four-layout-3.content-placed-outer .post-wrapper {
+  flex-direction: column;
+}
+#zita-section-post .post-four-layout-3.content-placed-outer .post-content {
+  min-height: unset;
+}
+#zita-section-post .post-four-layout-3.content-placed-outer .featured-image {
+  position: relative;
+  min-height: 322px;
+}
 
 /*# sourceMappingURL=script.css.map*/

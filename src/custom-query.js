@@ -40,7 +40,7 @@
         loader_.addClass("active");
         let returnData = fns._ajaxFunction(data_);
         returnData.success(function (response) {
-          console.log("response3->" + response);
+          // console.log("response3->" + response);
           // response
           loader_.removeClass("active");
           let nxtPrev = thisBtn.closest(".zita-two-post-wrapper-next-prev");
@@ -140,16 +140,23 @@
         // has class active li
       }
     },
-    zita_post_next_prev: function () {
+    zita_post_next_prev_img: function () {
       let thisBtn = $(this);
       let getDataWrapper = thisBtn.closest(".zita-image-section");
-      let getData = getDataWrapper.find(".parent-column-two").data("setting");
+      let getSettingsWrapReplace = "",
+        action = "";
+      if (thisBtn.data("section") == "three-post") {
+        getSettingsWrapReplace = getDataWrapper.find(".parent-column-two");
+        action = "post_image_three_post";
+      } else if (thisBtn.data("section") == "four-post") {
+        getSettingsWrapReplace = getDataWrapper.find(".zita-post-four-post");
+        action = "post_image_four_post";
+      }
+      let getData = getSettingsWrapReplace.data("setting");
       let trigger = thisBtn.hasClass("next") ? "next" : "prev";
-      let currentPage = getDataWrapper
-        .find(".parent-column-two")
-        .attr("data-currentpage");
+      let currentPage = getSettingsWrapReplace.attr("data-currentpage");
       let data_ = {
-        action: "post_image_three_post",
+        action: action,
         attr: getData,
         trigger: trigger,
       };
@@ -161,12 +168,11 @@
         (trigger == "prev" || currentPage.total >= currentPage.current + 1)
       ) {
         data_["page"] = currentPage.current;
-        console.log(data_);
         let loader_ = getDataWrapper.find(".zita-block-loader");
         loader_.addClass("active");
         let returnData = fns._ajaxFunction(data_);
         returnData.success(function (response) {
-          console.log("response3->" + response);
+          // console.log("response3->" + response);
           // response
           loader_.removeClass("active");
           let nxtPrev = thisBtn.closest(".zita-two-post-wrapper-next-prev");
@@ -186,10 +192,8 @@
             current: string_fy,
             total: currentPage.total,
           });
-          getDataWrapper
-            .find(".parent-column-two")
-            .attr("data-currentpage", string_fy);
-          getDataWrapper.find(".parent-column-two").html(response);
+          getSettingsWrapReplace.attr("data-currentpage", string_fy);
+          getSettingsWrapReplace.html(response);
           // response
         });
       }
@@ -208,7 +212,7 @@
       $(document).on(
         "click",
         ".zita-two-post-wrapper-next-prev:not('.disable') .zita-image-section-np:not('.disable')",
-        fns.zita_post_next_prev
+        fns.zita_post_next_prev_img
       );
     },
   };

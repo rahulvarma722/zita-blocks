@@ -34,3 +34,5 @@ include "block-callback/post-category-layout-c.php";
 include "block-callback/post-grid-layout-c.php";
 include "block-callback/post-image-layout-c.php";
 include "block-callback/post-image-layout-three-post-c.php";
+include "block-callback/post-image-layout-four-post-c.php";
+include "block-callback/post-image-layout-five-post-c.php";

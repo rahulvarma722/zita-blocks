@@ -140,7 +140,7 @@ class Edit extends Component {
   render() {
     // ++++++++++++++===============
     const { posts, attributes, setAttributes, category } = this.props;
-    console.log("Three post layout", this.props);
+    // console.log("Three post layout", this.props);
 
     let {
       heading,
@@ -336,21 +336,6 @@ class Edit extends Component {
                 <option value="3">Layout Three</option>
               </select>
             </div>
-            {/* <ToggleControl
-              label="Layout One"
-              checked={layout_.type == 1}
-              onChange={(e) => this.updateObj("layout", "type", layout, 1)}
-            />
-            <ToggleControl
-              label="Layout Two"
-              checked={layout_.type == 2}
-              onChange={(e) => this.updateObj("layout", "type", layout, 2)}
-            />
-            <ToggleControl
-              label="Layout Three"
-              checked={layout_.type == 3}
-              onChange={(e) => this.updateObj("layout", "type", layout, 3)}
-            /> */}
             {layout_.type == 3 && (
               <>
                 <p>

@@ -13,7 +13,7 @@ wpgt_register_block_fn('zita-post-section-three-post',  [
                 "contentPlace" => "inner",
                 "contentAlign" => "bottom",
                 "overlayColor" => "transparent",
-                "contentBgColor" => "black",
+                // "contentBgColor" => "black",
             ]]
         ],
         "title" => [

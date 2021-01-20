@@ -143,20 +143,20 @@ class Edit extends Component {
     const { posts, attributes, setAttributes, category } = this.props;
     // console.log("this.props", this.props);
     // if number of post sum
-    if (numberOfPosts == 3 || numberOfPosts == 5) {
-      this.setState({
-        metaChoose: "primary",
-        excerpt: "primary",
-        heading: "primary",
-      });
-    }
+    // if (numberOfPosts == 3 || numberOfPosts == 5) {
+    //   this.setState({
+    //     metaChoose: "primary",
+    //     excerpt: "primary",
+    //     heading: "primary",
+    //   });
+    // }
     // if number of post sum
 
     let {
       heading,
       author,
       numberOfPosts,
-      thumbnail,
+      layout,
       date,
       showTag,
       showCate,
@@ -174,7 +174,6 @@ class Edit extends Component {
       author2,
     } = attributes;
     let heading_ = heading[0];
-    let thumbnail_ = thumbnail[0];
     let excerpt_ = excerpt[0];
     let date_ = date[0];
     let author_ = author[0];
@@ -191,6 +190,7 @@ class Edit extends Component {
     let date2_ = date2[0];
     let author2_ = author2[0];
     // category init
+    let layout_ = layout[0];
     let cateGory = [{ value: "all", label: "All" }];
     if (category && category.length) {
       category.map((catt) => {
@@ -313,27 +313,101 @@ class Edit extends Component {
               </>
             )}
           </PanelBody>
-          {/* <PanelBody
+          <PanelBody
             title={__("Post Layout", "zita-blocks")}
             initialOpen={false}
           >
+            <div className="flex-section">
+              <p>Choose Layout</p>
+              <select
+                value={layout_.type}
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  let value_ = parseInt(e.target.value);
+                  this.updateObj("layout", "type", layout, value_);
+                }}
+              >
+                <option value="1">Layout One</option>
+                <option value="2">Layout Two</option>
+                <option value="3">Layout Three</option>
+              </select>
+            </div>
+            {layout_.type == 3 && (
+              <>
+                <p>
+                  <strong>{__("Content Placed", "zita-blocks")}</strong>
+                </p>
+                <div class="zita-switcher-button-section">
+                  <span
+                    onClick={() =>
+                      this.updateObj("layout", "contentPlace", layout, "inner")
+                    }
+                    className={
+                      layout_.contentPlace == "inner" ? "selected" : ""
+                    }
+                  >
+                    {__("Inner", "zita-blocks")}
+                  </span>
+                  <span
+                    onClick={() =>
+                      this.updateObj("layout", "contentPlace", layout, "outer")
+                    }
+                    className={
+                      layout_.contentPlace == "outer" ? "selected" : ""
+                    }
+                  >
+                    {__("Outer", "zita-blocks")}
+                  </span>
+                </div>
+              </>
+            )}
+            {(layout_.type == 2 ||
+              layout_.type == 1 ||
+              (layout_.type == 3 && layout_.contentPlace == "inner")) && (
+              <>
+                <p>
+                  <strong>{__("Content Alignment", "zita-blocks")}</strong>
+                </p>
+                <div class="zita-switcher-button-section">
+                  <span
+                    onClick={() =>
+                      this.updateObj("layout", "contentAlign", layout, "center")
+                    }
+                    className={
+                      layout_.contentAlign == "center" ? "selected" : ""
+                    }
+                  >
+                    {__("Center", "zita-blocks")}
+                  </span>
+                  <span
+                    onClick={() =>
+                      this.updateObj("layout", "contentAlign", layout, "bottom")
+                    }
+                    className={
+                      layout_.contentAlign == "bottom" ? "selected" : ""
+                    }
+                  >
+                    {__("Bottom", "zita-blocks")}
+                  </span>
+                </div>
+              </>
+            )}
             <p>
-              <strong>{__("Number of Post Display", "zita-blocks")}</strong>
+              <strong>{__("Image Overlay Color", "zita-blocks")}</strong>
             </p>
-            <RangeControl
-              value={numberOfPosts}
-              min={1}
-              max={6}
-              onChange={(e) => {
-                setAttributes({ numberOfPosts: e });
+            <ColorPicker
+              color={layout_.overlayColor}
+              onChangeComplete={(colorBg) => {
+                let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                this.updateObj("layout", "overlayColor", layout, color);
               }}
             />
-          </PanelBody> */}
+          </PanelBody>
           <PanelBody
             title={__("Post Title", "zita-blocks")}
             initialOpen={false}
           >
-            {(numberOfPosts == 3 || numberOfPosts == 5) && (
+            {layout_.type !== 3 && (
               <div class="zita-switcher-button-section">
                 <span
                   onClick={() => this.setState({ heading: "primary" })}
@@ -457,7 +531,7 @@ class Edit extends Component {
             title={__("Excerpt / Content", "zita-blocks")}
             initialOpen={false}
           >
-            {(numberOfPosts == 3 || numberOfPosts == 5) && (
+            {layout_.type !== 3 && (
               <div className="zita-switcher-button-section">
                 <span
                   onClick={() => this.setState({ excerpt: "primary" })}
@@ -596,7 +670,7 @@ class Edit extends Component {
             </div>
             {/* category */}
             {/* primery and secondary */}
-            {(numberOfPosts == 3 || numberOfPosts == 5) && (
+            {layout_.type !== 3 && (
               <div class="zita-switcher-button-section">
                 <span
                   onClick={() => this.setState({ metaChoose: "primary" })}
@@ -1012,9 +1086,57 @@ class Edit extends Component {
               }
             />
           </PanelBody>
+          <PanelBody title="Next / Previous Button" initialOpen={false}>
+            <ToggleControl
+              label={__("Enable", "zita-blocks")}
+              checked={meta_style_.npEnable}
+              onChange={(e) =>
+                this.updateObj("meta_style", "npEnable", meta_style, e)
+              }
+            />
+            {meta_style_.npEnable && (
+              <>
+                <p>
+                  <strong>{__("Font Size", "zita-blocks")}</strong>
+                </p>
+                <RangeControl
+                  value={meta_style_.npBgfontSize}
+                  min={1}
+                  max={30}
+                  onChange={(e) => {
+                    this.updateObj("meta_style", "npBgfontSize", meta_style, e);
+                  }}
+                />
+                <p>
+                  <strong>{__("Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPalette
+                  value={meta_style_.npColor}
+                  onChange={(color) =>
+                    this.updateObj("meta_style", "npColor", meta_style, color)
+                  }
+                />
+                <p>
+                  <strong>{__("Background Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPicker
+                  color={meta_style_.npBgColor}
+                  onChangeComplete={(colorBg) => {
+                    let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                    this.updateObj(
+                      "meta_style",
+                      "npBgColor",
+                      meta_style,
+                      color
+                    );
+                  }}
+                />
+              </>
+            )}
+          </PanelBody>
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
-          <div className="zita-section-post">
+          <div className="zita-section-post zita-post-four-post">
             {title_.enable && (
               <div
                 className="zita-block-post-title"
@@ -1039,20 +1161,11 @@ class Edit extends Component {
                 />
               </div>
             )}
-            {(posts.length == 1 ||
-              posts.length == 2 ||
-              posts.length == 4 ||
-              posts.length == 6) && (
-              <div
-                className={`column-count column-count-${
-                  posts.length == 2 || posts.length == 4
-                    ? 2
-                    : posts.length == 6
-                    ? 3
-                    : 1
-                }`}
-              >
-                {posts.map((post) => {
+            <div
+              className={`column-count column-count-2 post-four-layout-${layout_.type} content-align-${layout_.contentAlign} content-placed-${layout_.contentPlace}`}
+            >
+              {layout_.type == 3 ? (
+                posts.map((post) => {
                   return (
                     "getMedia_" in post &&
                     post.getMedia_ &&
@@ -1063,23 +1176,16 @@ class Edit extends Component {
                       author_,
                       date_,
                       meta_style_,
-                      thumbnail_,
                       showCate_,
                       excerpt_,
-                      showTag_
+                      showTag_,
+                      layout_
                     )
                   );
-                })}
-              </div>
-            )}
-            {(posts.length == 3 || posts.length == 5) && (
-              <div
-                className={`parent-column-two count-${
-                  posts.length == 3 ? 3 : 5
-                }`}
-              >
-                <div>
-                  <div className="column-count column-count-1">
+                })
+              ) : (
+                <>
+                  <div className="column-one">
                     {"getMedia_" in posts[0] &&
                       posts[0].getMedia_ &&
                       "guid" in posts[0].getMedia_ &&
@@ -1089,39 +1195,77 @@ class Edit extends Component {
                         author_,
                         date_,
                         meta_style_,
-                        thumbnail_,
                         showCate_,
                         excerpt_,
-                        showTag_
+                        showTag_,
+                        layout_
                       )}
                   </div>
-                </div>
-                <div>
-                  <div
-                    className={`column-count column-count-${
-                      posts.length == 3 ? 1 : 2
-                    }`}
-                  >
-                    {posts.map((post, in_) => {
-                      return (
-                        in_ != 0 &&
-                        "getMedia_" in post &&
-                        post.getMedia_ &&
-                        "guid" in post.getMedia_ &&
-                        this.returnHtml(
-                          post,
-                          heading2_,
-                          author2_,
-                          date2_,
-                          meta_style2_,
-                          thumbnail_,
-                          showCate2_,
-                          excerpt2_,
-                          showTag2_
-                        )
-                      );
-                    })}
+                  <div className="column-two">
+                    {posts.length >= 1 &&
+                      "getMedia_" in posts[1] &&
+                      posts[1].getMedia_ &&
+                      "guid" in posts[1].getMedia_ &&
+                      this.returnHtml(
+                        posts[1],
+                        heading2_,
+                        author2_,
+                        date2_,
+                        meta_style2_,
+                        showCate2_,
+                        excerpt2_,
+                        showTag2_,
+                        layout_
+                      )}
+                    <div>
+                      {posts.length >= 2 &&
+                        "getMedia_" in posts[1] &&
+                        posts[1].getMedia_ &&
+                        "guid" in posts[1].getMedia_ &&
+                        posts.map((post, in_) => {
+                          return (
+                            in_ >= 2 &&
+                            "getMedia_" in post &&
+                            post.getMedia_ &&
+                            "guid" in post.getMedia_ &&
+                            this.returnHtml(
+                              post,
+                              heading2_,
+                              author2_,
+                              date2_,
+                              meta_style2_,
+                              showCate2_,
+                              excerpt2_,
+                              showTag2_,
+                              layout_
+                            )
+                          );
+                        })}
+                    </div>
                   </div>
+                </>
+              )}
+            </div>
+            {meta_style_.npEnable && (
+              <div className="zita-two-post-wrapper-next-prev">
+                {/* npBgfontSize npColor npBgColor */}
+                <div
+                  style={{
+                    fontSize: meta_style_.npBgfontSize,
+                    color: meta_style_.npColor,
+                    backgroundColor: meta_style_.npBgColor,
+                  }}
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </div>
+                <div
+                  style={{
+                    fontSize: meta_style_.npBgfontSize,
+                    color: meta_style_.npColor,
+                    backgroundColor: meta_style_.npBgColor,
+                  }}
+                >
+                  <i class="fas fa-chevron-right"></i>
                 </div>
               </div>
             )}
@@ -1152,10 +1296,10 @@ class Edit extends Component {
     author_,
     date_,
     meta_style_,
-    thumbnail_,
     showCate_,
     excerpt_,
-    showTag_
+    showTag_,
+    layout_
   ) => {
     let postAuthor =
       author_ && author_.enable && "name" in this.authorFn(post.author)
@@ -1164,18 +1308,13 @@ class Edit extends Component {
     return (
       <article className="block-post-article" key={post.id}>
         <div className="post-wrapper">
-          {/* {"getMedia_" in post &&
-            post.getMedia_ &&
-            "guid" in post.getMedia_ &&
-            thumbnail_.enable && (
-              <div className="featured-image">
-                <img src={post.getMedia_.guid.rendered} />
-              </div>
-            )} */}
           <div className="featured-image">
             <img src={post.getMedia_.guid.rendered} />
           </div>
-          <div className="post-content">
+          <div
+            className="post-content"
+            style={{ backgroundColor: layout_.overlayColor }}
+          >
             {showCate_ && showCate_.enable && (
               <p className="post-category">
                 {this.showCateFn(post.categories, showCate_)}

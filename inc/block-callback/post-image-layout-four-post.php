@@ -1,6 +1,6 @@
 <?php
 wpgt_register_block_fn('zita-post-section-four-post',  [
-    "render_callback" => "zita_section_block",
+    "render_callback" => "zita_section_block_four_post",
     'attributes' => [
         'numberOfPosts' => [
             'type' => "number",
@@ -20,13 +20,23 @@ wpgt_register_block_fn('zita-post-section-four-post',  [
                 "fontWeight" => 400
             ]]
         ],
-        "thumbnail" => [
+        "layout" => [
             "type" => "array",
             "default" => [[
-                "enable" => true,
-                "borderRadius" => 10
+                "type" => 1,
+                "contentPlace" => "inner",
+                "contentAlign" => "bottom",
+                "overlayColor" => "transparent",
+                // "contentBgColor" => "black",
             ]]
         ],
+        // "thumbnail" => [
+        //     "type" => "array",
+        //     "default" => [[
+        //         "enable" => true,
+        //         "borderRadius" => 10
+        //     ]]
+        // ],
         'heading' => [
             'type' => "array",
             "default" => [[
@@ -40,7 +50,11 @@ wpgt_register_block_fn('zita-post-section-four-post',  [
             "default" => [[
                 "color" => "white",
                 "fontSize" => 12,
-                // "left_border" => true
+                "blockBgColor" => "transparent",
+                "npEnable" => false,
+                "npColor" => '#adadad',
+                "npBgColor" => 'white',
+                "npBgfontSize" => 15,
             ]]
         ],
         "author" => [
@@ -103,7 +117,7 @@ wpgt_register_block_fn('zita-post-section-four-post',  [
         'excerpt2' => [
             'type' => "array",
             "default" => [[
-                "enable" => true,
+                "enable" => false,
                 "words" => 10,
                 "color" => 'white',
                 "fontSize" => 12
@@ -117,7 +131,7 @@ wpgt_register_block_fn('zita-post-section-four-post',  [
             "type" => "array",
             "default" => [[
                 "enable" => true,
-                "last_modified" => true
+                "last_modified" => false
             ]]
         ],
         'showCate2' => [
