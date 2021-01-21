@@ -145,15 +145,22 @@
       let getDataWrapper = thisBtn.closest(".zita-image-section");
       let getSettingsWrapReplace = "",
         action = "";
-      if (thisBtn.data("section") == "three-post") {
+      let getSEction = thisBtn.data("section");
+      if (getSEction == "three-post") {
         getSettingsWrapReplace = getDataWrapper.find(".parent-column-two");
         action = "post_image_three_post";
-      } else if (thisBtn.data("section") == "four-post") {
+      } else if (getSEction == "four-post") {
         getSettingsWrapReplace = getDataWrapper.find(".zita-post-four-post");
         action = "post_image_four_post";
-      } else if (thisBtn.data("section") == "five-post") {
+      } else if (getSEction == "five-post") {
         getSettingsWrapReplace = getDataWrapper.find(".zita-post-five-post");
         action = "post_image_five_post";
+      } else if (getSEction == "list-post") {
+        getSettingsWrapReplace = getDataWrapper.find(".list-layout-section");
+        action = "zita_post_layout_list";
+      } else if (getSEction == "grid-post") {
+        getSettingsWrapReplace = getDataWrapper.find(".grid-layout-section");
+        action = "zita_post_layout_grid";
       }
       let getData = getSettingsWrapReplace.data("setting");
       let trigger = thisBtn.hasClass("next") ? "next" : "prev";

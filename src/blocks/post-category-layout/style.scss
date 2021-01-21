@@ -242,6 +242,17 @@
   &.disable {
     display: none;
   }
+  .paginationNumbers {
+    display: flex;
+    > div {
+      border: 1px solid;
+      margin: 7px;
+      padding: 4px 8px;
+      color: #adadad;
+      line-height: 1;
+      cursor: pointer;
+    }
+  }
   > div {
     border: 1px solid;
     margin: 7px;

@@ -1,5 +1,6 @@
 #zita-block-post {
-  * {
+    position: relative;
+    * :not(i) {
     font-family: "Catamaran-Regular", sans-serif;
     -webkit-font-smoothing: initial;
   }
@@ -67,6 +68,7 @@
       width: 100%;
       position: relative;
       height: 168px;
+      margin-bottom: 6px;
       img {
         position: absolute;
         top: 0;

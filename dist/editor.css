@@ -821,6 +821,7 @@
   width: 100%;
   position: relative;
   height: 168px;
+  margin-bottom: 6px;
 }
 .zita-block-post .column-count:not(.column-count-1) .featured-image img {
   position: absolute;

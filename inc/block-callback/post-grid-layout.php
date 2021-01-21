@@ -50,7 +50,11 @@ wpgt_register_block_fn('zita-post-grid',  [
                 "color" => "white",
                 "left_border" => false,
                 "fontSize" => 11,
-                "blockBgColor" => 'transparent'
+                "blockBgColor" => 'transparent',
+                "npEnable" => true,
+                "npColor" => '#adadad',
+                "npBgColor" => 'white',
+                "npBgfontSize" => 15,
             ]]
         ],
         "author" => [

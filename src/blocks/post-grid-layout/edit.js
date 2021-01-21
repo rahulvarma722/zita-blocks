@@ -657,6 +657,54 @@ class Edit extends Component {
               </>
             )}
           </PanelBody>
+          <PanelBody title="Next / Previous Button" initialOpen={false}>
+            <ToggleControl
+              label={__("Enable", "zita-blocks")}
+              checked={meta_style_.npEnable}
+              onChange={(e) =>
+                this.updateObj("meta_style", "npEnable", meta_style, e)
+              }
+            />
+            {meta_style_.npEnable && (
+              <>
+                <p>
+                  <strong>{__("Font Size", "zita-blocks")}</strong>
+                </p>
+                <RangeControl
+                  value={meta_style_.npBgfontSize}
+                  min={1}
+                  max={30}
+                  onChange={(e) => {
+                    this.updateObj("meta_style", "npBgfontSize", meta_style, e);
+                  }}
+                />
+                <p>
+                  <strong>{__("Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPalette
+                  value={meta_style_.npColor}
+                  onChange={(color) =>
+                    this.updateObj("meta_style", "npColor", meta_style, color)
+                  }
+                />
+                <p>
+                  <strong>{__("Background Color", "zita-blocks")}</strong>
+                </p>
+                <ColorPicker
+                  color={meta_style_.npBgColor}
+                  onChangeComplete={(colorBg) => {
+                    let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                    this.updateObj(
+                      "meta_style",
+                      "npBgColor",
+                      meta_style,
+                      color
+                    );
+                  }}
+                />
+              </>
+            )}
+          </PanelBody>
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
           <div
@@ -931,6 +979,29 @@ class Edit extends Component {
                 );
               })}
             </div>
+            {meta_style_.npEnable && (
+              <div className="zita-two-post-wrapper-next-prev">
+                {/* npBgfontSize npColor npBgColor */}
+                <div
+                  style={{
+                    fontSize: meta_style_.npBgfontSize,
+                    color: meta_style_.npColor,
+                    backgroundColor: meta_style_.npBgColor,
+                  }}
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </div>
+                <div
+                  style={{
+                    fontSize: meta_style_.npBgfontSize,
+                    color: meta_style_.npColor,
+                    backgroundColor: meta_style_.npBgColor,
+                  }}
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div>
