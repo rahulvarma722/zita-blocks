@@ -251,6 +251,10 @@
       color: #adadad;
       line-height: 1;
       cursor: pointer;
+      &.disable {
+        opacity: 0.5;
+        cursor: default;
+      }
     }
   }
   > div {

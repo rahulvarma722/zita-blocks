@@ -1179,6 +1179,10 @@
   line-height: 1;
   cursor: pointer;
 }
+.zita-two-post-wrapper-next-prev .paginationNumbers > div.disable {
+  opacity: 0.5;
+  cursor: default;
+}
 .zita-two-post-wrapper-next-prev > div {
   border: 1px solid;
   margin: 7px;

@@ -26,6 +26,7 @@ registerBlockType("zita-blocks/block-column-parent", {
       default: "",
     },
   },
+  // example: () => {},
   edit: (props) => {
     const { className, attributes, setAttributes } = props;
     const { columns, fullWidth } = attributes;

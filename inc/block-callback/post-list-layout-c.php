@@ -58,11 +58,24 @@ function mytheme_blocks_render_latest_post_block($attr)
         if ($attr['meta_style'][0]['npEnable']) {
             $keepDisable = $totalPosts <= $attr['numberOfPosts'] ? "disable" : '';
             $nextPrevStyle = "font-size:" . $attr['meta_style'][0]['npBgfontSize'] . "px;color:" . $attr['meta_style'][0]['npColor'] . ";background-color:" . $attr['meta_style'][0]['npBgColor'] . ";";
-            $paginationLink = '<section class="paginationNumbers">';
-            for ($it = 1; $it <= $pagesOfPost; $it++) {
-                $paginationLink .= '<div class="zita-image-section-np pagination" data-page="' . $it . '" style="' . $nextPrevStyle . '">' . $it . '</div>';
+
+            $paginationLink = '';
+            if ($attr['meta_style'][0]['npPagination']) {
+                $paginationLink .= '<section class="paginationNumbers">';
+                $pagesOfPost = $pagesOfPost < 4 ? $pagesOfPost : 4;
+                for ($it = 1; $it < $pagesOfPost; $it++) {
+                    $disabled_ = "";
+                    if ($it == 1) {
+                        $disabled_ = "disable";
+                    }
+                    $paginationLink .= '<div class="zita-image-section-np ' . $disabled_ . ' pagination" data-page="' . $it . '" style="' . $nextPrevStyle . '">' . $it . '</div>';
+                }
+                if ($pagesOfPost >= 4) {
+                    $paginationLink .= '<div class="dots pagination" ><span>...</span></div>';
+                    $paginationLink .= '<div class="zita-image-section-np pagination" data-page="' . $pagesOfPost . '" style="' . $nextPrevStyle . '">' . $pagesOfPost . '</div>';
+                }
+                $paginationLink .= '</section>';
             }
-            $paginationLink .= '</section>';
             $postHtml .= "<div class='zita-two-post-wrapper-next-prev " . $keepDisable . "'>
                             <div data-section='list-post' style='" . $nextPrevStyle . "' class='zita-image-section-np disable prev'>
                                 <i class='fas fa-chevron-left'></i>
@@ -74,7 +87,6 @@ function mytheme_blocks_render_latest_post_block($attr)
                         </div>";
         }
         $postHtml .= "</div>";
-        // echo "</pre>";
         wp_reset_postdata();
         return $postChecker ? $postHtml : false;
     } else {
@@ -175,7 +187,7 @@ function returnHtmlListPost($cate_, $heading__, $postAuthor, $meta_, $postDate, 
         $postHtmlCl1 .= "</p>";
     }
     // tags
-    if (isset($tags_[0]['enable']) && $tags_[0]['enable']) {
+    if (isset($tags_[0]['enable']) && $tags_[0]['enable'] == "true") {
         $tags = get_the_tags(get_the_ID());
         $postHtmlCl1 .= '<p class="post-tags">';
         if (!empty($tags)) {

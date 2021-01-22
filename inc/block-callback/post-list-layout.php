@@ -60,6 +60,7 @@ wpgt_register_block_fn('zita-post',  [
                 "imageAlign" => "center",
                 "fontSize" => 11,
                 "blockBgColor" => 'transparent',
+                "npPagination" => true,
                 "npEnable" => true,
                 "npColor" => '#adadad',
                 "npBgColor" => 'white',

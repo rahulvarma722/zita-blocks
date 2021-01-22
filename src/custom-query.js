@@ -146,6 +146,22 @@
       let getSettingsWrapReplace = "",
         action = "";
       let getSEction = thisBtn.data("section");
+      let trigger = thisBtn.hasClass("next") ? "next" : "prev";
+      let nextPREvcontainer = thisBtn.closest(
+        ".zita-two-post-wrapper-next-prev"
+      );
+      // pagination function
+      let pagNo = "";
+      if (thisBtn.hasClass("pagination")) {
+        trigger = "pagination";
+        pagNo = parseInt(thisBtn.attr("data-page"));
+        getSEction = thisBtn
+          .closest(".zita-two-post-wrapper-next-prev")
+          .find(".zita-image-section-np.prev")
+          .attr("data-section");
+      }
+      // pagination function
+
       if (getSEction == "three-post") {
         getSettingsWrapReplace = getDataWrapper.find(".parent-column-two");
         action = "post_image_three_post";
@@ -163,19 +179,25 @@
         action = "zita_post_layout_grid";
       }
       let getData = getSettingsWrapReplace.data("setting");
-      let trigger = thisBtn.hasClass("next") ? "next" : "prev";
       let currentPage = getSettingsWrapReplace.attr("data-currentpage");
       let data_ = {
         action: action,
         attr: getData,
         trigger: trigger,
       };
+      // pagination function
+      if (pagNo) {
+        data_["page_no"] = pagNo;
+      }
+      // pagination function
       currentPage = JSON.parse(currentPage);
       if (
         currentPage &&
         "current" in currentPage &&
         currentPage.current > 0 &&
-        (trigger == "prev" || currentPage.total >= currentPage.current + 1)
+        (trigger == "prev" ||
+          currentPage.total >= currentPage.current + 1 ||
+          pagNo)
       ) {
         data_["page"] = currentPage.current;
         let loader_ = getDataWrapper.find(".zita-block-loader");
@@ -185,18 +207,116 @@
           // console.log("response3->" + response);
           // response
           loader_.removeClass("active");
-          let nxtPrev = thisBtn.closest(".zita-two-post-wrapper-next-prev");
-          nxtPrev.find(".zita-image-section-np").removeClass("disable");
+          nextPREvcontainer
+            .find(".zita-image-section-np")
+            .removeClass("disable");
           let string_fy =
             currentPage.current == 1 && trigger == "prev"
               ? 1
+              : pagNo
+              ? pagNo
               : trigger == "next"
               ? currentPage.current + 1
               : currentPage.current - 1;
+          // pagination function
+          let paginationPage = nextPREvcontainer.find(".paginationNumbers");
+          if (paginationPage.length) {
+            totaPageNo = parseInt(currentPage.total);
+            let htmlPagination = "";
+            const checkStrFy = (number1, number2) => {
+              return number1 == number2 ? "disable" : "";
+            };
+            if (string_fy == 1 || string_fy == 2) {
+              htmlPagination +=
+                '<div class="zita-image-section-np ' +
+                checkStrFy(string_fy, 1) +
+                ' pagination" data-page="1">1</div>';
+              htmlPagination +=
+                '<div class="zita-image-section-np ' +
+                checkStrFy(string_fy, 2) +
+                ' pagination" data-page="2">2</div>';
+              if (totaPageNo >= 3) {
+                htmlPagination +=
+                  '<div class="zita-image-section-np ' +
+                  checkStrFy(string_fy, 3) +
+                  ' pagination" data-page="3">3</div>';
+                if (totaPageNo >= 4) {
+                  htmlPagination += '<div class="dots pagination" >...</div>';
+                  htmlPagination +=
+                    '<div class="zita-image-section-np ' +
+                    checkStrFy(string_fy, totaPageNo) +
+                    ' pagination" data-page="' +
+                    totaPageNo +
+                    '">' +
+                    totaPageNo +
+                    "</div>";
+                }
+              }
+            } else if (string_fy >= 3) {
+              htmlPagination +=
+                '<div class="zita-image-section-np ' +
+                checkStrFy(string_fy, 1) +
+                ' pagination" data-page="1">1</div>';
+              htmlPagination += '<div class="dots pagination" >...</div>';
+              let strngifyMinus = string_fy - 1;
+              let strngifyPlus = string_fy + 1;
+              htmlPagination +=
+                '<div class="zita-image-section-np ' +
+                checkStrFy(string_fy, strngifyMinus) +
+                ' pagination" data-page="' +
+                strngifyMinus +
+                '">' +
+                strngifyMinus +
+                "</div>";
+              htmlPagination +=
+                '<div class="zita-image-section-np ' +
+                checkStrFy(string_fy, string_fy) +
+                ' pagination" data-page="' +
+                string_fy +
+                '">' +
+                string_fy +
+                "</div>";
+              if (totaPageNo >= strngifyPlus) {
+                htmlPagination +=
+                  '<div class="zita-image-section-np total ' +
+                  checkStrFy(string_fy, strngifyPlus) +
+                  ' pagination" data-page="' +
+                  strngifyPlus +
+                  '">' +
+                  strngifyPlus +
+                  "</div>";
+              }
+              if (totaPageNo > 5) {
+                htmlPagination += '<div class="dots pagination" >...</div>';
+                htmlPagination +=
+                  '<div class="zita-image-section-np ' +
+                  checkStrFy(string_fy, totaPageNo) +
+                  ' pagination" data-page="' +
+                  totaPageNo +
+                  '">' +
+                  totaPageNo +
+                  "</div>";
+              }
+            }
+            paginationPage.html(htmlPagination);
+            let style_pagination = nextPREvcontainer
+              .find(".zita-image-section-np.prev")
+              .attr("style");
+            if (style_pagination) {
+              paginationPage
+                .find(".zita-image-section-np")
+                .attr("style", style_pagination);
+            }
+          }
+          // pagination function
           if (string_fy == 1) {
-            nxtPrev.find(".zita-image-section-np.prev").addClass("disable");
+            nextPREvcontainer
+              .find(".zita-image-section-np.prev")
+              .addClass("disable");
           } else if (string_fy == currentPage.total) {
-            nxtPrev.find(".zita-image-section-np.next").addClass("disable");
+            nextPREvcontainer
+              .find(".zita-image-section-np.next")
+              .addClass("disable");
           }
           string_fy = JSON.stringify({
             current: string_fy,

@@ -51,6 +51,7 @@ wpgt_register_block_fn('zita-post-grid',  [
                 "left_border" => false,
                 "fontSize" => 11,
                 "blockBgColor" => 'transparent',
+                "npPagination" => true,
                 "npEnable" => true,
                 "npColor" => '#adadad',
                 "npBgColor" => 'white',

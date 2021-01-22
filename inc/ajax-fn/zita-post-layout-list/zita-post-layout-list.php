@@ -3,6 +3,10 @@ function zita_post_layout_list()
 {
     $attr = $_POST['attr'];
     $pageNo = $_POST['trigger'] == "next" ? $_POST['page'] + 1 : $_POST['page'] - 1;
+
+    if(isset($_POST['page_no'])){
+        $pageNo = $_POST['page_no'];
+    }
     $args = [
         'post_type' => 'post',
         "posts_per_page" => $attr['numberOfPosts'],

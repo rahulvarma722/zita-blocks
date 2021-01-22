@@ -743,6 +743,16 @@ class Edit extends Component {
             {meta_style_.npEnable && (
               <>
                 <p>
+                  <strong>{__("Pagination Number", "zita-blocks")}</strong>
+                </p>
+                <ToggleControl
+                  label={__("Enable", "zita-blocks")}
+                  checked={meta_style_.npPagination}
+                  onChange={(e) =>
+                    this.updateObj("meta_style", "npPagination", meta_style, e)
+                  }
+                />
+                <p>
                   <strong>{__("Font Size", "zita-blocks")}</strong>
                 </p>
                 <RangeControl
@@ -1057,6 +1067,37 @@ class Edit extends Component {
                 >
                   <i class="fas fa-chevron-left"></i>
                 </div>
+                {meta_style_.npPagination && (
+                  <section className="paginationNumbers">
+                    {[1, 2, 3].map((pagiV) => {
+                      return (
+                        <div
+                          className="zita-image-section-np  pagination"
+                          style={{
+                            fontSize: meta_style_.npBgfontSize,
+                            color: meta_style_.npColor,
+                            backgroundColor: meta_style_.npBgColor,
+                          }}
+                        >
+                          {pagiV}
+                        </div>
+                      );
+                    })}
+                    <div class="dots pagination">
+                      <span>...</span>
+                    </div>
+                    <div
+                      className="zita-image-section-np  pagination"
+                      style={{
+                        fontSize: meta_style_.npBgfontSize,
+                        color: meta_style_.npColor,
+                        backgroundColor: meta_style_.npBgColor,
+                      }}
+                    >
+                      4
+                    </div>
+                  </section>
+                )}
                 <div
                   style={{
                     fontSize: meta_style_.npBgfontSize,

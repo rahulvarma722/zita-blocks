@@ -2539,7 +2539,13 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(e) {
           return _this2.updateObj("meta_style", "npEnable", meta_style, e);
         }
-      }), meta_style_.npEnable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }), meta_style_.npEnable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Pagination Number", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Enable", "zita-blocks"),
+        checked: meta_style_.npPagination,
+        onChange: function onChange(e) {
+          return _this2.updateObj("meta_style", "npPagination", meta_style, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: meta_style_.npBgfontSize,
         min: 1,
         max: 30,
@@ -2727,7 +2733,27 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }, wp.element.createElement("i", {
         class: "fas fa-chevron-left"
-      })), wp.element.createElement("div", {
+      })), meta_style_.npPagination && wp.element.createElement("section", {
+        className: "paginationNumbers"
+      }, [1, 2, 3].map(function (pagiV) {
+        return wp.element.createElement("div", {
+          className: "zita-image-section-np  pagination",
+          style: {
+            fontSize: meta_style_.npBgfontSize,
+            color: meta_style_.npColor,
+            backgroundColor: meta_style_.npBgColor
+          }
+        }, pagiV);
+      }), wp.element.createElement("div", {
+        class: "dots pagination"
+      }, wp.element.createElement("span", null, "...")), wp.element.createElement("div", {
+        className: "zita-image-section-np  pagination",
+        style: {
+          fontSize: meta_style_.npBgfontSize,
+          color: meta_style_.npColor,
+          backgroundColor: meta_style_.npBgColor
+        }
+      }, "4")), wp.element.createElement("div", {
         style: {
           fontSize: meta_style_.npBgfontSize,
           color: meta_style_.npColor,
@@ -9740,7 +9766,13 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(e) {
           return _this2.updateObj("meta_style", "npEnable", meta_style, e);
         }
-      }), meta_style_.npEnable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+      }), meta_style_.npEnable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Pagination Number", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Enable", "zita-blocks"),
+        checked: meta_style_.npPagination,
+        onChange: function onChange(e) {
+          return _this2.updateObj("meta_style", "npPagination", meta_style, e);
+        }
+      }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Font Size", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: meta_style_.npBgfontSize,
         min: 1,
         max: 30,
@@ -9925,7 +9957,27 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }, wp.element.createElement("i", {
         class: "fas fa-chevron-left"
-      })), wp.element.createElement("div", {
+      })), meta_style_.npPagination && wp.element.createElement("section", {
+        className: "paginationNumbers"
+      }, [1, 2, 3].map(function (pagiV) {
+        return wp.element.createElement("div", {
+          className: "zita-image-section-np  pagination",
+          style: {
+            fontSize: meta_style_.npBgfontSize,
+            color: meta_style_.npColor,
+            backgroundColor: meta_style_.npBgColor
+          }
+        }, pagiV);
+      }), wp.element.createElement("div", {
+        class: "dots pagination"
+      }, wp.element.createElement("span", null, "...")), wp.element.createElement("div", {
+        className: "zita-image-section-np  pagination",
+        style: {
+          fontSize: meta_style_.npBgfontSize,
+          color: meta_style_.npColor,
+          backgroundColor: meta_style_.npBgColor
+        }
+      }, "4")), wp.element.createElement("div", {
         style: {
           fontSize: meta_style_.npBgfontSize,
           color: meta_style_.npColor,
@@ -13168,6 +13220,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])("zit
       default: ""
     }
   },
+  // example: () => {},
   edit: function edit(props) {
     var className = props.className,
         attributes = props.attributes,
