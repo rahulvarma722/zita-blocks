@@ -292,7 +292,7 @@ class Edit extends Component {
             <RangeControl
               value={numberOfColumn}
               min={2}
-              max={4}
+              max={6}
               onChange={(e) => {
                 setAttributes({ numberOfColumn: e });
               }}
@@ -303,7 +303,7 @@ class Edit extends Component {
             <RangeControl
               value={numberOfPosts}
               min={1}
-              max={20}
+              max={24}
               onChange={(e) => {
                 setAttributes({ numberOfPosts: e });
               }}

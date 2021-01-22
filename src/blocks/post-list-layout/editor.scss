@@ -98,7 +98,7 @@
       }
     }
   }
-  @for $i from 2 through 4 {
+  @for $i from 2 through 6 {
     .column-count-#{$i} {
       > article {
         width: calc(100% / #{$i});

@@ -155,7 +155,6 @@ class Edit extends Component {
     let {
       heading,
       author,
-      numberOfPosts,
       layout,
       date,
       showTag,
@@ -322,7 +321,6 @@ class Edit extends Component {
               <select
                 value={layout_.type}
                 onChange={(e) => {
-                  console.log(e.target.value);
                   let value_ = parseInt(e.target.value);
                   this.updateObj("layout", "type", layout, value_);
                 }}
@@ -1183,6 +1181,70 @@ class Edit extends Component {
                     )
                   );
                 })
+              ) : layout_.type == 2 ? (
+                <>
+                  <div className="column-one">
+                    {posts.length &&
+                      "getMedia_" in posts[0] &&
+                      posts[0].getMedia_ &&
+                      "guid" in posts[0].getMedia_ &&
+                      this.returnHtml(
+                        posts[0],
+                        heading2_,
+                        author2_,
+                        date2_,
+                        meta_style2_,
+                        showCate2_,
+                        excerpt2_,
+                        showTag2_,
+                        layout_
+                      )}
+                    <div>
+                      {posts.length >= 2 &&
+                        "getMedia_" in posts[1] &&
+                        posts[1].getMedia_ &&
+                        "guid" in posts[1].getMedia_ &&
+                        posts.map((post, in_) => {
+                          console.log("in_->", in_);
+                          return (
+                            in_ != 0 &&
+                            in_ <= 2 &&
+                            "getMedia_" in post &&
+                            post.getMedia_ &&
+                            "guid" in post.getMedia_ &&
+                            this.returnHtml(
+                              post,
+                              heading2_,
+                              author2_,
+                              date2_,
+                              meta_style2_,
+                              showCate2_,
+                              excerpt2_,
+                              showTag2_,
+                              layout_
+                            )
+                          );
+                        })}
+                    </div>
+                  </div>
+                  <div className="column-two">
+                    {posts.length > 2 &&
+                      "getMedia_" in posts[3] &&
+                      posts[3].getMedia_ &&
+                      "guid" in posts[3].getMedia_ &&
+                      this.returnHtml(
+                        posts[3],
+                        heading_,
+                        author_,
+                        date_,
+                        meta_style_,
+                        showCate_,
+                        excerpt_,
+                        showTag_,
+                        layout_
+                      )}
+                  </div>
+                </>
               ) : (
                 <>
                   <div className="column-one">

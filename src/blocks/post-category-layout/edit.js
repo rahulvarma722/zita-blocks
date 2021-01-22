@@ -321,7 +321,7 @@ class Edit extends Component {
               />
             </div>
           )}
-          {cateTrue.enable && makingCate.length && (
+          {cateTrue.enable && makingCate.length != 0 && (
             <>
               <div class="nav-linear-items">
                 <ul>
@@ -914,83 +914,6 @@ class Edit extends Component {
                 />
               </>
             )}
-            {/* <div class="zita-switcher-button-section">
-              <span
-                onClick={() => this.setState({ thumbnail: "primary" })}
-                className={this.state.thumbnail == "primary" ? "selected" : ""}
-              >
-                Primary
-              </span>
-              <span
-                onClick={() => this.setState({ thumbnail: "secondary" })}
-                className={
-                  this.state.thumbnail == "secondary" ? "selected" : ""
-                }
-              >
-                Secondary
-              </span>
-            </div>
-            {this.state.thumbnail == "primary" ? (
-              <>
-                <ToggleControl
-                  label={thumbnail_.enable ? "Show" : "Hide"}
-                  checked={thumbnail_.enable}
-                  onChange={(e) =>
-                    this.updateObj("thumbnail", "enable", thumbnail, e)
-                  }
-                />
-                {thumbnail_.enable && (
-                  <>
-                    <p>
-                      <strong>Border Radius</strong>
-                    </p>
-                    <RangeControl
-                      value={thumbnail_.borderRadius}
-                      min={0}
-                      max={80}
-                      onChange={(e) =>
-                        this.updateObj(
-                          "thumbnail",
-                          "borderRadius",
-                          thumbnail,
-                          e
-                        )
-                      }
-                    />
-                  </>
-                )}
-              </>
-            ) : (
-              <>
-                <ToggleControl
-                  label={thumbnail2_.enable ? "Show" : "Hide"}
-                  checked={thumbnail2_.enable}
-                  onChange={(e) =>
-                    this.updateObj("thumbnail2", "enable", thumbnail2, e)
-                  }
-                />
-                {thumbnail2_.enable && (
-                  <>
-                    <p>
-                      <strong>Border Radius</strong>
-                    </p>
-                    <RangeControl
-                      value={thumbnail2_.borderRadius}
-                      min={0}
-                      max={80}
-                      onChange={(e) =>
-                        this.updateObj(
-                          "thumbnail2",
-                          "borderRadius",
-                          thumbnail2,
-                          e
-                        )
-                      }
-                    />
-                  </>
-                )}
-              </>
-            )} */}
           </PanelBody>
           <PanelBody title="Post Meta" initialOpen={false}>
             {/* category */}

@@ -1190,7 +1190,96 @@ class Edit extends Component {
                 })
               ) : (
                 <>
-                  <div>
+                  {layout_.type == "2" ? (
+                    <>
+                      <div>
+                        <div className="column-count column-count-1">
+                          {posts.map((post, in_) => {
+                            return (
+                              in_ < 2 &&
+                              "getMedia_" in post &&
+                              post.getMedia_ &&
+                              "guid" in post.getMedia_ &&
+                              this.returnHtml(
+                                post,
+                                heading2_,
+                                author2_,
+                                date2_,
+                                meta_style2_,
+                                showCate2_,
+                                excerpt2_,
+                                showTag2_,
+                                layout_
+                              )
+                            );
+                          })}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="column-count column-count-1">
+                          {"getMedia_" in posts[2] &&
+                            posts[2].getMedia_ &&
+                            "guid" in posts[2].getMedia_ &&
+                            this.returnHtml(
+                              posts[2],
+                              heading_,
+                              author_,
+                              date_,
+                              meta_style_,
+                              showCate_,
+                              excerpt_,
+                              showTag_,
+                              layout_
+                            )}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div>
+                        <div className="column-count column-count-1">
+                          {"getMedia_" in posts[0] &&
+                            posts[0].getMedia_ &&
+                            "guid" in posts[0].getMedia_ &&
+                            this.returnHtml(
+                              posts[0],
+                              heading_,
+                              author_,
+                              date_,
+                              meta_style_,
+                              showCate_,
+                              excerpt_,
+                              showTag_,
+                              layout_
+                            )}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="column-count column-count-1">
+                          {posts.map((post, in_) => {
+                            return (
+                              in_ != 0 &&
+                              "getMedia_" in post &&
+                              post.getMedia_ &&
+                              "guid" in post.getMedia_ &&
+                              this.returnHtml(
+                                post,
+                                heading2_,
+                                author2_,
+                                date2_,
+                                meta_style2_,
+                                showCate2_,
+                                excerpt2_,
+                                showTag2_,
+                                layout_
+                              )
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                  {/* <div>
                     <div className="column-count column-count-1">
                       {"getMedia_" in posts[0] &&
                         posts[0].getMedia_ &&
@@ -1230,7 +1319,7 @@ class Edit extends Component {
                         );
                       })}
                     </div>
-                  </div>
+                  </div> */}
                 </>
               )}
             </div>

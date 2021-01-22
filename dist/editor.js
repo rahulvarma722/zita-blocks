@@ -1106,7 +1106,7 @@ var Edit = /*#__PURE__*/function (_Component) {
             color: title_.color,
             fontSize: title_.fontSize + "px"
           }
-        })), cateTrue.enable && makingCate.length && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
+        })), cateTrue.enable && makingCate.length != 0 && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
           class: "nav-linear-items"
         }, wp.element.createElement("ul", null, wp.element.createElement("li", {
           class: "cat-item cat-item-all"
@@ -2290,7 +2290,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       }, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Column", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: numberOfColumn,
         min: 2,
-        max: 4,
+        max: 6,
         onChange: function onChange(e) {
           setAttributes({
             numberOfColumn: e
@@ -2299,7 +2299,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       }), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Number of Post Display", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
         value: numberOfPosts,
         min: 1,
-        max: 20,
+        max: 24,
         onChange: function onChange(e) {
           setAttributes({
             numberOfPosts: e
@@ -4351,7 +4351,6 @@ var Edit = /*#__PURE__*/function (_Component) {
 
       var heading = attributes.heading,
           author = attributes.author,
-          numberOfPosts = attributes.numberOfPosts,
           layout = attributes.layout,
           date = attributes.date,
           showTag = attributes.showTag,
@@ -4473,7 +4472,6 @@ var Edit = /*#__PURE__*/function (_Component) {
       }, wp.element.createElement("p", null, "Choose Layout"), wp.element.createElement("select", {
         value: layout_.type,
         onChange: function onChange(e) {
-          console.log(e.target.value);
           var value_ = parseInt(e.target.value);
 
           _this2.updateObj("layout", "type", layout, value_);
@@ -4979,7 +4977,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         className: "column-count column-count-2 post-four-layout-".concat(layout_.type, " content-align-").concat(layout_.contentAlign, " content-placed-").concat(layout_.contentPlace)
       }, layout_.type == 3 ? posts.map(function (post) {
         return "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading_, author_, date_, meta_style_, showCate_, excerpt_, showTag_, layout_);
-      }) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
+      }) : layout_.type == 2 ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
+        className: "column-one"
+      }, posts.length && "getMedia_" in posts[0] && posts[0].getMedia_ && "guid" in posts[0].getMedia_ && this.returnHtml(posts[0], heading2_, author2_, date2_, meta_style2_, showCate2_, excerpt2_, showTag2_, layout_), wp.element.createElement("div", null, posts.length >= 2 && "getMedia_" in posts[1] && posts[1].getMedia_ && "guid" in posts[1].getMedia_ && posts.map(function (post, in_) {
+        console.log("in_->", in_);
+        return in_ != 0 && in_ <= 2 && "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading2_, author2_, date2_, meta_style2_, showCate2_, excerpt2_, showTag2_, layout_);
+      }))), wp.element.createElement("div", {
+        className: "column-two"
+      }, posts.length > 2 && "getMedia_" in posts[3] && posts[3].getMedia_ && "guid" in posts[3].getMedia_ && this.returnHtml(posts[3], heading_, author_, date_, meta_style_, showCate_, excerpt_, showTag_, layout_))) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
         className: "column-one"
       }, "getMedia_" in posts[0] && posts[0].getMedia_ && "guid" in posts[0].getMedia_ && this.returnHtml(posts[0], heading_, author_, date_, meta_style_, showCate_, excerpt_, showTag_, layout_)), wp.element.createElement("div", {
         className: "column-two"
@@ -7135,13 +7140,19 @@ var Edit = /*#__PURE__*/function (_Component) {
         className: "parent-column-two count-3 post-three-layout-".concat(layout_.type, " content-align-").concat(layout_.contentAlign, " content-placed-").concat(layout_.contentPlace)
       }, layout_.type == 3 ? posts.map(function (post, in_) {
         return "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading_, author_, date_, meta_style_, showCate_, excerpt_, showTag_, layout_);
-      }) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", null, wp.element.createElement("div", {
+      }) : wp.element.createElement(wp.element.Fragment, null, layout_.type == "2" ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", null, wp.element.createElement("div", {
+        className: "column-count column-count-1"
+      }, posts.map(function (post, in_) {
+        return in_ < 2 && "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading2_, author2_, date2_, meta_style2_, showCate2_, excerpt2_, showTag2_, layout_);
+      }))), wp.element.createElement("div", null, wp.element.createElement("div", {
+        className: "column-count column-count-1"
+      }, "getMedia_" in posts[2] && posts[2].getMedia_ && "guid" in posts[2].getMedia_ && this.returnHtml(posts[2], heading_, author_, date_, meta_style_, showCate_, excerpt_, showTag_, layout_)))) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", null, wp.element.createElement("div", {
         className: "column-count column-count-1"
       }, "getMedia_" in posts[0] && posts[0].getMedia_ && "guid" in posts[0].getMedia_ && this.returnHtml(posts[0], heading_, author_, date_, meta_style_, showCate_, excerpt_, showTag_, layout_))), wp.element.createElement("div", null, wp.element.createElement("div", {
         className: "column-count column-count-1"
       }, posts.map(function (post, in_) {
         return in_ != 0 && "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading2_, author2_, date2_, meta_style2_, showCate2_, excerpt2_, showTag2_, layout_);
-      }))))), meta_style_.npEnable && wp.element.createElement("div", {
+      })))))), meta_style_.npEnable && wp.element.createElement("div", {
         className: "zita-two-post-wrapper-next-prev"
       }, wp.element.createElement("div", {
         style: {

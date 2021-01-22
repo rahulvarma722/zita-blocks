@@ -56,27 +56,66 @@ function zita_section_block_four_post($attr)
             }
         } else {
             $checkFirst = $checkTwo = true;
+            $checkForTwo = 1;
             $columnOne = '<div class="column-one">';
             $columnTwo = '<div class="column-two">';
             $columnTwo1 = "";
             $columnTwo2 = "<div>";
             while ($query->have_posts()) {
                 $query->the_post();
-                if ($checkFirst) {
-                    $checkFirst = false;
-                    $columnOne .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
-                } else {
-                    if ($checkTwo) {
-                        $checkTwo = false;
-                        $columnTwo1 .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                ////////////////////
+                if ($attr['layout'][0]['type'] == 2) {
+                    if ($checkForTwo <= 3) {
+                        $checkForTwo++;
+                        if ($checkTwo) {
+                            $checkTwo = false;
+                            $columnTwo1 .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                        } else {
+                            $columnTwo2 .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                        }
                     } else {
-                        $columnTwo2 .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                        $columnTwo .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                    }
+                } else {
+                    if ($checkFirst) {
+                        $checkFirst = false;
+                        $columnOne .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                    } else {
+                        if ($checkTwo) {
+                            $checkTwo = false;
+                            $columnTwo1 .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                        } else {
+                            $columnTwo2 .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                        }
                     }
                 }
+                ////////////////////
+                // $query->the_post();
+                // if ($checkFirst) {
+                //     $checkFirst = false;
+                //     $columnOne .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                // } else {
+                //     if ($checkTwo) {
+                //         $checkTwo = false;
+                //         $columnTwo1 .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                //     } else {
+                //         $columnTwo2 .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                //     }
+                // }
             }
             $columnTwo2 .= "</div>";
-            $columnOne .= "</div>";
-            $columnTwo .= $columnTwo1 . $columnTwo2 . "</div>";
+
+            // $columnOne .= "</div>";
+            // $columnTwo .= $columnTwo1 . $columnTwo2 . "</div>";
+
+            if ($attr['layout'][0]['type'] == 2) {
+                $columnOne .= $columnTwo1 . $columnTwo2 . "</div>";
+                $columnTwo .= "</div>";
+            } else {
+                $columnOne .= "</div>";
+                $columnTwo .= $columnTwo1 . $columnTwo2 . "</div>";
+            }
+
             $postHtml .= $columnOne;
             $postHtml .= $columnTwo;
         }

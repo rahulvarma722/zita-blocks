@@ -1,9 +1,9 @@
 #zita-section-post {
-  .post-four-layout-2 {
-    flex-direction: row-reverse;
-  }
+  // .post-four-layout-2 {
+  //   flex-direction: row-reverse;
+  // }
   &.zita-post-four-post {
-    .column-count {
+    .column-count.post-four-layout-1 {
       // display: block;
       > div {
         flex: 1;
@@ -20,6 +20,26 @@
             > article {
               display: block;
             }
+          }
+        }
+      }
+    }
+  }
+  .column-count.post-four-layout-2 {
+    > div {
+      flex: 1;
+      &.column-one {
+        display: block;
+        .post-content {
+          min-height: 196px;
+        }
+        > article {
+          // max-height: 200px;
+        }
+        > div {
+          display: flex;
+          > article {
+            display: block;
           }
         }
       }
