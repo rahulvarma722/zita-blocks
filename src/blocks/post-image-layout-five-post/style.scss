@@ -1,0 +1,14 @@
+#zita-section-post {
+  .post-five-layout-2.parent-column-two
+    > div:last-child
+    .block-post-article
+    .post-content {
+    min-height: 404px;
+  }
+  .post-five-layout-2.parent-column-two
+    > div:first-child
+    .block-post-article
+    .post-content {
+    min-height: 202px;
+  }
+}

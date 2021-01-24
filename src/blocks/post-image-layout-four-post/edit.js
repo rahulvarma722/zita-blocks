@@ -139,7 +139,6 @@ class Edit extends Component {
   };
   render() {
     // ++++++++++++++===============
-
     const { posts, attributes, setAttributes, category } = this.props;
     // console.log("this.props", this.props);
     // if number of post sum
@@ -151,7 +150,6 @@ class Edit extends Component {
     //   });
     // }
     // if number of post sum
-
     let {
       heading,
       author,
@@ -328,9 +326,10 @@ class Edit extends Component {
                 <option value="1">Layout One</option>
                 <option value="2">Layout Two</option>
                 <option value="3">Layout Three</option>
+                <option value="4">Layout Four</option>
               </select>
             </div>
-            {layout_.type == 3 && (
+            {(layout_.type == 3 || layout_.type == 4) && (
               <>
                 <p>
                   <strong>{__("Content Placed", "zita-blocks")}</strong>
@@ -1162,7 +1161,7 @@ class Edit extends Component {
             <div
               className={`column-count column-count-2 post-four-layout-${layout_.type} content-align-${layout_.contentAlign} content-placed-${layout_.contentPlace}`}
             >
-              {layout_.type == 3 ? (
+              {layout_.type == 3 || layout_.type == 4 ? (
                 posts.map((post) => {
                   return (
                     "getMedia_" in post &&

@@ -49,7 +49,7 @@ function zita_section_block_four_post($attr)
         }
         $postHtml .= "<div class='zita-post-four-post column-count column-count-2 post-four-layout-" . $attr['layout'][0]['type'] . " content-align-" . $attr['layout'][0]['contentAlign'] . " content-placed-" . $attr['layout'][0]['contentPlace'] . "' data-setting='" . $postSetting . "' data-currentpage='" . $currentPage . "'>";
 
-        if ($attr['layout'][0]['type'] == 3) {
+        if ($attr['layout'][0]['type'] == 3 || $attr['layout'][0]['type'] == 4) {
             while ($query->have_posts()) {
                 $query->the_post();
                 $postHtml .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);

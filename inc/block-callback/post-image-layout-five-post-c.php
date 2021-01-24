@@ -46,21 +46,38 @@ function zita_section_block_five_post($attr)
         }
         $postHtml .= "<div class='zita-post-five-post parent-column-two count-3 post-three-layout-" . $attr['layout'][0]['type'] . " content-align-" . $attr['layout'][0]['contentAlign'] . "'  data-setting='" . $postSetting . "' data-currentpage='" . $currentPage . "'>";
         $checkFirst = true;
+        $CountTwoLayout = 1;
         $columnOne = '<div><div class="column-count column-count-1">';
         $columnTwo = '<div><div class="column-count column-count-2">';
         while ($query->have_posts()) {
             $query->the_post();
-            if ($checkFirst) {
-                $checkFirst = false;
-                $columnOne .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+            if ($attr['layout'][0]['type'] == 2) {
+                if ($CountTwoLayout > 4) {
+                    $columnOne .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                } else {
+                    $CountTwoLayout++;
+                    $columnTwo .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                }
             } else {
-                $columnTwo .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                if ($checkFirst) {
+                    $checkFirst = false;
+                    $columnOne .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                } else {
+                    $columnTwo .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                }
             }
         }
         $columnOne .= "</div></div>";
         $columnTwo .= "</div></div>";
-        $postHtml .= $columnOne;
-        $postHtml .= $columnTwo;
+
+        if ($attr['layout'][0]['type'] == 2) {
+            $postHtml .= $columnTwo;
+            $postHtml .= $columnOne;
+        } else {
+            $postHtml .= $columnOne;
+            $postHtml .= $columnTwo;
+        }
+
         $postHtml .= '</div>';
 
         if ($attr['meta_style'][0]['npEnable']) {

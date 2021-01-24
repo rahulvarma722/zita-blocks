@@ -1151,47 +1151,96 @@ class Edit extends Component {
             <div
               className={`parent-column-two column-count  post-five-layout-${layout_.type} content-align-${layout_.contentAlign}`}
             >
-              <div>
-                <div className="column-count column-count-1">
-                  {"getMedia_" in posts[0] &&
-                    posts[0].getMedia_ &&
-                    "guid" in posts[0].getMedia_ &&
-                    this.returnHtml(
-                      posts[0],
-                      heading_,
-                      author_,
-                      date_,
-                      meta_style_,
-                      showCate_,
-                      excerpt_,
-                      showTag_,
-                      layout_
-                    )}
-                </div>
-              </div>
-              <div>
-                <div className="column-count column-count-2">
-                  {posts.map((post, in_) => {
-                    return (
-                      in_ != 0 &&
-                      "getMedia_" in post &&
-                      post.getMedia_ &&
-                      "guid" in post.getMedia_ &&
-                      this.returnHtml(
-                        post,
-                        heading2_,
-                        author2_,
-                        date2_,
-                        meta_style2_,
-                        showCate2_,
-                        excerpt2_,
-                        showTag2_,
-                        layout_
-                      )
-                    );
-                  })}
-                </div>
-              </div>
+              {layout_.type == 2 ? (
+                <>
+                  <div>
+                    <div className="column-count column-count-2">
+                      {posts.map((post, in_) => {
+                        return (
+                          in_ < 4 &&
+                          "getMedia_" in post &&
+                          post.getMedia_ &&
+                          "guid" in post.getMedia_ &&
+                          this.returnHtml(
+                            post,
+                            heading2_,
+                            author2_,
+                            date2_,
+                            meta_style2_,
+                            showCate2_,
+                            excerpt2_,
+                            showTag2_,
+                            layout_
+                          )
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="column-count column-count-1">
+                      {posts.length > 4 &&
+                        "getMedia_" in posts[4] &&
+                        posts[4].getMedia_ &&
+                        "guid" in posts[4].getMedia_ &&
+                        this.returnHtml(
+                          posts[4],
+                          heading_,
+                          author_,
+                          date_,
+                          meta_style_,
+                          showCate_,
+                          excerpt_,
+                          showTag_,
+                          layout_
+                        )}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <div className="column-count column-count-1">
+                      {"getMedia_" in posts[0] &&
+                        posts[0].getMedia_ &&
+                        "guid" in posts[0].getMedia_ &&
+                        this.returnHtml(
+                          posts[0],
+                          heading_,
+                          author_,
+                          date_,
+                          meta_style_,
+                          showCate_,
+                          excerpt_,
+                          showTag_,
+                          layout_
+                        )}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="column-count column-count-2">
+                      {posts.map((post, in_) => {
+                        return (
+                          in_ != 0 &&
+                          "getMedia_" in post &&
+                          post.getMedia_ &&
+                          "guid" in post.getMedia_ &&
+                          this.returnHtml(
+                            post,
+                            heading2_,
+                            author2_,
+                            date2_,
+                            meta_style2_,
+                            showCate2_,
+                            excerpt2_,
+                            showTag2_,
+                            layout_
+                          )
+                        );
+                      })}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
             {meta_style_.npEnable && (
               <div className="zita-two-post-wrapper-next-prev">

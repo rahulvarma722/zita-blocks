@@ -33,7 +33,7 @@ function post_image_four_post_html($args, $attr)
         $postExcerpt2 = isset($attr['excerpt2'][0]['enable']) && $attr['excerpt2'][0]['enable']  == "true" ? true : false;
         $postExcerpt2Color = $postExcerpt2 && $attr['excerpt2'][0]['color'] ? $attr['excerpt2'][0]['color'] : "";
         $postHtml = "";
-        if ($attr['layout'][0]['type'] == 3) {
+        if ($attr['layout'][0]['type'] == 3 || $attr['layout'][0]['type'] == 4) {
             while ($query->have_posts()) {
                 $query->the_post();
                 $postHtml .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);

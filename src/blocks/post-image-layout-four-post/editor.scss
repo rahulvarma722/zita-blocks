@@ -43,6 +43,23 @@
         }
       }
     }
+    .column-count.post-four-layout-4 {
+      article.block-post-article {
+        width: 25%;
+      }
+      &.content-placed-outer {
+        .post-wrapper {
+          flex-direction: column;
+        }
+        .post-content {
+          min-height: unset;
+        }
+        .featured-image {
+          position: relative;
+          min-height: 322px;
+        }
+      }
+    }
   }
   .post-four-layout-3 {
     &.content-placed-outer {
