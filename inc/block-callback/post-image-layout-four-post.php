@@ -118,14 +118,14 @@ wpgt_register_block_fn('zita-post-section-four-post',  [
             'type' => "array",
             "default" => [[
                 "enable" => false,
-                "words" => 10,
+                "words" => 8,
                 "color" => 'white',
                 "fontSize" => 12
             ]]
         ],
         "author2" => [
             "type" => "array",
-            "default" => [["enable" => true]]
+            "default" => [["enable" => false]]
         ],
         'date2' => [
             "type" => "array",
@@ -148,7 +148,7 @@ wpgt_register_block_fn('zita-post-section-four-post',  [
         'showTag2' => [
             "type" => "array",
             "default" => [[
-                "enable" => true,
+                "enable" => false,
                 "color" => "white",
                 "backgroundColor" => "black",
                 "count" => 2,
