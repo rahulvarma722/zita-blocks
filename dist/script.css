@@ -1172,12 +1172,14 @@
 
 .zita-two-post-wrapper-next-prev {
   display: flex;
+  flex-wrap: wrap;
 }
 .zita-two-post-wrapper-next-prev.disable {
   display: none;
 }
 .zita-two-post-wrapper-next-prev .paginationNumbers {
   display: flex;
+  flex-wrap: wrap;
 }
 .zita-two-post-wrapper-next-prev .paginationNumbers > div {
   border: 1px solid;

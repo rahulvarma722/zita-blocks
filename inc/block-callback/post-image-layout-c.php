@@ -25,7 +25,7 @@ function zita_section_block($attr)
         $postExcerptColor = $postExcerpt && $attr['excerpt'][0]['color'] ? $attr['excerpt'][0]['color'] : "";
         $postExcerpt2 = isset($attr['excerpt2'][0]['enable']) && $attr['excerpt2'][0]['enable']  ? true : false;
         $postExcerpt2Color = $postExcerpt2 && $attr['excerpt2'][0]['color'] ? $attr['excerpt2'][0]['color'] : "";
-        $postThumbnail = isset($attr['thumbnail'][0]['enable']) && $attr['thumbnail'][0]['enable']  ? true : false;
+        // $postThumbnail = isset($attr['thumbnail'][0]['enable']) && $attr['thumbnail'][0]['enable']  ? true : false;
         $postHtml = "<div class='zita-section-post' id='zita-section-post'>";
         // post title
         if (isset($attr['title'][0]['enable']) && $attr['title'][0]['enable']) {
@@ -45,7 +45,7 @@ function zita_section_block($attr)
             while ($query->have_posts()) {
                 $query->the_post();
                 if (get_the_post_thumbnail_url()) {
-                    $postHtml .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], 1);
+                    $postHtml .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], 1, $attr['layout'][0]);
                 }
             }
             $postHtml .= "</div>";
@@ -60,13 +60,13 @@ function zita_section_block($attr)
                 if (get_the_post_thumbnail_url()) {
                     if ($checkFirst) {
                         $checkFirst = false;
-                        $columnOne .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], 1);
+                        $columnOne .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], 1, $attr['layout'][0]);
                     } else {
                         if ($checkFirst) {
                             $checkFirst = false;
-                            $columnOne .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], 1);
+                            $columnOne .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], 1, $attr['layout'][0]);
                         } else {
-                            $columnTwo .= returnHtmlPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], 1);
+                            $columnTwo .= returnHtmlPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], 1, $attr['layout'][0]);
                         }
                     }
                 }
@@ -88,7 +88,7 @@ function zita_section_block($attr)
 
 // echo 'hello'. $koooo;
 // fnnn
-function returnHtmlPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $postExcerpt, $postExcerpt__, $postDateModify, $postExcerptColor, $tags_, $category__in, $thumbnail = false)
+function returnHtmlPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $postExcerpt, $postExcerpt__, $postDateModify, $postExcerptColor, $tags_, $category__in, $thumbnail = false, $layout = [])
 {
     $postHtmlCl1 = "<article class='block-post-article'>";
     $postHtmlCl1 .= "<div class='post-wrapper' id='post-wrapper'>";
@@ -100,7 +100,20 @@ function returnHtmlPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $pos
         $postHtmlCl1 .= '</a>';
         $postHtmlCl1 .= '</div>';
     }
-    $postHtmlCl1 .= "<div class='post-content'>";
+    $layoutStyleBgClr = isset($layout['overlayColor']) ? "background-color:" . $layout['overlayColor'] . ";" : '';
+    // $layoutStyleBgClr .= isset($layout['contentAlign']) ? "background-color:" . $layout['overlayColor'] . ";" : '';
+    if (isset($layout['contentAlign'])) {
+        if ($layout['contentAlign'] == "bottom-left") {
+            $layoutStyleBgClr .= "align-items:normal;";
+        } else if ($layout['contentAlign'] == "bottom-center") {
+            $layoutStyleBgClr .= "align-items:center;";
+        } else if ($layout['contentAlign'] == "bottom-right") {
+            $layoutStyleBgClr .= "align-items:flex-end;";
+        } else {
+            $layoutStyleBgClr .= "justify-content:center;";
+        }
+    }
+    $postHtmlCl1 .= "<div class='post-content' style='" . $layoutStyleBgClr . "'>";
     // category
     if ($cate_[0]['enable']) {
         $postHtmlCl1 .= '<p class="post-category">';

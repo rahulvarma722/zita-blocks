@@ -164,6 +164,7 @@ class Edit extends Component {
       postCategories,
       meta_style,
       title,
+      layout,
     } = attributes;
     let heading_ = heading[0];
     let thumbnail_ = thumbnail[0];
@@ -174,6 +175,7 @@ class Edit extends Component {
     let title_ = title[0];
     let showTag_ = showTag[0];
     let showCate_ = showCate[0];
+    let layout_ = layout[0];
     // category init
     let cateGory = [{ value: "all", label: "All" }];
     if (category && category.length) {
@@ -297,22 +299,81 @@ class Edit extends Component {
               </>
             )}
           </PanelBody>
-          {/* <PanelBody
+          <PanelBody
             title={__("Post Layout", "zita-blocks")}
             initialOpen={false}
           >
             <p>
-              <strong>{__("Number of Post Display", "zita-blocks")}</strong>
+              <strong>{__("Content Alignment", "zita-blocks")}</strong>
             </p>
-            <RangeControl
-              value={numberOfPosts}
-              min={1}
-              max={6}
-              onChange={(e) => {
-                setAttributes({ numberOfPosts: e });
+            <div class="zita-switcher-button-section">
+              <span
+                onClick={() =>
+                  this.updateObj(
+                    "layout",
+                    "contentAlign",
+                    layout,
+                    "bottom-left"
+                  )
+                }
+                className={
+                  layout_.contentAlign == "bottom-left" ? "selected" : ""
+                }
+              >
+                {__("Bottom Left", "zita-blocks")}
+              </span>
+              <span
+                onClick={() =>
+                  this.updateObj(
+                    "layout",
+                    "contentAlign",
+                    layout,
+                    "bottom-center"
+                  )
+                }
+                className={
+                  layout_.contentAlign == "bottom-center" ? "selected" : ""
+                }
+              >
+                {__("Bottom Center", "zita-blocks")}
+              </span>
+            </div>
+            <div class="zita-switcher-button-section">
+              <span
+                onClick={() =>
+                  this.updateObj(
+                    "layout",
+                    "contentAlign",
+                    layout,
+                    "bottom-right"
+                  )
+                }
+                className={
+                  layout_.contentAlign == "bottom-right" ? "selected" : ""
+                }
+              >
+                {__("Bottom Right", "zita-blocks")}
+              </span>
+              <span
+                onClick={() =>
+                  this.updateObj("layout", "contentAlign", layout, "center")
+                }
+                className={layout_.contentAlign == "center" ? "selected" : ""}
+              >
+                {__("Center", "zita-blocks")}
+              </span>
+            </div>
+            <p>
+              <strong>{__("Image Overlay Color", "zita-blocks")}</strong>
+            </p>
+            <ColorPicker
+              color={layout_.overlayColor}
+              onChangeComplete={(colorBg) => {
+                let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                this.updateObj("layout", "overlayColor", layout, color);
               }}
             />
-          </PanelBody> */}
+          </PanelBody>
           <PanelBody
             title={__("Post Title", "zita-blocks")}
             initialOpen={false}
@@ -658,7 +719,8 @@ class Edit extends Component {
                     thumbnail_,
                     showCate_,
                     excerpt_,
-                    showTag_
+                    showTag_,
+                    layout_
                   )
                 );
               })}
@@ -693,27 +755,32 @@ class Edit extends Component {
     thumbnail_,
     showCate_,
     excerpt_,
-    showTag_
+    showTag_,
+    layout_
   ) => {
     let postAuthor =
       author_ && author_.enable && "name" in this.authorFn(post.author)
         ? this.authorFn(post.author).name
         : false;
+    let contentStyle =
+      layout_.contentAlign == "bottom-left"
+        ? { alignItems: "normal" }
+        : layout_.contentAlign == "bottom-center"
+        ? { alignItems: "center" }
+        : layout_.contentAlign == "bottom-right"
+        ? { alignItems: "flex-end" }
+        : { justifyContent: "center" };
+    contentStyle = {
+      ...contentStyle,
+      ...{ backgroundColor: layout_.overlayColor },
+    };
     return (
       <article className="block-post-article" key={post.id}>
         <div className="post-wrapper">
-          {/* {"getMedia_" in post &&
-            post.getMedia_ &&
-            "guid" in post.getMedia_ &&
-            thumbnail_.enable && (
-              <div className="featured-image">
-                <img src={post.getMedia_.guid.rendered} />
-              </div>
-            )} */}
           <div className="featured-image">
             <img src={post.getMedia_.guid.rendered} />
           </div>
-          <div className="post-content">
+          <div className="post-content" style={contentStyle}>
             {showCate_ && showCate_.enable && (
               <p className="post-category">
                 {this.showCateFn(post.categories, showCate_)}

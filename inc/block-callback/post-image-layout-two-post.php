@@ -20,6 +20,15 @@ wpgt_register_block_fn('zita-post-section-two-post',  [
                 "fontWeight" => 400
             ]]
         ],
+        "layout" => [
+            "type" => "array",
+            "default" => [[
+                // "type" => 1,
+                // "contentPlace" => "inner",
+                "contentAlign" => "bottom-left",
+                "overlayColor" => "transparent",
+            ]]
+        ],
         "thumbnail" => [
             "type" => "array",
             "default" => [[

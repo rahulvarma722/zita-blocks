@@ -7384,6 +7384,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_5__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7562,8 +7566,20 @@ var Edit = /*#__PURE__*/function (_Component) {
       return retur;
     });
 
-    _defineProperty(_assertThisInitialized(_this), "returnHtml", function (post, heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_) {
+    _defineProperty(_assertThisInitialized(_this), "returnHtml", function (post, heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_, layout_) {
       var postAuthor = author_ && author_.enable && "name" in _this.authorFn(post.author) ? _this.authorFn(post.author).name : false;
+      var contentStyle = layout_.contentAlign == "bottom-left" ? {
+        alignItems: "normal"
+      } : layout_.contentAlign == "bottom-center" ? {
+        alignItems: "center"
+      } : layout_.contentAlign == "bottom-right" ? {
+        alignItems: "flex-end"
+      } : {
+        justifyContent: "center"
+      };
+      contentStyle = _objectSpread(_objectSpread({}, contentStyle), {
+        backgroundColor: layout_.overlayColor
+      });
       return wp.element.createElement("article", {
         className: "block-post-article",
         key: post.id
@@ -7574,7 +7590,8 @@ var Edit = /*#__PURE__*/function (_Component) {
       }, wp.element.createElement("img", {
         src: post.getMedia_.guid.rendered
       })), wp.element.createElement("div", {
-        className: "post-content"
+        className: "post-content",
+        style: contentStyle
       }, showCate_ && showCate_.enable && wp.element.createElement("p", {
         className: "post-category"
       }, _this.showCateFn(post.categories, showCate_)), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["RichText"].Content, {
@@ -7673,7 +7690,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           excerpt = attributes.excerpt,
           postCategories = attributes.postCategories,
           meta_style = attributes.meta_style,
-          title = attributes.title;
+          title = attributes.title,
+          layout = attributes.layout;
       var heading_ = heading[0];
       var thumbnail_ = thumbnail[0];
       var excerpt_ = excerpt[0];
@@ -7682,7 +7700,8 @@ var Edit = /*#__PURE__*/function (_Component) {
       var meta_style_ = meta_style[0];
       var title_ = title[0];
       var showTag_ = showTag[0];
-      var showCate_ = showCate[0]; // category init
+      var showCate_ = showCate[0];
+      var layout_ = layout[0]; // category init
 
       var cateGory = [{
         value: "all",
@@ -7765,6 +7784,40 @@ var Edit = /*#__PURE__*/function (_Component) {
           _this2.updateObj("title", "width", title, e);
         }
       }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
+        title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Post Layout", "zita-blocks"),
+        initialOpen: false
+      }, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Content Alignment", "zita-blocks"))), wp.element.createElement("div", {
+        class: "zita-switcher-button-section"
+      }, wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.updateObj("layout", "contentAlign", layout, "bottom-left");
+        },
+        className: layout_.contentAlign == "bottom-left" ? "selected" : ""
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Bottom Left", "zita-blocks")), wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.updateObj("layout", "contentAlign", layout, "bottom-center");
+        },
+        className: layout_.contentAlign == "bottom-center" ? "selected" : ""
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Bottom Center", "zita-blocks"))), wp.element.createElement("div", {
+        class: "zita-switcher-button-section"
+      }, wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.updateObj("layout", "contentAlign", layout, "bottom-right");
+        },
+        className: layout_.contentAlign == "bottom-right" ? "selected" : ""
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Bottom Right", "zita-blocks")), wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.updateObj("layout", "contentAlign", layout, "center");
+        },
+        className: layout_.contentAlign == "center" ? "selected" : ""
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Center", "zita-blocks"))), wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Image Overlay Color", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["ColorPicker"], {
+        color: layout_.overlayColor,
+        onChangeComplete: function onChangeComplete(colorBg) {
+          var color = "rgba(".concat(colorBg.rgb.r, ",").concat(colorBg.rgb.g, ",").concat(colorBg.rgb.b, ",").concat(colorBg.rgb.a, ")");
+
+          _this2.updateObj("layout", "overlayColor", layout, color);
+        }
+      })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
         title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Post Title", "zita-blocks"),
         initialOpen: false
       }, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Post Title Tag", "zita-blocks"))), wp.element.createElement("select", {
@@ -7985,7 +8038,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       })), wp.element.createElement("div", {
         className: "column-count column-count-2"
       }, posts.map(function (post) {
-        return "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_);
+        return "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_, layout_);
       }))) : wp.element.createElement("div", null, !posts ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("No Post Found", "zita-blocks") : wp.element.createElement("div", {
         className: "post-loader"
       }, wp.element.createElement("div", {

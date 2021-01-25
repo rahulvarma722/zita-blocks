@@ -152,8 +152,10 @@
 }
 .zita-two-post-wrapper-next-prev {
   display: flex;
+  flex-wrap: wrap;
   .paginationNumbers {
     display: flex;
+    flex-wrap: wrap;
     > div {
       border: 1px solid;
       margin: 7px;
