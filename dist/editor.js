@@ -3373,7 +3373,21 @@ var Edit = /*#__PURE__*/function (_Component) {
         value: "1"
       }, "Layout One"), wp.element.createElement("option", {
         value: "2"
-      }, "Layout Two"))), (layout_.type == 2 || layout_.type == 1 || layout_.type == 3 && layout_.contentPlace == "inner") && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Content Alignment", "zita-blocks"))), wp.element.createElement("div", {
+      }, "Layout Two"), wp.element.createElement("option", {
+        value: "3"
+      }, "Layout Three"))), layout_.type == 3 && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Content Placed", "zita-blocks"))), wp.element.createElement("div", {
+        class: "zita-switcher-button-section"
+      }, wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.updateObj("layout", "contentPlace", layout, "inner");
+        },
+        className: layout_.contentPlace == "inner" ? "selected" : ""
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Inner", "zita-blocks")), wp.element.createElement("span", {
+        onClick: function onClick() {
+          return _this2.updateObj("layout", "contentPlace", layout, "outer");
+        },
+        className: layout_.contentPlace == "outer" ? "selected" : ""
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Outer", "zita-blocks")))), (layout_.type == 2 || layout_.type == 1 || layout_.type == 3 && layout_.contentPlace == "inner") && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Content Alignment", "zita-blocks"))), wp.element.createElement("div", {
         class: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
@@ -3853,14 +3867,16 @@ var Edit = /*#__PURE__*/function (_Component) {
           return _this2.updateObj("title", "value", title, e);
         }
       })), wp.element.createElement("div", {
-        className: "parent-column-two column-count  post-five-layout-".concat(layout_.type, " content-align-").concat(layout_.contentAlign)
+        className: "parent-column-two column-count  post-five-layout-".concat(layout_.type, " content-align-").concat(layout_.contentAlign, " content-placed-").concat(layout_.contentPlace)
       }, layout_.type == 2 ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", null, wp.element.createElement("div", {
         className: "column-count column-count-2"
       }, posts.map(function (post, in_) {
         return in_ < 4 && "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading2_, author2_, date2_, meta_style2_, showCate2_, excerpt2_, showTag2_, layout_);
       }))), wp.element.createElement("div", null, wp.element.createElement("div", {
         className: "column-count column-count-1"
-      }, posts.length > 4 && "getMedia_" in posts[4] && posts[4].getMedia_ && "guid" in posts[4].getMedia_ && this.returnHtml(posts[4], heading_, author_, date_, meta_style_, showCate_, excerpt_, showTag_, layout_)))) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", null, wp.element.createElement("div", {
+      }, posts.length > 4 && "getMedia_" in posts[4] && posts[4].getMedia_ && "guid" in posts[4].getMedia_ && this.returnHtml(posts[4], heading_, author_, date_, meta_style_, showCate_, excerpt_, showTag_, layout_)))) : layout_.type == 3 ? posts.map(function (post, in_) {
+        return "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading_, author_, date_, meta_style_, showCate_, excerpt_, showTag_, layout_);
+      }) : wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", null, wp.element.createElement("div", {
         className: "column-count column-count-1"
       }, "getMedia_" in posts[0] && posts[0].getMedia_ && "guid" in posts[0].getMedia_ && this.returnHtml(posts[0], heading_, author_, date_, meta_style_, showCate_, excerpt_, showTag_, layout_))), wp.element.createElement("div", null, wp.element.createElement("div", {
         className: "column-count column-count-2"

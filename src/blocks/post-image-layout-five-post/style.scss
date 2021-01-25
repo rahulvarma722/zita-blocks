@@ -11,4 +11,21 @@
     .post-content {
     min-height: 202px;
   }
+  .post-five-layout-3.parent-column-two {
+    & > article {
+      width: 20%;
+    }
+    &.content-placed-outer {
+      .post-wrapper {
+        flex-direction: column;
+      }
+      .post-content {
+        min-height: unset;
+      }
+      .featured-image {
+        position: relative;
+        min-height: 322px;
+      }
+    }
+  }
 }

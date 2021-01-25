@@ -199,6 +199,32 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/blocks/post-image-layout-five-post/script.js":
+/*!**********************************************************!*\
+  !*** ./src/blocks/post-image-layout-five-post/script.js ***!
+  \**********************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/post-image-layout-five-post/style.scss");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/***/ }),
+
+/***/ "./src/blocks/post-image-layout-five-post/style.scss":
+/*!***********************************************************!*\
+  !*** ./src/blocks/post-image-layout-five-post/style.scss ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "./src/blocks/post-image-layout-four-post/script.js":
 /*!**********************************************************!*\
   !*** ./src/blocks/post-image-layout-four-post/script.js ***!
@@ -871,6 +897,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_post_image_layout_script__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./blocks/post-image-layout/script */ "./src/blocks/post-image-layout/script.js");
 /* harmony import */ var _blocks_post_image_layout_three_post_script__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./blocks/post-image-layout-three-post/script */ "./src/blocks/post-image-layout-three-post/script.js");
 /* harmony import */ var _blocks_post_image_layout_four_post_script__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./blocks/post-image-layout-four-post/script */ "./src/blocks/post-image-layout-four-post/script.js");
+/* harmony import */ var _blocks_post_image_layout_five_post_script__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./blocks/post-image-layout-five-post/script */ "./src/blocks/post-image-layout-five-post/script.js");
+
 
 
 

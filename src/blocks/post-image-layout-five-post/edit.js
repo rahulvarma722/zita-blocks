@@ -328,10 +328,10 @@ class Edit extends Component {
               >
                 <option value="1">Layout One</option>
                 <option value="2">Layout Two</option>
-                {/* <option value="3">Layout Three</option> */}
+                <option value="3">Layout Three</option>
               </select>
             </div>
-            {/* {layout_.type == 3 && (
+            {layout_.type == 3 && (
               <>
                 <p>
                   <strong>{__("Content Placed", "zita-blocks")}</strong>
@@ -359,7 +359,7 @@ class Edit extends Component {
                   </span>
                 </div>
               </>
-            )} */}
+            )}
             {(layout_.type == 2 ||
               layout_.type == 1 ||
               (layout_.type == 3 && layout_.contentPlace == "inner")) && (
@@ -1149,7 +1149,7 @@ class Edit extends Component {
               </div>
             )}
             <div
-              className={`parent-column-two column-count  post-five-layout-${layout_.type} content-align-${layout_.contentAlign}`}
+              className={`parent-column-two column-count  post-five-layout-${layout_.type} content-align-${layout_.contentAlign} content-placed-${layout_.contentPlace}`}
             >
               {layout_.type == 2 ? (
                 <>
@@ -1196,6 +1196,25 @@ class Edit extends Component {
                     </div>
                   </div>
                 </>
+              ) : layout_.type == 3 ? (
+                posts.map((post, in_) => {
+                  return (
+                    "getMedia_" in post &&
+                    post.getMedia_ &&
+                    "guid" in post.getMedia_ &&
+                    this.returnHtml(
+                      post,
+                      heading_,
+                      author_,
+                      date_,
+                      meta_style_,
+                      showCate_,
+                      excerpt_,
+                      showTag_,
+                      layout_
+                    )
+                  );
+                })
               ) : (
                 <>
                   <div>

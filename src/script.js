@@ -11,3 +11,4 @@ import "./blocks/post-grid-layout/script";
 import "./blocks/post-image-layout/script";
 import "./blocks/post-image-layout-three-post/script";
 import "./blocks/post-image-layout-four-post/script";
+import "./blocks/post-image-layout-five-post/script";

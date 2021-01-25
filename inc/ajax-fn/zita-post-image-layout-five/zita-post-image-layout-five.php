@@ -34,6 +34,7 @@ function post_image_five_post_html($args, $attr)
         $postExcerpt2Color = $postExcerpt2 && $attr['excerpt2'][0]['color'] ? $attr['excerpt2'][0]['color'] : "";
 
         $checkFirst = true;
+        $postHtml = '';
         $columnOne = '<div><div class="column-count column-count-1">';
         $columnTwo = '<div><div class="column-count column-count-2">';
         while ($query->have_posts()) {
@@ -45,6 +46,8 @@ function post_image_five_post_html($args, $attr)
                     $CountTwoLayout++;
                     $columnTwo .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
                 }
+            } else if ($attr['layout'][0]['type'] == 3) {
+                $postHtml .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
             } else {
                 if ($checkFirst) {
                     $checkFirst = false;
@@ -54,14 +57,17 @@ function post_image_five_post_html($args, $attr)
                 }
             }
         }
-        $columnOne .= "</div></div>";
-        $columnTwo .= "</div></div>";
-        if ($attr['layout'][0]['type'] == 2) {
-            $postHtml .= $columnTwo;
-            $postHtml .= $columnOne;
-        } else {
-            $postHtml .= $columnOne;
-            $postHtml .= $columnTwo;
+        if ($attr['layout'][0]['type'] != 3) {
+            $columnOne .= "</div></div>";
+            $columnTwo .= "</div></div>";
+
+            if ($attr['layout'][0]['type'] == 2) {
+                $postHtml .= $columnTwo;
+                $postHtml .= $columnOne;
+            } else {
+                $postHtml .= $columnOne;
+                $postHtml .= $columnTwo;
+            }
         }
         $postHtml .= '</div>';
 

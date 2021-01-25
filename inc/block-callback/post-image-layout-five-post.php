@@ -31,7 +31,7 @@ wpgt_register_block_fn('zita-post-section-five-post',  [
             "type" => "array",
             "default" => [[
                 "type" => 1,
-                // "contentPlace" => "inner",
+                "contentPlace" => "inner",
                 "contentAlign" => "bottom",
                 "overlayColor" => "transparent",
                 // "contentBgColor" => "black",
