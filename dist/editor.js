@@ -3289,6 +3289,17 @@ var Edit = /*#__PURE__*/function (_Component) {
             label: catt.name
           });
         });
+      } // if number of post sum
+
+
+      if (layout_.type == 3) {
+        if (this.state.metaChoose == "secondary" || this.state.excerpt == "secondary" || this.state.heading == "secondary") {
+          this.setState({
+            metaChoose: "primary",
+            excerpt: "primary",
+            heading: "primary"
+          });
+        }
       }
 
       return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
@@ -3409,7 +3420,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
         title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Post Title", "zita-blocks"),
         initialOpen: false
-      }, wp.element.createElement("div", {
+      }, layout_.type != 3 && wp.element.createElement("div", {
         class: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
@@ -3498,7 +3509,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
         title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Excerpt / Content", "zita-blocks"),
         initialOpen: false
-      }, wp.element.createElement("div", {
+      }, layout_.type != 3 && wp.element.createElement("div", {
         className: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
@@ -3582,7 +3593,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           });
         },
         options: cateGory
-      })), wp.element.createElement("div", {
+      })), layout_.type != 3 && wp.element.createElement("div", {
         class: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
@@ -4418,6 +4429,17 @@ var Edit = /*#__PURE__*/function (_Component) {
             label: catt.name
           });
         });
+      } // if number of post sum
+
+
+      if (layout_.type == 3 || layout_.type == 4) {
+        if (this.state.metaChoose == "secondary" || this.state.excerpt == "secondary" || this.state.heading == "secondary") {
+          this.setState({
+            metaChoose: "primary",
+            excerpt: "primary",
+            heading: "primary"
+          });
+        }
       }
 
       return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
@@ -4540,7 +4562,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       })), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
         title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Post Title", "zita-blocks"),
         initialOpen: false
-      }, layout_.type !== 3 && wp.element.createElement("div", {
+      }, (layout_.type !== 3 || layout_.type !== 4) && wp.element.createElement("div", {
         class: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
@@ -4629,7 +4651,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       }))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
         title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Excerpt / Content", "zita-blocks"),
         initialOpen: false
-      }, layout_.type !== 3 && wp.element.createElement("div", {
+      }, (layout_.type !== 3 || layout_.type !== 4) && wp.element.createElement("div", {
         className: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
@@ -4713,7 +4735,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           });
         },
         options: cateGory
-      })), layout_.type !== 3 && wp.element.createElement("div", {
+      })), (layout_.type !== 3 || layout_.type !== 4) && wp.element.createElement("div", {
         class: "zita-switcher-button-section"
       }, wp.element.createElement("span", {
         onClick: function onClick() {
@@ -7575,6 +7597,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       } : layout_.contentAlign == "bottom-right" ? {
         alignItems: "flex-end"
       } : {
+        alignItems: "center",
         justifyContent: "center"
       };
       contentStyle = _objectSpread(_objectSpread({}, contentStyle), {

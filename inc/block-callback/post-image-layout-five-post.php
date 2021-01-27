@@ -9,11 +9,11 @@ wpgt_register_block_fn('zita-post-section-five-post',  [
         "title" => [
             "type" => "array",
             "default" => [[
-                'enable' => false,
+                'enable' => true,
                 "value" => "Add Block Title",
                 "fontSize" => 16,
                 "color" => "white",
-                "backgroundColor" => "#d80c79",
+                "backgroundColor" => "#05b0cb",
                 "align" => "left",
                 // "customWidth" => false,
                 "width" => 10,
@@ -33,7 +33,7 @@ wpgt_register_block_fn('zita-post-section-five-post',  [
                 "type" => 1,
                 "contentPlace" => "inner",
                 "contentAlign" => "bottom",
-                "overlayColor" => "transparent",
+                "overlayColor" => "rgba(0, 0, 0, 0.25)",
                 // "contentBgColor" => "black",
             ]]
         ],
@@ -41,19 +41,19 @@ wpgt_register_block_fn('zita-post-section-five-post',  [
             'type' => "array",
             "default" => [[
                 "tag" => 'h2',
-                "fontSize" => 22,
+                "fontSize" => 24,
                 "color" => 'white',
             ]]
         ],
         "meta_style" => [
             "type" => "array",
             "default" => [[
-                "color" => "white",
+                "color" => "rgb(5, 176, 203)",
                 "fontSize" => 12,
                 "blockBgColor" => "transparent",
-                "npEnable" => true,
-                "npColor" => '#adadad',
-                "npBgColor" => 'white',
+                "npEnable" => false,
+                "npColor" => '#05b0cb',
+                "npBgColor" => 'transparent',
                 "npBgfontSize" => 15,
             ]]
         ],
@@ -72,11 +72,11 @@ wpgt_register_block_fn('zita-post-section-five-post',  [
             "type" => "array",
             "default" => [[
                 "enable" => true,
-                "customColor" => false,
+                "customColor" => true,
                 "color" => "white",
-                "backgroundColor" => "#d80c79",
-                "count" => 2,
-                "fontSize" => 14
+                "backgroundColor" => "#05b0cb",
+                "count" => 1,
+                "fontSize" => 12
             ]]
         ],
         'showTag' => [
@@ -102,25 +102,25 @@ wpgt_register_block_fn('zita-post-section-five-post',  [
         "meta_style2" => [
             "type" => "array",
             "default" => [[
-                "color" => "#8e8c8d",
+                "color" => "rgb(5, 176, 203)",
                 "fontSize" => 14
             ]]
         ],
         'heading2' => [
             'type' => "array",
             "default" => [[
-                "tag" => 'h1',
-                "fontSize" => 30,
+                "tag" => 'h2',
+                "fontSize" => 14,
                 "color" => 'white',
             ]]
         ],
         'excerpt2' => [
             'type' => "array",
             "default" => [[
-                "enable" => true,
-                "words" => 10,
+                "enable" => false,
+                "words" => 8,
                 "color" => 'white',
-                "fontSize" => 12
+                "fontSize" => 10
             ]]
         ],
         "author2" => [
@@ -131,24 +131,24 @@ wpgt_register_block_fn('zita-post-section-five-post',  [
             "type" => "array",
             "default" => [[
                 "enable" => true,
-                "last_modified" => true
+                "last_modified" => false
             ]]
         ],
         'showCate2' => [
             "type" => "array",
             "default" => [[
                 "enable" => true,
-                "customColor" => false,
+                "customColor" => true,
                 "color" => "white",
-                "backgroundColor" => "black",
-                "count" => 2,
+                "backgroundColor" => "#05b0cb",
+                "count" => 1,
                 "fontSize" => 12
             ]]
         ],
         'showTag2' => [
             "type" => "array",
             "default" => [[
-                "enable" => true,
+                "enable" => false,
                 "color" => "white",
                 "backgroundColor" => "black",
                 "count" => 2,

@@ -110,7 +110,7 @@ function returnHtmlPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $pos
         } else if ($layout['contentAlign'] == "bottom-right") {
             $layoutStyleBgClr .= "align-items:flex-end;";
         } else {
-            $layoutStyleBgClr .= "justify-content:center;";
+            $layoutStyleBgClr .= "align-items:center;justify-content:center;";
         }
     }
     $postHtmlCl1 .= "<div class='post-content' style='" . $layoutStyleBgClr . "'>";

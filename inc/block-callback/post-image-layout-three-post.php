@@ -65,7 +65,7 @@ wpgt_register_block_fn('zita-post-section-three-post',  [
             "type" => "array",
             "default" => [[
                 "enable" => true,
-                "customColor" => false,
+                "customColor" => true,
                 "color" => "white",
                 "backgroundColor" => "#0927ce",
                 "count" => 1,
@@ -131,7 +131,7 @@ wpgt_register_block_fn('zita-post-section-three-post',  [
             "type" => "array",
             "default" => [[
                 "enable" => true,
-                "customColor" => false,
+                "customColor" => true,
                 "color" => "white",
                 "backgroundColor" => "#0927ce",
                 "count" => 1,

@@ -200,6 +200,20 @@ class Edit extends Component {
         });
       });
     }
+    // if number of post sum
+    if (layout_.type == 3) {
+      if (
+        this.state.metaChoose == "secondary" ||
+        this.state.excerpt == "secondary" ||
+        this.state.heading == "secondary"
+      ) {
+        this.setState({
+          metaChoose: "primary",
+          excerpt: "primary",
+          heading: "primary",
+        });
+      }
+    }
     return (
       <>
         <InspectorControls>
@@ -406,20 +420,25 @@ class Edit extends Component {
             title={__("Post Title", "zita-blocks")}
             initialOpen={false}
           >
-            <div class="zita-switcher-button-section">
-              <span
-                onClick={() => this.setState({ heading: "primary" })}
-                className={this.state.heading == "primary" ? "selected" : ""}
-              >
-                {__("Primary", "zita-blocks")}
-              </span>
-              <span
-                onClick={() => this.setState({ heading: "secondary" })}
-                className={this.state.heading == "secondary" ? "selected" : ""}
-              >
-                {__("Secondary", "zita-blocks")}
-              </span>
-            </div>
+            {layout_.type != 3 && (
+              <div class="zita-switcher-button-section">
+                <span
+                  onClick={() => this.setState({ heading: "primary" })}
+                  className={this.state.heading == "primary" ? "selected" : ""}
+                >
+                  {__("Primary", "zita-blocks")}
+                </span>
+                <span
+                  onClick={() => this.setState({ heading: "secondary" })}
+                  className={
+                    this.state.heading == "secondary" ? "selected" : ""
+                  }
+                >
+                  {__("Secondary", "zita-blocks")}
+                </span>
+              </div>
+            )}
+
             {this.state.heading == "primary" ? (
               <>
                 <p>
@@ -526,20 +545,25 @@ class Edit extends Component {
             title={__("Excerpt / Content", "zita-blocks")}
             initialOpen={false}
           >
-            <div className="zita-switcher-button-section">
-              <span
-                onClick={() => this.setState({ excerpt: "primary" })}
-                className={this.state.excerpt == "primary" ? "selected" : ""}
-              >
-                {__("Primary", "zita-blocks")}
-              </span>
-              <span
-                onClick={() => this.setState({ excerpt: "secondary" })}
-                className={this.state.excerpt == "secondary" ? "selected" : ""}
-              >
-                {__("Secondary", "zita-blocks")}
-              </span>
-            </div>
+            {layout_.type != 3 && (
+              <div className="zita-switcher-button-section">
+                <span
+                  onClick={() => this.setState({ excerpt: "primary" })}
+                  className={this.state.excerpt == "primary" ? "selected" : ""}
+                >
+                  {__("Primary", "zita-blocks")}
+                </span>
+                <span
+                  onClick={() => this.setState({ excerpt: "secondary" })}
+                  className={
+                    this.state.excerpt == "secondary" ? "selected" : ""
+                  }
+                >
+                  {__("Secondary", "zita-blocks")}
+                </span>
+              </div>
+            )}
+
             {this.state.excerpt == "primary" ? (
               <>
                 <ToggleControl
@@ -661,22 +685,27 @@ class Edit extends Component {
             </div>
             {/* category */}
             {/* primery and secondary */}
-            <div class="zita-switcher-button-section">
-              <span
-                onClick={() => this.setState({ metaChoose: "primary" })}
-                className={this.state.metaChoose == "primary" ? "selected" : ""}
-              >
-                {__("Primary", "zita-blocks")}
-              </span>
-              <span
-                onClick={() => this.setState({ metaChoose: "secondary" })}
-                className={
-                  this.state.metaChoose == "secondary" ? "selected" : ""
-                }
-              >
-                {__("Secondary", "zita-blocks")}
-              </span>
-            </div>
+            {layout_.type != 3 && (
+              <div class="zita-switcher-button-section">
+                <span
+                  onClick={() => this.setState({ metaChoose: "primary" })}
+                  className={
+                    this.state.metaChoose == "primary" ? "selected" : ""
+                  }
+                >
+                  {__("Primary", "zita-blocks")}
+                </span>
+                <span
+                  onClick={() => this.setState({ metaChoose: "secondary" })}
+                  className={
+                    this.state.metaChoose == "secondary" ? "selected" : ""
+                  }
+                >
+                  {__("Secondary", "zita-blocks")}
+                </span>
+              </div>
+            )}
+
             {/* show author */}
             {this.state.metaChoose == "primary" ? (
               <>

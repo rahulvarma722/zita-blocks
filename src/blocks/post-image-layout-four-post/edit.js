@@ -197,6 +197,20 @@ class Edit extends Component {
         });
       });
     }
+    // if number of post sum
+    if (layout_.type == 3 || layout_.type == 4) {
+      if (
+        this.state.metaChoose == "secondary" ||
+        this.state.excerpt == "secondary" ||
+        this.state.heading == "secondary"
+      ) {
+        this.setState({
+          metaChoose: "primary",
+          excerpt: "primary",
+          heading: "primary",
+        });
+      }
+    }
     return (
       <>
         <InspectorControls>
@@ -404,7 +418,7 @@ class Edit extends Component {
             title={__("Post Title", "zita-blocks")}
             initialOpen={false}
           >
-            {layout_.type !== 3 && (
+            {(layout_.type !== 3 || layout_.type !== 4) && (
               <div class="zita-switcher-button-section">
                 <span
                   onClick={() => this.setState({ heading: "primary" })}
@@ -528,7 +542,7 @@ class Edit extends Component {
             title={__("Excerpt / Content", "zita-blocks")}
             initialOpen={false}
           >
-            {layout_.type !== 3 && (
+            {(layout_.type !== 3 || layout_.type !== 4) && (
               <div className="zita-switcher-button-section">
                 <span
                   onClick={() => this.setState({ excerpt: "primary" })}
@@ -667,7 +681,7 @@ class Edit extends Component {
             </div>
             {/* category */}
             {/* primery and secondary */}
-            {layout_.type !== 3 && (
+            {(layout_.type !== 3 || layout_.type !== 4) && (
               <div class="zita-switcher-button-section">
                 <span
                   onClick={() => this.setState({ metaChoose: "primary" })}

@@ -769,7 +769,7 @@ class Edit extends Component {
         ? { alignItems: "center" }
         : layout_.contentAlign == "bottom-right"
         ? { alignItems: "flex-end" }
-        : { justifyContent: "center" };
+        : { alignItems: "center", justifyContent: "center" };
     contentStyle = {
       ...contentStyle,
       ...{ backgroundColor: layout_.overlayColor },
