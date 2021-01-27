@@ -1,6 +1,6 @@
 <?php
-wpgt_register_block_fn('zita-post-grid',  [
-    "render_callback" => "zita_post_grid_block",
+zita_blocks_register_block_fn('zita-post-grid',  [
+    "render_callback" => "zita_blocks_post_grid_block",
     'attributes' => [
         'numberOfPosts' => [
             'type' => "number",

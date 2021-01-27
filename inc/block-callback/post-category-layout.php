@@ -1,6 +1,6 @@
 <?php
-wpgt_register_block_fn('zita-post-tc',  [
-    "render_callback" => "zita_two_column_block",
+zita_blocks_register_block_fn('zita-post-tc',  [
+    "render_callback" => "zita_blocks_two_column_block",
     'attributes' => [
         'numberOfPosts' => [
             'type' => "number",

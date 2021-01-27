@@ -1,6 +1,6 @@
 <?php
 // add category 
-function my_plugin_block_categories($categories, $post)
+function zita_blocks_block_categories($categories, $post)
 {
     return array_merge(
         $categories,
@@ -13,9 +13,9 @@ function my_plugin_block_categories($categories, $post)
         )
     );
 }
-add_filter('block_categories', 'my_plugin_block_categories', 10, 2);
+add_filter('block_categories', 'zita_blocks_block_categories', 10, 2);
 // register blocks common function
-function wpgt_register_block_fn($blockName, $extraFeature = [])
+function zita_blocks_register_block_fn($blockName, $extraFeature = [])
 {
     register_block_type(
         'zita-blocks/' . $blockName,

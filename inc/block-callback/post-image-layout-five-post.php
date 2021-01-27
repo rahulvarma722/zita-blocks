@@ -1,6 +1,6 @@
 <?php
-wpgt_register_block_fn('zita-post-section-five-post',  [
-    "render_callback" => "zita_section_block_five_post",
+zita_blocks_register_block_fn('zita-post-section-five-post',  [
+    "render_callback" => "zita_blocks_section_five_post",
     'attributes' => [
         'numberOfPosts' => [
             'type' => "number",

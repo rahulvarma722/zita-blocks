@@ -1,6 +1,6 @@
 <?php
 // zita post callback function
-function zita_post_grid_block($attr)
+function zita_blocks_post_grid_block($attr)
 {
 
     $args = [
@@ -54,7 +54,7 @@ function zita_post_grid_block($attr)
             if (!$postChecker) {
                 $postChecker = true;
             }
-            $postHtml .= returnHtmlListPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $args, $attr['thumbnail']);
+            $postHtml .= zita_blocks_returnHtmlListPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $args, $attr['thumbnail']);
         }
         $postHtml .= "</div>";
         if ($attr['meta_style'][0]['npEnable']) {

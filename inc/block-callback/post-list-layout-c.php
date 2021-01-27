@@ -1,6 +1,6 @@
 <?php
 // zita post callback function
-function mytheme_blocks_render_latest_post_block($attr)
+function zita_blocks_render_latest_post_block($attr)
 {
     $args = [
         "posts_per_page" => $attr['numberOfPosts']
@@ -52,7 +52,7 @@ function mytheme_blocks_render_latest_post_block($attr)
             if (!$postChecker) {
                 $postChecker = true;
             }
-            $postHtml .= returnHtmlListPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $args, $attr['thumbnail']);
+            $postHtml .= zita_blocks_returnHtmlListPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $args, $attr['thumbnail']);
         }
         $postHtml .= "</div>";
         if ($attr['meta_style'][0]['npEnable']) {
@@ -94,7 +94,7 @@ function mytheme_blocks_render_latest_post_block($attr)
     }
 }
 
-function returnHtmlListPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $postExcerpt, $postExcerpt__, $postDateModify, $postExcerptColor, $tags_, $category__in, $thumbnail = false)
+function zita_blocks_returnHtmlListPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $postExcerpt, $postExcerpt__, $postDateModify, $postExcerptColor, $tags_, $category__in, $thumbnail = false)
 {
     $postHtmlCl1 = "<article class='block-post-article'>";
     $postHtmlCl1 .= "<div class='post-wrapper' id='post-wrapper'>";

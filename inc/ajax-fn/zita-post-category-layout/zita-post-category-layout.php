@@ -1,5 +1,5 @@
 <?php
-function post_tc_block()
+function zita_blocks_post_tc()
 {
     $pageNo = $_POST['trigger'] == "next" ? $_POST['page'] + 1 : $_POST['page'] - 1;
     $attr = $_POST['attr'];
@@ -11,12 +11,12 @@ function post_tc_block()
     if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
         $args['category__in'] = $attr["postCategories"];
     }
-    echo post_tc_html($args, $attr) ? post_tc_html($args, $attr) : 0;
+    echo zita_blocks_post_tc_html($args, $attr) ? zita_blocks_post_tc_html($args, $attr) : 0;
     die();
 }
-add_action('wp_ajax_post_category_layout_block', "post_tc_block");
-add_action('wp_ajax_nopriv_post_category_layout_block', "post_tc_block");
-function post_tc_block_choose_cate()
+add_action('wp_ajax_post_category_layout_block', "zita_blocks_post_tc");
+add_action('wp_ajax_nopriv_post_category_layout_block', "zita_blocks_post_tc");
+function zita_blocks_choose_cate()
 {
     $attr = $_POST['attr'];
     $args = [
@@ -27,14 +27,14 @@ function post_tc_block_choose_cate()
     if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
         $args['category__in'] = $attr["postCategories"];
     }
-    echo post_tc_html($args, $attr) ? json_encode(post_tc_html($args, $attr, true)) : 0;
+    echo zita_blocks_post_tc_html($args, $attr) ? json_encode(zita_blocks_post_tc_html($args, $attr, true)) : 0;
     die();
 }
-add_action('wp_ajax_post_category_layout_choose_category', "post_tc_block_choose_cate");
-add_action('wp_ajax_nopriv_post_category_layout_choose_category', "post_tc_block_choose_cate");
+add_action('wp_ajax_post_category_layout_choose_category', "zita_blocks_choose_cate");
+add_action('wp_ajax_nopriv_post_category_layout_choose_category', "zita_blocks_choose_cate");
 
 // return html function
-function post_tc_html($args, $attr, $showNextPrev = false)
+function zita_blocks_post_tc_html($args, $attr, $showNextPrev = false)
 {
     if ($attr['thumbnail'][0]['enable'] == "true") {
         $args['meta_key'] = "_thumbnail_id";
@@ -59,9 +59,9 @@ function post_tc_html($args, $attr, $showNextPrev = false)
             $query->the_post();
             if ($checkFirst) {
                 $checkFirst = false;
-                $postHtmlCl1 .= returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['thumbnail']);
+                $postHtmlCl1 .= zita_blocks_returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['thumbnail']);
             } else {
-                $postHtmlCl2 .= returnHtmlPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['thumbnail']);
+                $postHtmlCl2 .= zita_blocks_returnHtmlPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['thumbnail']);
             }
         }
         $postHtmlCl1 .=  '</div>';

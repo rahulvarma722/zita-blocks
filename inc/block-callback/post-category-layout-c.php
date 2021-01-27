@@ -1,10 +1,7 @@
 <?php
 // zita post callback function
-function zita_two_column_block($attr)
+function zita_blocks_two_column_block($attr)
 {
-    // echo "<pre>";
-    // print_r($attr);
-    // echo "</pre>";
     $args = [
         'post_type' => 'post',
         "posts_per_page" => $attr['numberOfPosts'],
@@ -12,7 +9,6 @@ function zita_two_column_block($attr)
     if ($attr['thumbnail'][0]['enable']) {
         $args['meta_key'] = "_thumbnail_id";
     }
-
     $fourAndMoreNav = [];
     if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
         $args['category__in'] = $attr["postCategories"];

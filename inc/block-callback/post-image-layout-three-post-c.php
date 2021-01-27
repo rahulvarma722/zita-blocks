@@ -1,6 +1,6 @@
 <?php
 // zita post section callback function
-function zita_section_block_three_post($attr)
+function zita_blocks_section_three_post($attr)
 {
     // echo "<pre>";
     // print_r($attr);
@@ -53,7 +53,7 @@ function zita_section_block_three_post($attr)
             while ($query->have_posts()) {
                 $query->the_post();
                 if (get_the_post_thumbnail_url()) {
-                    $postHtml .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                    $postHtml .= zita_blocks_returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
                 }
             }
         } else {
@@ -66,16 +66,16 @@ function zita_section_block_three_post($attr)
                 if ($attr['layout'][0]['type'] == 2) {
                     if ($checkForTwo <= 2) {
                         $checkForTwo++;
-                        $columnOne .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                        $columnOne .= zita_blocks_returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
                     } else {
-                        $columnTwo .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                        $columnTwo .= zita_blocks_returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
                     }
                 } else {
                     if ($checkFirst) {
                         $checkFirst = false;
-                        $columnOne .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                        $columnOne .= zita_blocks_returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
                     } else {
-                        $columnTwo .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                        $columnTwo .= zita_blocks_returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
                     }
                 }
             }
@@ -107,7 +107,7 @@ function zita_section_block_three_post($attr)
     }
 }
 
-function returnHtmlPost_three_post($cate_, $heading__, $postAuthor, $meta_, $postDate, $postExcerpt, $postExcerpt__, $postDateModify, $postExcerptColor, $tags_, $category__in, $layout_)
+function zita_blocks_returnHtmlPost_three_post($cate_, $heading__, $postAuthor, $meta_, $postDate, $postExcerpt, $postExcerpt__, $postDateModify, $postExcerptColor, $tags_, $category__in, $layout_)
 {
     $postHtmlCl1 = "<article class='block-post-article'>";
     $postHtmlCl1 .= "<div class='post-wrapper' id='post-wrapper'>";

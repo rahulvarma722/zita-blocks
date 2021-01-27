@@ -1,5 +1,5 @@
 <?php
-function post_image_five_post()
+function zita_blocks_post_image_five_post()
 {
     $pageNo = $_POST['trigger'] == "next" ? $_POST['page'] + 1 : $_POST['page'] - 1;
     $attr = $_POST['attr'];
@@ -12,13 +12,13 @@ function post_image_five_post()
     if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
         $args['category__in'] = $attr["postCategories"];
     }
-    echo post_image_five_post_html($args, $attr) ? post_image_five_post_html($args, $attr) : 0;
+    echo zita_blocks_post_image_five_post_html($args, $attr) ? zita_blocks_post_image_five_post_html($args, $attr) : 0;
     die();
 }
-add_action('wp_ajax_post_image_five_post', "post_image_five_post");
-add_action('wp_ajax_nopriv_post_image_five_post', "post_image_five_post");
+add_action('wp_ajax_post_image_five_post', "zita_blocks_post_image_five_post");
+add_action('wp_ajax_nopriv_post_image_five_post', "zita_blocks_post_image_five_post");
 // return html function
-function post_image_five_post_html($args, $attr)
+function zita_blocks_post_image_five_post_html($args, $attr)
 {
     $query = new WP_Query($args);
     if ($query->have_posts()) {
@@ -41,19 +41,19 @@ function post_image_five_post_html($args, $attr)
             $query->the_post();
             if ($attr['layout'][0]['type'] == 2) {
                 if ($CountTwoLayout > 4) {
-                    $columnOne .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                    $columnOne .= zita_blocks_returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
                 } else {
                     $CountTwoLayout++;
-                    $columnTwo .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                    $columnTwo .= zita_blocks_returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
                 }
             } else if ($attr['layout'][0]['type'] == 3) {
-                $postHtml .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                $postHtml .= zita_blocks_returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
             } else {
                 if ($checkFirst) {
                     $checkFirst = false;
-                    $columnOne .= returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                    $columnOne .= zita_blocks_returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
                 } else {
-                    $columnTwo .= returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                    $columnTwo .= zita_blocks_returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
                 }
             }
         }

@@ -1,6 +1,6 @@
 <?php
 // zita post slider callback function
-function mytheme_blocks_render_post_slider($attr)
+function zita_blocks_render_post_slider($attr)
 {
     $args = [
         "posts_per_page" => $attr['numberOfPosts'],
