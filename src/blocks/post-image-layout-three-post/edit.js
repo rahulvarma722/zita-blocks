@@ -207,7 +207,10 @@ class Edit extends Component {
     return (
       <>
         <InspectorControls>
-          <PanelBody title="Block Title" initialOpen={false}>
+          <PanelBody
+            title={__("Block Title", "zita-blocks")}
+            initialOpen={false}
+          >
             <ToggleControl
               label={
                 title_.enable
@@ -285,7 +288,7 @@ class Edit extends Component {
                 />
                 {/* font weight */}
                 <div className="flex-section">
-                  <p>Font Weight</p>
+                  <p>{__("Font Weight", "zita-blocks")}</p>
                   <select
                     value={title_.fontWeight}
                     onChange={(e) => {
@@ -331,9 +334,9 @@ class Edit extends Component {
                   this.updateObj("layout", "type", layout, value_);
                 }}
               >
-                <option value="1">Layout One</option>
-                <option value="2">Layout Two</option>
-                <option value="3">Layout Three</option>
+                <option value="1">{__("Layout One", "zita-blocks")}</option>
+                <option value="2">{__("Layout Two", "zita-blocks")}</option>
+                <option value="3">{__("Layout Three", "zita-blocks")}</option>
               </select>
             </div>
             {layout_.type == 3 && (
@@ -453,10 +456,10 @@ class Edit extends Component {
                     setAttributes({ heading: newHeading });
                   }}
                 >
-                  <option value="h1">H1</option>
-                  <option value="h2">H2</option>
-                  <option value="h3">H3</option>
-                  <option value="p">P</option>
+                  <option value="h1">{__("H1", "zita-blocks")}</option>
+                  <option value="h2">{__("H2", "zita-blocks")}</option>
+                  <option value="h3">{__("H3", "zita-blocks")}</option>
+                  <option value="p">{__("P", "zita-blocks")}</option>
                 </select>
                 <p>
                   <strong>{__("Font Size", "zita-blocks")}</strong>
@@ -503,10 +506,10 @@ class Edit extends Component {
                     setAttributes({ heading2: newHeading });
                   }}
                 >
-                  <option value="h1">H1</option>
-                  <option value="h2">H2</option>
-                  <option value="h3">H3</option>
-                  <option value="p">P</option>
+                  <option value="h1">{__("H1", "zita-blocks")}</option>
+                  <option value="h2">{__("H2", "zita-blocks")}</option>
+                  <option value="h3">{__("H3", "zita-blocks")}</option>
+                  <option value="p">{__("P", "zita-blocks")}</option>
                 </select>
                 <p>
                   <strong>{__("Font Size", "zita-blocks")}</strong>
@@ -569,7 +572,7 @@ class Edit extends Component {
                 {excerpt_.enable && (
                   <>
                     <p>
-                      <strong>Font Size</strong>
+                      <strong>{__("Font Size", "zita-blocks")}</strong>
                     </p>
                     <RangeControl
                       value={excerpt_.fontSize}
@@ -629,7 +632,7 @@ class Edit extends Component {
                       }
                     />
                     <p>
-                      <strong>Font Size</strong>
+                      <strong>{__("Font Size", "zita-blocks")}</strong>
                     </p>
                     <RangeControl
                       value={excerpt2_.fontSize}
@@ -1279,47 +1282,6 @@ class Edit extends Component {
                       </div>
                     </>
                   )}
-                  {/* <div>
-                    <div className="column-count column-count-1">
-                      {"getMedia_" in posts[0] &&
-                        posts[0].getMedia_ &&
-                        "guid" in posts[0].getMedia_ &&
-                        this.returnHtml(
-                          posts[0],
-                          heading_,
-                          author_,
-                          date_,
-                          meta_style_,
-                          showCate_,
-                          excerpt_,
-                          showTag_,
-                          layout_
-                        )}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="column-count column-count-1">
-                      {posts.map((post, in_) => {
-                        return (
-                          in_ != 0 &&
-                          "getMedia_" in post &&
-                          post.getMedia_ &&
-                          "guid" in post.getMedia_ &&
-                          this.returnHtml(
-                            post,
-                            heading2_,
-                            author2_,
-                            date2_,
-                            meta_style2_,
-                            showCate2_,
-                            excerpt2_,
-                            showTag2_,
-                            layout_
-                          )
-                        );
-                      })}
-                    </div>
-                  </div> */}
                 </>
               )}
             </div>
@@ -1462,7 +1424,7 @@ class Edit extends Component {
                     }}
                     className="post-date-last-modified"
                   >
-                    <span>Modified: </span>
+                    <span>{__("Modified:","zita-blocks")} </span>
                     {this.dateFormate(post.modified)}
                   </p>
                 </>

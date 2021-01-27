@@ -11,6 +11,7 @@ import {
   ToggleControl,
 } from "@wordpress/components";
 import { Component } from "@wordpress/element";
+import { __ } from "@wordpress/i18n";
 let bgImageWrapper = plugin_url.url + "assets/img/image2.jpg";
 class Edit extends Component {
   constructor(props) {
@@ -35,14 +36,18 @@ class Edit extends Component {
         spacing: "2",
       },
       title: {
-        text: "This Is Title text",
+        text: __("This Is Title text", "zita-blocks"),
         fontSize: 17,
         color: "red",
       },
-      text: { text: "Add Description", fontSize: 17, color: "red" },
+      text: {
+        text: __("Add Description", "zita-blocks"),
+        fontSize: 17,
+        color: "red",
+      },
       buttoneOne: {
         enable: true,
-        text: "Button One",
+        text: __("Button One", "zita-blocks"),
         link: "#",
         target: false,
         fontSize: "",
@@ -57,7 +62,7 @@ class Edit extends Component {
       },
       buttoneTwo: {
         enable: true,
-        text: "Button Two",
+        text: __("Button Two", "zita-blocks"),
         link: "#",
         target: false,
         fontSize: "",
@@ -168,14 +173,21 @@ class Edit extends Component {
     }
     return [
       <InspectorControls>
-        <PanelBody title={"Slider Setting"} initialOpen={false}>
-          <p className="block-inside">Slider Dimension</p>
+        <PanelBody
+          title={__("Slider Setting", "zita-blocks")}
+          initialOpen={false}
+        >
+          <p className="block-inside">
+            {__("Slider Dimension", "zita-blocks")}
+          </p>
           <p>
-            <strong>Width</strong>
+            <strong>{__("Width", "zita-blocks")}</strong>
           </p>
           <ToggleControl
             label={
-              sliderSetting.dimension.width ? "Full Width" : "Custom Width"
+              sliderSetting.dimension.width
+                ? __("Full Width", "zita-blocks")
+                : __("Custom Width", "zita-blocks")
             }
             checked={sliderSetting.dimension.width}
             onChange={(e) => {
@@ -184,7 +196,7 @@ class Edit extends Component {
           />
           {sliderSetting.dimension.width && (
             <RangeControl
-              label="Width"
+              label={__("Width", "zita-blocks")}
               value={sliderSetting.dimension.custom_width}
               min={200}
               max={1400}
@@ -194,10 +206,14 @@ class Edit extends Component {
             />
           )}
           <p>
-            <strong>Height</strong>
+            <strong>{__("Height", "zita-blocks")}</strong>
           </p>
           <ToggleControl
-            label={sliderSetting.dimension.width ? "Auto" : "Custom Height"}
+            label={
+              sliderSetting.dimension.width
+                ? __("Auto", "zita-blocks")
+                : __("Custom Height", "zita-blocks")
+            }
             checked={sliderSetting.dimension.height}
             onChange={(e) => {
               this.updateGlobalSlide(e, "dimension", "height");
@@ -205,7 +221,7 @@ class Edit extends Component {
           />
           {sliderSetting.dimension.height && (
             <RangeControl
-              label="Height"
+              label={__("Height", "zita-blocks")}
               value={sliderSetting.dimension.custom_height}
               min={360}
               max={1000}
@@ -214,7 +230,7 @@ class Edit extends Component {
               }
             />
           )}
-          <p className="block-inside">Slider Effect</p>
+          <p className="block-inside">{__("Slider Effect", "zita-blocks")}</p>
           <div class="zita-switcher-button-section">
             <span
               onClick={() =>
@@ -224,7 +240,7 @@ class Edit extends Component {
                 sliderSetting.sliderEffect == "slideEffect" ? "selected" : ""
               }
             >
-              Slide
+              {__("Slide", "zita-blocks")}
             </span>
             <span
               onClick={() =>
@@ -234,35 +250,37 @@ class Edit extends Component {
                 sliderSetting.sliderEffect == "fadeEffect" ? "selected" : ""
               }
             >
-              Fade
+              {__("Fade", "zita-blocks")}
             </span>
           </div>
-          <p className="block-inside">Trigger</p>
+          <p className="block-inside">{__("Trigger", "zita-blocks")}</p>
           <div class="zita-switcher-button-section">
             <span
               onClick={() => this.setState({ trigger: "linear" })}
               className={triggerActive == "linear" ? "selected" : ""}
             >
-              Linear
+              {__("Linear", "zita-blocks")}
             </span>
             <span
               onClick={() => this.setState({ trigger: "left" })}
               className={triggerActive == "left" ? "selected" : ""}
             >
-              Left Right
+              {__("Left Right", "zita-blocks")}
             </span>
             <span
               onClick={() => this.setState({ trigger: "auto" })}
               className={triggerActive == "auto" ? "selected" : ""}
             >
-              Auto
+              {__("Auto", "zita-blocks")}
             </span>
           </div>
           {triggerActive == "linear" && (
             <>
               <ToggleControl
                 label={
-                  sliderSetting.linearTrigger.enable ? "Disable" : "Enable"
+                  sliderSetting.linearTrigger.enable
+                    ? __("Disable", "zita-blocks")
+                    : __("Enable", "zita-blocks")
                 }
                 checked={sliderSetting.linearTrigger.enable}
                 onChange={(e) =>
@@ -272,7 +290,7 @@ class Edit extends Component {
               {sliderSetting.linearTrigger.enable && (
                 <>
                   <RangeControl
-                    label="Size"
+                    label={__("Size", "zita-blocks")}
                     value={sliderSetting.linearTrigger.fontSize}
                     min={0}
                     max={70}
@@ -281,7 +299,7 @@ class Edit extends Component {
                     }
                   />
                   <p>
-                    <strong>Color</strong>
+                    <strong>{__("Color", "zita-blocks")}</strong>
                   </p>
                   <ColorPicker
                     color={sliderSetting.linearTrigger.color}
@@ -291,7 +309,7 @@ class Edit extends Component {
                     }}
                   />
                   <p>
-                    <strong>Active Color</strong>
+                    <strong>{__("Active Color", "zita-blocks")}</strong>
                   </p>
                   <ColorPicker
                     color={sliderSetting.linearTrigger.activeColor}
@@ -312,7 +330,9 @@ class Edit extends Component {
             <>
               <ToggleControl
                 label={
-                  sliderSetting.leftRightTrigger.enable ? "Disable" : "Enable"
+                  sliderSetting.leftRightTrigger.enable
+                    ? __("Disable", "zita-blocks")
+                    : __("Enable", "zita-blocks")
                 }
                 checked={sliderSetting.leftRightTrigger.enable}
                 onChange={(e) =>
@@ -322,7 +342,7 @@ class Edit extends Component {
               {sliderSetting.leftRightTrigger.enable && (
                 <>
                   <RangeControl
-                    label="Font Size"
+                    label={__("Font Size", "zita-blocks")}
                     value={sliderSetting.leftRightTrigger.fontSize}
                     min={0}
                     max={70}
@@ -331,7 +351,7 @@ class Edit extends Component {
                     }
                   />
                   <p>
-                    <strong>Color</strong>
+                    <strong>{__("Color", "zita-blocks")}</strong>
                   </p>
                   <ColorPalette
                     value={sliderSetting.leftRightTrigger.color}
@@ -340,7 +360,7 @@ class Edit extends Component {
                     }
                   />
                   <p>
-                    <strong>Background Color</strong>
+                    <strong>{__("Background Color", "zita-blocks")}</strong>
                   </p>
                   <ColorPicker
                     color={sliderSetting.leftRightTrigger.backgroundColor}
@@ -360,7 +380,11 @@ class Edit extends Component {
           {triggerActive == "auto" && (
             <>
               <ToggleControl
-                label={sliderSetting.autoTrigger.enable ? "Disable" : "Enable"}
+                label={
+                  sliderSetting.autoTrigger.enable
+                    ? __("Disable", "zita-blocks")
+                    : __("Enable", "zita-blocks")
+                }
                 checked={sliderSetting.autoTrigger.enable}
                 onChange={(e) =>
                   this.updateGlobalSlide(e, "autoTrigger", "enable")
@@ -368,7 +392,7 @@ class Edit extends Component {
               />
               {sliderSetting.autoTrigger.enable && (
                 <RangeControl
-                  label="Slide Delay"
+                  label={__("Slide Delay", "zita-blocks")}
                   value={sliderSetting.autoTrigger.delay}
                   min={0}
                   max={12}
@@ -380,9 +404,12 @@ class Edit extends Component {
             </>
           )}
         </PanelBody>
-        <PanelBody title={"Slide Setting"} initialOpen={false}>
+        <PanelBody
+          title={__("Slide Setting", "zita-blocks")}
+          initialOpen={false}
+        >
           <p>
-            <strong>Background image</strong>
+            <strong>{__("Background image", "zita-blocks")}</strong>
           </p>
           <MediaUpload
             allowedType="image"
@@ -401,20 +428,20 @@ class Edit extends Component {
           />
 
           <div className="flex-section">
-            <p>Background Size</p>
+            <p>{__("Background Size", "zita-blocks")}</p>
             <select
               value={currentSlide.container.bgSize}
               onChange={(e) => {
                 this.updateSlides(e.target.value, "container", "bgSize");
               }}
             >
-              <option value="auto">Auto</option>
-              <option value="cover">Cover</option>
-              <option value="contain">Contain</option>
+              <option value="auto">{__("Auto", "zita-blocks")}</option>
+              <option value="cover">{__("Cover", "zita-blocks")}</option>
+              <option value="contain">{__("Contain", "zita-blocks")}</option>
             </select>
           </div>
           <p>
-            <strong>Overlay Color</strong>
+            <strong>{__("Overlay Color", "zita-blocks")}</strong>
           </p>
           <ColorPicker
             color={currentSlide.container.overlayColor}
@@ -424,7 +451,7 @@ class Edit extends Component {
             }}
           />
           <p>
-            <strong>Content Alignment</strong>
+            <strong>{__("Content Alignment", "zita-blocks")}</strong>
           </p>
           <div className="zita-alignment">
             <div>
@@ -459,10 +486,13 @@ class Edit extends Component {
             </div>
           </div>
         </PanelBody>
-        <PanelBody title={"Text Setting"} initialOpen={false}>
-          <p className="block-inside">Header Setting</p>
+        <PanelBody
+          title={__("Text Setting", "zita-blocks")}
+          initialOpen={false}
+        >
+          <p className="block-inside">{__("Header Setting", "zita-blocks")}</p>
           <p>
-            <strong>Font Size</strong>
+            <strong>{__("Font Size", "zita-blocks")}</strong>
           </p>
           <RangeControl
             value={currentSlide.title.fontSize}
@@ -471,15 +501,17 @@ class Edit extends Component {
             onChange={(e) => this.updateSlides(e, "title", "fontSize")}
           />
           <p>
-            <strong>Color</strong>
+            <strong>{__("Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={currentSlide.title.color}
             onChange={(color) => this.updateSlides(color, "title", "color")}
           />
-          <p className="block-inside">Description Setting</p>
+          <p className="block-inside">
+            {__("Description Setting", "zita-blocks")}
+          </p>
           <p>
-            <strong>Font Size</strong>
+            <strong>{__("Font Size", "zita-blocks")}</strong>
           </p>
           <RangeControl
             value={currentSlide.text.fontSize}
@@ -488,14 +520,14 @@ class Edit extends Component {
             onChange={(e) => this.updateSlides(e, "text", "fontSize")}
           />
           <p>
-            <strong>Color</strong>
+            <strong>{__("Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={currentSlide.text.color}
             onChange={(color) => this.updateSlides(color, "text", "color")}
           />
           <p>
-            <strong>Text Vertical Space</strong>
+            <strong>{__("Text Vertical Space", "zita-blocks")}</strong>
           </p>
           <RangeControl
             value={currentSlide.wrapper.spacing}
@@ -504,7 +536,10 @@ class Edit extends Component {
             onChange={(e) => this.updateSlides(e, "wrapper", "spacing")}
           />
         </PanelBody>
-        <PanelBody title={"Button Setting"} initialOpen={false}>
+        <PanelBody
+          title={__("Button Setting", "zita-blocks")}
+          initialOpen={false}
+        >
           <div className="zita-switcher-button-section">
             <span
               className={activeTwoBtnState == "buttoneOne" ? "selected" : ""}
@@ -512,7 +547,7 @@ class Edit extends Component {
                 this.setState({ twoBtn: "buttoneOne" });
               }}
             >
-              Button 1
+              {__("Button 1", "zita-blocks")}
             </span>
             <span
               className={activeTwoBtnState == "buttoneTwo" ? "selected" : ""}
@@ -520,12 +555,14 @@ class Edit extends Component {
                 this.setState({ twoBtn: "buttoneTwo" });
               }}
             >
-              Button 2
+              {__("Button 2", "zita-blocks")}
             </span>
           </div>
           <ToggleControl
             label={
-              currentSlide[activeTwoBtnState].enable ? "Disable" : "Enable"
+              currentSlide[activeTwoBtnState].enable
+                ? __("Disable", "zita-blocks")
+                : __("Enable", "zita-blocks")
             }
             checked={currentSlide[activeTwoBtnState].enable}
             onChange={(e) => {
@@ -535,7 +572,7 @@ class Edit extends Component {
           {currentSlide[activeTwoBtnState].enable && (
             <>
               <RangeControl
-                label="Font Size"
+                label={__("Font Size", "zita-blocks")}
                 value={currentSlide[activeTwoBtnState].fontSize}
                 min={0}
                 max={70}
@@ -543,14 +580,14 @@ class Edit extends Component {
                   this.updateSlides(e, activeTwoBtnState, "fontSize")
                 }
               />
-              <p>Color</p>
+              <p>{__("Color", "zita-blocks")}</p>
               <ColorPalette
                 value={currentSlide[activeTwoBtnState].color}
                 onChange={(color) =>
                   this.updateSlides(color, activeTwoBtnState, "color")
                 }
               />
-              <p>Background Color</p>
+              <p>{__("Background Color", "zita-blocks")}</p>
               <ColorPicker
                 color={currentSlide[activeTwoBtnState].backgroundColor}
                 onChangeComplete={(colorBg) => {
@@ -563,7 +600,7 @@ class Edit extends Component {
                 }}
               />
               <RangeControl
-                label="Height"
+                label={__("Height", "zita-blocks")}
                 value={currentSlide[activeTwoBtnState].height}
                 min={0}
                 max={30}
@@ -572,7 +609,7 @@ class Edit extends Component {
                 }
               />
               <RangeControl
-                label="Width"
+                label={__("Width", "zita-blocks")}
                 value={currentSlide[activeTwoBtnState].width}
                 min={0}
                 max={30}
@@ -581,11 +618,11 @@ class Edit extends Component {
                 }
               />
               <p>
-                <strong>Border</strong>
+                <strong>{__("Border", "zita-blocks")}</strong>
               </p>
               <ToggleControl
                 label={
-                  currentSlide[activeTwoBtnState].border ? "Disable" : "Enable"
+                  currentSlide[activeTwoBtnState].border ? __("Disable", "zita-blocks") : __("Enable", "zita-blocks")
                 }
                 checked={currentSlide[activeTwoBtnState].border}
                 onChange={(e) =>
@@ -595,7 +632,7 @@ class Edit extends Component {
               {currentSlide[activeTwoBtnState].border && (
                 <div className="icon-border-setting">
                   <RangeControl
-                    label="Border Width"
+                    label={__("Border Width", "zita-blocks")}
                     value={currentSlide[activeTwoBtnState].borderWidth}
                     min={0}
                     max={100}
@@ -604,7 +641,7 @@ class Edit extends Component {
                     }
                   />
                   <RangeControl
-                    label="Border Radius"
+                    label={__("Border Radius", "zita-blocks")}
                     value={currentSlide[activeTwoBtnState].borderRadius}
                     min={0}
                     max={50}
@@ -612,7 +649,7 @@ class Edit extends Component {
                       this.updateSlides(e, activeTwoBtnState, "borderRadius")
                     }
                   />
-                  <p>Border Color</p>
+                  <p>{__("Border Color", "zita-blocks")}</p>
                   <ColorPalette
                     value={currentSlide[activeTwoBtnState].borderColor}
                     onChange={(color) =>
@@ -750,7 +787,7 @@ class Edit extends Component {
                             <RichText
                               key="editable"
                               tagName="h1"
-                              placeholder="Service Title"
+                              placeholder={__("Service Title", "zita-blocks")}
                               value={val.title.text}
                               onChange={(e) =>
                                 this.updateSlides(e, "title", "text")
@@ -763,7 +800,7 @@ class Edit extends Component {
                             <RichText
                               key="editable"
                               tagName="h2"
-                              placeholder="Service Title"
+                              placeholder={__("Service Title", "zita-blocks")}
                               value={val.text.text}
                               onChange={(e) =>
                                 this.updateSlides(e, "text", "text")
@@ -779,7 +816,7 @@ class Edit extends Component {
                                   <RichText
                                     key="editable"
                                     tagName="a"
-                                    placeholder="Button One"
+                                    placeholder={__("Button One", "zita-blocks")}
                                     value={val.buttoneOne.text}
                                     onChange={(e) =>
                                       this.updateSlides(e, "buttoneOne", "text")
@@ -792,7 +829,7 @@ class Edit extends Component {
                                 <RichText
                                   key="editable"
                                   tagName="a"
-                                  placeholder="Button Two"
+                                  placeholder={__("Button Two", "zita-blocks")}
                                   value={val.buttoneTwo.text}
                                   onChange={(e) =>
                                     this.updateSlides(e, "buttoneTwo", "text")

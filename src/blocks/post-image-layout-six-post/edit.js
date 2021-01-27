@@ -35,18 +35,18 @@ class Edit extends Component {
     let date_ = date.split("T")[0];
     let dateObj = new Date(date_);
     const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+      __("January", "zita-blocks"),
+      __("February", "zita-blocks"),
+      __("March", "zita-blocks"),
+      __("April", "zita-blocks"),
+      __("May", "zita-blocks"),
+      __("June", "zita-blocks"),
+      __("July", "zita-blocks"),
+      __("August", "zita-blocks"),
+      __("September", "zita-blocks"),
+      __("October", "zita-blocks"),
+      __("November", "zita-blocks"),
+      __("December", "zita-blocks"),
     ];
     let dateArr =
       monthNames[dateObj.getMonth()] +
@@ -203,7 +203,10 @@ class Edit extends Component {
     return (
       <>
         <InspectorControls>
-          <PanelBody title="Block Title" initialOpen={false}>
+          <PanelBody
+            title={__("Block Title", "zita-blocks")}
+            initialOpen={false}
+          >
             <ToggleControl
               label={
                 title_.enable
@@ -281,7 +284,7 @@ class Edit extends Component {
                 />
                 {/* font weight */}
                 <div className="flex-section">
-                  <p>Font Weight</p>
+                  <p>{__("Font Weight", "zita-blocks")}</p>
                   <select
                     value={title_.fontWeight}
                     onChange={(e) => {
@@ -375,10 +378,10 @@ class Edit extends Component {
                     setAttributes({ heading: newHeading });
                   }}
                 >
-                  <option value="h1">H1</option>
-                  <option value="h2">H2</option>
-                  <option value="h3">H3</option>
-                  <option value="p">P</option>
+                  <option value="h1">{__("H1", "zita-blocks")}</option>
+                  <option value="h2">{__("H2", "zita-blocks")}</option>
+                  <option value="h3">{__("H3", "zita-blocks")}</option>
+                  <option value="p">{__("P", "zita-blocks")}</option>
                 </select>
                 <p>
                   <strong>{__("Font Size", "zita-blocks")}</strong>
@@ -425,10 +428,10 @@ class Edit extends Component {
                     setAttributes({ heading2: newHeading });
                   }}
                 >
-                  <option value="h1">H1</option>
-                  <option value="h2">H2</option>
-                  <option value="h3">H3</option>
-                  <option value="p">P</option>
+                  <option value="h1">{__("H1", "zita-blocks")}</option>
+                  <option value="h2">{__("H2", "zita-blocks")}</option>
+                  <option value="h3">{__("H3", "zita-blocks")}</option>
+                  <option value="p">{__("P", "zita-blocks")}</option>
                 </select>
                 <p>
                   <strong>{__("Font Size", "zita-blocks")}</strong>
@@ -491,7 +494,7 @@ class Edit extends Component {
                 {excerpt_.enable && (
                   <>
                     <p>
-                      <strong>Font Size</strong>
+                      <strong>{__("Font Size", "zita-blocks")}</strong>
                     </p>
                     <RangeControl
                       value={excerpt_.fontSize}
@@ -551,7 +554,7 @@ class Edit extends Component {
                       }
                     />
                     <p>
-                      <strong>Font Size</strong>
+                      <strong>{__("Font Size","zita-blocks")}</strong>
                     </p>
                     <RangeControl
                       value={excerpt2_.fontSize}
@@ -1246,7 +1249,7 @@ class Edit extends Component {
                     }}
                     className="post-date-last-modified"
                   >
-                    <span>Modified: </span>
+                    <span>{__("Modified:","zita-blocks")} </span>
                     {this.dateFormate(post.modified)}
                   </p>
                 </>

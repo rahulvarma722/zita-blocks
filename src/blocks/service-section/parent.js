@@ -1,11 +1,10 @@
 import { registerBlockType } from "@wordpress/blocks";
 import { InnerBlocks, InspectorControls } from "@wordpress/block-editor";
-import { PanelBody, RangeControl, ColorPicker } from "@wordpress/components";
-
-const { useDispatch, useSelect } = wp.data;
+import { PanelBody, RangeControl } from "@wordpress/components";
+import { __ } from "@wordpress/i18n";
 
 registerBlockType("zita-blocks/block-column-parent", {
-  title: "Service Section",
+  title: __("Service Section", "zita-blocks"),
   icon: "grid-view",
   // description: "Parent Of all Column Member",
   category: "zita-category",
@@ -38,14 +37,14 @@ registerBlockType("zita-blocks/block-column-parent", {
       <InspectorControls>
         <PanelBody>
           <RangeControl
-            label="Number Of Column"
+            label={__("Number Of Column", "zita-blocks")}
             value={columns}
             onChange={(v) => setAttributes({ columns: v })}
             min={1}
             max={4}
           />
           <p>
-            <strong>Column Layout</strong>
+            <strong>{__("Column Layout", "zita-blocks")}</strong>
           </p>
           <div className="column-layout-num-column">
             <div>

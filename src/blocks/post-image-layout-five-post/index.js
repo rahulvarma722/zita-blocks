@@ -1,7 +1,6 @@
 import "./editor.scss";
 import { registerBlockType } from "@wordpress/blocks";
 import Edit from "./edit";
-const attrSave = {};
 registerBlockType("zita-blocks/zita-post-section-five-post", {
   title: "Post Image Layout Five Post",
   icon: "tagcloud",

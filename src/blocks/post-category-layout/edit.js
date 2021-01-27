@@ -244,7 +244,7 @@ class Edit extends Component {
                     }}
                     className="post-date-last-modified"
                   >
-                    <span>Modified: </span>
+                    <span>{__("Modified", "zita-blocks")}: </span>
                     {this.dateFormate(post.modified)}
                   </p>
                 </>
@@ -259,7 +259,9 @@ class Edit extends Component {
                 className="post-excerpt"
               >
                 {this.excerptWords(excerpt_.words, post.excerpt.rendered)}
-                <span className="read-more">...Read More</span>
+                <span className="read-more">
+                  ...{__("Read More", "zita-blocks")}
+                </span>
               </p>
             )}
             {showTag_ && showTag_.enable && (
@@ -334,7 +336,7 @@ class Edit extends Component {
                       }}
                       href="#"
                     >
-                      all
+                      {__("all", "zita-blocks")}
                     </a>
                   </li>
                   {makingCate.map((cateV, cKey) => {
@@ -367,7 +369,8 @@ class Edit extends Component {
                     }}
                     class="more-opener"
                   >
-                    More<i class="fas fa-chevron-down"></i>
+                    {__("More", "zita-blocks")}
+                    <i class="fas fa-chevron-down"></i>
                   </span>
                   <ul>
                     {makingCate.map((cateV, cKey) => {
@@ -467,26 +470,30 @@ class Edit extends Component {
                 onClick={() => this.setState({ blockTitle: "title" })}
                 className={this.state.blockTitle == "title" ? "selected" : ""}
               >
-                Title
+                {__("Title", "zita-blocks")}
               </span>
               <span
                 onClick={() => this.setState({ blockTitle: "nav" })}
                 className={this.state.blockTitle == "nav" ? "selected" : ""}
               >
-                Navigation
+                {__("Navigation", "zita-blocks")}
               </span>
             </div>
             {this.state.blockTitle == "title" ? (
               <>
                 <ToggleControl
-                  label={title_.enable ? "Show" : "Hide"}
+                  label={
+                    title_.enable
+                      ? __("Show", "zita-blocks")
+                      : __("Hide", "zita-blocks")
+                  }
                   checked={title_.enable}
                   onChange={(e) => this.updateObj("title", "enable", title, e)}
                 />
                 {title_.enable && (
                   <>
                     <RangeControl
-                      label="Font Size"
+                      label={__("Font Size", "zita-blocks")}
                       value={title_.fontSize}
                       min={5}
                       max={50}
@@ -495,7 +502,7 @@ class Edit extends Component {
                       }}
                     />
                     <p>
-                      <strong>Color</strong>
+                      <strong>{__("Color", "zita-blocks")}</strong>
                     </p>
                     <ColorPalette
                       value={title_.color}
@@ -504,7 +511,7 @@ class Edit extends Component {
                       }
                     />
                     <p>
-                      <strong>Background Color</strong>
+                      <strong>{__("Background Color", "zita-blocks")}</strong>
                     </p>
                     <ColorPicker
                       color={title_.bgColor}
@@ -519,7 +526,11 @@ class Edit extends Component {
             ) : (
               <>
                 <ToggleControl
-                  label={categorynav[0].enable ? "Show" : "Hide"}
+                  label={
+                    categorynav[0].enable
+                      ? __("Show", "zita-blocks")
+                      : __("Hide", "zita-blocks")
+                  }
                   checked={categorynav[0].enable}
                   onChange={(e) =>
                     this.updateObj("categorynav", "enable", categorynav, e)
@@ -528,7 +539,7 @@ class Edit extends Component {
                 {categorynav[0].enable && (
                   <>
                     <RangeControl
-                      label="Font Size"
+                      label={__("Font Size", "zita-blocks")}
                       value={categorynav[0].fontSize}
                       min={5}
                       max={50}
@@ -542,7 +553,7 @@ class Edit extends Component {
                       }}
                     />
                     <p>
-                      <strong>Color</strong>
+                      <strong>{__("Color", "zita-blocks")}</strong>
                     </p>
                     <ColorPalette
                       value={categorynav[0].color}
@@ -556,7 +567,7 @@ class Edit extends Component {
                       }
                     />
                     <p>
-                      <strong>Background Color</strong>
+                      <strong>{__("Background Color", "zita-blocks")}</strong>
                     </p>
                     <ColorPicker
                       color={categorynav[0].bgColor}
@@ -578,7 +589,7 @@ class Edit extends Component {
             {(title_.enable || categorynav[0].enable) && (
               <>
                 <p>
-                  <strong>Under Line</strong>
+                  <strong>{__("Under Line", "zita-blocks")}</strong>
                 </p>
                 <ToggleControl
                   label={meta_style_.underLine ? "Show" : "Hide"}
@@ -590,7 +601,7 @@ class Edit extends Component {
                 {meta_style_.underLine && (
                   <>
                     <p>
-                      <strong>Color</strong>
+                      <strong>{__("Color", "zita-blocks")}</strong>
                     </p>
                     <ColorPicker
                       color={meta_style_.underLineColor}
@@ -609,9 +620,12 @@ class Edit extends Component {
               </>
             )}
           </PanelBody>
-          <PanelBody title="Post Layout" initialOpen={false}>
+          <PanelBody
+            title={__("Post Layout", "zita-blocks")}
+            initialOpen={false}
+          >
             <p>
-              <strong>Number of Post Display</strong>
+              <strong>{__("Number of Post Display", "zita-blocks")}</strong>
             </p>
             <RangeControl
               value={numberOfPosts}
@@ -622,7 +636,7 @@ class Edit extends Component {
               }}
             />
             <p>
-              <strong>Layout Position</strong>
+              <strong>{__("Layout Position", "zita-blocks")}</strong>
             </p>
             <div class="zita-switcher-button-section">
               <span
@@ -638,7 +652,7 @@ class Edit extends Component {
                   meta_style_.layoutPosition == "left" ? "selected" : ""
                 }
               >
-                Left
+                {__("Left", "zita-blocks")}
               </span>
               <span
                 onClick={() =>
@@ -653,11 +667,11 @@ class Edit extends Component {
                   meta_style_.layoutPosition == "right" ? "selected" : ""
                 }
               >
-                Right
+                {__("Right", "zita-blocks")}
               </span>
             </div>
             <p>
-              <strong>Block Background Color</strong>
+              <strong>{__("Block Background Color", "zita-blocks")}</strong>
             </p>
             <ColorPicker
               color={meta_style_.blockBgColor}
@@ -667,25 +681,28 @@ class Edit extends Component {
               }}
             />
           </PanelBody>
-          <PanelBody title="Post Title" initialOpen={false}>
+          <PanelBody
+            title={__("Post Title", "zita-blocks")}
+            initialOpen={false}
+          >
             <div class="zita-switcher-button-section">
               <span
                 onClick={() => this.setState({ heading: "primary" })}
                 className={this.state.heading == "primary" ? "selected" : ""}
               >
-                Primary
+                {__("Primary", "zita-blocks")}
               </span>
               <span
                 onClick={() => this.setState({ heading: "secondary" })}
                 className={this.state.heading == "secondary" ? "selected" : ""}
               >
-                Secondary
+                {__("Secondary", "zita-blocks")}
               </span>
             </div>
             {this.state.heading == "primary" ? (
               <>
                 <p>
-                  <strong>Post Title Tag</strong>
+                  <strong>{__("Post Title Tag", "zita-blocks")}</strong>
                 </p>
                 <select
                   value={heading_.tag}
@@ -706,13 +723,13 @@ class Edit extends Component {
                     setAttributes({ heading: newHeading });
                   }}
                 >
-                  <option value="h1">H1</option>
-                  <option value="h2">H2</option>
-                  <option value="h3">H3</option>
-                  <option value="p">P</option>
+                  <option value="h1">{__("H1", "zita-blocks")}</option>
+                  <option value="h2">{__("H2", "zita-blocks")}</option>
+                  <option value="h3">{__("H3", "zita-blocks")}</option>
+                  <option value="p">{__("P", "zita-blocks")}</option>
                 </select>
                 <p>
-                  <strong>Font Size</strong>
+                  <strong>{__("Font Size", "zita-blocks")}</strong>
                 </p>
                 <RangeControl
                   value={heading_.fontSize}
@@ -723,7 +740,7 @@ class Edit extends Component {
                   }
                 />
                 <p>
-                  <strong>Color</strong>
+                  <strong>{__("Color", "zita-blocks")}</strong>
                 </p>
                 <ColorPalette
                   value={heading_.color}
@@ -735,7 +752,7 @@ class Edit extends Component {
             ) : (
               <>
                 <p>
-                  <strong>Heading Tag</strong>
+                  <strong>{__("Heading Tag", "zita-blocks")}</strong>
                 </p>
                 <select
                   value={heading2_.tag}
@@ -756,13 +773,13 @@ class Edit extends Component {
                     setAttributes({ heading2: newHeading });
                   }}
                 >
-                  <option value="h1">H1</option>
-                  <option value="h2">H2</option>
-                  <option value="h3">H3</option>
-                  <option value="p">P</option>
+                  <option value="h1">{__("H1", "zita-blocks")}</option>
+                  <option value="h2">{__("H2", "zita-blocks")}</option>
+                  <option value="h3">{__("H3", "zita-blocks")}</option>
+                  <option value="p">{__("P", "zita-blocks")}</option>
                 </select>
                 <p>
-                  <strong>Font Size</strong>
+                  <strong>{__("Font Size", "zita-blocks")}</strong>
                 </p>
                 <RangeControl
                   value={heading2_.fontSize}
@@ -773,7 +790,7 @@ class Edit extends Component {
                   }
                 />
                 <p>
-                  <strong>Color</strong>
+                  <strong>{__("Color", "zita-blocks")}</strong>
                 </p>
                 <ColorPalette
                   value={heading2_.color}
@@ -784,19 +801,22 @@ class Edit extends Component {
               </>
             )}
           </PanelBody>
-          <PanelBody title="Excerpt / Content" initialOpen={false}>
+          <PanelBody
+            title={__("Excerpt / Content", "zita-blocks")}
+            initialOpen={false}
+          >
             <div class="zita-switcher-button-section">
               <span
                 onClick={() => this.setState({ excerpt: "primary" })}
                 className={this.state.excerpt == "primary" ? "selected" : ""}
               >
-                Primary
+                {__("Primary", "zita-blocks")}
               </span>
               <span
                 onClick={() => this.setState({ excerpt: "secondary" })}
                 className={this.state.excerpt == "secondary" ? "selected" : ""}
               >
-                Secondary
+                {__("Secondary", "zita-blocks")}
               </span>
             </div>
             {this.state.excerpt == "primary" ? (
@@ -811,7 +831,7 @@ class Edit extends Component {
                 {excerpt_.enable && (
                   <>
                     <p>
-                      <strong>Number of words</strong>
+                      <strong>{__("Number of words", "zita-blocks")}</strong>
                     </p>
                     <RangeControl
                       value={excerpt_.words}
@@ -822,7 +842,7 @@ class Edit extends Component {
                       }
                     />
                     <p>
-                      <strong>Font Size</strong>
+                      <strong>{__("Font Size", "zita-blocks")}</strong>
                     </p>
                     <RangeControl
                       value={excerpt_.fontSize}
@@ -833,7 +853,7 @@ class Edit extends Component {
                       }
                     />
                     <p>
-                      <strong>Color</strong>
+                      <strong>{__("Color", "zita-blocks")}</strong>
                     </p>
                     <ColorPalette
                       value={excerpt_.color}
@@ -847,7 +867,11 @@ class Edit extends Component {
             ) : (
               <>
                 <ToggleControl
-                  label={excerpt2_.enable ? "Show" : "Hide"}
+                  label={
+                    excerpt2_.enable
+                      ? __("Show", "zita-blocks")
+                      : __("Hide", "zita-blocks")
+                  }
                   checked={excerpt2_.enable}
                   onChange={(e) =>
                     this.updateObj("excerpt2", "enable", excerpt2, e)
@@ -856,7 +880,7 @@ class Edit extends Component {
                 {excerpt2_.enable && (
                   <>
                     <p>
-                      <strong>Number of words</strong>
+                      <strong>{__("Number of words", "zita-blocks")}</strong>
                     </p>
                     <RangeControl
                       value={excerpt2_.words}
@@ -867,7 +891,7 @@ class Edit extends Component {
                       }
                     />
                     <p>
-                      <strong>Font Size</strong>
+                      <strong>{__("Font Size", "zita-blocks")}</strong>
                     </p>
                     <RangeControl
                       value={excerpt2_.fontSize}
@@ -878,7 +902,7 @@ class Edit extends Component {
                       }
                     />
                     <p>
-                      <strong>Color</strong>
+                      <strong>{__("Color", "zita-blocks")}</strong>
                     </p>
                     <ColorPalette
                       value={excerpt2_.color}
@@ -891,9 +915,16 @@ class Edit extends Component {
               </>
             )}
           </PanelBody>
-          <PanelBody title="Featured Image" initialOpen={false}>
+          <PanelBody
+            title={__("Featured Image", "zita-blocks")}
+            initialOpen={false}
+          >
             <ToggleControl
-              label={thumbnail_.enable ? "Show" : "Hide"}
+              label={
+                thumbnail_.enable
+                  ? __("Show", "zita-blocks")
+                  : __("Hide", "zita-blocks")
+              }
               checked={thumbnail_.enable}
               onChange={(e) =>
                 this.updateObj("thumbnail", "enable", thumbnail, e)
@@ -902,7 +933,7 @@ class Edit extends Component {
             {thumbnail_.enable && (
               <>
                 <p>
-                  <strong>Border Radius</strong>
+                  <strong>{__("Border Radius", "zita-blocks")}</strong>
                 </p>
                 <RangeControl
                   value={thumbnail_.borderRadius}
@@ -915,10 +946,10 @@ class Edit extends Component {
               </>
             )}
           </PanelBody>
-          <PanelBody title="Post Meta" initialOpen={false}>
+          <PanelBody title={__("Post Meta", "zita-blocks")} initialOpen={false}>
             {/* category */}
             <p>
-              <strong>Choose Category</strong>
+              <strong>{__("Choose Category", "zita-blocks")}</strong>
             </p>
             <div className="zita-multiple-select">
               <SelectControl
@@ -941,7 +972,7 @@ class Edit extends Component {
                 onClick={() => this.setState({ metaChoose: "primary" })}
                 className={this.state.metaChoose == "primary" ? "selected" : ""}
               >
-                Primary
+                {__("Primary", "zita-blocks")}
               </span>
               <span
                 onClick={() => this.setState({ metaChoose: "secondary" })}
@@ -949,7 +980,7 @@ class Edit extends Component {
                   this.state.metaChoose == "secondary" ? "selected" : ""
                 }
               >
-                Secondary
+                {__("Secondary", "zita-blocks")}
               </span>
             </div>
 
@@ -957,7 +988,7 @@ class Edit extends Component {
             {this.state.metaChoose == "primary" ? (
               <>
                 <ToggleControl
-                  label="Author"
+                  label={__("Author", "zita-blocks")}
                   checked={author_.enable}
                   onChange={(e) =>
                     this.updateObj("author", "enable", author, e)
@@ -965,12 +996,12 @@ class Edit extends Component {
                 />
                 {/* show date */}
                 <ToggleControl
-                  label="Date"
+                  label={__("Date", "zita-blocks")}
                   checked={date_.enable}
                   onChange={(e) => this.updateObj("date", "enable", date, e)}
                 />
                 <ToggleControl
-                  label="Categories"
+                  label={__("Categories", "zita-blocks")}
                   checked={showCate_.enable}
                   onChange={(e) =>
                     this.updateObj("showCate", "enable", showCate, e)
@@ -978,14 +1009,14 @@ class Edit extends Component {
                 />
                 {/* show last date */}
                 <ToggleControl
-                  label="Last Modified Date"
+                  label={__("Last Modified Date", "zita-blocks")}
                   checked={date_.last_modified}
                   onChange={(e) =>
                     this.updateObj("date", "last_modified", date, e)
                   }
                 />
                 <ToggleControl
-                  label="Tag"
+                  label={__("Tag", "zita-blocks")}
                   checked={showTag_.enable}
                   onChange={(e) =>
                     this.updateObj("showTag", "enable", showTag, e)
@@ -1147,7 +1178,7 @@ class Edit extends Component {
                 {/* secondary  */}
                 {/* show author */}
                 <ToggleControl
-                  label="Author"
+                  label={__("Author", "zita-blocks")}
                   checked={author2_.enable}
                   onChange={(e) =>
                     this.updateObj("author2", "enable", author2, e)
@@ -1155,12 +1186,12 @@ class Edit extends Component {
                 />
                 {/* show date */}
                 <ToggleControl
-                  label="Date"
+                  label={__("Date", "zita-blocks")}
                   checked={date2_.enable}
                   onChange={(e) => this.updateObj("date2", "enable", date2, e)}
                 />
                 <ToggleControl
-                  label="Categories"
+                  label={__("Categories", "zita-blocks")}
                   checked={showCate2_.enable}
                   onChange={(e) =>
                     this.updateObj("showCate2", "enable", showCate2, e)
@@ -1168,7 +1199,7 @@ class Edit extends Component {
                 />
                 {/* show last date */}
                 <ToggleControl
-                  label="Last Modified Date"
+                  label={__("Last Modified Date", "zita-blocks")}
                   checked={date2_.last_modified}
                   onChange={(e) =>
                     this.updateObj("date2", "last_modified", date2, e)
@@ -1393,11 +1424,11 @@ class Edit extends Component {
         ) : (
           <div>
             {!posts ? (
-              "No Post Found"
+              __("No Post Found", "zita-blocks")
             ) : (
               <div className="post-loader">
                 <div className="active linear-bubble zita-block-loader">
-                  Post Loading...
+                  {__("Post Loading...", "zita-blocks")}
                   <div>
                     <span></span>
                   </div>

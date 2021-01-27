@@ -138,7 +138,7 @@ registerBlockType("zita-blocks/icon-image-content", {
   getEditWrapperProps(attributes) {},
   keywords: ["service", "service-section"],
   attributes: attrSave,
-  example: () => {},
+  // example: () => {},
   edit: (props) => {
     const { attributes, setAttributes } = props;
     const {

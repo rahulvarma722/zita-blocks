@@ -26,18 +26,18 @@ class Edit extends Component {
     let date_ = date.split("T")[0];
     let dateObj = new Date(date_);
     const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+      __("January", "zita-blocks"),
+      __("February", "zita-blocks"),
+      __("March", "zita-blocks"),
+      __("April", "zita-blocks"),
+      __("May", "zita-blocks"),
+      __("June", "zita-blocks"),
+      __("July", "zita-blocks"),
+      __("August", "zita-blocks"),
+      __("September", "zita-blocks"),
+      __("October", "zita-blocks"),
+      __("November", "zita-blocks"),
+      __("December", "zita-blocks"),
     ];
     let dateArr =
       monthNames[dateObj.getMonth()] +
@@ -200,7 +200,7 @@ class Edit extends Component {
 
     return [
       <InspectorControls>
-        <PanelBody title="Block Title" initialOpen={false}>
+        <PanelBody title={__("Block Title", "zita-blocks")} initialOpen={false}>
           <ToggleControl
             label={
               title_.enable
@@ -278,7 +278,7 @@ class Edit extends Component {
               />
               {/* font weight */}
               <div className="flex-section">
-                <p>Font Weight</p>
+                <p>{__("Font Weight", "zita-blocks")}</p>
                 <select
                   value={title_.fontWeight}
                   onChange={(e) => {
@@ -381,7 +381,9 @@ class Edit extends Component {
           </p>
           <ToggleControl
             label={
-              sliderSetting.dimension.width ? "Custom Width" : "Auto Width"
+              sliderSetting.dimension.width
+                ? __("Custom Width", "zita-blocks")
+                : __("Auto Width", "zita-blocks")
             }
             checked={sliderSetting.dimension.width}
             onChange={(e) => {
@@ -400,7 +402,9 @@ class Edit extends Component {
           )}
           <ToggleControl
             label={
-              sliderSetting.dimension.height ? "Custom Height" : "Auto Height"
+              sliderSetting.dimension.height
+                ? __("Custom Height", "zita-blocks")
+                : __("Auto Height", "zita-blocks")
             }
             checked={sliderSetting.dimension.height}
             onChange={(e) => {
@@ -417,7 +421,7 @@ class Edit extends Component {
               }
             />
           )}
-          <p className="block-inside">Slider Effect</p>
+          <p className="block-inside">{__("Slider Effect", "zita-blocks")}</p>
           <div class="zita-switcher-button-section">
             <span
               onClick={() =>
@@ -427,7 +431,7 @@ class Edit extends Component {
                 sliderSetting.sliderEffect == "slideEffect" ? "selected" : ""
               }
             >
-              Slide
+              {__("Slide", "zita-blocks")}
             </span>
             <span
               onClick={() =>
@@ -437,35 +441,37 @@ class Edit extends Component {
                 sliderSetting.sliderEffect == "fadeEffect" ? "selected" : ""
               }
             >
-              Fade
+              {__("Fade", "zita-blocks")}
             </span>
           </div>
-          <p className="block-inside">Trigger</p>
+          <p className="block-inside">{__("Trigger", "zita-blocks")}</p>
           <div class="zita-switcher-button-section">
             <span
               onClick={() => this.setState({ trigger: "linear" })}
               className={triggerActive == "linear" ? "selected" : ""}
             >
-              Linear
+              {__("Linear", "zita-blocks")}
             </span>
             <span
               onClick={() => this.setState({ trigger: "left" })}
               className={triggerActive == "left" ? "selected" : ""}
             >
-              Left Right
+              {__("Left Right", "zita-blocks")}
             </span>
             <span
               onClick={() => this.setState({ trigger: "auto" })}
               className={triggerActive == "auto" ? "selected" : ""}
             >
-              Auto
+              {__("Auto", "zita-blocks")}
             </span>
           </div>
           {triggerActive == "linear" && (
             <>
               <ToggleControl
                 label={
-                  sliderSetting.linearTrigger.enable ? "Enable" : "Disable"
+                  sliderSetting.linearTrigger.enable
+                    ? __("Enable", "zita-blocks")
+                    : __("Disable", "zita-blocks")
                 }
                 checked={sliderSetting.linearTrigger.enable}
                 onChange={(e) =>
@@ -473,7 +479,7 @@ class Edit extends Component {
                 }
               />
               <p>
-                <strong>Position</strong>
+                <strong>{__("Position", "zita-blocks")}</strong>
               </p>
               <div class="zita-switcher-button-section">
                 <span
@@ -484,7 +490,7 @@ class Edit extends Component {
                     sliderSetting.linearTrigger.place == "in" ? "selected" : ""
                   }
                 >
-                  In
+                  {__("In", "zita-blocks")}
                 </span>
                 <span
                   onClick={() => {
@@ -494,11 +500,11 @@ class Edit extends Component {
                     sliderSetting.linearTrigger.place == "out" ? "selected" : ""
                   }
                 >
-                  Out
+                  {__("Out", "zita-blocks")}
                 </span>
               </div>
               <p>
-                <strong>Trigger Type</strong>
+                <strong>{__("Trigger Type", "zita-blocks")}</strong>
               </p>
               {sliderSetting.linearTrigger.enable && (
                 <>
@@ -518,7 +524,7 @@ class Edit extends Component {
                           : ""
                       }
                     >
-                      Bullets
+                      {__("Bullets", "zita-blocks")}
                     </span>
                     <span
                       onClick={() => {
@@ -534,7 +540,7 @@ class Edit extends Component {
                           : ""
                       }
                     >
-                      Thumbnail
+                      {__("Thumbnail", "zita-blocks")}
                     </span>
                   </div>
                   {/* dk */}
@@ -550,7 +556,7 @@ class Edit extends Component {
                         }
                       />
                       <p>
-                        <strong>Color</strong>
+                        <strong>{__("Color", "zita-blocks")}</strong>
                       </p>
                       <ColorPicker
                         color={sliderSetting.linearTrigger.color}
@@ -564,7 +570,7 @@ class Edit extends Component {
                         }}
                       />
                       <p>
-                        <strong>Active Color</strong>
+                        <strong>{__("Active Color", "zita-blocks")}</strong>
                       </p>
                       <ColorPicker
                         color={sliderSetting.linearTrigger.activeColor}
@@ -579,7 +585,7 @@ class Edit extends Component {
                       />
                     </>
                   ) : (
-                    <h1>thumbnail design</h1>
+                    <h1>{__("thumbnail design", "zita-blocks")}</h1>
                   )}
                 </>
               )}
@@ -589,7 +595,9 @@ class Edit extends Component {
             <>
               <ToggleControl
                 label={
-                  sliderSetting.leftRightTrigger.enable ? "Enable" : "Disable"
+                  sliderSetting.leftRightTrigger.enable
+                    ? __("Enable", "zita-blocks")
+                    : __("Disable", "zita-blocks")
                 }
                 checked={sliderSetting.leftRightTrigger.enable}
                 onChange={(e) =>
@@ -599,7 +607,7 @@ class Edit extends Component {
               {sliderSetting.leftRightTrigger.enable && (
                 <>
                   <RangeControl
-                    label="Font Size"
+                    label={__("Font Size", "zita-blocks")}
                     value={sliderSetting.leftRightTrigger.fontSize}
                     min={0}
                     max={70}
@@ -608,7 +616,7 @@ class Edit extends Component {
                     }
                   />
                   <p>
-                    <strong>Color</strong>
+                    <strong>{__("Color", "zita-blocks")}</strong>
                   </p>
                   <ColorPalette
                     value={sliderSetting.leftRightTrigger.color}
@@ -617,7 +625,7 @@ class Edit extends Component {
                     }
                   />
                   <p>
-                    <strong>Background Color</strong>
+                    <strong>{__("Background Color", "zita-blocks")}</strong>
                   </p>
                   <ColorPicker
                     color={sliderSetting.leftRightTrigger.backgroundColor}
@@ -637,7 +645,11 @@ class Edit extends Component {
           {triggerActive == "auto" && (
             <>
               <ToggleControl
-                label={sliderSetting.autoTrigger.enable ? "Enable" : "Disable"}
+                label={
+                  sliderSetting.autoTrigger.enable
+                    ? __("Enable", "zita-blocks")
+                    : __("Disable", "zita-blocks")
+                }
                 checked={sliderSetting.autoTrigger.enable}
                 onChange={(e) =>
                   this.updateGlobalSlide(e, "autoTrigger", "enable")
@@ -645,7 +657,7 @@ class Edit extends Component {
               />
               {sliderSetting.autoTrigger.enable && (
                 <RangeControl
-                  label="Slide Delay"
+                  label={__("Slide Delay", "zita-blocks")}
                   value={sliderSetting.autoTrigger.delay}
                   min={0}
                   max={12}
@@ -657,9 +669,9 @@ class Edit extends Component {
             </>
           )}
         </PanelBody>
-        <PanelBody title="Post Title" initialOpen={false}>
+        <PanelBody title={__("Post Title", "zita-blocks")} initialOpen={false}>
           <p>
-            <strong>Post Title Tag</strong>
+            <strong>{__("Post Title Tag", "zita-blocks")}</strong>
           </p>
           <select
             value={heading_.tag}
@@ -680,13 +692,13 @@ class Edit extends Component {
               setAttributes({ heading: newHeading });
             }}
           >
-            <option value="h1">H1</option>
-            <option value="h2">H2</option>
-            <option value="h3">H3</option>
-            <option value="p">P</option>
+            <option value="h1">{__("H1", "zita-blocks")}</option>
+            <option value="h2">{__("H2", "zita-blocks")}</option>
+            <option value="h3">{__("H3", "zita-blocks")}</option>
+            <option value="p">{__("P", "zita-blocks")}</option>
           </select>
           <p>
-            <strong>Font Size</strong>
+            <strong>{__("Font Size", "zita-blocks")}</strong>
           </p>
           <RangeControl
             value={heading_.fontSize}
@@ -695,7 +707,7 @@ class Edit extends Component {
             onChange={(e) => this.updateObj("heading", "fontSize", heading, e)}
           />
           <p>
-            <strong>Color</strong>
+            <strong>{__("Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={heading_.color}
@@ -704,16 +716,20 @@ class Edit extends Component {
             }
           />
         </PanelBody>
-        <PanelBody title="Excerpt" initialOpen={false}>
+        <PanelBody title={__("Excerpt", "zita-blocks")} initialOpen={false}>
           <ToggleControl
-            label={excerpt_.enable ? "Show" : "Hide"}
+            label={
+              excerpt_.enable
+                ? __("Show", "zita-blocks")
+                : __("Hide", "zita-blocks")
+            }
             checked={excerpt_.enable}
             onChange={(e) => this.updateObj("excerpt", "enable", excerpt, e)}
           />
           {excerpt_.enable && (
             <>
               <p>
-                <strong>Number of words</strong>
+                <strong>{__("Number of words", "zita-blocks")}</strong>
               </p>
               <RangeControl
                 value={excerpt_.words}
@@ -722,7 +738,7 @@ class Edit extends Component {
                 onChange={(e) => this.updateObj("excerpt", "words", excerpt, e)}
               />
               <p>
-                <strong>Font Size</strong>
+                <strong>{__("Font Size", "zita-blocks")}</strong>
               </p>
               <RangeControl
                 value={excerpt_.fontSize}
@@ -733,7 +749,7 @@ class Edit extends Component {
                 }
               />
               <p>
-                <strong>Color</strong>
+                <strong>{__("Color", "zita-blocks")}</strong>
               </p>
               <ColorPalette
                 value={excerpt_.color}
@@ -744,9 +760,9 @@ class Edit extends Component {
             </>
           )}
         </PanelBody>
-        <PanelBody title={"Post Meta"} initialOpen={false}>
+        <PanelBody title={__("Post Meta", "zita-blocks")} initialOpen={false}>
           <p>
-            <strong>Choose Category</strong>
+            <strong>{__("Choose Category", "zita-blocks")}</strong>
           </p>
           <div className="zita-multiple-select">
             <SelectControl
@@ -764,29 +780,29 @@ class Edit extends Component {
           </div>
           {/* show author */}
           <ToggleControl
-            label="Author"
+            label={__("Author", "zita-blocks")}
             checked={author_.enable}
             onChange={(e) => this.updateObj("author", "enable", author, e)}
           />
           {/* show date */}
           <ToggleControl
-            label="Date"
+            label={__("Date", "zita-blocks")}
             checked={date_.enable}
             onChange={(e) => this.updateObj("date", "enable", date, e)}
           />
           <ToggleControl
-            label="Categories"
+            label={__("Categories", "zita-blocks")}
             checked={showCate_.enable}
             onChange={(e) => this.updateObj("showCate", "enable", showCate, e)}
           />
           {/* show last date */}
           <ToggleControl
-            label="Last Modified Date"
+            label={__("Last Modified Date", "zita-blocks")}
             checked={date_.last_modified}
             onChange={(e) => this.updateObj("date", "last_modified", date, e)}
           />
           <ToggleControl
-            label="Tag"
+            label={__("Tag", "zita-blocks")}
             checked={showTag_.enable}
             onChange={(e) => this.updateObj("showTag", "enable", showTag, e)}
           />
@@ -1155,9 +1171,9 @@ class Edit extends Component {
                 );
               })
             ) : !posts ? (
-              <h1>No Post Found </h1>
+              <h1>{__("No Post Found", "zita-blocks")} </h1>
             ) : (
-              <h1>Loading </h1>
+              <h1>{__("Loading", "zita-blocks")} </h1>
             )}
           </ul>
           {/* slider trigger */}

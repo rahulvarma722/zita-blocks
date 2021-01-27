@@ -7,6 +7,7 @@ import {
   InspectorControls,
   ColorPalette,
 } from "@wordpress/block-editor";
+import { __ } from "@wordpress/i18n";
 
 import { useState, useRef, useEffect } from "@wordpress/element";
 import {
@@ -18,7 +19,7 @@ import {
 const attrS = {
   headingTxt: {
     type: "string",
-    default: "Basic",
+    default: __("Basic", "zita-blocks"),
   },
   headingFontSize: {
     type: "number",
@@ -138,7 +139,7 @@ const attrS = {
   },
   linkTxt: {
     type: "string",
-    default: "ORDER NOW",
+    default: __("ORDER NOW", "zita-blocks"),
   },
   linkLink: {
     type: "string",
@@ -166,7 +167,7 @@ const attrS = {
   linkSpaceH: { type: "number", default: 45 },
   bottomTxt: {
     type: "string",
-    default: "Terms & Conditions",
+    default: __("Terms & Conditions", "zita-blocks"),
   },
   bottomTxtColor: {
     type: "string",
@@ -198,7 +199,7 @@ const attrS = {
 };
 
 registerBlockType("zita-blocks/pricing-table-table", {
-  title: "Price Table Colomn",
+  title: __("Price Table Colomn", "zita-blocks"),
   icon: "table-col-before",
   category: "zita-category",
   parent: ["zita-blocks/pricing-table-section"],
@@ -279,15 +280,6 @@ registerBlockType("zita-blocks/pricing-table-table", {
           borderRadius: containerBorderRadius + "px",
         }
       : {};
-    // containerBorderStyle = containerBgColor
-    //   ? {
-    //       ...containerBorderStyle,
-    //       ...{
-    //         backgroundColor: containerBgColor,
-    //       },
-    //     }
-    //   : containerBorderStyle;
-    // price style
     let priceStyle = {
       backgroundColor: priceBgColor,
       fontFamily: priceFF,
@@ -378,12 +370,15 @@ registerBlockType("zita-blocks/pricing-table-table", {
 
     return [
       <InspectorControls>
-        <PanelBody title={"Header Section"} initialOpen={false}>
-          <p className="block-inside">Header Setting</p>
+        <PanelBody
+          title={__("Header Section", "zita-blocks")}
+          initialOpen={false}
+        >
+          <p className="block-inside">{__("Header Setting", "zita-blocks")}</p>
           {/* font family */}
           <div className="THK-font-family-wrapper">
             <p>
-              <strong>Font Family</strong>
+              <strong>{__("Font Family", "zita-blocks")}</strong>
             </p>
             <div
               ref={familyRef}
@@ -418,25 +413,27 @@ registerBlockType("zita-blocks/pricing-table-table", {
           </div>
           {/* font family */}
           <p>
-            <strong>Color</strong>
+            <strong>{__("Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={headingColor}
             onChange={(color) => setAttributes({ headingColor: color })}
           />
           <RangeControl
-            label="Font Size"
+            label={__("Font Size", "zita-blocks")}
             value={headingFontSize}
             min={0}
             max={60}
             onChange={(e) => setAttributes({ headingFontSize: e })}
           />
-          <p className="block-inside">Short Description</p>
+          <p className="block-inside">
+            {__("Short Description", "zita-blocks")}
+          </p>
 
           {/* font family */}
           <div className="THK-font-family-wrapper">
             <p>
-              <strong>Font Family</strong>
+              <strong>{__("Font Family", "zita-blocks")}</strong>
             </p>
             <div
               ref={familyRef2}
@@ -472,20 +469,22 @@ registerBlockType("zita-blocks/pricing-table-table", {
           {/* font family */}
 
           <RangeControl
-            label="Font Size"
+            label={__("Font Size", "zita-blocks")}
             value={descriptionFontSize}
             min={0}
             max={60}
             onChange={(e) => setAttributes({ descriptionFontSize: e })}
           />
           <p>
-            <strong>Color</strong>
+            <strong>{__("Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={descriptionColor}
             onChange={(color) => setAttributes({ descriptionColor: color })}
           />
-          <p className="block-inside">Background Color</p>
+          <p className="block-inside">
+            {__("Background Color", "zita-blocks")}
+          </p>
           <ColorPicker
             color={headerBackground}
             onChangeComplete={(colorBg) => {
@@ -495,7 +494,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
           />
         </PanelBody>
         <PanelBody title={"Price Setting"} initialOpen={false}>
-          <p className="block-inside">Position</p>
+          <p className="block-inside">{__("Position", "zita-blocks")}</p>
           <div className="column-layout-num-column text_">
             <div>
               <input
@@ -505,7 +504,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
                 checked={pricePosition == "top" ? true : false}
                 onChange={() => setAttributes({ pricePosition: "top" })}
               />
-              <label for="price-position-top">Top</label>
+              <label for="price-position-top">{__("Top", "zita-blocks")}</label>
             </div>
             <div>
               <input
@@ -515,12 +514,14 @@ registerBlockType("zita-blocks/pricing-table-table", {
                 checked={pricePosition == "bottom" ? true : false}
                 onChange={() => setAttributes({ pricePosition: "bottom" })}
               />
-              <label for="price-position-bottom">Bottom</label>
+              <label for="price-position-bottom">
+                {__("Bottom", "zita-blocks")}
+              </label>
             </div>
           </div>
-          <p className="block-inside">Price</p>
+          <p className="block-inside">{__("Price", "zita-blocks")}</p>
           <div className="flex-section">
-            <p>Price</p>
+            <p>{__("Price", "zita-blocks")}</p>
             <input
               type="number"
               value={priceMonth}
@@ -529,22 +530,22 @@ registerBlockType("zita-blocks/pricing-table-table", {
               }}
             />
           </div>
-          <p>Color</p>
+          <p>{__("Color", "zita-blocks")}</p>
           <ColorPalette
             value={priceColor}
             onChange={(color) => setAttributes({ priceColor: color })}
           />
           <RangeControl
-            label="Font Size"
+            label={__("Font Size", "zita-blocks")}
             value={priceFontSize}
             min={0}
             max={100}
             onChange={(e) => setAttributes({ priceFontSize: e })}
           />
-          <p className="block-inside">Currency</p>
+          <p className="block-inside">{__("Currency", "zita-blocks")}</p>
 
           <div className="flex-section">
-            <p>Currency</p>
+            <p>{__("Currency", "zita-blocks")}</p>
             <select
               value={currencyC}
               onChange={(e) => {
@@ -581,14 +582,14 @@ registerBlockType("zita-blocks/pricing-table-table", {
             onChange={(color) => setAttributes({ currencyColor: color })}
           />*/}
           <RangeControl
-            label="Font Size"
+            label={__("Font Size", "zita-blocks")}
             value={currencyFs}
             min={0}
             max={60}
             onChange={(e) => setAttributes({ currencyFs: e })}
           />
           <div className="flex-section">
-            <p>Formate</p>
+            <p>{__("Formate", "zita-blocks")}</p>
             <select
               value={currencyFormate}
               onChange={(e) => {
@@ -597,14 +598,14 @@ registerBlockType("zita-blocks/pricing-table-table", {
                 if (raised) setAttributes({ currencyFs: 8 });
               }}
             >
-              <option value="0">Normal</option>
-              <option value="1">Rasied</option>
+              <option value="0">{__("Normal", "zita-blocks")}</option>
+              <option value="1">{__("Rasied", "zita-blocks")}</option>
             </select>
           </div>
-          <p className="block-inside">Text</p>
+          <p className="block-inside">{__("Text", "zita-blocks")}</p>
 
           <div className="flex-section">
-            <p>Enter Text</p>
+            <p>{__("Enter Text", "zita-blocks")}</p>
             <input
               type="text"
               value={priceMonthPrice}
@@ -613,21 +614,21 @@ registerBlockType("zita-blocks/pricing-table-table", {
               }}
             />
           </div>
-          <p>Color</p>
+          <p>{__("Color", "zita-blocks")}</p>
           <ColorPalette
             value={priceMonthPriceColor}
             onChange={(color) => setAttributes({ priceMonthPriceColor: color })}
           />
           <RangeControl
-            label="Font Size"
+            label={__("Font Size", "zita-blocks")}
             value={priceMonthPriceFs}
             min={0}
             max={100}
             onChange={(e) => setAttributes({ priceMonthPriceFs: e })}
           />
 
-          <p className="block-inside">Advance Setting</p>
-          <p>Layout</p>
+          <p className="block-inside">{__("Advance Setting", "zita-blocks")}</p>
+          <p>{__("Layout", "zita-blocks")}</p>
           <div className="column-layout-num-column text_">
             <div>
               <input
@@ -637,7 +638,9 @@ registerBlockType("zita-blocks/pricing-table-table", {
                 checked={!priceInline ? true : false}
                 onChange={() => setAttributes({ priceInline: false })}
               />
-              <label for="price-layout-rounded">Rounded</label>
+              <label for="price-layout-rounded">
+                {__("Rounded", "zita-blocks")}
+              </label>
             </div>
             <div>
               <input
@@ -647,13 +650,13 @@ registerBlockType("zita-blocks/pricing-table-table", {
                 checked={priceInline ? true : false}
                 onChange={() => setAttributes({ priceInline: true })}
               />
-              <label for="price-layout-box">Box</label>
+              <label for="price-layout-box">{__("Box", "zita-blocks")}</label>
             </div>
           </div>
 
           {!priceInline && (
             <RangeControl
-              label="Price Space"
+              label={__("Price Space", "zita-blocks")}
               value={priceSpace}
               min={0}
               max={200}
@@ -663,14 +666,14 @@ registerBlockType("zita-blocks/pricing-table-table", {
           {priceInline && (
             <>
               <RangeControl
-                label="Top/Bottom"
+                label={__("Top/Bottom", "zita-blocks")}
                 value={priceSpaceV}
                 min={0}
                 max={200}
                 onChange={(e) => setAttributes({ priceSpaceV: e })}
               />
               <RangeControl
-                label="Left/Right"
+                label={__("Left/Right", "zita-blocks")}
                 value={priceSpaceH}
                 min={0}
                 max={200}
@@ -680,31 +683,35 @@ registerBlockType("zita-blocks/pricing-table-table", {
           )}
 
           <p>
-            <strong>Border</strong>
+            <strong>{__("Border", "zita-blocks")}</strong>
           </p>
 
           <ToggleControl
-            label={priceBorder ? "Disable" : "Enable"}
+            label={
+              priceBorder
+                ? __("Disable", "zita-blocks")
+                : __("Enable", "zita-blocks")
+            }
             checked={priceBorder}
             onChange={(e) => setAttributes({ priceBorder: e })}
           />
           {priceBorder && (
             <div className="icon-border-setting">
               <RangeControl
-                label="Border Width"
+                label={__("Border Width", "zita-blocks")}
                 value={priceBorderWidth}
                 min={0}
                 max={20}
                 onChange={(e) => setAttributes({ priceBorderWidth: e })}
               />
               <RangeControl
-                label="Border Radius"
+                label={__("Border Radius", "zita-blocks")}
                 value={priceBorderRadius}
                 min={0}
                 max={50}
                 onChange={(e) => setAttributes({ priceBorderRadius: e })}
               />
-              <p>Border Color</p>
+              <p>{__("Border Color", "zita-blocks")}</p>
               <ColorPalette
                 value={priceBorderColor}
                 onChange={(color) => setAttributes({ priceBorderColor: color })}
@@ -714,7 +721,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
           {/* font family */}
           <div className="THK-font-family-wrapper">
             <p>
-              <strong>Font Family</strong>
+              <strong>{__("Font Family", "zita-blocks")}</strong>
             </p>
             <div
               ref={familyRef}
@@ -731,7 +738,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
                 className="font-family-show"
               >
                 <span style={{ fontFamily: priceFF }}>
-                  {priceFF ? priceFF : "Choose Family"}
+                  {priceFF ? priceFF : __("Choose Family", "zita-blocks")}
                 </span>
               </div>
               <div className="family-items">
@@ -751,11 +758,12 @@ registerBlockType("zita-blocks/pricing-table-table", {
           {/* font family */}
           {/* font weight */}
           <div className="flex-section">
-            <p>Font Weight</p>
+            <p>{__("Font Weight", "zita-blocks")}</p>
             <select
               value={currencyFontWeight}
               onChange={(e) => {
-                setAttributes({ currencyFontWeight: e.target.value })}}
+                setAttributes({ currencyFontWeight: e.target.value });
+              }}
             >
               <option value="400">400</option>
               <option value="500">500</option>
@@ -767,7 +775,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
           </div>
           {/* font weight */}
           <p>
-            <strong>Background Color</strong>
+            <strong>{__("Background Color", "zita-blocks")}</strong>
           </p>
           <ColorPicker
             color={priceBgColor}
@@ -781,7 +789,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
           {/* font family */}
           <div className="THK-font-family-wrapper">
             <p>
-              <strong>Font Family</strong>
+              <strong>{__("Font Family", "zita-blocks")}</strong>
             </p>
             <div
               ref={familyRef}
@@ -798,7 +806,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
                 className="font-family-show"
               >
                 <span style={{ fontFamily: pointsFF }}>
-                  {pointsFF ? pointsFF : "Choose Family"}
+                  {pointsFF ? pointsFF : __("Choose Family", "zita-blocks")}
                 </span>
               </div>
               <div className="family-items">
@@ -818,21 +826,21 @@ registerBlockType("zita-blocks/pricing-table-table", {
           {/* font family */}
 
           <RangeControl
-            label="Font Size"
+            label={__("Font Size", "zita-blocks")}
             value={pointsFontSize}
             min={0}
             max={60}
             onChange={(e) => setAttributes({ pointsFontSize: e })}
           />
           <RangeControl
-            label="Space Between Text"
+            label={__("Space Between Text", "zita-blocks")}
             value={pointsSpaceBw}
             min={0}
             max={60}
             onChange={(e) => setAttributes({ pointsSpaceBw: e })}
           />
           <p>
-            <strong>Text Align</strong>
+            <strong>{__("Text Align", "zita-blocks")}</strong>
           </p>
           <div className="column-layout-num-column text_">
             <div>
@@ -843,7 +851,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
                 checked={pointAlign == "left" ? true : false}
                 onChange={() => setAttributes({ pointAlign: "left" })}
               />
-              <label for="points-align-top">Left</label>
+              <label for="points-align-top">{__("Left", "zita-blocks")}</label>
             </div>
             <div>
               <input
@@ -853,19 +861,21 @@ registerBlockType("zita-blocks/pricing-table-table", {
                 checked={pointAlign == "center" ? true : false}
                 onChange={() => setAttributes({ pointAlign: "center" })}
               />
-              <label for="points-align-bottom">Center</label>
+              <label for="points-align-bottom">
+                {__("Center", "zita-blocks")}
+              </label>
             </div>
           </div>
 
           <p>
-            <strong>Color</strong>
+            <strong>{__("Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             value={pointsColor}
             onChange={(color) => setAttributes({ pointsColor: color })}
           />
           <p>
-            <strong>Background Color</strong>
+            <strong>{__("Background Color", "zita-blocks")}</strong>
           </p>
           <ColorPicker
             color={middleBgColor}
@@ -876,64 +886,71 @@ registerBlockType("zita-blocks/pricing-table-table", {
           />
         </PanelBody>
 
-        <PanelBody title={"Button Section"} initialOpen={false}>
-          <p className="block-inside">Button</p>
+        <PanelBody
+          title={__("Button Section", "zita-blocks")}
+          initialOpen={false}
+        >
+          <p className="block-inside">{__("Button", "zita-blocks")}</p>
           <RangeControl
-            label="Font Size"
+            label={__("Font Size", "zita-blocks")}
             value={linkFontSize}
             min={0}
             max={70}
             onChange={(e) => setAttributes({ linkFontSize: e })}
           />
-          <p>Color</p>
+          <p>{__("Color", "zita-blocks")}</p>
           <ColorPalette
             value={linkColor}
             onChange={(color) => setAttributes({ linkColor: color })}
           />
-          <p>Background Color</p>
+          <p>{__("Background Color", "zita-blocks")}</p>
           <ColorPalette
             value={linkBgColor}
             onChange={(color) => setAttributes({ linkBgColor: color })}
           />
           <RangeControl
-            label="Height"
+            label={__("Height", "zita-blocks")}
             value={linkSpaceV}
             min={0}
             max={200}
             onChange={(e) => setAttributes({ linkSpaceV: e })}
           />
           <RangeControl
-            label="Width"
+            label={__("Width", "zita-blocks")}
             value={linkSpaceH}
             min={0}
             max={200}
             onChange={(e) => setAttributes({ linkSpaceH: e })}
           />
           <p>
-            <strong>Border</strong>
+            <strong>{__("Border", "zita-blocks")}</strong>
           </p>
           <ToggleControl
-            label={linkBorder ? "Disable" : "Enable"}
+            label={
+              linkBorder
+                ? __("Disable", "zita-blocks")
+                : __("Enable", "zita-blocks")
+            }
             checked={linkBorder}
             onChange={(e) => setAttributes({ linkBorder: e })}
           />
           {linkBorder && (
             <div className="icon-border-setting">
               <RangeControl
-                label="Border Width"
+                label={__("Border Width", "zita-blocks")}
                 value={linkBorderWidth}
                 min={0}
                 max={100}
                 onChange={(e) => setAttributes({ linkBorderWidth: e })}
               />
               <RangeControl
-                label="Border Radius"
+                label={__("Border Radius", "zita-blocks")}
                 value={linkBorderRadius}
                 min={0}
                 max={50}
                 onChange={(e) => setAttributes({ linkBorderRadius: e })}
               />
-              <p>Border Color</p>
+              <p>{__("Border Color", "zita-blocks")}</p>
               <ColorPalette
                 value={linkBorderColor}
                 onChange={(color) => setAttributes({ linkBorderColor: color })}
@@ -941,15 +958,15 @@ registerBlockType("zita-blocks/pricing-table-table", {
             </div>
           )}
 
-          <p className="block-inside">Small Text</p>
+          <p className="block-inside">{__("Small Text", "zita-blocks")}</p>
           <RangeControl
-            label="Font Size"
+            label={__("Font Size", "zita-blocks")}
             value={bottomTxtFontSize}
             min={0}
             max={70}
             onChange={(e) => setAttributes({ bottomTxtFontSize: e })}
           />
-          <p>Color</p>
+          <p>{__("Color", "zita-blocks")}</p>
           <ColorPalette
             value={bottomTxtColor}
             onChange={(color) => setAttributes({ bottomTxtColor: color })}
@@ -957,7 +974,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
           {/* font family */}
           <div className="THK-font-family-wrapper">
             <p>
-              <strong>Font Family</strong>
+              <strong>{__("Font Family", "zita-blocks")}</strong>
             </p>
             <div
               ref={familyRef}
@@ -974,7 +991,9 @@ registerBlockType("zita-blocks/pricing-table-table", {
                 className="font-family-show"
               >
                 <span style={{ fontFamily: bottomTxtFF }}>
-                  {bottomTxtFF ? bottomTxtFF : "Choose Family"}
+                  {bottomTxtFF
+                    ? bottomTxtFF
+                    : __("Choose Family", "zita-blocks")}
                 </span>
               </div>
               <div className="family-items">
@@ -992,7 +1011,9 @@ registerBlockType("zita-blocks/pricing-table-table", {
             </div>
           </div>
           {/* font family */}
-          <p className="block-inside">Background Color</p>
+          <p className="block-inside">
+            {__("Background Color", "zita-blocks")}
+          </p>
           <ColorPicker
             color={footerBgColor}
             onChangeComplete={(colorBg) => {
@@ -1002,7 +1023,10 @@ registerBlockType("zita-blocks/pricing-table-table", {
           />
         </PanelBody>
 
-        <PanelBody title={"Container Settings"} initialOpen={false}>
+        <PanelBody
+          title={__("Container Settings", "zita-blocks")}
+          initialOpen={false}
+        >
           {/* <ColorPicker
             onChangeComplete={(colorBg) => {
               let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
@@ -1010,30 +1034,34 @@ registerBlockType("zita-blocks/pricing-table-table", {
             }}
           /> */}
           <p>
-            <strong>Border</strong>
+            <strong>{__("Border", "zita-blocks")}</strong>
           </p>
           <ToggleControl
-            label={containerBorder ? "Disable" : "Enable"}
+            label={
+              containerBorder
+                ? __("Disable", "zita-blocks")
+                : __("Enable", "zita-blocks")
+            }
             checked={containerBorder}
             onChange={(e) => setAttributes({ containerBorder: e })}
           />
           {containerBorder && (
             <div className="icon-border-setting">
               <RangeControl
-                label="Border Width"
+                label={__("Border Width", "zita-blocks")}
                 value={containerBorderWidth}
                 min={0}
                 max={100}
                 onChange={(e) => setAttributes({ containerBorderWidth: e })}
               />
               <RangeControl
-                label="Border Radius"
+                label={__("Border Radius", "zita-blocks")}
                 value={containerBorderRadius}
                 min={0}
                 max={50}
                 onChange={(e) => setAttributes({ containerBorderRadius: e })}
               />
-              <p>Border Color</p>
+              <p>{__("Border Color", "zita-blocks")}</p>
               <ColorPalette
                 value={containerBorderColor}
                 onChange={(color) =>
@@ -1053,7 +1081,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
           <RichText
             key="editable"
             tagName="h3"
-            placeholder="Pricing Table"
+            placeholder={__("Pricing Table", "zita-blocks")}
             value={headingTxt}
             style={{
               fontSize: headingFontSize + "px",
@@ -1103,7 +1131,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
           <RichText
             key="editable"
             tagName="div"
-            placeholder="Pricing Description"
+            placeholder={__("Pricing Description", "zita-blocks")}
             multiline="p"
             style={{
               fontSize: pointsFontSize + "px",
@@ -1149,7 +1177,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
             <RichText
               key="editable"
               tagName="a"
-              placeholder="Click Me"
+              placeholder={__("Click Me", "zita-blocks")}
               value={linkTxt}
               onChange={(e) => setAttributes({ linkTxt: e })}
               style={link_style}
@@ -1159,7 +1187,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
             className="bottom-text"
             key="editable"
             tagName="p"
-            placeholder="Price"
+            placeholder={__("Price", "zita-blocks")}
             value={bottomTxt}
             onChange={(e) => setAttributes({ bottomTxt: e })}
             style={{

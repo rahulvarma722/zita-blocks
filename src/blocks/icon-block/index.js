@@ -9,6 +9,7 @@ import {
   AlignmentToolbar,
 } from "@wordpress/block-editor";
 import { useState, useRef, useEffect } from "@wordpress/element";
+import { __ } from "@wordpress/i18n";
 import {
   PanelBody,
   RangeControl,
@@ -18,9 +19,12 @@ import {
 } from "@wordpress/components";
 import fontFamily from "../block-assets/font-family";
 registerBlockType("zita-blocks/icon-block", {
-  title: "Icon",
+  title: __("Icon", "zita-blocks"),
   icon: "star-empty",
-  description: "Use a slide title for your main title for the slide.",
+  description: __(
+    "Use a slide title for your main title for the slide.",
+    "zita-blocks"
+  ),
   category: "zita-category",
   keywords: ["icon", "iconbox"],
   attributes: {
@@ -50,7 +54,7 @@ registerBlockType("zita-blocks/icon-block", {
     },
     titleTxt: {
       type: "string",
-      default: "Icon Title",
+      default: __("Icon Title", "zita-blocks"),
     },
     titleArrenge: {
       type: "string",
@@ -200,9 +204,12 @@ registerBlockType("zita-blocks/icon-block", {
 
     return [
       <InspectorControls>
-        <PanelBody title={"Icon Setting"} initialOpen={false}>
+        <PanelBody
+          title={__("Icon Setting", "zita-blocks")}
+          initialOpen={false}
+        >
           <p>
-            <strong>Choose Icon</strong>
+            <strong>{__("Choose Icon", "zita-blocks")}</strong>
           </p>
 
           <div
@@ -262,7 +269,7 @@ registerBlockType("zita-blocks/icon-block", {
             </div>
           </div>
           <p>
-            <strong>Icon Position</strong>
+            <strong>{__("Icon Position", "zita-blocks")}</strong>
           </p>
           <SelectControl
             value={titleArrenge} // e.g: value = [ 'a', 'c' ]
@@ -284,11 +291,11 @@ registerBlockType("zita-blocks/icon-block", {
             ]}
           />
           <p>
-            <strong>Space Between Icon and Title</strong>
+            <strong>{__("Space Between Icon and Title", "zita-blocks")}</strong>
           </p>
           {titleArrenge == "column" && (
             <RangeControl
-              label={"Top"}
+              label={__("Top", "zita-blocks")}
               value={titleMarginTop}
               min={0}
               max={200}
@@ -297,7 +304,7 @@ registerBlockType("zita-blocks/icon-block", {
           )}
           {titleArrenge == "row-reverse" && (
             <RangeControl
-              label={"Right"}
+              label={__("Right", "zita-blocks")}
               value={titleMarginRight}
               min={0}
               max={200}
@@ -306,7 +313,7 @@ registerBlockType("zita-blocks/icon-block", {
           )}
           {titleArrenge == "column-reverse" && (
             <RangeControl
-              label={"Bottom"}
+              label={__("Bottom", "zita-blocks")}
               value={titleMarginBottom}
               min={0}
               max={200}
@@ -315,7 +322,7 @@ registerBlockType("zita-blocks/icon-block", {
           )}
           {titleArrenge == "unset" && (
             <RangeControl
-              label={"Left"}
+              label={__("Left", "zita-blocks")}
               value={titleMarginLeft}
               min={0}
               max={200}
@@ -324,7 +331,7 @@ registerBlockType("zita-blocks/icon-block", {
           )}
 
           <p>
-            <strong>Font Size</strong>
+            <strong>{__("Font Size", "zita-blocks")}</strong>
           </p>
           <RangeControl
             value={iconFontsize}
@@ -333,35 +340,39 @@ registerBlockType("zita-blocks/icon-block", {
             onChange={(e) => setAttributes({ iconFontsize: e })}
           />
           <p>
-            <strong>Border</strong>
+            <strong>{__("Border", "zita-blocks")}</strong>
           </p>
           <ToggleControl
-            label={iconBorder ? "Disable" : "Enable"}
+            label={
+              iconBorder
+                ? __("Disable", "zita-blocks")
+                : __("Enable", "zita-blocks")
+            }
             checked={iconBorder}
             onChange={(e) => setAttributes({ iconBorder: e })}
           />
           {iconBorder && (
             <div className="icon-border-setting">
               <RangeControl
-                label="Border Width"
+                label={__("Border Width", "zita-blocks")}
                 value={iconBorderWidth}
                 min={0}
                 max={100}
                 onChange={(e) => setAttributes({ iconBorderWidth: e })}
               />
               <RangeControl
-                label="Border Radius"
+                label={__("Border Radius", "zita-blocks")}
                 value={iconBorderRadius}
                 min={0}
                 max={50}
                 onChange={(e) => setAttributes({ iconBorderRadius: e })}
               />
-              <p>Border Color</p>
+              <p>{__("Border Color", "zita-blocks")}</p>
               <ColorPalette
                 onChange={(color) => setAttributes({ iconBorderColor: color })}
               />
               <RangeControl
-                label="Icon Space"
+                label={__("Icon Space", "zita-blocks")}
                 value={iconSpace}
                 min={0}
                 max={200}
@@ -370,20 +381,29 @@ registerBlockType("zita-blocks/icon-block", {
             </div>
           )}
         </PanelBody>
-        <PanelBody title={"Title Setting"} initialOpen={false}>
+        <PanelBody
+          title={__("Title Setting", "zita-blocks")}
+          initialOpen={false}
+        >
           <ToggleControl
-            label={titleOnOff ? "Hide" : "Show"}
+            label={
+              titleOnOff ? __("Hide", "zita-blocks") : __("Show", "zita-blocks")
+            }
             checked={titleOnOff}
             onChange={(e) => setAttributes({ titleOnOff: e })}
           />
           <p>
-            <strong>Choose Tag</strong>
+            <strong>{__("Choose Tag", "zita-blocks")}</strong>
           </p>
           <SelectControl
             value={titleTag} // e.g: value = [ 'a', 'c' ]
             onChange={(e) => setAttributes({ titleTag: e })}
             options={[
-              { value: null, label: "Choose Tag", disabled: true },
+              {
+                value: null,
+                label: __("Choose Tag", "zita-blocks"),
+                disabled: true,
+              },
               { value: "h1", label: "h1" },
               { value: "h2", label: "h2" },
               { value: "h3", label: "h3" },
@@ -391,7 +411,7 @@ registerBlockType("zita-blocks/icon-block", {
             ]}
           />
           <p>
-            <strong>Font Size</strong>
+            <strong>{__("Font Size", "zita-blocks")}</strong>
           </p>
           <RangeControl
             value={titleFontsize}
@@ -402,7 +422,7 @@ registerBlockType("zita-blocks/icon-block", {
           {/* font family */}
           <div className="THK-font-family-wrapper">
             <p>
-              <strong>Font Family</strong>
+              <strong>{__("Font Family", "zita-blocks")}</strong>
             </p>
             <div
               ref={familyRef2}
@@ -418,7 +438,7 @@ registerBlockType("zita-blocks/icon-block", {
                 className="font-family-show"
               >
                 <span style={{ fontFamily: titleFF }}>
-                  {titleFF ? titleFF : "Choose Family"}
+                  {titleFF ? titleFF : __("Choose Family", "zita-blocks")}
                 </span>
               </div>
               <div className="family-items">
@@ -437,9 +457,12 @@ registerBlockType("zita-blocks/icon-block", {
           </div>
           {/* font family */}
         </PanelBody>
-        <PanelBody title={"Color Setting"} initialOpen={false}>
+        <PanelBody
+          title={__("Color Setting", "zita-blocks")}
+          initialOpen={false}
+        >
           <p>
-            <strong>Background Color</strong>
+            <strong>{__("Background Color", "zita-blocks")}</strong>
           </p>
           <ColorPicker
             onChangeComplete={(colorBg) => {
@@ -448,30 +471,33 @@ registerBlockType("zita-blocks/icon-block", {
             }}
           />
           <p>
-            <strong>Icon Color</strong>
+            <strong>{__("Icon Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette
             onChange={(color) => setAttributes({ iconColor: color })}
           />
           <p>
-            <strong>Title Color</strong>
+            <strong>{__("Title Color", "zita-blocks")}</strong>
           </p>
           <ColorPalette onChange={(e) => setAttributes({ titleColor: e })} />
         </PanelBody>
 
-        <PanelBody title={"Container Setting"} initialOpen={false}>
+        <PanelBody
+          title={__("Container Setting", "zita-blocks")}
+          initialOpen={false}
+        >
           <p>
-            <strong>Padding</strong>
+            <strong>{__("Padding", "zita-blocks")}</strong>
           </p>
           <RangeControl
-            label={"Top & Bottom"}
+            label={__("Top & Bottom", "zita-blocks")}
             value={iconPaddingTop}
             min={0}
             max={200}
             onChange={(e) => setAttributes({ iconPaddingTop: e })}
           />
           <RangeControl
-            label={"Left & Right"}
+            label={__("Left & Right", "zita-blocks")}
             value={iconPaddingRight}
             min={0}
             max={200}

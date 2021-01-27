@@ -1,9 +1,9 @@
 import "./editor.scss";
 import { registerBlockType } from "@wordpress/blocks";
 import Edit from "./edit";
-const attrSave = {};
+import { __ } from "@wordpress/i18n";
 registerBlockType("zita-blocks/zita-post-section-three-post", {
-  title: "Post Image Layout Three Post",
+  title: __("Post Image Layout Three Post", "zita-blocks"),
   icon: "tagcloud",
   category: "zita-category",
   getEditWrapperProps(attributes) {

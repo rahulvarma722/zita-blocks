@@ -8,7 +8,7 @@ import {
 import { PanelBody, RangeControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 const attrs_ = {
-  percentTitle: { type: "string", default: "Percent title" },
+  percentTitle: { type: "string", default: __("Percent title", "zita-blocks") },
   titleFs: { type: "number" },
   titleFf: { type: "string" },
   titleIn: { type: "boolean", default: false },

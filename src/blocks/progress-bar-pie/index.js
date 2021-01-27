@@ -23,7 +23,7 @@ const attrs_ = {
   textFs: { type: "number", default: 18 },
   textColor: { type: "string", default: "black" },
   percentTitleE: { type: "boolean", default: true },
-  percentTitle: { type: "string", default: "Add Title" },
+  percentTitle: { type: "string", default: __("Add Title", "zita-blocks") },
   percentTitleFs: { type: "number" },
   percentTitleColor: { type: "string" },
 };
@@ -197,7 +197,7 @@ registerBlockType("zita-blocks/progress-bar-pie", {
                   className="title_"
                   key="editable"
                   tagName="span"
-                  placeholder="Add Title"
+                  placeholder={__("Add Title", "zita-blocks")}
                   value={percentTitle}
                   onChange={(e) => setAttributes({ percentTitle: e })}
                   style={{

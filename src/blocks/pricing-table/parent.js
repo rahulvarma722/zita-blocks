@@ -1,9 +1,10 @@
 import { registerBlockType } from "@wordpress/blocks";
 import { InnerBlocks, InspectorControls } from "@wordpress/block-editor";
-import { PanelBody, RangeControl, ColorPicker } from "@wordpress/components";
+import { PanelBody, RangeControl } from "@wordpress/components";
+import { __ } from "@wordpress/i18n";
 
 registerBlockType("zita-blocks/pricing-table-section", {
-  title: "Pricing Table",
+  title: __("Pricing Table", "zita-blocks"),
   icon: "table-col-before",
   // description: "Pricing Table",
   category: "zita-category",
@@ -49,7 +50,7 @@ registerBlockType("zita-blocks/pricing-table-section", {
       <InspectorControls>
         <PanelBody>
           <RangeControl
-            label="Number Of Column"
+            label={__("Number Of Column", "zita-blocks")}
             value={columns}
             onChange={(v) => {
               setAttributes({ columns: v });
@@ -58,7 +59,7 @@ registerBlockType("zita-blocks/pricing-table-section", {
             max={4}
           />
           <p>
-            <strong>Column Layout</strong>
+            <strong>{__("Column Layout", "zita-blocks")}</strong>
           </p>
           <div className="column-layout-num-column">
             <div>
