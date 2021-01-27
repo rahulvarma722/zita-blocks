@@ -98,7 +98,7 @@ function zita_blocks_returnHtmlListPost($cate_, $heading__, $postAuthor, $meta_,
 {
     $postHtmlCl1 = "<article class='block-post-article'>";
     $postHtmlCl1 .= "<div class='post-wrapper' id='post-wrapper'>";
-    if (($thumbnail[0]['typeShow'] == 1 || $thumbnail[0]['typeShow'] == 'all') && $thumbnail[0]['enable'] && get_the_post_thumbnail_url()) {
+    if (((isset($thumbnail[0]['typeShow']) && ($thumbnail[0]['typeShow'] == 1 || $thumbnail[0]['typeShow'] == 'all')) && $thumbnail[0]['enable'] && get_the_post_thumbnail_url()) || (!isset($thumbnail[0]['typeShow']) && $thumbnail[0]['enable'] && get_the_post_thumbnail_url())) {
         $thumbnailStyle = isset($thumbnail[0]['borderRadius']) ? "border-radius:" . $thumbnail[0]['borderRadius'] . "px;" : '';
         $postHtmlCl1 .= '<div class="featured-image">';
         $postHtmlCl1 .= "<a href='" . esc_url(get_the_permalink()) . "'>";
