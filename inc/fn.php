@@ -27,6 +27,23 @@ function zita_blocks_register_block_fn($blockName, $extraFeature = [])
         ), $extraFeature)
     );
 }
+// array value sanitize
+function zita_blocks_array_sanitize($arr)
+{
+    $returnArray = [];
+    if (is_array($arr)) {
+        foreach ($arr as $key => $value) {
+            $key = is_numeric($key) ? $key : sanitize_text_field($key);
+            if (is_array($value)) {
+                $returnArray[$key] = zita_blocks_array_sanitize($value);
+            } else {
+                $value = is_numeric($value) ? intval($value) : sanitize_text_field($value);
+                $returnArray[$key] = $value;
+            } //else
+        } //foreach
+    }
+    return !empty($returnArray) ? $returnArray : false;
+}
 // block call back function
 include "block-callback/post-slider.php";
 include "block-callback/post-list-layout-c.php";

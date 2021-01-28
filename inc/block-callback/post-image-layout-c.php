@@ -100,8 +100,7 @@ function zita_blocks_returnHtmlPost($cate_, $heading__, $postAuthor, $meta_, $po
         $postHtmlCl1 .= '</a>';
         $postHtmlCl1 .= '</div>';
     }
-    $layoutStyleBgClr = isset($layout['overlayColor']) ? "background-color:" . $layout['overlayColor'] . ";" : '';
-    // $layoutStyleBgClr .= isset($layout['contentAlign']) ? "background-color:" . $layout['overlayColor'] . ";" : '';
+    $layoutStyleBgClr = isset($layout['overlayColor']) && $layout['overlayColor'] ? "background-color:" . $layout['overlayColor'] . ";" : '';
     if (isset($layout['contentAlign'])) {
         if ($layout['contentAlign'] == "bottom-left") {
             $layoutStyleBgClr .= "align-items:normal;";

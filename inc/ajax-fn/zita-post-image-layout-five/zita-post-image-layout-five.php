@@ -24,14 +24,14 @@ function zita_blocks_post_image_five_post_html($args, $attr)
     if ($query->have_posts()) {
         $postAuthor = isset($attr['author'][0]['enable']) && $attr['author'][0]['enable'] == "true" ? true : false;
         $postAuthor2 = isset($attr['author2'][0]['enable']) && $attr['author2'][0]['enable'] == "true" ? true : false;
-        $postDate = isset($attr['date'][0]['enable']) && $attr['date'][0]['enable'] == "true" ? true : false;
-        $postDate2 = isset($attr['date2'][0]['enable']) && $attr['date2'][0]['enable']  == "true" ? true : false;
-        $postDateModify = isset($attr['date'][0]['last_modified']) && $attr['date'][0]['last_modified'] == "true" ? true : false;
-        $postDateModify2 = isset($attr['date2'][0]['last_modified']) && $attr['date2'][0]['last_modified'] == "true"  ? true : false;
-        $postExcerpt = isset($attr['excerpt'][0]['enable']) && $attr['excerpt'][0]['enable'] == "true" ? true : false;
-        $postExcerptColor = $postExcerpt && $attr['excerpt'][0]['color'] ? $attr['excerpt'][0]['color'] : "";
-        $postExcerpt2 = isset($attr['excerpt2'][0]['enable']) && $attr['excerpt2'][0]['enable'] == "true" ? true : false;
-        $postExcerpt2Color = $postExcerpt2 && $attr['excerpt2'][0]['color'] ? $attr['excerpt2'][0]['color'] : "";
+        // $postDate = isset($attr['date'][0]['enable']) && $attr['date'][0]['enable'] == "true" ? true : false;
+        // $postDate2 = isset($attr['date2'][0]['enable']) && $attr['date2'][0]['enable']  == "true" ? true : false;
+        // $postDateModify = isset($attr['date'][0]['last_modified']) && $attr['date'][0]['last_modified'] == "true" ? true : false;
+        // $postDateModify2 = isset($attr['date2'][0]['last_modified']) && $attr['date2'][0]['last_modified'] == "true"  ? true : false;
+        // $postExcerpt = isset($attr['excerpt'][0]['enable']) && $attr['excerpt'][0]['enable'] == "true" ? true : false;
+        // $postExcerptColor = $postExcerpt && $attr['excerpt'][0]['color'] ? $attr['excerpt'][0]['color'] : "";
+        // $postExcerpt2 = isset($attr['excerpt2'][0]['enable']) && $attr['excerpt2'][0]['enable'] == "true" ? true : false;
+        // $postExcerpt2Color = $postExcerpt2 && $attr['excerpt2'][0]['color'] ? $attr['excerpt2'][0]['color'] : "";
 
         $checkFirst = true;
         $postHtml = '';
@@ -41,19 +41,19 @@ function zita_blocks_post_image_five_post_html($args, $attr)
             $query->the_post();
             if ($attr['layout'][0]['type'] == 2) {
                 if ($CountTwoLayout > 4) {
-                    $columnOne .= zita_blocks_returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                    $columnOne .= zita_blocks_returnHtmlListPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $attr['date'], $attr['excerpt'], $attr['showTag'], $args, [["enable" => true]], $attr['layout'][0]);
                 } else {
                     $CountTwoLayout++;
-                    $columnTwo .= zita_blocks_returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                    $columnTwo .= zita_blocks_returnHtmlListPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style2'], $attr['date2'], $attr['excerpt2'], $attr['showTag2'], $args, [["enable" => true]], $attr['layout'][0]);
                 }
             } else if ($attr['layout'][0]['type'] == 3) {
-                $postHtml .= zita_blocks_returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                $postHtml .= zita_blocks_returnHtmlListPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $attr['date'], $attr['excerpt'], $attr['showTag'], $args, [["enable" => true]], $attr['layout'][0]);
             } else {
                 if ($checkFirst) {
                     $checkFirst = false;
-                    $columnOne .= zita_blocks_returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                    $columnOne .= zita_blocks_returnHtmlListPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $attr['date'], $attr['excerpt'], $attr['showTag'], $args, [["enable" => true]], $attr['layout'][0]);
                 } else {
-                    $columnTwo .= zita_blocks_returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                    $columnTwo .= zita_blocks_returnHtmlListPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style2'], $attr['date2'], $attr['excerpt2'], $attr['showTag2'], $args, [["enable" => true]], $attr['layout'][0]);
                 }
             }
         }

@@ -53,19 +53,19 @@ function zita_blocks_section_five_post($attr)
             $query->the_post();
             if ($attr['layout'][0]['type'] == 2) {
                 if ($CountTwoLayout > 4) {
-                    $columnOne .= zita_blocks_returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                    $columnOne .= zita_blocks_returnHtmlListPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $attr['date'], $attr['excerpt'], $attr['showTag'], $args, [["enable" => true]], $attr['layout'][0]);
                 } else {
                     $CountTwoLayout++;
-                    $columnTwo .= zita_blocks_returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                    $columnTwo .= zita_blocks_returnHtmlListPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style2'], $attr['date2'], $attr['excerpt2'], $attr['showTag2'], $args, [["enable" => true]], $attr['layout'][0]);
                 }
             } else if ($attr['layout'][0]['type'] == 3) {
-                $postHtml .= zita_blocks_returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                $postHtml .= zita_blocks_returnHtmlListPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $attr['date'], $attr['excerpt'], $attr['showTag'], $args, [["enable" => true]], $attr['layout'][0]);
             } else {
                 if ($checkFirst) {
                     $checkFirst = false;
-                    $columnOne .= zita_blocks_returnHtmlPost_three_post($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt,  $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['layout'][0]);
+                    $columnOne .= zita_blocks_returnHtmlListPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $attr['date'], $attr['excerpt'], $attr['showTag'], $args, [["enable" => true]], $attr['layout'][0]);
                 } else {
-                    $columnTwo .= zita_blocks_returnHtmlPost_three_post($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['layout'][0]);
+                    $columnTwo .= zita_blocks_returnHtmlListPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style2'], $attr['date2'], $attr['excerpt2'], $attr['showTag2'], $args, [["enable" => true]], $attr['layout'][0]);
                 }
             }
         }
