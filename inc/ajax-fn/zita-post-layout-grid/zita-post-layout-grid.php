@@ -1,25 +1,27 @@
 <?php
 function zita_blocks_layout_grid()
 {
-    $attr = zita_blocks_array_sanitize($_POST['attr']);
-    if (isset($attr['numberOfPosts']) && intval($attr['numberOfPosts'])) {
-        $trigger = isset($_POST['trigger']) ? sanitize_text_field($_POST['trigger']) : '';
-        $page_ = isset($_POST['page']) && intval($_POST['page']) ? intval($_POST['page']) : '';
-        $pageNo = $trigger == "next" && is_numeric($page_) ? $page_ + 1 : $page_ - 1;
-        $page_No = isset($_POST['page_no']) && intval($_POST['page_no']) ? intval($_POST['page_no']) : false;
-        if ($page_No) {
-            $pageNo = $page_No;
+    if (isset($_POST['attr']) && is_array($_POST['attr'])) {
+        $attr = zita_blocks_array_sanitize($_POST['attr']);
+        if (isset($attr['numberOfPosts']) && intval($attr['numberOfPosts'])) {
+            $trigger = isset($_POST['trigger']) ? sanitize_text_field($_POST['trigger']) : '';
+            $page_ = isset($_POST['page']) && intval($_POST['page']) ? intval($_POST['page']) : '';
+            $pageNo = $trigger == "next" && is_numeric($page_) ? $page_ + 1 : $page_ - 1;
+            $page_No = isset($_POST['page_no']) && intval($_POST['page_no']) ? intval($_POST['page_no']) : false;
+            if ($page_No) {
+                $pageNo = $page_No;
+            }
+            $args = [
+                'post_type' => 'post',
+                "posts_per_page" => intval($attr['numberOfPosts']),
+                'paged' => $pageNo,
+            ];
+            if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
+                $args['category__in'] = $attr["postCategories"];
+            }
+            echo zita_blocks_layout_grid_html($args, $attr) ? zita_blocks_layout_grid_html($args, $attr) : 0;
+            die();
         }
-        $args = [
-            'post_type' => 'post',
-            "posts_per_page" => intval($attr['numberOfPosts']),
-            'paged' => $pageNo,
-        ];
-        if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
-            $args['category__in'] = $attr["postCategories"];
-        }
-        echo zita_blocks_layout_grid_html($args, $attr) ? zita_blocks_layout_grid_html($args, $attr) : 0;
-        die();
     }
 }
 add_action('wp_ajax_zita_post_layout_grid', "zita_blocks_layout_grid");

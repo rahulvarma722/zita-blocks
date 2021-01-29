@@ -6,10 +6,6 @@ zita_blocks_register_block_fn('zita-post-grid',  [
             'type' => "number",
             "default" => 6
         ],
-        // "columnLayout" => [
-        //     "type" => "string",
-        //     "default" => "grid"
-        // ],
         "numberOfColumn" => [
             "type" => "number",
             "default" => 3
@@ -23,7 +19,6 @@ zita_blocks_register_block_fn('zita-post-grid',  [
                 "color" => "white",
                 "backgroundColor" => "#22cb95",
                 "align" => "left",
-                // "customWidth" => false,
                 "width" => 10,
                 "fontWeight" => 400
             ]]
@@ -84,7 +79,6 @@ zita_blocks_register_block_fn('zita-post-grid',  [
             "type" => "array",
             "default" => [[
                 "enable" => false,
-                // "customColor" => false,
                 "color" => "#fcb900",
                 "backgroundColor" => "transparent",
                 "fontSize" => 11,

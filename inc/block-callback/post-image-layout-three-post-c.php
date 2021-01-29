@@ -45,8 +45,8 @@ function zita_blocks_section_three_post($attr)
             }
             $contentAlign = isset($attr['layout'][0]['contentAlign']) && $attr['layout'][0]['contentAlign'] ? $attr['layout'][0]['contentAlign'] : '';
             $contentPlaced = isset($attr['layout'][0]['contentPlace']) && $attr['layout'][0]['contentPlace'] ? $attr['layout'][0]['contentPlace'] : '';
-            $postHtml .= "<div class='parent-column-two count-3 post-three-layout-" . $attr['layout'][0]['type'] . " content-align-" . $contentAlign . " content-placed-" . $contentPlaced . "' data-setting='" . $postSetting . "' data-currentpage='" . $currentPage . "'>";
             $contentLayoutType = isset($attr['layout'][0]['type']) && intval($attr['layout'][0]['type']) ? intval($attr['layout'][0]['type']) : '';
+            $postHtml .= "<div class='parent-column-two count-3 post-three-layout-" . $contentLayoutType . " content-align-" . $contentAlign . " content-placed-" . $contentPlaced . "' data-setting='" . $postSetting . "' data-currentpage='" . $currentPage . "'>";
 
 
             $layout_ = isset($attr['layout'][0]) ? $attr['layout'][0] : false;
@@ -121,7 +121,7 @@ function zita_blocks_section_three_post($attr)
             wp_reset_postdata();
             return $postHtml;
         } else {
-            return "<div>No post found.</div>";
+            return "<div>" . __("No post found.", "zita-blocks") . "</div>";
         }
     }
 }

@@ -1,34 +1,44 @@
 <?php
 function zita_blocks_post_tc()
 {
-    $pageNo = $_POST['trigger'] == "next" ? $_POST['page'] + 1 : $_POST['page'] - 1;
-    $attr = $_POST['attr'];
-    $args = [
-        'post_type' => 'post',
-        "posts_per_page" => $attr['numberOfPosts'],
-        'paged' => $pageNo,
-    ];
-    if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
-        $args['category__in'] = $attr["postCategories"];
+    if (isset($_POST['attr']) && is_array($_POST['attr'])) {
+        $attr = zita_blocks_array_sanitize($_POST['attr']);
+        if (isset($attr['numberOfPosts']) && intval($attr['numberOfPosts'])) {
+            $trigger = isset($_POST['trigger']) ? sanitize_text_field($_POST['trigger']) : '';
+            $page_ = isset($_POST['page']) && intval($_POST['page']) ? intval($_POST['page']) : '';
+            $pageNo = $trigger == "next" && is_numeric($page_) ? $page_ + 1 : $page_ - 1;
+            $args = [
+                'post_type' => 'post',
+                "posts_per_page" => intval($attr['numberOfPosts']),
+                'paged' => $pageNo,
+            ];
+            if (isset($attr["postCategories"]) && is_array($attr["postCategories"]) && !empty($attr["postCategories"])) {
+                $args['category__in'] = $attr["postCategories"];
+            }
+            echo zita_blocks_post_tc_html($args, $attr) ? zita_blocks_post_tc_html($args, $attr) : 0;
+            die();
+        }
     }
-    echo zita_blocks_post_tc_html($args, $attr) ? zita_blocks_post_tc_html($args, $attr) : 0;
-    die();
 }
 add_action('wp_ajax_post_category_layout_block', "zita_blocks_post_tc");
 add_action('wp_ajax_nopriv_post_category_layout_block', "zita_blocks_post_tc");
 function zita_blocks_choose_cate()
 {
-    $attr = $_POST['attr'];
-    $args = [
-        'post_type' => 'post',
-        "posts_per_page" => $attr['numberOfPosts'],
-        'paged' => 1,
-    ];
-    if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
-        $args['category__in'] = $attr["postCategories"];
+    if (isset($_POST['attr']) && is_array($_POST['attr'])) {
+        $attr = zita_blocks_array_sanitize($_POST['attr']);
+        if (isset($attr['numberOfPosts']) && intval($attr['numberOfPosts'])) {
+            $args = [
+                'post_type' => 'post',
+                "posts_per_page" => intval($attr['numberOfPosts']),
+                'paged' => 1,
+            ];
+            if (isset($attr["postCategories"]) && is_array($attr["postCategories"]) && !empty($attr["postCategories"])) {
+                $args['category__in'] = $attr["postCategories"];
+            }
+            echo zita_blocks_post_tc_html($args, $attr) ? wp_json_encode(zita_blocks_post_tc_html($args, $attr, true)) : 0;
+            die();
+        }
     }
-    echo zita_blocks_post_tc_html($args, $attr) ? json_encode(zita_blocks_post_tc_html($args, $attr, true)) : 0;
-    die();
 }
 add_action('wp_ajax_post_category_layout_choose_category', "zita_blocks_choose_cate");
 add_action('wp_ajax_nopriv_post_category_layout_choose_category', "zita_blocks_choose_cate");
@@ -36,32 +46,39 @@ add_action('wp_ajax_nopriv_post_category_layout_choose_category', "zita_blocks_c
 // return html function
 function zita_blocks_post_tc_html($args, $attr, $showNextPrev = false)
 {
-    if ($attr['thumbnail'][0]['enable'] == "true") {
+    if (isset($attr['thumbnail'][0]['enable']) && ($attr['thumbnail'][0]['enable'] == "true" || $attr['thumbnail'][0]['enable'] == 1)) {
         $args['meta_key'] = "_thumbnail_id";
     }
     $query = new WP_Query($args);
-    $postHtml = "<div class='zita-post-two-column column-layout-" . $attr['meta_style'][0]["layoutPostion"] . "'>";
+    $layoutPosition = isset($attr['meta_style'][0]["layoutPostion"]) && $attr['meta_style'][0]["layoutPostion"] ? $attr['meta_style'][0]["layoutPostion"] : '';
+    $postHtml = "<div class='zita-post-two-column column-layout-" . $layoutPosition . "'>";
     $postHtmlCl1 = '<div class="column-one">';
     $postHtmlCl2 = '<div class="column-two">';
     if ($query->have_posts()) {
-        $postAuthor = $attr['author'][0]['enable'] == "true"  ? true : false;
-        $postAuthor2 = $attr['author2'][0]['enable']  == "true" ? true : false;
-        $postDate = $attr['date'][0]['enable']  == "true"  ? true : false;
-        $postDate2 = $attr['date2'][0]['enable']  == "true" ? true : false;
-        $postDateModify = $attr['date'][0]['last_modified']  == "true" ? true : false;
-        $postDateModify2 = $attr['date2'][0]['last_modified']  == "true" ? true : false;
-        $postExcerpt = $attr['excerpt'][0]['enable']  == "true"  ? true : false;
-        $postExcerptColor = $postExcerpt && $attr['excerpt'][0]['color'] ? $attr['excerpt'][0]['color'] : "";
-        $postExcerpt2 = $attr['excerpt2'][0]['enable'] == "true"  ? true : false;
-        $postExcerpt2Color = $postExcerpt2 && $attr['excerpt2'][0]['color'] ? $attr['excerpt2'][0]['color'] : "";
+        $postAuthor = isset($attr['author'][0]['enable']) && $attr['author'][0]['enable']  ? true : false;
+        $postAuthor2 = isset($attr['author2'][0]['enable']) && $attr['author2'][0]['enable']  ? true : false;
+        $showCate_ = isset($attr['showCate']) ? $attr["showCate"] : false;
+        $heading_ = isset($attr['heading']) ? $attr["heading"] : false;
+        $metaStyle_ = isset($attr['meta_style']) ? $attr["meta_style"] : false;
+        $Excerpt_ = isset($attr['excerpt']) ? $attr["excerpt"] : false;
+        $ShowTag  = isset($attr['showTag']) ? $attr["showTag"] : false;
+        $thumbnail_ = isset($attr['thumbnail']) ? $attr["thumbnail"] : false;
+        $date_ = isset($attr['date']) ? $attr["date"] : false;
+        // secondary
+        $showCate2_ = isset($attr['showCate2']) ? $attr["showCate2"] : false;
+        $heading2_ = isset($attr['heading2']) ? $attr["heading2"] : false;
+        $metaStyle2_ = isset($attr['meta_style2']) ? $attr["meta_style2"] : false;
+        $Excerpt2_ = isset($attr['excerpt2']) ? $attr["excerpt2"] : false;
+        $ShowTa2g  = isset($attr['showTag2']) ? $attr["showTag2"] : false;
+        $date2_ = isset($attr['date2']) ? $attr["date2"] : false;
         $checkFirst = true;
         while ($query->have_posts()) {
             $query->the_post();
             if ($checkFirst) {
                 $checkFirst = false;
-                $postHtmlCl1 .= zita_blocks_returnHtmlPost($attr['showCate'], $attr['heading'], $postAuthor, $attr['meta_style'], $postDate, $postExcerpt, $attr['excerpt'], $postDateModify, $postExcerptColor, $attr['showTag'], $attr["postCategories"], $attr['thumbnail']);
+                $postHtmlCl1 .= zita_blocks_returnHtmlListPost($showCate_, $heading_, $postAuthor, $metaStyle_, $date_, $Excerpt_, $ShowTag, $args, $thumbnail_);
             } else {
-                $postHtmlCl2 .= zita_blocks_returnHtmlPost($attr['showCate2'], $attr['heading2'], $postAuthor2, $attr['meta_style'], $postDate2, $postExcerpt2,  $attr['excerpt2'], $postDateModify2, $postExcerpt2Color, $attr['showTag2'], $attr["postCategories"], $attr['thumbnail']);
+                $postHtmlCl2 .= zita_blocks_returnHtmlListPost($showCate2_, $heading2_, $postAuthor2, $metaStyle2_, $date2_, $Excerpt2_, $ShowTa2g, $args, $thumbnail_);
             }
         }
         $postHtmlCl1 .=  '</div>';
@@ -70,12 +87,12 @@ function zita_blocks_post_tc_html($args, $attr, $showNextPrev = false)
         $postHtml .= '</div>';
 
         // for category click 
-        if ($showNextPrev === true) {
+        if ($showNextPrev === true && isset($attr['numberOfPosts']) && intval($attr['numberOfPosts'])) {
             $totalPosts = $query->found_posts;
             $currentPage = null;
-            if ($totalPosts > $attr['numberOfPosts']) {
-                $pagesOfPost = ceil($totalPosts / $attr['numberOfPosts']);
-                $currentPage = json_encode(array("current" => 1, "total" => $pagesOfPost));
+            if ($totalPosts > intval($attr['numberOfPosts'])) {
+                $pagesOfPost = ceil($totalPosts / intval($attr['numberOfPosts']));
+                $currentPage = wp_json_encode(array("current" => 1, "total" => $pagesOfPost));
             }
             $returnObj = ["nextprev" => $currentPage];
         }

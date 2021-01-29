@@ -105,7 +105,7 @@ function zita_blocks_render_latest_post_block($attr)
     }
 }
 
-function zita_blocks_returnHtmlListPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $postExcerpt__, $tags_, $category__in, $thumbnail = false, $layout=[])
+function zita_blocks_returnHtmlListPost($cate_, $heading__, $postAuthor, $meta_, $postDate, $postExcerpt__, $tags_, $category__in, $thumbnail = false, $layout = [])
 {
     $postHtmlCl1 = "<article class='block-post-article'>";
     $postHtmlCl1 .= "<div class='post-wrapper' id='post-wrapper'>";
@@ -125,14 +125,14 @@ function zita_blocks_returnHtmlListPost($cate_, $heading__, $postAuthor, $meta_,
             $layoutStyleBgClr .= "align-items:center;";
         } else if ($layout['contentAlign'] == "bottom-right") {
             $layoutStyleBgClr .= "align-items:flex-end;";
-        } else if($layout['contentAlign'] == "center") {
+        } else if ($layout['contentAlign'] == "center") {
             $layoutStyleBgClr .= "align-items:center;justify-content:center;";
         }
     }
     $layoutStyleBgClr = $layoutStyleBgClr ? "style='" . $layoutStyleBgClr . "'" : '';
     $postHtmlCl1 .= "<div class='post-content' " . $layoutStyleBgClr . ">";
     // category
-    if (isset($cate_[0]['enable']) && $cate_[0]['enable'] == 'true') {
+    if (isset($cate_[0]['enable']) && ($cate_[0]['enable'] == 'true' || $cate_[0]['enable'] == 1)) {
         $postHtmlCl1 .= '<p class="post-category">';
         $category_ = get_the_category();
         $category_ = json_encode($category_);
@@ -178,7 +178,7 @@ function zita_blocks_returnHtmlListPost($cate_, $heading__, $postAuthor, $meta_,
         $postHtmlCl1 .=  get_the_author();
         $postHtmlCl1 .= "</a></p>";
     }
-    if (isset($postDate[0]['enable']) && $postDate[0]['enable'] == 'true') {
+    if (isset($postDate[0]['enable']) && ($postDate[0]['enable'] == 'true' || $postDate[0]['enable'] == 1)) {
         $postHtmlCl1 .= $postAuthor ? '<span style="' . $metaStyle . '" class="slash">/</span>' : '';
         $dateYear =   get_the_date('Y');
         $dateMonth =   get_the_date('m');
@@ -188,7 +188,7 @@ function zita_blocks_returnHtmlListPost($cate_, $heading__, $postAuthor, $meta_,
         $postHtmlCl1 .=  get_the_date();
         $postHtmlCl1 .= "</a></p>";
     }
-    if (isset($postDate[0]['last_modified']) && $postDate[0]['last_modified'] == 'true') {
+    if (isset($postDate[0]['last_modified']) && ($postDate[0]['last_modified'] == 'true' || $postDate[0]['last_modified'] == 1)) {
         $postHtmlCl1 .= ($postDate || $postAuthor) ? '<span style="' . $metaStyle . '" class="slash">/</span>' : '';
         $dateYear =   get_the_modified_date('Y');
         $dateMonth =   get_the_modified_date('m');
@@ -199,7 +199,7 @@ function zita_blocks_returnHtmlListPost($cate_, $heading__, $postAuthor, $meta_,
         $postHtmlCl1 .= "</a></p>";
     }
     $postHtmlCl1 .= '</div>';
-    if (isset($postExcerpt__[0]["enable"]) && $postExcerpt__[0]["enable"] == "true") {
+    if (isset($postExcerpt__[0]["enable"]) && ($postExcerpt__[0]["enable"] == "true" || $postExcerpt__[0]["enable"] == 1)) {
         $postExcerpt = get_the_excerpt();
         $exLength = isset($postExcerpt__[0]['words']) && $postExcerpt__[0]['words']  ? $postExcerpt__[0]['words'] : false;
         if ($exLength) {
@@ -215,11 +215,13 @@ function zita_blocks_returnHtmlListPost($cate_, $heading__, $postAuthor, $meta_,
         $postHtmlCl1 .= "</p>";
     }
     ///////////////////// tags
-    if (isset($tags_[0]['enable']) && $tags_[0]['enable'] == "true") {
+    if (isset($tags_[0]['enable']) && ($tags_[0]['enable'] == "true" || $tags_[0]['enable'] == 1)) {
         $tags = get_the_tags(get_the_ID());
         $postHtmlCl1 .= '<p class="post-tags">';
         if (!empty($tags)) {
-            $Tagstyle = 'font-size:' . $tags_[0]['fontSize'] . 'px;background-color:' . $tags_[0]['backgroundColor'] . ';color:' . $tags_[0]['color'] . ';';
+            $Tagstyle = isset($tags_[0]['fontSize']) && intval($tags_[0]['fontSize']) ? 'font-size:' . intval($tags_[0]['fontSize']) . 'px;' : '';
+            $Tagstyle .= isset($tags_[0]['backgroundColor']) && $tags_[0]['backgroundColor'] ? 'background-color:' . $tags_[0]['backgroundColor'] . ';' : '';
+            $Tagstyle .= isset($tags_[0]['color']) && $tags_[0]['color'] ? 'color:' . $tags_[0]['color'] . ';' : '';
             $tagCount = 0;
             foreach ($tags as $tagValue) {
                 if ($tags_[0]['count'] == $tagCount) break;

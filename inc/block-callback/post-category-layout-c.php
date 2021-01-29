@@ -1,7 +1,7 @@
 <?php
 // zita post callback function
 function zita_blocks_two_column_block($attr)
-{
+{   
     $attr = zita_blocks_array_sanitize($attr);
     $args = ['post_type' => 'post'];
     if (isset($attr['numberOfPosts']) && intval($attr['numberOfPosts'])) {
@@ -93,31 +93,33 @@ function zita_blocks_two_column_block($attr)
         $postHtml .= "<div class='zita-two-post-wrapper' data-setting='" . $postSetting . "' data-currentpage='" . $currentPage . "'><div class='zita-post-two-column column-layout-" . $layoutPosition . "'>";
         $postHtmlCl1 = '<div class="column-one">';
         $postHtmlCl2 = '<div class="column-two">';
+
         // echo "<pre>";
         if ($query->have_posts()) {
             $postAuthor = isset($attr['author'][0]['enable']) && $attr['author'][0]['enable']  ? true : false;
+            $postAuthor2 = isset($attr['author2'][0]['enable']) && $attr['author2'][0]['enable']  ? true : false;
+            $showCate_ = isset($attr['showCate']) ? $attr["showCate"] : false;
+            $heading_ = isset($attr['heading']) ? $attr["heading"] : false;
+            $metaStyle_ = isset($attr['meta_style']) ? $attr["meta_style"] : false;
+            $Excerpt_ = isset($attr['excerpt']) ? $attr["excerpt"] : false;
+            $ShowTag  = isset($attr['showTag']) ? $attr["showTag"] : false;
+            $thumbnail_ = isset($attr['thumbnail']) ? $attr["thumbnail"] : false;
+            $date_ = isset($attr['date']) ? $attr["date"] : false;
+            // secondary
+            $showCate2_ = isset($attr['showCate2']) ? $attr["showCate2"] : false;
+            $heading2_ = isset($attr['heading2']) ? $attr["heading2"] : false;
+            $metaStyle2_ = isset($attr['meta_style2']) ? $attr["meta_style2"] : false;
+            $Excerpt2_ = isset($attr['excerpt2']) ? $attr["excerpt2"] : false;
+            $ShowTa2g  = isset($attr['showTag2']) ? $attr["showTag2"] : false;
+            $date2_ = isset($attr['date2']) ? $attr["date2"] : false;
             $checkFirst = true;
             while ($query->have_posts()) {
                 $query->the_post();
                 if ($checkFirst) {
                     $checkFirst = false;
-                    $showCate_ = isset($attr['showCate']) ? $attr["showCate"] : false;
-                    $heading_ = isset($attr['heading']) ? $attr["heading"] : false;
-                    $metaStyle_ = isset($attr['meta_style']) ? $attr["meta_style"] : false;
-                    $Excerpt_ = isset($attr['excerpt']) ? $attr["excerpt"] : false;
-                    $ShowTag  = isset($attr['showTag']) ? $attr["showTag"] : false;
-                    $thumbnail_ = isset($attr['thumbnail']) ? $attr["thumbnail"] : false;
-                    $date_ = isset($attr['date']) ? $attr["date"] : false;
                     $postHtmlCl1 .= zita_blocks_returnHtmlListPost($showCate_, $heading_, $postAuthor, $metaStyle_, $date_, $Excerpt_, $ShowTag, $args, $thumbnail_);
                 } else {
-                    $showCate_ = isset($attr['showCate2']) ? $attr["showCate2"] : false;
-                    $heading_ = isset($attr['heading2']) ? $attr["heading2"] : false;
-                    $metaStyle_ = isset($attr['meta_style2']) ? $attr["meta_style2"] : false;
-                    $Excerpt_ = isset($attr['excerpt2']) ? $attr["excerpt2"] : false;
-                    $ShowTag  = isset($attr['showTag2']) ? $attr["showTag2"] : false;
-                    $thumbnail_ = isset($attr['thumbnail']) ? $attr["thumbnail"] : false;
-                    $date_ = isset($attr['date2']) ? $attr["date2"] : false;
-                    $postHtmlCl2 .= zita_blocks_returnHtmlListPost($showCate_, $heading_, $postAuthor, $metaStyle_, $date_, $Excerpt_, $ShowTag, $args, $thumbnail_);
+                    $postHtmlCl2 .= zita_blocks_returnHtmlListPost($showCate2_, $heading2_, $postAuthor2, $metaStyle2_, $date2_, $Excerpt2_, $ShowTa2g, $args, $thumbnail_);
                 }
             }
             $postHtmlCl1 .=  '</div>';
