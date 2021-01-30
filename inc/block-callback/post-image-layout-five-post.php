@@ -30,7 +30,7 @@ zita_blocks_register_block_fn('zita-post-section-five-post',  [
         "layout" => [
             "type" => "array",
             "default" => [[
-                "type" => 1,
+                "type" => 3,
                 "contentPlace" => "inner",
                 "contentAlign" => "bottom",
                 "overlayColor" => "rgba(0, 0, 0, 0.25)",

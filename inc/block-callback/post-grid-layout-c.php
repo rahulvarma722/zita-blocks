@@ -67,7 +67,7 @@ function zita_blocks_post_grid_block($attr)
                 $postHtml .= zita_blocks_returnHtmlListPost($showCate_, $heading_, $postAuthor, $metaStyle_, $date_, $Excerpt_, $ShowTag, $args, $thumbnail_);
             }
             $postHtml .= "</div>";
-            if (isset($attr['meta_style'][0]['npEnable']) && ($attr['meta_style'][0]['npEnable'] == "true" || $attr['meta_style'][0]['npEnable'] == "1")) {
+            if (($totalPosts > $numberOfpost) && isset($attr['meta_style'][0]['npEnable']) && ($attr['meta_style'][0]['npEnable'] == "true" || $attr['meta_style'][0]['npEnable'] == "1")) {
                 $nextPrevStyle = isset($attr['meta_style'][0]['npBgfontSize']) && intval($attr['meta_style'][0]['npBgfontSize']) ? "font-size:" . $attr['meta_style'][0]['npBgfontSize'] . "px;" : '';
                 $nextPrevStyle .= isset($attr['meta_style'][0]['npColor']) && $attr['meta_style'][0]['npColor'] ? "color:" . $attr['meta_style'][0]['npColor'] . ";" : '';
                 $nextPrevStyle .= isset($attr['meta_style'][0]['npBgColor']) && $attr['meta_style'][0]['npBgColor'] ? "background-color:" . $attr['meta_style'][0]['npBgColor'] . ";" : '';
@@ -89,8 +89,7 @@ function zita_blocks_post_grid_block($attr)
                     }
                     $paginationLink .= '</section>';
                 }
-                $keepDisable = $totalPosts <= $numberOfpost ? "disable" : '';
-                $postHtml .= "<div class='zita-two-post-wrapper-next-prev " . $keepDisable . "'>
+                $postHtml .= "<div class='zita-two-post-wrapper-next-prev'>
                                 <div data-section='grid-post' style='" . $nextPrevStyle . "' class='zita-image-section-np disable prev'>
                                     <i class='fas fa-chevron-left'></i>
                                 </div>";

@@ -14,7 +14,6 @@ import {
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { decodeEntities } from "@wordpress/html-entities";
-
 class Edit extends Component {
   constructor(props) {
     super(props);
@@ -136,14 +135,19 @@ class Edit extends Component {
     return retur;
   };
   render() {
-    const { posts, attributes, setAttributes, category } = this.props;
+    const {
+      posts,
+      attributes,
+      setAttributes,
+      category,
+      totalPosts,
+    } = this.props;
     // console.log("post list grid layout ->", this.props);
     let {
       heading,
       author,
       numberOfPosts,
       thumbnail,
-      // numberOfColumn,
       // columnLayout,
       dimension,
       date,
@@ -735,67 +739,83 @@ class Edit extends Component {
               </>
             )}
           </PanelBody>
-          <PanelBody
-            title={__("Next / Previous Button", "zita-blocks")}
-            initialOpen={false}
-          >
-            <ToggleControl
-              label={__("Enable", "zita-blocks")}
-              checked={meta_style_.npEnable}
-              onChange={(e) =>
-                this.updateObj("meta_style", "npEnable", meta_style, e)
-              }
-            />
-            {meta_style_.npEnable && (
-              <>
-                <p>
-                  <strong>{__("Pagination Number", "zita-blocks")}</strong>
-                </p>
-                <ToggleControl
-                  label={__("Enable", "zita-blocks")}
-                  checked={meta_style_.npPagination}
-                  onChange={(e) =>
-                    this.updateObj("meta_style", "npPagination", meta_style, e)
-                  }
-                />
-                <p>
-                  <strong>{__("Font Size", "zita-blocks")}</strong>
-                </p>
-                <RangeControl
-                  value={meta_style_.npBgfontSize}
-                  min={1}
-                  max={30}
-                  onChange={(e) => {
-                    this.updateObj("meta_style", "npBgfontSize", meta_style, e);
-                  }}
-                />
-                <p>
-                  <strong>{__("Color", "zita-blocks")}</strong>
-                </p>
-                <ColorPalette
-                  value={meta_style_.npColor}
-                  onChange={(color) =>
-                    this.updateObj("meta_style", "npColor", meta_style, color)
-                  }
-                />
-                <p>
-                  <strong>{__("Background Color", "zita-blocks")}</strong>
-                </p>
-                <ColorPicker
-                  color={meta_style_.npBgColor}
-                  onChangeComplete={(colorBg) => {
-                    let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                    this.updateObj(
-                      "meta_style",
-                      "npBgColor",
-                      meta_style,
-                      color
-                    );
-                  }}
-                />
-              </>
-            )}
-          </PanelBody>
+          {totalPosts && totalPosts > numberOfPosts && (
+            <PanelBody
+              title={__("Next / Previous Button", "zita-blocks")}
+              initialOpen={false}
+            >
+              <ToggleControl
+                label={__("Enable", "zita-blocks")}
+                checked={meta_style_.npEnable}
+                onChange={(e) =>
+                  this.updateObj("meta_style", "npEnable", meta_style, e)
+                }
+              />
+              {meta_style_.npEnable && (
+                <>
+                  <p>
+                    <strong>{__("Pagination Number", "zita-blocks")}</strong>
+                  </p>
+                  <ToggleControl
+                    label={
+                      meta_style_.npPagination
+                        ? __("Pagination On", "zita-blocks")
+                        : __("Next Previous On", "zita-blocks")
+                    }
+                    checked={meta_style_.npPagination}
+                    onChange={(e) =>
+                      this.updateObj(
+                        "meta_style",
+                        "npPagination",
+                        meta_style,
+                        e
+                      )
+                    }
+                  />
+                  <p>
+                    <strong>{__("Font Size", "zita-blocks")}</strong>
+                  </p>
+                  <RangeControl
+                    value={meta_style_.npBgfontSize}
+                    min={1}
+                    max={30}
+                    onChange={(e) => {
+                      this.updateObj(
+                        "meta_style",
+                        "npBgfontSize",
+                        meta_style,
+                        e
+                      );
+                    }}
+                  />
+                  <p>
+                    <strong>{__("Color", "zita-blocks")}</strong>
+                  </p>
+                  <ColorPalette
+                    value={meta_style_.npColor}
+                    onChange={(color) =>
+                      this.updateObj("meta_style", "npColor", meta_style, color)
+                    }
+                  />
+                  <p>
+                    <strong>{__("Background Color", "zita-blocks")}</strong>
+                  </p>
+                  <ColorPicker
+                    color={meta_style_.npBgColor}
+                    onChangeComplete={(colorBg) => {
+                      let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                      this.updateObj(
+                        "meta_style",
+                        "npBgColor",
+                        meta_style,
+                        color
+                      );
+                    }}
+                  />
+                </>
+              )}
+            </PanelBody>
+          )}
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
           <div className="zita-block-post list-layout" style={blockStyle}>
@@ -1061,7 +1081,9 @@ class Edit extends Component {
                 );
               })}
             </div>
-            {meta_style_.npEnable && (
+            {totalPosts &&
+            totalPosts > numberOfPosts &&
+            meta_style_.npEnable ? (
               <div className="zita-two-post-wrapper-next-prev">
                 {/* npBgfontSize npColor npBgColor */}
                 <div
@@ -1114,6 +1136,8 @@ class Edit extends Component {
                   <i class="fas fa-chevron-right"></i>
                 </div>
               </div>
+            ) : (
+              ""
             )}
           </div>
         ) : (
@@ -1148,10 +1172,10 @@ export default withSelect((select, props) => {
     query2["categories"] = cateCh;
   }
   const { getMedia, getEntityRecords, getAuthors } = select("core");
+  let getTotalPost = getEntityRecords("postType", "post", query2);
   /////////////////////////////////////////////////////////////////////////////
   let getAllPost = [];
   if (thumbnail[0].typeShow == "1") {
-    let getTotalPost = getEntityRecords("postType", "post", query2);
     getAllPost =
       getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
     // console.log("outer fn ", getTotalPost);
@@ -1173,11 +1197,14 @@ export default withSelect((select, props) => {
         let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
         if (
           newPostArray.length == numberOfPosts ||
-          getTotalPost.length == numberOfposts_
+          getTotalPost.length <= numberOfposts_
         ) {
           return newPostArray;
         } else {
-          if (newPostArray.length < numberOfPosts && getTotalPost.length) {
+          if (
+            newPostArray.length < numberOfPosts &&
+            numberOfposts_ <= getTotalPost.length
+          ) {
             return returnPostFn(numberOfPosts, numberOfposts_ + 1);
           }
         }
@@ -1190,9 +1217,14 @@ export default withSelect((select, props) => {
   // let getAllPost = getEntityRecords("postType", "post", query);
   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
-
   // console.log("all post->", getAllPost);
-  let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
+  let arrayCatePost = {
+    posts: true,
+    category: cate_,
+    tags: tags_,
+    totalPosts:
+      getTotalPost && getTotalPost instanceof Array && getTotalPost.length,
+  };
   if (getAllPost && getAllPost.length) {
     let returnArray = [];
     getAllPost.map((v, index_) => {

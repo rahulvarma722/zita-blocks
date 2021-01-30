@@ -286,7 +286,7 @@
                   strngifyPlus +
                   "</div>";
               }
-              if (totaPageNo > 5) {
+              if (totaPageNo > 5 && totaPageNo > string_fy + 1) {
                 htmlPagination += '<div class="dots pagination" >...</div>';
                 htmlPagination +=
                   '<div class="zita-image-section-np ' +

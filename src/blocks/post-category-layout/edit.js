@@ -1486,9 +1486,6 @@ export default withSelect((select, props) => {
             newPostArray.length < numberOfPosts &&
             numberOfposts_ <= getTotalPost.length
           ) {
-            // console.log("play fn numberOfposts_ -> ", numberOfposts_);
-            // console.log("play fn getTotalPost -> ", getTotalPost);
-            // console.log("play fn newPostArray -> ", newPostArray);
             return returnPostFn(numberOfPosts, numberOfposts_ + 1);
           }
         }

@@ -14,7 +14,7 @@ import {
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { decodeEntities } from "@wordpress/html-entities";
-
+// let blankImage = plugin_url.url + "assets/img/blank-img.png";
 class Edit extends Component {
   constructor(props) {
     super(props);
@@ -136,7 +136,13 @@ class Edit extends Component {
     return retur;
   };
   render() {
-    const { posts, attributes, setAttributes, category } = this.props;
+    const {
+      posts,
+      attributes,
+      setAttributes,
+      category,
+      totalPosts,
+    } = this.props;
     // console.log("post list grid layout ->", this.props);
     let {
       heading,
@@ -144,7 +150,6 @@ class Edit extends Component {
       numberOfPosts,
       thumbnail,
       numberOfColumn,
-      columnLayout,
       date,
       showTag,
       showCate,
@@ -175,7 +180,10 @@ class Edit extends Component {
     return (
       <>
         <InspectorControls>
-          <PanelBody title={__("Block Title", "zita-blocks")} initialOpen={false}>
+          <PanelBody
+            title={__("Block Title", "zita-blocks")}
+            initialOpen={false}
+          >
             <ToggleControl
               label={
                 title_.enable
@@ -285,7 +293,10 @@ class Edit extends Component {
               </>
             )}
           </PanelBody>
-          <PanelBody title={__("Post Layout", "zita-blocks")} initialOpen={false}>
+          <PanelBody
+            title={__("Post Layout", "zita-blocks")}
+            initialOpen={false}
+          >
             <p>
               <strong>{__("Column", "zita-blocks")}</strong>
             </p>
@@ -657,64 +668,83 @@ class Edit extends Component {
               </>
             )}
           </PanelBody>
-          <PanelBody title={__("Next / Previous Button", "zita-blocks")} initialOpen={false}>
-            <ToggleControl
-              label={__("Enable", "zita-blocks")}
-              checked={meta_style_.npEnable}
-              onChange={(e) =>
-                this.updateObj("meta_style", "npEnable", meta_style, e)
-              }
-            />
-            {meta_style_.npEnable && (
-              <>
-                <p>
-                  <strong>{__("Pagination Number", "zita-blocks")}</strong>
-                </p>
-                <ToggleControl
-                  label={__("Enable", "zita-blocks")}
-                  checked={meta_style_.npPagination}
-                  onChange={(e) =>
-                    this.updateObj("meta_style", "npPagination", meta_style, e)
-                  }
-                />
-                <p>
-                  <strong>{__("Font Size", "zita-blocks")}</strong>
-                </p>
-                <RangeControl
-                  value={meta_style_.npBgfontSize}
-                  min={1}
-                  max={30}
-                  onChange={(e) => {
-                    this.updateObj("meta_style", "npBgfontSize", meta_style, e);
-                  }}
-                />
-                <p>
-                  <strong>{__("Color", "zita-blocks")}</strong>
-                </p>
-                <ColorPalette
-                  value={meta_style_.npColor}
-                  onChange={(color) =>
-                    this.updateObj("meta_style", "npColor", meta_style, color)
-                  }
-                />
-                <p>
-                  <strong>{__("Background Color", "zita-blocks")}</strong>
-                </p>
-                <ColorPicker
-                  color={meta_style_.npBgColor}
-                  onChangeComplete={(colorBg) => {
-                    let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                    this.updateObj(
-                      "meta_style",
-                      "npBgColor",
-                      meta_style,
-                      color
-                    );
-                  }}
-                />
-              </>
-            )}
-          </PanelBody>
+          {totalPosts && totalPosts > numberOfPosts && (
+            <PanelBody
+              title={__("Next / Previous Button", "zita-blocks")}
+              initialOpen={false}
+            >
+              <ToggleControl
+                label={__("Enable", "zita-blocks")}
+                checked={meta_style_.npEnable}
+                onChange={(e) =>
+                  this.updateObj("meta_style", "npEnable", meta_style, e)
+                }
+              />
+              {meta_style_.npEnable && (
+                <>
+                  <p>
+                    <strong>{__("Pagination Number", "zita-blocks")}</strong>
+                  </p>
+                  <ToggleControl
+                    label={
+                      meta_style_.npPagination
+                        ? __("Pagination On", "zita-blocks")
+                        : __("Next Previous On", "zita-blocks")
+                    }
+                    checked={meta_style_.npPagination}
+                    onChange={(e) =>
+                      this.updateObj(
+                        "meta_style",
+                        "npPagination",
+                        meta_style,
+                        e
+                      )
+                    }
+                  />
+                  <p>
+                    <strong>{__("Font Size", "zita-blocks")}</strong>
+                  </p>
+                  <RangeControl
+                    value={meta_style_.npBgfontSize}
+                    min={1}
+                    max={30}
+                    onChange={(e) => {
+                      this.updateObj(
+                        "meta_style",
+                        "npBgfontSize",
+                        meta_style,
+                        e
+                      );
+                    }}
+                  />
+                  <p>
+                    <strong>{__("Color", "zita-blocks")}</strong>
+                  </p>
+                  <ColorPalette
+                    value={meta_style_.npColor}
+                    onChange={(color) =>
+                      this.updateObj("meta_style", "npColor", meta_style, color)
+                    }
+                  />
+                  <p>
+                    <strong>{__("Background Color", "zita-blocks")}</strong>
+                  </p>
+                  <ColorPicker
+                    color={meta_style_.npBgColor}
+                    onChangeComplete={(colorBg) => {
+                      let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                      this.updateObj(
+                        "meta_style",
+                        "npBgColor",
+                        meta_style,
+                        color
+                      );
+                    }}
+                  />
+                </>
+              )}
+            </PanelBody>
+          )}
         </InspectorControls>
         {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
           <div
@@ -759,11 +789,7 @@ class Edit extends Component {
                   "getMedia_" in post &&
                   post.getMedia_ &&
                   "guid" in post.getMedia_ ? (
-                  <article
-                    all="ddj"
-                    className="block-post-article"
-                    key={post.id}
-                  >
+                  <article className="block-post-article" key={post.id}>
                     <div className="post-wrapper">
                       <div className="featured-image">
                         <img
@@ -989,7 +1015,9 @@ class Edit extends Component {
                 );
               })}
             </div>
-            {meta_style_.npEnable && (
+            {totalPosts &&
+            totalPosts > numberOfPosts &&
+            meta_style_.npEnable ? (
               <div className="zita-two-post-wrapper-next-prev">
                 {/* npBgfontSize npColor npBgColor */}
                 <div
@@ -1042,6 +1070,8 @@ class Edit extends Component {
                   <i class="fas fa-chevron-right"></i>
                 </div>
               </div>
+            ) : (
+              ""
             )}
           </div>
         ) : (
@@ -1076,15 +1106,15 @@ export default withSelect((select, props) => {
     query2["categories"] = cateCh;
   }
   const { getMedia, getEntityRecords, getAuthors } = select("core");
+  let getTotalPost = getEntityRecords("postType", "post", query2);
   /////////////////////////////////////////////////////////////////////////////
   let getAllPost = [];
   if (thumbnail[0].typeShow == "1") {
-    let getTotalPost = getEntityRecords("postType", "post", query2);
     getAllPost =
       getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
-    // console.log("outer fn ", getTotalPost);
+    console.log("outer fn ", getTotalPost);
     function returnPostFn(numberOfPosts, check = false) {
-      // console.log("inner fn ", getTotalPost);
+      console.log("inner fn ", getTotalPost);
       let numberOfposts_ = check ? check : numberOfPosts;
       let new_query = {
         per_page: numberOfposts_,
@@ -1117,10 +1147,18 @@ export default withSelect((select, props) => {
   } else {
     getAllPost = getEntityRecords("postType", "post", query);
   }
+  // let getAllPost = getEntityRecords("postType", "post", query);
+  console.log("getAllPost", getAllPost);
   ///////////////////////////////////////////////////////////////////////////////
   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
-  let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
+  let arrayCatePost = {
+    posts: true,
+    category: cate_,
+    tags: tags_,
+    totalPosts:
+      getTotalPost && getTotalPost instanceof Array && getTotalPost.length,
+  };
   if (getAllPost && getAllPost.length) {
     let returnArray = [];
     getAllPost.map((v, index_) => {
