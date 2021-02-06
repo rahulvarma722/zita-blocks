@@ -15,3 +15,6 @@ import "./blocks/post-image-layout-three-post";
 import "./blocks/post-image-layout-four-post";
 import "./blocks/post-image-layout-five-post";
 import "./blocks/post-image-layout-six-post";
+// layout block 
+// import "./blocks/block-layout";
+import "./blocks/block-layout-pre";

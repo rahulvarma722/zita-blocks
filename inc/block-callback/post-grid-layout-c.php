@@ -15,7 +15,6 @@ function zita_blocks_post_grid_block($attr)
         if ($postThumbnail == "1") {
             $args['meta_key'] = '_thumbnail_id';
         }
-
         // typeShow
         $query = new WP_Query($args);
         $postHtml = '';

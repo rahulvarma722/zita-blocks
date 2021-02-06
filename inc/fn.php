@@ -20,9 +20,9 @@ function zita_blocks_register_block_fn($blockName, $extraFeature = [])
     register_block_type(
         'zita-blocks/' . $blockName,
         array_merge(array(
-            'editor_script' => 'my-custom-block',
-            'editor_style'  => 'my-custom-block-editor-style',
-            'script'  => 'my-custom-block-script',
+            'editor_script' => 'zita-blocks-editor-secript',
+            'editor_style'  => 'zita-blocks-editor-style',
+            'script'  => 'zita-blocks-script',
             'style'         => 'frontend-style'
         ), $extraFeature)
     );
@@ -53,3 +53,5 @@ include "block-callback/post-image-layout-c.php";
 include "block-callback/post-image-layout-three-post-c.php";
 include "block-callback/post-image-layout-four-post-c.php";
 include "block-callback/post-image-layout-five-post-c.php";
+//block api url function
+include "json/block_layout.php";
