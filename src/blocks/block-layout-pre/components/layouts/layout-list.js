@@ -10,6 +10,8 @@ class Layoutlist extends Component {
   constructor() {
     super();
     this.state = {
+      apiUrl:
+        "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search/",
       templateLoading: true,
       activeCatePage: "all",
       activePricePage: "free",
@@ -30,46 +32,39 @@ class Layoutlist extends Component {
   }
   //   get all blocks first time
   getAllRetrived() {
-    return apiFetch({
-      url:
-        "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search",
-      // url: "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search",
-      method: "GET",
-    })
-      .then((favorite_keys) => {
-        console.log("favorite_keys", favorite_keys);
-        return favorite_keys;
+    let url = this.state.apiUrl;
+    fetch(url)
+      .then((response) => {
+        return response.json();
       })
-      .catch((error) => console.error("api error zita-blocks ", error));
+      .then((json) => {
+        // console.log("json -> ", json);
+        this.setState({ block_templates: json });
+      });
   }
-  //   get all blocks with argument
+  // get all blocks with argument
   getAllTemplatesRetrived(object_parem = {}) {
     const urlParams = new URLSearchParams(object_parem);
-    let putUrl = urlParams && urlParams != "" ? "?" + urlParams : "";
-    let apiUrl =
-      "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search" + putUrl;
-    return apiFetch({
-      url: apiUrl,
-      method: "GET",
-    })
-      .then((favorite_keys) => {
-        console.log("favorite_keys", favorite_keys);
-        return favorite_keys;
+    let putUrl = urlParams && urlParams != "" ? "/?" + urlParams : "";
+    let apiUrl = this.state.apiUrl + putUrl;
+    fetch(apiUrl)
+      .then((response) => {
+        return response.json();
       })
-      .catch((error) => console.error("api error zita-blocks ", error));
+      .then((json) => {
+        this.setState({ block_templates: json });
+      });
   }
   //component did mount
   async componentDidMount() {
-    const allTamplates = await this.getAllRetrived();
-    this.setState({ block_templates: allTamplates });
+    await this.getAllRetrived();
   }
   //choose category,
   async getTemplateChooseCategory(category) {
     this.setState({ templateCategory: category });
-    const allTamplates = await this.getAllTemplatesRetrived({
+    await this.getAllTemplatesRetrived({
       category: category,
     });
-    this.setState({ block_templates: allTamplates });
   }
   //show all data from
   render() {

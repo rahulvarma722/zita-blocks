@@ -266,6 +266,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this);
     _this.state = {
+      apiUrl: "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search/",
       templateLoading: true,
       activeCatePage: "all",
       activePricePage: "free",
@@ -303,33 +304,34 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
   _createClass(Layoutlist, [{
     key: "getAllRetrived",
     value: function getAllRetrived() {
-      return apiFetch({
-        url: "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search",
-        // url: "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search",
-        method: "GET"
-      }).then(function (favorite_keys) {
-        console.log("favorite_keys", favorite_keys);
-        return favorite_keys;
-      }).catch(function (error) {
-        return console.error("api error zita-blocks ", error);
+      var _this2 = this;
+
+      var url = this.state.apiUrl;
+      fetch(url).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        // console.log("json -> ", json);
+        _this2.setState({
+          block_templates: json
+        });
       });
-    } //   get all blocks with argument
+    } // get all blocks with argument
 
   }, {
     key: "getAllTemplatesRetrived",
     value: function getAllTemplatesRetrived() {
+      var _this3 = this;
+
       var object_parem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var urlParams = new URLSearchParams(object_parem);
-      var putUrl = urlParams && urlParams != "" ? "?" + urlParams : "";
-      var apiUrl = "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search" + putUrl;
-      return apiFetch({
-        url: apiUrl,
-        method: "GET"
-      }).then(function (favorite_keys) {
-        console.log("favorite_keys", favorite_keys);
-        return favorite_keys;
-      }).catch(function (error) {
-        return console.error("api error zita-blocks ", error);
+      var putUrl = urlParams && urlParams != "" ? "/?" + urlParams : "";
+      var apiUrl = this.state.apiUrl + putUrl;
+      fetch(apiUrl).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        _this3.setState({
+          block_templates: json
+        });
       });
     } //component did mount
 
@@ -337,7 +339,6 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
     key: "componentDidMount",
     value: function () {
       var _componentDidMount = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var allTamplates;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -346,12 +347,6 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
                 return this.getAllRetrived();
 
               case 2:
-                allTamplates = _context.sent;
-                this.setState({
-                  block_templates: allTamplates
-                });
-
-              case 4:
               case "end":
                 return _context.stop();
             }
@@ -370,7 +365,6 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
     key: "getTemplateChooseCategory",
     value: function () {
       var _getTemplateChooseCategory = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(category) {
-        var allTamplates;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -384,12 +378,6 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
                 });
 
               case 3:
-                allTamplates = _context2.sent;
-                this.setState({
-                  block_templates: allTamplates
-                });
-
-              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -407,7 +395,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this4 = this;
 
       console.log("state props api->", this.state);
       var _this$state = this.state,
@@ -427,7 +415,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
         className: activePricePage == "all" ? "active" : null,
         onClick: function onClick() {
           if (activePricePage != "all") {
-            _this2.setState({
+            _this4.setState({
               activePricePage: "all"
             });
           }
@@ -437,7 +425,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
         className: activePricePage == "free" ? "active" : null,
         onClick: function onClick() {
           if (activePricePage != "free") {
-            _this2.setState({
+            _this4.setState({
               activePricePage: "free"
             });
           }
@@ -447,7 +435,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
         className: activePricePage == "premium" ? "active" : null,
         onClick: function onClick() {
           if (activePricePage != "premium") {
-            _this2.setState({
+            _this4.setState({
               activePricePage: "premium"
             });
           }
@@ -460,11 +448,11 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
         className: activeCatePage == "all" ? "active" : null,
         onClick: function onClick() {
           if (activeCatePage != "all") {
-            _this2.setState({
+            _this4.setState({
               activeCatePage: "all"
             });
 
-            _this2.getTemplateChooseCategory("all");
+            _this4.getTemplateChooseCategory("all");
           }
         }
       }, "all"), block_templates_category.map(function (template_v, template_key) {
@@ -473,11 +461,11 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
           className: activeCatePage == template_key ? "active" : null,
           onClick: function onClick() {
             if (activeCatePage != template_key) {
-              _this2.setState({
+              _this4.setState({
                 activeCatePage: template_key
               });
 
-              _this2.getTemplateChooseCategory(template_v.name);
+              _this4.getTemplateChooseCategory(template_v.name);
             }
           }
         }, template_v.title);
@@ -500,7 +488,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
         }, wp.element.createElement("button", null, "Preview"), wp.element.createElement(Button, {
           className: "zita-blocks-layout-imp-btn",
           onClick: function onClick() {
-            _this2.props.import(template.content);
+            _this4.props.import(template.content);
           }
         }, wp.element.createElement("i", {
           className: "fas fa-download"
