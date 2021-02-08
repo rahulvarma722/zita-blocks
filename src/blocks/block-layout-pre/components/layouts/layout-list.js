@@ -31,10 +31,13 @@ class Layoutlist extends Component {
   //   get all blocks first time
   getAllRetrived() {
     return apiFetch({
-      url: "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search",
+      url:
+        "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search",
+      // url: "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search",
       method: "GET",
     })
       .then((favorite_keys) => {
+        console.log("favorite_keys", favorite_keys);
         return favorite_keys;
       })
       .catch((error) => console.error("api error zita-blocks ", error));
@@ -170,6 +173,7 @@ class Layoutlist extends Component {
                         </div>
                       </div>
                       <div className="template-btn_">
+                        <button>Preview</button>
                         <Button
                           className="zita-blocks-layout-imp-btn"
                           onClick={() => {

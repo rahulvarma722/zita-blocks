@@ -1,3 +1,25 @@
+.zitaBlocksinsertWrap {
+  display: flex;
+  align-items: center;
+  button {
+    color: white;
+    display: flex;
+    align-items: center;
+    background: #ffbf00;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    img {
+      width: 30px;
+      margin-right: 5px;
+      background: white;
+      padding: 4px;
+      border-radius: 13px;
+    }
+  }
+}
 .zita-blocks-layout-modal {
   width: 85%;
   height: 85%;

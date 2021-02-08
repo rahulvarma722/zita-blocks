@@ -304,9 +304,11 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
     key: "getAllRetrived",
     value: function getAllRetrived() {
       return apiFetch({
-        url: "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search",
+        url: "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search",
+        // url: "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search",
         method: "GET"
       }).then(function (favorite_keys) {
+        console.log("favorite_keys", favorite_keys);
         return favorite_keys;
       }).catch(function (error) {
         return console.error("api error zita-blocks ", error);
@@ -495,7 +497,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
           className: "title_"
         }, wp.element.createElement("span", null, template.name))), wp.element.createElement("div", {
           className: "template-btn_"
-        }, wp.element.createElement(Button, {
+        }, wp.element.createElement("button", null, "Preview"), wp.element.createElement(Button, {
           className: "zita-blocks-layout-imp-btn",
           onClick: function onClick() {
             _this2.props.import(template.content);
@@ -665,7 +667,6 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])("zit
   icon: "album",
   category: "zita-category",
   edit: function edit(props) {
-    console.log("zita block prt 2.1", props);
     return wp.element.createElement(_components_edit__WEBPACK_IMPORTED_MODULE_0__["default"], props);
   },
   save: function save() {
@@ -695,16 +696,24 @@ function appendImportButton() {
     return;
   }
 
-  var buttonDiv = document.createElement("div");
-  var html = '<div class="gb-toolbar-insert-layout">';
-  html += "<button id=\"gbLayoutInsertButton\" class=\"components-button components-icon-button\" aria-label=\"".concat(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Insert Layout", "zita-blocks"), "\">");
-  html += "<i class=\"dashicons dashicons-album gb-toolbar-insert-layout-button\"></i> ".concat(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Zita Layouts", "zita-blocks"));
-  html += "</button>";
-  html += "</div>";
-  buttonDiv.innerHTML = html;
-  toolbar.appendChild(buttonDiv);
-  document.getElementById("gbLayoutInsertButton").addEventListener("click", gbInsertLayout);
-  genesisBlocksLayoutButtonAdded = true;
+  setTimeout(function () {
+    if (!document.getElementById("zitaBlocksinsert")) {
+      var buttonDiv = document.createElement("div");
+      buttonDiv.className = "zitaBlocksinsertWrap";
+      var html = "";
+      html += '<button id="zitaBlocksinsert">'; // html += `<i class="dashicons dashicons-album"></i>`;
+      // zita-transparent-img.png
+
+      var imgUrl = plugin_url.url + "assets/img/blocks-image/zita-transparent-img.png";
+      html += '<img src="' + imgUrl + '">';
+      html += "".concat(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Zita Layouts", "zita-blocks"));
+      html += "</button>";
+      buttonDiv.innerHTML = html;
+      toolbar.appendChild(buttonDiv);
+      document.getElementById("zitaBlocksinsert").addEventListener("click", gbInsertLayout);
+      genesisBlocksLayoutButtonAdded = true;
+    }
+  }, 1000);
 }
 /**
  * Add the Layout block on click.

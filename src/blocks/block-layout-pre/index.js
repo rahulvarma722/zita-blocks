@@ -1,5 +1,5 @@
 import Edit from "./components/edit";
-import './editor.scss';
+import "./editor.scss";
 import { __ } from "@wordpress/i18n";
 import { registerBlockType } from "@wordpress/blocks";
 registerBlockType("zita-blocks/zita-blocks-layouts", {
@@ -8,10 +8,7 @@ registerBlockType("zita-blocks/zita-blocks-layouts", {
   icon: "album",
   category: "zita-category",
   edit: (props) => {
-    console.log("zita block prt 2.1", props);
-    return (
-        <Edit {...props} />
-    );
+    return <Edit {...props} />;
   },
   save: () => {
     return null;
@@ -25,7 +22,6 @@ let genesisBlocksLayoutButtonAdded = false;
 wp.data.subscribe(() => {
   appendImportButton();
 });
-
 /**
  * Build the layout inserter button.
  */
@@ -37,24 +33,27 @@ function appendImportButton() {
   if (!toolbar) {
     return;
   }
-  const buttonDiv = document.createElement("div");
-  let html = '<div class="gb-toolbar-insert-layout">';
-  html += `<button id="gbLayoutInsertButton" class="components-button components-icon-button" aria-label="${__(
-    "Insert Layout",
-    "zita-blocks"
-  )}">`;
-  html += `<i class="dashicons dashicons-album gb-toolbar-insert-layout-button"></i> ${__(
-    "Zita Layouts",
-    "zita-blocks"
-  )}`;
-  html += `</button>`;
-  html += "</div>";
-  buttonDiv.innerHTML = html;
-  toolbar.appendChild(buttonDiv);
-  document
-    .getElementById("gbLayoutInsertButton")
-    .addEventListener("click", gbInsertLayout);
-  genesisBlocksLayoutButtonAdded = true;
+  setTimeout(() => {
+    if (!document.getElementById("zitaBlocksinsert")) {
+      const buttonDiv = document.createElement("div");
+      buttonDiv.className = "zitaBlocksinsertWrap";
+      let html = "";
+      html += '<button id="zitaBlocksinsert">';
+      // html += `<i class="dashicons dashicons-album"></i>`;
+      // zita-transparent-img.png
+      let imgUrl =
+        plugin_url.url + "assets/img/blocks-image/zita-transparent-img.png";
+      html += '<img src="' + imgUrl + '">';
+      html += `${__("Zita Layouts", "zita-blocks")}`;
+      html += "</button>";
+      buttonDiv.innerHTML = html;
+      toolbar.appendChild(buttonDiv);
+      document
+        .getElementById("zitaBlocksinsert")
+        .addEventListener("click", gbInsertLayout);
+      genesisBlocksLayoutButtonAdded = true;
+    }
+  }, 1000);
 }
 /**
  * Add the Layout block on click.
