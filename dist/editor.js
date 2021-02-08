@@ -271,7 +271,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
       activeCatePage: "all",
       activePricePage: "free",
       templateCategory: "",
-      templatePrice: "",
+      templatePrice: "all",
       block_templates_category: [{
         name: "cate-1",
         title: "Category 1"
@@ -306,11 +306,10 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
     value: function getAllRetrived() {
       var _this2 = this;
 
-      var url = this.state.apiUrl;
+      var url = this.state.apiUrl + "?initilaize=1";
       fetch(url).then(function (response) {
         return response.json();
       }).then(function (json) {
-        // console.log("json -> ", json);
         _this2.setState({
           block_templates: json
         });
@@ -324,7 +323,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
 
       var object_parem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var urlParams = new URLSearchParams(object_parem);
-      var putUrl = urlParams && urlParams != "" ? "/?" + urlParams : "";
+      var putUrl = urlParams && urlParams != "" ? "?" + urlParams : "";
       var apiUrl = this.state.apiUrl + putUrl;
       fetch(apiUrl).then(function (response) {
         return response.json();
@@ -374,7 +373,8 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
                 });
                 _context2.next = 3;
                 return this.getAllTemplatesRetrived({
-                  category: category
+                  category: category,
+                  price: this.state.templatePrice
                 });
 
               case 3:
@@ -10753,11 +10753,10 @@ var Edit = /*#__PURE__*/function (_Component) {
   var getAllPost = [];
 
   if (thumbnail[0].typeShow == "1") {
-    getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false; // console.log("outer fn ", getTotalPost);
+    getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
 
     function returnPostFn(numberOfPosts) {
       var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      // console.log("inner fn ", getTotalPost);
       var numberOfposts_ = check ? check : numberOfPosts;
       var new_query = {
         per_page: numberOfposts_

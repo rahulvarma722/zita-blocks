@@ -16,7 +16,7 @@ class Layoutlist extends Component {
       activeCatePage: "all",
       activePricePage: "free",
       templateCategory: "",
-      templatePrice: "",
+      templatePrice: "all",
       block_templates_category: [
         { name: "cate-1", title: "Category 1" },
         { name: "cate-2", title: "Category 2" },
@@ -32,20 +32,19 @@ class Layoutlist extends Component {
   }
   //   get all blocks first time
   getAllRetrived() {
-    let url = this.state.apiUrl;
+    let url = this.state.apiUrl + "?initilaize=1";
     fetch(url)
       .then((response) => {
         return response.json();
       })
       .then((json) => {
-        // console.log("json -> ", json);
         this.setState({ block_templates: json });
       });
   }
   // get all blocks with argument
   getAllTemplatesRetrived(object_parem = {}) {
     const urlParams = new URLSearchParams(object_parem);
-    let putUrl = urlParams && urlParams != "" ? "/?" + urlParams : "";
+    let putUrl = urlParams && urlParams != "" ? "?" + urlParams : "";
     let apiUrl = this.state.apiUrl + putUrl;
     fetch(apiUrl)
       .then((response) => {
@@ -64,6 +63,7 @@ class Layoutlist extends Component {
     this.setState({ templateCategory: category });
     await this.getAllTemplatesRetrived({
       category: category,
+      price: this.state.templatePrice,
     });
   }
   //show all data from

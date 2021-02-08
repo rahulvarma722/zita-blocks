@@ -12,14 +12,18 @@ function zita_blocks_layout_url()
 function zita_blocks_layout_url_result(\WP_REST_Request $request)
 {
     $request_params  = $request->get_params();
-    $req_category = isset($request_params['category']) && $request_params['category'] != '' ? $request_params['category'] : false;
+    //first time initilize
+    $firstTimeInit = isset($request_params['category']) && $request_params['category'] != '' ? $request_params['category'] : false;
+    // filtering category 
+    $request_category = isset($request_params['category']) && $request_params['category'] != '' ? $request_params['category'] : false;
     $allTemplates = zita_blocks_layout_file();
     $sendTemplate = [];
+    
     // filter all type of data
-    if ($req_category && $req_category != "all") {
+    if ($request_category && $request_category != "all") {
         foreach ($allTemplates as $template_value) {
             // filter category 
-            if ($template_value['category'] == $req_category) {
+            if ($template_value['category'] == $request_category) {
                 $sendTemplate[] = $template_value;
             }
         }
@@ -29,7 +33,4 @@ function zita_blocks_layout_url_result(\WP_REST_Request $request)
         // send data without filtered
         return $allTemplates;
     }
-    // $layouts = zita_blocks_layout_file();
-    // $layouts = array_merge($layouts, [["category-comes" => $req_category], ["category-comes" => $request_params]]);
-    // return $layouts;
 }
