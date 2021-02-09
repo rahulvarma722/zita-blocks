@@ -143,7 +143,6 @@ class Edit extends Component {
       category,
       totalPosts,
     } = this.props;
-    // console.log("post list grid layout ->", this.props);
     let {
       heading,
       author,
@@ -1112,9 +1111,7 @@ export default withSelect((select, props) => {
   if (thumbnail[0].typeShow == "1") {
     getAllPost =
       getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
-    // console.log("outer fn ", getTotalPost);
     function returnPostFn(numberOfPosts, check = false) {
-      // console.log("inner fn ", getTotalPost);
       let numberOfposts_ = check ? check : numberOfPosts;
       let new_query = {
         per_page: numberOfposts_,
@@ -1148,7 +1145,6 @@ export default withSelect((select, props) => {
     getAllPost = getEntityRecords("postType", "post", query);
   }
   // let getAllPost = getEntityRecords("postType", "post", query);
-  console.log("getAllPost", getAllPost);
   ///////////////////////////////////////////////////////////////////////////////
   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });

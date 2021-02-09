@@ -320,7 +320,6 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
       fetch(url).then(function (response) {
         return response.json();
       }).then(function (json) {
-        // console.log("first time json", json);
         _this2.setState({
           block_templates: json.demos,
           block_templates_category: json.categories
@@ -337,12 +336,9 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
       var urlParams = new URLSearchParams(object_parem);
       var putUrl = urlParams && urlParams != "" ? "?" + urlParams : "";
       var apiUrl = this.state.apiUrl + putUrl;
-      console.log("apiUrl", apiUrl);
       fetch(apiUrl).then(function (response) {
         return response.json();
       }).then(function (json) {
-        console.log("json cate", json);
-
         if ("price_send" in object_parem && json && "categories" in json && "demos" in json) {
           _this3.setState({
             block_templates: json.demos,
@@ -352,8 +348,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
           _this3.setState({
             block_templates: json
           });
-        } else {
-          console.log("no json data found json -> ", json);
+        } else {// console.lo("no json data found json -> ", json);
         }
       });
     } //choose category,
@@ -429,7 +424,6 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
     value: function render() {
       var _this4 = this;
 
-      // console.log("state props api->", this.state);
       var _this$state = this.state,
           block_templates = _this$state.block_templates,
           block_templates_category = _this$state.block_templates_category,
@@ -496,9 +490,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
       }, block_templates && block_templates.length ? wp.element.createElement("div", {
         className: "template-itemes_"
       }, block_templates.map(function (template) {
-        {
-          /* console.log("template", template); */
-        }
+        {}
         return wp.element.createElement("div", null, wp.element.createElement("div", {
           className: "template-content"
         }, wp.element.createElement("div", {
@@ -620,7 +612,6 @@ function LayoutModal(props) {
   var _useDispatch = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__["useDispatch"])("core/block-editor"),
       removeBlock = _useDispatch.removeBlock;
 
-  console.log("modal inside check props", props);
   return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], {
     key: "layout-modal-fragment-" + props.clientId
   }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Button"], {
@@ -1375,8 +1366,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])("zit
       borderRadius: iconBorderRadius + "%",
       width: iconSpace + "px",
       height: iconSpace + "px"
-    } : null; // console.log(borderStyle);
-
+    } : null;
     return wp.element.createElement("div", {
       className: "themehunk-icon-block",
       style: {
@@ -1810,8 +1800,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
           category = _this$props.category,
-          totalPost = _this$props.totalPost; // console.log("two section", this.props);
-      // return <h1>This is Two Column Block</h1>;
+          totalPost = _this$props.totalPost; // return <h1>This is Two Column Block</h1>;
 
       var heading = attributes.heading,
           author = attributes.author,
@@ -1862,9 +1851,7 @@ var Edit = /*#__PURE__*/function (_Component) {
             label: catt.name
           });
         });
-      } // console.log("category", category);
-      // console.log("cateGory", cateGory);
-
+      }
 
       return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Block Title / Navigation",
@@ -2460,12 +2447,10 @@ var Edit = /*#__PURE__*/function (_Component) {
   var getAllPost = [];
 
   if (thumbnail[0].enable) {
-    // console.log("all post out", getTotalPost);
     getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
 
     function returnPostFn(numberOfPosts) {
       var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      // console.log("all post in", getTotalPost);
       var numberOfposts_ = check ? check : numberOfPosts;
       var new_query = {
         per_page: numberOfposts_
@@ -2816,8 +2801,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
           category = _this$props.category,
-          totalPosts = _this$props.totalPosts; // console.log("post list grid layout ->", this.props);
-
+          totalPosts = _this$props.totalPosts;
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
@@ -3436,11 +3420,10 @@ var Edit = /*#__PURE__*/function (_Component) {
   var getAllPost = [];
 
   if (thumbnail[0].typeShow == "1") {
-    getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false; // console.log("outer fn ", getTotalPost);
+    getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
 
     function returnPostFn(numberOfPosts) {
       var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      // console.log("inner fn ", getTotalPost);
       var numberOfposts_ = check ? check : numberOfPosts;
       var new_query = {
         per_page: numberOfposts_
@@ -3469,9 +3452,8 @@ var Edit = /*#__PURE__*/function (_Component) {
   } else {
     getAllPost = getEntityRecords("postType", "post", query);
   } // let getAllPost = getEntityRecords("postType", "post", query);
+  ///////////////////////////////////////////////////////////////////////////////
 
-
-  console.log("getAllPost", getAllPost); ///////////////////////////////////////////////////////////////////////////////
 
   var cate_ = getEntityRecords("taxonomy", "category", {
     per_page: -1
@@ -3866,8 +3848,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category; // console.log("this.props", this.props);
-      // if number of post sum
+          category = _this$props.category; // if number of post sum
 
       if (numberOfPosts == 3 || numberOfPosts == 5) {
         this.setState({
@@ -5007,8 +4988,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category; // console.log("this.props", this.props);
-      // if number of post sum
+          category = _this$props.category; // if number of post sum
       // if (numberOfPosts == 3 || numberOfPosts == 5) {
       //   this.setState({
       //     metaChoose: "primary",
@@ -5662,7 +5642,6 @@ var Edit = /*#__PURE__*/function (_Component) {
       }) : layout_.type == 2 ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
         className: "column-one"
       }, posts.length && "getMedia_" in posts[0] && posts[0].getMedia_ && "guid" in posts[0].getMedia_ && this.returnHtml(posts[0], heading2_, author2_, date2_, meta_style2_, showCate2_, excerpt2_, showTag2_, layout_), wp.element.createElement("div", null, posts.length >= 2 && "getMedia_" in posts[1] && posts[1].getMedia_ && "guid" in posts[1].getMedia_ && posts.map(function (post, in_) {
-        console.log("in_->", in_);
         return in_ != 0 && in_ <= 2 && "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading2_, author2_, date2_, meta_style2_, showCate2_, excerpt2_, showTag2_, layout_);
       }))), wp.element.createElement("div", {
         className: "column-two"
@@ -6148,8 +6127,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category; // console.log("this.props", this.props);
-      // if number of post sum
+          category = _this$props.category; // if number of post sum
 
       if (numberOfPosts == 3 || numberOfPosts == 5) {
         this.setState({
@@ -7183,8 +7161,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category; // console.log("Three post layout", this.props);
-
+          category = _this$props.category;
       var heading = attributes.heading,
           author = attributes.author,
           layout = attributes.layout,
@@ -7320,7 +7297,6 @@ var Edit = /*#__PURE__*/function (_Component) {
       }, wp.element.createElement("p", null, "Choose Layout"), wp.element.createElement("select", {
         value: layout_.type,
         onChange: function onChange(e) {
-          console.log(e.target.value);
           var value_ = parseInt(e.target.value);
 
           _this2.updateObj("layout", "type", layout, value_);
@@ -8333,8 +8309,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category; // console.log("this.props", this.props);
-      // if number of post sum
+          category = _this$props.category; // if number of post sum
 
       if (numberOfPosts == 3 || numberOfPosts == 5) {
         this.setState({
@@ -9164,8 +9139,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           posts = _this$props.posts,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
-          category = _this$props.category; // console.log("this.props", this.props);
-      // if number of post sum
+          category = _this$props.category; // if number of post sum
 
       if (numberOfPosts == 3 || numberOfPosts == 5) {
         this.setState({
@@ -10138,8 +10112,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes,
           category = _this$props.category,
-          totalPosts = _this$props.totalPosts; // console.log("post list grid layout ->", this.props);
-
+          totalPosts = _this$props.totalPosts;
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
@@ -10824,8 +10797,7 @@ var Edit = /*#__PURE__*/function (_Component) {
   });
   var tags_ = getEntityRecords("taxonomy", "post_tag", {
     per_page: -1
-  }); // console.log("all post->", getAllPost);
-
+  });
   var arrayCatePost = {
     posts: true,
     category: cate_,
@@ -12380,11 +12352,10 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])("zit
       }
     }, priceMonthPrice)), wp.element.createElement("div", {
       className: "link_button"
-    }, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["RichText"].Content, {
-      tagName: "a",
-      value: linkTxt,
+    }, wp.element.createElement("a", {
+      href: linkLink,
       style: link_style
-    })), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["RichText"].Content, {
+    }, linkTxt)), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["RichText"].Content, {
       className: "bottom-text",
       tagName: "p",
       value: bottomTxt,
@@ -12445,7 +12416,6 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])("zit
     }
   },
   edit: function edit(props) {
-    // console.log(props);
     var className = props.className,
         attributes = props.attributes,
         setAttributes = props.setAttributes;
@@ -12507,8 +12477,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])("zit
     // const { attributes } = props;
     var _props$attributes = props.attributes,
         columns = _props$attributes.columns,
-        fullWidth = _props$attributes.fullWidth; // console.log(columns);
-
+        fullWidth = _props$attributes.fullWidth;
     return wp.element.createElement("div", {
       className: "".concat(fullWidth, " column-count-").concat(columns, " ")
     }, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__["InnerBlocks"].Content, null));
@@ -14261,9 +14230,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           sliderSetting = _this$props$attribute.sliderSetting;
       var thisState = this.state;
       var stateIndex = thisState.selectedSlide;
-      var currentSlide = slides[stateIndex]; // console.log(slides);
-      // console.log(currentSlide);
-
+      var currentSlide = slides[stateIndex];
       var activeTwoBtnState = thisState.twoBtn;
       var triggerActive = thisState.trigger;
       var buttonOneStyle = {
@@ -15389,7 +15356,6 @@ var Edit = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "authorFn", function (author) {
-      // console.log("wordkinggg");
       var retur = {};
 
       if ("authors" in _this.props) {
@@ -15447,8 +15413,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes = _this$props.setAttributes,
           posts = _this$props.posts,
           category = _this$props.category;
-      var slideIndex = this.state.slideIndex; // console.log("zita slider this.props", this.props);
-
+      var slideIndex = this.state.slideIndex;
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
@@ -16173,7 +16138,6 @@ var Edit = /*#__PURE__*/function (_Component) {
     }
   } ///////////////////////////////////////////////////////////////////////////////
   // let getAllPost = getEntityRecords("postType", "post", query);
-  // console.log("getAllPost", getAllPost);
 
 
   var cate_ = getEntityRecords("taxonomy", "category", {

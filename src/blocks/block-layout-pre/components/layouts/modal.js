@@ -15,7 +15,6 @@ function LayoutModal(props) {
   //   preventing to close first time
   const [checkFirst, setcheckFirst] = useState(false);
   const { removeBlock } = useDispatch("core/block-editor");
-  console.log("modal inside check props", props);
   return (
     <>
       <Fragment key={"layout-modal-fragment-" + props.clientId}>

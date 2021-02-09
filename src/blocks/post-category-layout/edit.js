@@ -408,7 +408,6 @@ class Edit extends Component {
       category,
       totalPost,
     } = this.props;
-    // console.log("two section", this.props);
     // return <h1>This is Two Column Block</h1>;
     let {
       heading,
@@ -459,8 +458,6 @@ class Edit extends Component {
         });
       });
     }
-    // console.log("category", category);
-    // console.log("cateGory", cateGory);
     return (
       <>
         <InspectorControls>
@@ -1457,11 +1454,9 @@ export default withSelect((select, props) => {
   /////////////////////////////////////////////////////////////////////////////
   let getAllPost = [];
   if (thumbnail[0].enable) {
-    // console.log("all post out", getTotalPost);
     getAllPost =
       getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
     function returnPostFn(numberOfPosts, check = false) {
-      // console.log("all post in", getTotalPost);
       let numberOfposts_ = check ? check : numberOfPosts;
       let new_query = {
         per_page: numberOfposts_,

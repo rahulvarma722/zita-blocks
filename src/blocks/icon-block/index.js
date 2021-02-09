@@ -602,7 +602,6 @@ registerBlockType("zita-blocks/icon-block", {
           height: iconSpace + "px",
         }
       : null;
-    // console.log(borderStyle);
 
     return (
       <div

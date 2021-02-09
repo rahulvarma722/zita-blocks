@@ -97,7 +97,7 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/icon-block/style.scss");
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
- // console.log('yes i mfront js');
+
 
 /***/ }),
 
@@ -123,42 +123,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/post-category-layout/style.scss");
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
- // import axios from "axios";
-// console.log("dafhoiahfiohf");
-// let stateCheck__ = setInterval(() => {
-//   if (document.readyState === "complete") {
-//     clearInterval(stateCheck__);
-//     const nextBtn = document.querySelector(".zita-post-NP-btn");
-//     // console.log(nextBtn);
-//     nextBtn.addEventListener("click", (e) => {
-//       console.log("wordking");
-//       console.log("zita_ajax_url", zita_ajax_url);
-//       axios.post(zita_ajax_url.admin_ajax, { action: "hello", param: "one" }).then(res=>{
-//           console.log(res);
-//       });
-//     });
-//     // nextBtn.addEventListener("click", (e) => {
-//     //   console.log("wordking");
-//     //   console.log("zita_ajax_url", zita_ajax_url);
-//     //   var request = new XMLHttpRequest();
-//     //   // Instantiating the request object
-//     //   request.open("POST", zita_ajax_url.admin_ajax, true);
-//     //   // Defining event listener for readystatechange event
-//     //   request.onreadystatechange = function () {
-//     //     // Check if the request is compete and was successful
-//     //     if (this.readyState === 4 && this.status === 200) {
-//     //       // Inserting the response from server into an HTML element
-//     //       //   document.getElementById("result").innerHTML = this.responseText;
-//     //       console.log("response", this.responseText);
-//     //     }
-//     //   };
-//     //   // Sending the request to the server
-//     //   request.send("action=hello&name=binny");
-//     // });
-//     // ready
-//   }
-// }, 100);
-// console.log("dafshoihafihfihf");
+
 
 /***/ }),
 
@@ -340,7 +305,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/pricing-table/style.scss");
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
- // console.log("8085 hello ready to say hi front");
+
 
 /***/ }),
 
@@ -722,7 +687,7 @@ var stateCheck = setInterval(function () {
           var next = containerClosest.querySelector(".zita-slider-bullet-next-prev.next");
           var indicator = containerClosest.querySelector(".zita-slider-bullet-trigger");
           var indicatorActive = void 0,
-              indiCatorStyle = void 0; // console.log(indicator.children);
+              indiCatorStyle = void 0;
 
           if (indicator) {
             indicatorActive = indicator.getAttribute("active-color");
@@ -804,8 +769,7 @@ var stateCheck = setInterval(function () {
                 indicator[index].querySelector("span").style.backgroundColor = indicatorActive;
               }
             }
-          } // console.log(sliderDelay);
-
+          }
 
           sliderDelay = parseInt(sliderDelay);
 

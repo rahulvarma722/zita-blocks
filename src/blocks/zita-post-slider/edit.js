@@ -119,7 +119,6 @@ class Edit extends Component {
   };
   // autor
   authorFn = (author) => {
-    // console.log("wordkinggg");
     let retur = {};
     if ("authors" in this.props) {
       this.props.authors.map((authorDetail) => {
@@ -151,7 +150,6 @@ class Edit extends Component {
   render() {
     let { attributes, setAttributes, posts, category } = this.props;
     let { slideIndex } = this.state;
-    // console.log("zita slider this.props", this.props);
     let {
       heading,
       author,
@@ -1278,7 +1276,6 @@ export default withSelect((select, props) => {
   ///////////////////////////////////////////////////////////////////////////////
   // let getAllPost = getEntityRecords("postType", "post", query);
 
-  // console.log("getAllPost", getAllPost);
   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
   let arrayCatePost = { posts: true, category: cate_, tags: tags_ };

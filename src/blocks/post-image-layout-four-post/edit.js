@@ -140,7 +140,6 @@ class Edit extends Component {
   render() {
     // ++++++++++++++===============
     const { posts, attributes, setAttributes, category } = this.props;
-    // console.log("this.props", this.props);
     // if number of post sum
     // if (numberOfPosts == 3 || numberOfPosts == 5) {
     //   this.setState({
@@ -1224,7 +1223,6 @@ class Edit extends Component {
                         posts[1].getMedia_ &&
                         "guid" in posts[1].getMedia_ &&
                         posts.map((post, in_) => {
-                          console.log("in_->", in_);
                           return (
                             in_ != 0 &&
                             in_ <= 2 &&

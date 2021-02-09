@@ -974,7 +974,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
             <InputControl
               value={linkLink}
               onChange={(nextValue) => {
-                setAttributes({ linkLink: nextValue })
+                setAttributes({ linkLink: nextValue });
               }}
             />
           </div>
@@ -1443,7 +1443,12 @@ registerBlockType("zita-blocks/pricing-table-table", {
             </div>
           )}
           <div className="link_button">
-            <RichText.Content tagName="a" value={linkTxt} style={link_style} />
+            {/* <RichText.Content
+              tagName="a"
+              value={linkTxt}
+              style={link_style}
+            /> */}
+            <a href={linkLink} style={link_style}>{linkTxt}</a>
           </div>
           <RichText.Content
             className="bottom-text"

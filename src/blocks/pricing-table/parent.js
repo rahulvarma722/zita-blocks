@@ -29,7 +29,6 @@ registerBlockType("zita-blocks/pricing-table-section", {
     },
   },
   edit: (props) => {
-    // console.log(props);
 
     const { className, attributes, setAttributes } = props;
     const { columns, fullWidth } = attributes;
@@ -100,7 +99,6 @@ registerBlockType("zita-blocks/pricing-table-section", {
   save: (props) => {
     // const { attributes } = props;
     const { columns, fullWidth } = props.attributes;
-    // console.log(columns);
     return (
       <div className={`${fullWidth} column-count-${columns} `}>
         <InnerBlocks.Content />

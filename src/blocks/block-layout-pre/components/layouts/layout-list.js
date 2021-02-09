@@ -31,7 +31,6 @@ class Layoutlist extends Component {
         return response.json();
       })
       .then((json) => {
-        // console.log("first time json", json);
         this.setState({
           block_templates: json.demos,
           block_templates_category: json.categories,
@@ -43,13 +42,11 @@ class Layoutlist extends Component {
     const urlParams = new URLSearchParams(object_parem);
     let putUrl = urlParams && urlParams != "" ? "?" + urlParams : "";
     let apiUrl = this.state.apiUrl + putUrl;
-    console.log("apiUrl", apiUrl);
     fetch(apiUrl)
       .then((response) => {
         return response.json();
       })
       .then((json) => {
-        console.log("json cate", json);
         if (
           "price_send" in object_parem &&
           json &&
@@ -63,7 +60,7 @@ class Layoutlist extends Component {
         } else if (json) {
           this.setState({ block_templates: json });
         } else {
-          console.log("no json data found json -> ", json);
+          // console.lo("no json data found json -> ", json);
         }
       });
   }
@@ -87,7 +84,6 @@ class Layoutlist extends Component {
 
   //show all data from
   render() {
-    // console.log("state props api->", this.state);
     const {
       block_templates,
       block_templates_category,
@@ -191,7 +187,6 @@ class Layoutlist extends Component {
               <div className="template-itemes_">
                 {block_templates.map((template) => {
                   {
-                    /* console.log("template", template); */
                   }
                   return (
                     <div>

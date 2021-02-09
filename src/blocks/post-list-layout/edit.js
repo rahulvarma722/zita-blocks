@@ -142,7 +142,6 @@ class Edit extends Component {
       category,
       totalPosts,
     } = this.props;
-    // console.log("post list grid layout ->", this.props);
     let {
       heading,
       author,
@@ -1215,7 +1214,6 @@ export default withSelect((select, props) => {
   // let getAllPost = getEntityRecords("postType", "post", query);
   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
-  // console.log("all post->", getAllPost);
   let arrayCatePost = {
     posts: true,
     category: cate_,

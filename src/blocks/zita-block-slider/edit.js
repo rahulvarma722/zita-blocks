@@ -115,10 +115,6 @@ class Edit extends Component {
     const thisState = this.state;
     const stateIndex = thisState.selectedSlide;
     const currentSlide = slides[stateIndex];
-
-    // console.log(slides);
-    // console.log(currentSlide);
-
     const activeTwoBtnState = thisState.twoBtn;
     let triggerActive = thisState.trigger;
     let buttonOneStyle = {

@@ -40,7 +40,6 @@ registerBlockType( 'wpgt-blocks/test-block', {
     },
 	edit: ( props ) => {
             const {attributes,setAttributes,className} = props;
-            // console.log( attributes );
             const { title,body,titleColor,backgroundImage,overlayColor,overlayOpacity } = attributes;
 
         function onChangeTitle(newTitle){

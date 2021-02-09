@@ -224,7 +224,6 @@ let stateCheck = setInterval(() => {
           ".zita-slider-bullet-trigger"
         );
         let indicatorActive, indiCatorStyle;
-        // console.log(indicator.children);
         if (indicator) {
           indicatorActive = indicator.getAttribute("active-color");
           indiCatorStyle = indicator.getAttribute("childStyle");
@@ -295,7 +294,6 @@ let stateCheck = setInterval(() => {
             }
           }
         }
-        // console.log(sliderDelay);
         sliderDelay = parseInt(sliderDelay);
         if (sliderDelay > 0) {
           sliderDelay = sliderDelay * 1000;

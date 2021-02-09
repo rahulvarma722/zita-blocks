@@ -140,7 +140,6 @@ class Edit extends Component {
   render() {
     // ++++++++++++++===============
     const { posts, attributes, setAttributes, category } = this.props;
-    // console.log("Three post layout", this.props);
 
     let {
       heading,
@@ -329,7 +328,6 @@ class Edit extends Component {
               <select
                 value={layout_.type}
                 onChange={(e) => {
-                  console.log(e.target.value);
                   let value_ = parseInt(e.target.value);
                   this.updateObj("layout", "type", layout, value_);
                 }}
