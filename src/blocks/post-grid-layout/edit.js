@@ -1112,9 +1112,9 @@ export default withSelect((select, props) => {
   if (thumbnail[0].typeShow == "1") {
     getAllPost =
       getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
-    console.log("outer fn ", getTotalPost);
+    // console.log("outer fn ", getTotalPost);
     function returnPostFn(numberOfPosts, check = false) {
-      console.log("inner fn ", getTotalPost);
+      // console.log("inner fn ", getTotalPost);
       let numberOfposts_ = check ? check : numberOfPosts;
       let new_query = {
         per_page: numberOfposts_,

@@ -10,25 +10,18 @@ class Layoutlist extends Component {
   constructor() {
     super();
     this.state = {
-      apiUrl:
-        "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search/",
+      apiUrl: "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search/",
+      // "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search/",
       templateLoading: true,
-      activeCatePage: "all",
-      activePricePage: "free",
-      templateCategory: "",
+      templateCategory: "all",
       templatePrice: "all",
-      block_templates_category: [
-        { name: "cate-1", title: "Category 1" },
-        { name: "cate-2", title: "Category 2" },
-        { name: "cate-3", title: "Category 3" },
-        { name: "cate-4", title: "Category 4" },
-        { name: "cate-6", title: "Category 6" },
-        { name: "cate-7", title: "Category 7" },
-        { name: "cate-8", title: "Category 8" },
-      ],
+      block_templates_category: [],
       block_templates: [],
-      // blockPage: 1,
     };
+  }
+  //component did mount
+  async componentDidMount() {
+    await this.getAllRetrived();
   }
   //   get all blocks first time
   getAllRetrived() {
@@ -38,42 +31,68 @@ class Layoutlist extends Component {
         return response.json();
       })
       .then((json) => {
-        this.setState({ block_templates: json });
+        // console.log("first time json", json);
+        this.setState({
+          block_templates: json.demos,
+          block_templates_category: json.categories,
+        });
       });
   }
   // get all blocks with argument
-  getAllTemplatesRetrived(object_parem = {}) {
+  getDemosByFilter(object_parem = {}) {
     const urlParams = new URLSearchParams(object_parem);
     let putUrl = urlParams && urlParams != "" ? "?" + urlParams : "";
     let apiUrl = this.state.apiUrl + putUrl;
+    console.log("apiUrl", apiUrl);
     fetch(apiUrl)
       .then((response) => {
         return response.json();
       })
       .then((json) => {
-        this.setState({ block_templates: json });
+        console.log("json cate", json);
+        if (
+          "price_send" in object_parem &&
+          json &&
+          "categories" in json &&
+          "demos" in json
+        ) {
+          this.setState({
+            block_templates: json.demos,
+            block_templates_category: json.categories,
+          });
+        } else if (json) {
+          this.setState({ block_templates: json });
+        } else {
+          console.log("no json data found json -> ", json);
+        }
       });
   }
-  //component did mount
-  async componentDidMount() {
-    await this.getAllRetrived();
-  }
   //choose category,
-  async getTemplateChooseCategory(category) {
+  async getDemosFilterCategory(category) {
     this.setState({ templateCategory: category });
-    await this.getAllTemplatesRetrived({
+    await this.getDemosByFilter({
       category: category,
       price: this.state.templatePrice,
     });
   }
+  //choose price,
+  async getDemosFilterPrice(price) {
+    this.setState({ templateCategory: "all", templatePrice: price });
+    await this.getDemosByFilter({
+      category: "all",
+      price: price,
+      price_send: "1",
+    });
+  }
+
   //show all data from
   render() {
-    console.log("state props api->", this.state);
+    // console.log("state props api->", this.state);
     const {
       block_templates,
       block_templates_category,
-      activeCatePage,
-      activePricePage,
+      templateCategory,
+      templatePrice,
     } = this.state;
     const { clientId } = this.props;
     return (
@@ -83,10 +102,10 @@ class Layoutlist extends Component {
             <nav>
               <span
                 key={"all"}
-                className={activePricePage == "all" ? "active" : null}
+                className={templatePrice == "all" ? "active" : null}
                 onClick={() => {
-                  if (activePricePage != "all") {
-                    this.setState({ activePricePage: "all" });
+                  if (templatePrice != "all") {
+                    this.getDemosFilterPrice("all");
                   }
                 }}
               >
@@ -94,10 +113,10 @@ class Layoutlist extends Component {
               </span>
               <span
                 key={"free"}
-                className={activePricePage == "free" ? "active" : null}
+                className={templatePrice == "free" ? "active" : null}
                 onClick={() => {
-                  if (activePricePage != "free") {
-                    this.setState({ activePricePage: "free" });
+                  if (templatePrice != "free") {
+                    this.getDemosFilterPrice("free");
                   }
                 }}
               >
@@ -105,10 +124,10 @@ class Layoutlist extends Component {
               </span>
               <span
                 key={"premium"}
-                className={activePricePage == "premium" ? "active" : null}
+                className={templatePrice == "premium" ? "active" : null}
                 onClick={() => {
-                  if (activePricePage != "premium") {
-                    this.setState({ activePricePage: "premium" });
+                  if (templatePrice != "premium") {
+                    this.getDemosFilterPrice("premium");
                   }
                 }}
               >
@@ -119,35 +138,41 @@ class Layoutlist extends Component {
               <div>
                 <span>CATEGORIES</span>
                 <div className="list_">
-                  <span
-                    className={activeCatePage == "all" ? "active" : null}
-                    onClick={() => {
-                      if (activeCatePage != "all") {
-                        this.setState({ activeCatePage: "all" });
-                        this.getTemplateChooseCategory("all");
-                      }
-                    }}
-                  >
-                    all
-                  </span>
-                  {block_templates_category.map((template_v, template_key) => {
-                    return (
+                  {block_templates_category.length ? (
+                    <>
                       <span
-                        key={template_key}
-                        className={
-                          activeCatePage == template_key ? "active" : null
-                        }
+                        className={templateCategory == "all" ? "active" : null}
                         onClick={() => {
-                          if (activeCatePage != template_key) {
-                            this.setState({ activeCatePage: template_key });
-                            this.getTemplateChooseCategory(template_v.name);
+                          if (templateCategory != "all") {
+                            this.getDemosFilterCategory("all");
                           }
                         }}
                       >
-                        {template_v.title}
+                        all
                       </span>
-                    );
-                  })}
+                      {block_templates_category.map((template_v) => {
+                        return (
+                          <span
+                            key={template_v.id}
+                            className={
+                              templateCategory == template_v.id
+                                ? "active"
+                                : null
+                            }
+                            onClick={() => {
+                              if (templateCategory != template_v.id) {
+                                this.getDemosFilterCategory(template_v.id);
+                              }
+                            }}
+                          >
+                            {template_v.title}
+                          </span>
+                        );
+                      })}
+                    </>
+                  ) : (
+                    <h1>loading</h1>
+                  )}
                 </div>
               </div>
             </div>
@@ -156,7 +181,9 @@ class Layoutlist extends Component {
             {block_templates && block_templates.length ? (
               <div className="template-itemes_">
                 {block_templates.map((template) => {
-                  console.log("template", template);
+                  {
+                    /* console.log("template", template); */
+                  }
                   return (
                     <div>
                       <div className="template-content">

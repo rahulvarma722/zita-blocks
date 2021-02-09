@@ -84,7 +84,6 @@ function zita_blocks_script()
 	wp_enqueue_script('custom-query', ZITA_BLOCKS_PLUGIN_URL . 'src/custom-query.js', array('jquery'), 2);
 	wp_localize_script('custom-query', 'zita_ajax_url', array('admin_ajax' => admin_url('admin-ajax.php')));
 	// wp_enqueue_scripts( 'wp-utils' );
-
 }
 add_action('admin_enqueue_scripts', 'zita_blocks_script');
 add_action('wp_enqueue_scripts', 'zita_blocks_script', 15);

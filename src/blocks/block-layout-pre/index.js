@@ -39,8 +39,6 @@ function appendImportButton() {
       buttonDiv.className = "zitaBlocksinsertWrap";
       let html = "";
       html += '<button id="zitaBlocksinsert">';
-      // html += `<i class="dashicons dashicons-album"></i>`;
-      // zita-transparent-img.png
       let imgUrl =
         plugin_url.url + "assets/img/blocks-image/zita-transparent-img.png";
       html += '<img src="' + imgUrl + '">';

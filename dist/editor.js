@@ -266,75 +266,19 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this);
     _this.state = {
-      apiUrl: "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search/",
+      apiUrl: "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search/",
+      // "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search/",
       templateLoading: true,
-      activeCatePage: "all",
-      activePricePage: "free",
-      templateCategory: "",
+      templateCategory: "all",
       templatePrice: "all",
-      block_templates_category: [{
-        name: "cate-1",
-        title: "Category 1"
-      }, {
-        name: "cate-2",
-        title: "Category 2"
-      }, {
-        name: "cate-3",
-        title: "Category 3"
-      }, {
-        name: "cate-4",
-        title: "Category 4"
-      }, {
-        name: "cate-6",
-        title: "Category 6"
-      }, {
-        name: "cate-7",
-        title: "Category 7"
-      }, {
-        name: "cate-8",
-        title: "Category 8"
-      }],
-      block_templates: [] // blockPage: 1,
-
+      block_templates_category: [],
+      block_templates: []
     };
     return _this;
-  } //   get all blocks first time
+  } //component did mount
 
 
   _createClass(Layoutlist, [{
-    key: "getAllRetrived",
-    value: function getAllRetrived() {
-      var _this2 = this;
-
-      var url = this.state.apiUrl + "?initilaize=1";
-      fetch(url).then(function (response) {
-        return response.json();
-      }).then(function (json) {
-        _this2.setState({
-          block_templates: json
-        });
-      });
-    } // get all blocks with argument
-
-  }, {
-    key: "getAllTemplatesRetrived",
-    value: function getAllTemplatesRetrived() {
-      var _this3 = this;
-
-      var object_parem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var urlParams = new URLSearchParams(object_parem);
-      var putUrl = urlParams && urlParams != "" ? "?" + urlParams : "";
-      var apiUrl = this.state.apiUrl + putUrl;
-      fetch(apiUrl).then(function (response) {
-        return response.json();
-      }).then(function (json) {
-        _this3.setState({
-          block_templates: json
-        });
-      });
-    } //component did mount
-
-  }, {
     key: "componentDidMount",
     value: function () {
       var _componentDidMount = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -358,12 +302,59 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
       }
 
       return componentDidMount;
-    }() //choose category,
+    }() //   get all blocks first time
 
   }, {
-    key: "getTemplateChooseCategory",
+    key: "getAllRetrived",
+    value: function getAllRetrived() {
+      var _this2 = this;
+
+      var url = this.state.apiUrl + "?initilaize=1";
+      fetch(url).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        // console.log("first time json", json);
+        _this2.setState({
+          block_templates: json.demos,
+          block_templates_category: json.categories
+        });
+      });
+    } // get all blocks with argument
+
+  }, {
+    key: "getDemosByFilter",
+    value: function getDemosByFilter() {
+      var _this3 = this;
+
+      var object_parem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var urlParams = new URLSearchParams(object_parem);
+      var putUrl = urlParams && urlParams != "" ? "?" + urlParams : "";
+      var apiUrl = this.state.apiUrl + putUrl;
+      console.log("apiUrl", apiUrl);
+      fetch(apiUrl).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        console.log("json cate", json);
+
+        if ("price_send" in object_parem && json && "categories" in json && "demos" in json) {
+          _this3.setState({
+            block_templates: json.demos,
+            block_templates_category: json.categories
+          });
+        } else if (json) {
+          _this3.setState({
+            block_templates: json
+          });
+        } else {
+          console.log("no json data found json -> ", json);
+        }
+      });
+    } //choose category,
+
+  }, {
+    key: "getDemosFilterCategory",
     value: function () {
-      var _getTemplateChooseCategory = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(category) {
+      var _getDemosFilterCategory = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(category) {
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -372,7 +363,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
                   templateCategory: category
                 });
                 _context2.next = 3;
-                return this.getAllTemplatesRetrived({
+                return this.getDemosByFilter({
                   category: category,
                   price: this.state.templatePrice
                 });
@@ -385,11 +376,45 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
         }, _callee2, this);
       }));
 
-      function getTemplateChooseCategory(_x) {
-        return _getTemplateChooseCategory.apply(this, arguments);
+      function getDemosFilterCategory(_x) {
+        return _getDemosFilterCategory.apply(this, arguments);
       }
 
-      return getTemplateChooseCategory;
+      return getDemosFilterCategory;
+    }() //choose price,
+
+  }, {
+    key: "getDemosFilterPrice",
+    value: function () {
+      var _getDemosFilterPrice = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(price) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                this.setState({
+                  templateCategory: "all",
+                  templatePrice: price
+                });
+                _context3.next = 3;
+                return this.getDemosByFilter({
+                  category: "all",
+                  price: price,
+                  price_send: "1"
+                });
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function getDemosFilterPrice(_x2) {
+        return _getDemosFilterPrice.apply(this, arguments);
+      }
+
+      return getDemosFilterPrice;
     }() //show all data from
 
   }, {
@@ -397,12 +422,12 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
     value: function render() {
       var _this4 = this;
 
-      console.log("state props api->", this.state);
+      // console.log("state props api->", this.state);
       var _this$state = this.state,
           block_templates = _this$state.block_templates,
           block_templates_category = _this$state.block_templates_category,
-          activeCatePage = _this$state.activeCatePage,
-          activePricePage = _this$state.activePricePage;
+          templateCategory = _this$state.templateCategory,
+          templatePrice = _this$state.templatePrice;
       var clientId = this.props.clientId;
       return wp.element.createElement("div", {
         className: "zita-blocks-layout-wrapper"
@@ -412,69 +437,57 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
         className: "left-section_"
       }, wp.element.createElement("nav", null, wp.element.createElement("span", {
         key: "all",
-        className: activePricePage == "all" ? "active" : null,
+        className: templatePrice == "all" ? "active" : null,
         onClick: function onClick() {
-          if (activePricePage != "all") {
-            _this4.setState({
-              activePricePage: "all"
-            });
+          if (templatePrice != "all") {
+            _this4.getDemosFilterPrice("all");
           }
         }
       }, "All"), wp.element.createElement("span", {
         key: "free",
-        className: activePricePage == "free" ? "active" : null,
+        className: templatePrice == "free" ? "active" : null,
         onClick: function onClick() {
-          if (activePricePage != "free") {
-            _this4.setState({
-              activePricePage: "free"
-            });
+          if (templatePrice != "free") {
+            _this4.getDemosFilterPrice("free");
           }
         }
       }, "Free"), wp.element.createElement("span", {
         key: "premium",
-        className: activePricePage == "premium" ? "active" : null,
+        className: templatePrice == "premium" ? "active" : null,
         onClick: function onClick() {
-          if (activePricePage != "premium") {
-            _this4.setState({
-              activePricePage: "premium"
-            });
+          if (templatePrice != "premium") {
+            _this4.getDemosFilterPrice("premium");
           }
         }
       }, "Premium")), wp.element.createElement("div", {
         className: "cate-container-"
       }, wp.element.createElement("div", null, wp.element.createElement("span", null, "CATEGORIES"), wp.element.createElement("div", {
         className: "list_"
-      }, wp.element.createElement("span", {
-        className: activeCatePage == "all" ? "active" : null,
+      }, block_templates_category.length ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("span", {
+        className: templateCategory == "all" ? "active" : null,
         onClick: function onClick() {
-          if (activeCatePage != "all") {
-            _this4.setState({
-              activeCatePage: "all"
-            });
-
-            _this4.getTemplateChooseCategory("all");
+          if (templateCategory != "all") {
+            _this4.getDemosFilterCategory("all");
           }
         }
-      }, "all"), block_templates_category.map(function (template_v, template_key) {
+      }, "all"), block_templates_category.map(function (template_v) {
         return wp.element.createElement("span", {
-          key: template_key,
-          className: activeCatePage == template_key ? "active" : null,
+          key: template_v.id,
+          className: templateCategory == template_v.id ? "active" : null,
           onClick: function onClick() {
-            if (activeCatePage != template_key) {
-              _this4.setState({
-                activeCatePage: template_key
-              });
-
-              _this4.getTemplateChooseCategory(template_v.name);
+            if (templateCategory != template_v.id) {
+              _this4.getDemosFilterCategory(template_v.id);
             }
           }
         }, template_v.title);
-      }))))), wp.element.createElement("div", {
+      })) : wp.element.createElement("h1", null, "loading"))))), wp.element.createElement("div", {
         className: "main-section_"
       }, block_templates && block_templates.length ? wp.element.createElement("div", {
         className: "template-itemes_"
       }, block_templates.map(function (template) {
-        console.log("template", template);
+        {
+          /* console.log("template", template); */
+        }
         return wp.element.createElement("div", null, wp.element.createElement("div", {
           className: "template-content"
         }, wp.element.createElement("div", {
@@ -689,9 +702,7 @@ function appendImportButton() {
       var buttonDiv = document.createElement("div");
       buttonDiv.className = "zitaBlocksinsertWrap";
       var html = "";
-      html += '<button id="zitaBlocksinsert">'; // html += `<i class="dashicons dashicons-album"></i>`;
-      // zita-transparent-img.png
-
+      html += '<button id="zitaBlocksinsert">';
       var imgUrl = plugin_url.url + "assets/img/blocks-image/zita-transparent-img.png";
       html += '<img src="' + imgUrl + '">';
       html += "".concat(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Zita Layouts", "zita-blocks"));
@@ -3404,12 +3415,11 @@ var Edit = /*#__PURE__*/function (_Component) {
   var getAllPost = [];
 
   if (thumbnail[0].typeShow == "1") {
-    getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
-    console.log("outer fn ", getTotalPost);
+    getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false; // console.log("outer fn ", getTotalPost);
 
     function returnPostFn(numberOfPosts) {
       var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      console.log("inner fn ", getTotalPost);
+      // console.log("inner fn ", getTotalPost);
       var numberOfposts_ = check ? check : numberOfPosts;
       var new_query = {
         per_page: numberOfposts_
