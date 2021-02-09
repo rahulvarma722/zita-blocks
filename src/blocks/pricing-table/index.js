@@ -9,7 +9,6 @@ import {
 } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
 import { useState, useRef, useEffect } from "@wordpress/element";
-import { URLInputButton, URLInput, URLPopover } from "@wordpress/block-editor";
 import {
   PanelBody,
   RangeControl,
@@ -960,7 +959,6 @@ registerBlockType("zita-blocks/pricing-table-table", {
           )}
 
           <p className="block-inside">{__("Button Link", "zita-blocks")}</p>
-          {/* URLInputButton, URLInput, URLPopover */}
           <div className="zita-blocks-linkbtn">
             <ToggleControl
               label={
@@ -1197,6 +1195,7 @@ registerBlockType("zita-blocks/pricing-table-table", {
             <RichText
               key="editable"
               tagName="a"
+              // target={linkTarget ? "_blank" : null}
               placeholder={__("Click Me", "zita-blocks")}
               value={linkTxt}
               onChange={(e) => setAttributes({ linkTxt: e })}
@@ -1443,12 +1442,13 @@ registerBlockType("zita-blocks/pricing-table-table", {
             </div>
           )}
           <div className="link_button">
-            {/* <RichText.Content
+            <RichText.Content
               tagName="a"
+              href={linkLink}
+              // target={linkTarget ? "_blank" : null}
               value={linkTxt}
               style={link_style}
-            /> */}
-            <a href={linkLink} style={link_style}>{linkTxt}</a>
+            />
           </div>
           <RichText.Content
             className="bottom-text"

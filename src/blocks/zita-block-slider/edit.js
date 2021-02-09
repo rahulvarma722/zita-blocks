@@ -9,6 +9,7 @@ import {
   RangeControl,
   ColorPicker,
   ToggleControl,
+  __experimentalInputControl as InputControl,
 } from "@wordpress/components";
 import { Component } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
@@ -576,6 +577,25 @@ class Edit extends Component {
                   this.updateSlides(e, activeTwoBtnState, "fontSize")
                 }
               />
+              <div className="zita-blocks-linkbtn">
+                <ToggleControl
+                  label={
+                    currentSlide[activeTwoBtnState].target
+                      ? __("Open New Tab", "zita-blocks")
+                      : __("Open Same Tab", "zita-blocks")
+                  }
+                  checked={currentSlide[activeTwoBtnState].target}
+                  onChange={(e) =>
+                    this.updateSlides(e, activeTwoBtnState, "target")
+                  }
+                />
+                <InputControl
+                  value={currentSlide[activeTwoBtnState].link}
+                  onChange={(nextValue) => {
+                    this.updateSlides(nextValue, activeTwoBtnState, "link");
+                  }}
+                />
+              </div>
               <p>{__("Color", "zita-blocks")}</p>
               <ColorPalette
                 value={currentSlide[activeTwoBtnState].color}
@@ -618,7 +638,9 @@ class Edit extends Component {
               </p>
               <ToggleControl
                 label={
-                  currentSlide[activeTwoBtnState].border ? __("Disable", "zita-blocks") : __("Enable", "zita-blocks")
+                  currentSlide[activeTwoBtnState].border
+                    ? __("Disable", "zita-blocks")
+                    : __("Enable", "zita-blocks")
                 }
                 checked={currentSlide[activeTwoBtnState].border}
                 onChange={(e) =>
@@ -812,7 +834,10 @@ class Edit extends Component {
                                   <RichText
                                     key="editable"
                                     tagName="a"
-                                    placeholder={__("Button One", "zita-blocks")}
+                                    placeholder={__(
+                                      "Button One",
+                                      "zita-blocks"
+                                    )}
                                     value={val.buttoneOne.text}
                                     onChange={(e) =>
                                       this.updateSlides(e, "buttoneOne", "text")

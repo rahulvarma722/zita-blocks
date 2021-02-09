@@ -10952,7 +10952,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
 var attrS = {
   headingTxt: {
     type: "string",
@@ -12125,7 +12124,8 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])("zit
       className: "link_button"
     }, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["RichText"], {
       key: "editable",
-      tagName: "a",
+      tagName: "a" // target={linkTarget ? "_blank" : null}
+      ,
       placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Click Me", "zita-blocks"),
       value: linkTxt,
       onChange: function onChange(e) {
@@ -12352,10 +12352,13 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])("zit
       }
     }, priceMonthPrice)), wp.element.createElement("div", {
       className: "link_button"
-    }, wp.element.createElement("a", {
-      href: linkLink,
+    }, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["RichText"].Content, {
+      tagName: "a",
+      href: linkLink // target={linkTarget ? "_blank" : null}
+      ,
+      value: linkTxt,
       style: link_style
-    }, linkTxt)), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["RichText"].Content, {
+    })), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["RichText"].Content, {
       className: "bottom-text",
       tagName: "p",
       value: bottomTxt,
@@ -14545,7 +14548,20 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(e) {
           return _this2.updateSlides(e, activeTwoBtnState, "fontSize");
         }
-      }), wp.element.createElement("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])("Color", "zita-blocks")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
+      }), wp.element.createElement("div", {
+        className: "zita-blocks-linkbtn"
+      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["ToggleControl"], {
+        label: currentSlide[activeTwoBtnState].target ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])("Open New Tab", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])("Open Same Tab", "zita-blocks"),
+        checked: currentSlide[activeTwoBtnState].target,
+        onChange: function onChange(e) {
+          return _this2.updateSlides(e, activeTwoBtnState, "target");
+        }
+      }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["__experimentalInputControl"], {
+        value: currentSlide[activeTwoBtnState].link,
+        onChange: function onChange(nextValue) {
+          _this2.updateSlides(nextValue, activeTwoBtnState, "link");
+        }
+      })), wp.element.createElement("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])("Color", "zita-blocks")), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__["ColorPalette"], {
         value: currentSlide[activeTwoBtnState].color,
         onChange: function onChange(color) {
           return _this2.updateSlides(color, activeTwoBtnState, "color");
@@ -15074,12 +15090,12 @@ var elementLiSlide = function elementLiSlide(val, index_) {
     className: "button-container"
   }, val.buttoneOne.enable && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["RichText"].Content, {
     tagName: "a",
-    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])("Button One", "zita-blocks"),
+    href: val.buttoneOne.link,
     value: val.buttoneOne.text,
     style: buttonOneStyle
   })), val.buttoneTwo.enable && wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["RichText"].Content, {
     tagName: "a",
-    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])("Button One", "zita-blocks"),
+    href: val.buttoneTwo.link,
     value: val.buttoneTwo.text,
     style: buttonTwoStyle
   }))))))));
@@ -15111,6 +15127,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])("zit
   example: function example() {},
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   save: function save(props) {
+    console.log("props", props);
     var _props$attributes = props.attributes,
         slides = _props$attributes.slides,
         sliderSetting = _props$attributes.sliderSetting;

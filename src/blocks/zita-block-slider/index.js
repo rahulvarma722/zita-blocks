@@ -301,13 +301,12 @@ let elementLiSlide = (val, index_, clone = false) => {
                     color: val.text.color,
                   }}
                 />
-
                 <div className="button-container">
                   {val.buttoneOne.enable && (
                     <>
                       <RichText.Content
                         tagName="a"
-                        placeholder={__("Button One", "zita-blocks")}
+                        href={val.buttoneOne.link}
                         value={val.buttoneOne.text}
                         style={buttonOneStyle}
                       />
@@ -316,7 +315,7 @@ let elementLiSlide = (val, index_, clone = false) => {
                   {val.buttoneTwo.enable && (
                     <RichText.Content
                       tagName="a"
-                      placeholder={__("Button One", "zita-blocks")}
+                      href={val.buttoneTwo.link}
                       value={val.buttoneTwo.text}
                       style={buttonTwoStyle}
                     />
@@ -353,6 +352,7 @@ registerBlockType("zita-blocks/slide", {
   example: () => {},
   edit: Edit,
   save: (props) => {
+    console.log("props", props);
     let { slides, sliderSetting } = props.attributes;
     sliderSetting = sliderSetting[0];
     let leftRightStyle = {
@@ -425,17 +425,9 @@ registerBlockType("zita-blocks/slide", {
             className={`zita-slider-ul-slides ${sliderSetting.sliderEffect}`}
             sliderSetting={sliderSettingJson}
           >
-            {/* {sliderSetting.sliderEffect == "slideEffect" &&
-              elementLiSlide(
-                slides[slides.length - 1],
-                slides.length - 1,
-                "clone_ last_"
-              )} */}
             {slides.map((val, index_) => {
               return elementLiSlide(val, index_);
             })}
-            {/* {sliderSetting.sliderEffect == "slideEffect" &&
-              elementLiSlide(slides[0], 0, "clone_ first_")} */}
           </ul>
         </div>
       </div>
