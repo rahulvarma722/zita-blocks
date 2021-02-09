@@ -1,4 +1,6 @@
 <?php
+//write demos price free,premium
+//and include category to appear in front 
 function zita_blocks_layout_file()
 {
     $zita_demos = array(

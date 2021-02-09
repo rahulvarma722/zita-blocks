@@ -11,9 +11,9 @@ import LayoutModal from "./layouts/modal";
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
-const { Placeholder } = wp.components;
-const { Component, Fragment } = wp.element;
+import { __ } from "@wordpress/i18n";
+import { Component, Fragment } from "@wordpress/element";
+import { Placeholder } from "@wordpress/components";
 
 export default class Edit extends Component {
   constructor(props) {

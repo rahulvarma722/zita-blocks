@@ -125,6 +125,12 @@ var icons_ = ["fas fa-ad", "fas fa-address-book", "fas fa-address-card", "fas fa
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Edit; });
 /* harmony import */ var _layouts_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layouts/modal */ "./src/blocks/block-layout-pre/components/layouts/modal.js");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -160,11 +166,9 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
  * WordPress dependencies.
  */
 
-var __ = wp.i18n.__;
-var Placeholder = wp.components.Placeholder;
-var _wp$element = wp.element,
-    Component = _wp$element.Component,
-    Fragment = _wp$element.Fragment;
+
+
+
 
 var Edit = /*#__PURE__*/function (_Component) {
   _inherits(Edit, _Component);
@@ -186,12 +190,12 @@ var Edit = /*#__PURE__*/function (_Component) {
           clientId = _this$props.clientId;
       /* Placeholder with layout modal */
 
-      return [wp.element.createElement(Fragment, {
+      return [wp.element.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], {
         key: clientId
-      }, wp.element.createElement(Placeholder, {
+      }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Placeholder"], {
         key: "placeholder",
-        label: __("Layout Selector", "zita-blocks"),
-        instructions: __("Launch the layout library to browse pre-designed sections.", "zita-blocks"),
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Layout Selector", "zita-blocks"),
+        instructions: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Launch the layout library to browse pre-designed sections.", "zita-blocks"),
         className: "gb-layout-selector-placeholder",
         icon: "layout"
       }, wp.element.createElement(_layouts_modal__WEBPACK_IMPORTED_MODULE_0__["default"], {
@@ -201,7 +205,7 @@ var Edit = /*#__PURE__*/function (_Component) {
   }]);
 
   return Edit;
-}(Component);
+}(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Component"]);
 
 
 
@@ -216,6 +220,14 @@ var Edit = /*#__PURE__*/function (_Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -242,17 +254,12 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var Component = wp.element.Component;
-var _wp = wp,
-    apiFetch = _wp.apiFetch;
-var _wp$data = wp.data,
-    useDispatch = _wp$data.useDispatch,
-    withSelect = _wp$data.withSelect,
-    withDispatch = _wp$data.withDispatch;
 var compose = wp.compose.compose;
-var Button = wp.components.Button;
 var rawHandler = wp.blocks.rawHandler;
-var __ = wp.i18n.__;
+
+
+
+
 
 var Layoutlist = /*#__PURE__*/function (_Component) {
   _inherits(Layoutlist, _Component);
@@ -443,7 +450,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
             _this4.getDemosFilterPrice("all");
           }
         }
-      }, "All"), wp.element.createElement("span", {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("All", "zita-blocks")), wp.element.createElement("span", {
         key: "free",
         className: templatePrice == "free" ? "active" : null,
         onClick: function onClick() {
@@ -451,7 +458,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
             _this4.getDemosFilterPrice("free");
           }
         }
-      }, "Free"), wp.element.createElement("span", {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Free", "zita-blocks")), wp.element.createElement("span", {
         key: "premium",
         className: templatePrice == "premium" ? "active" : null,
         onClick: function onClick() {
@@ -459,9 +466,9 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
             _this4.getDemosFilterPrice("premium");
           }
         }
-      }, "Premium")), wp.element.createElement("div", {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Premium", "zita-blocks"))), wp.element.createElement("div", {
         className: "cate-container-"
-      }, wp.element.createElement("div", null, wp.element.createElement("span", null, "CATEGORIES"), wp.element.createElement("div", {
+      }, wp.element.createElement("div", null, wp.element.createElement("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("CATEGORIES", "zita-blocks")), wp.element.createElement("div", {
         className: "list_"
       }, block_templates_category.length ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("span", {
         className: templateCategory == "all" ? "active" : null,
@@ -470,7 +477,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
             _this4.getDemosFilterCategory("all");
           }
         }
-      }, "all"), block_templates_category.map(function (template_v) {
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("all", "zita-blocks")), block_templates_category.map(function (template_v) {
         return wp.element.createElement("span", {
           key: template_v.id,
           className: templateCategory == template_v.id ? "active" : null,
@@ -479,8 +486,12 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
               _this4.getDemosFilterCategory(template_v.id);
             }
           }
-        }, template_v.title);
-      })) : wp.element.createElement("h1", null, "loading"))))), wp.element.createElement("div", {
+        }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])(template_v.title, "zita-blocks"));
+      })) : wp.element.createElement("div", null, wp.element.createElement("div", {
+        className: "post-loader"
+      }, wp.element.createElement("div", {
+        className: "active linear-bubble zita-block-loader"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Categories Loading...", "zita-blocks"), wp.element.createElement("div", null, wp.element.createElement("span", null))))))))), wp.element.createElement("div", {
         className: "main-section_"
       }, block_templates && block_templates.length ? wp.element.createElement("div", {
         className: "template-itemes_"
@@ -498,23 +509,29 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
           className: "title_"
         }, wp.element.createElement("span", null, template.name))), wp.element.createElement("div", {
           className: "template-btn_"
-        }, wp.element.createElement("button", null, "Preview"), wp.element.createElement(Button, {
+        }, wp.element.createElement("button", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Preview", "zita-blocks")), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["Button"], {
           className: "zita-blocks-layout-imp-btn",
           onClick: function onClick() {
             _this4.props.import(template.content);
           }
         }, wp.element.createElement("i", {
           className: "fas fa-download"
-        }), wp.element.createElement("span", null, "import"))));
-      })) : wp.element.createElement("div", null, wp.element.createElement("h1", null, "Zita Loading Template........")))));
+        }), wp.element.createElement("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("import", "zita-blocks")))));
+      })) : wp.element.createElement("div", {
+        className: "template-loader"
+      }, wp.element.createElement("div", {
+        className: "post-loader"
+      }, wp.element.createElement("div", {
+        className: "active linear-bubble zita-block-loader"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Templates Loading...", "zita-blocks"), wp.element.createElement("div", null, wp.element.createElement("span", null))))))));
     }
   }]);
 
   return Layoutlist;
-}(Component); // export default Layoutlist;
+}(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["Component"]); // export default Layoutlist;
 
 
-/* harmony default export */ __webpack_exports__["default"] = (compose(withSelect(function (select, _ref) {
+/* harmony default export */ __webpack_exports__["default"] = (compose(Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__["withSelect"])(function (select, _ref) {
   var clientId = _ref.clientId;
 
   var _select = select("core/block-editor"),
@@ -528,7 +545,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
     block: block,
     canUserUseUnfilteredHTML: canUserUseUnfilteredHTML()
   };
-}), withDispatch(function (dispatch, _ref2) {
+}), Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__["withDispatch"])(function (dispatch, _ref2) {
   var block = _ref2.block,
       canUserUseUnfilteredHTML = _ref2.canUserUseUnfilteredHTML;
   return {
@@ -554,6 +571,14 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_list__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layout-list */ "./src/blocks/block-layout-pre/components/layouts/layout-list.js");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -574,45 +599,41 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
  * WordPress dependencies.
  */
 
-var __ = wp.i18n.__;
-var _wp$element = wp.element,
-    Fragment = _wp$element.Fragment,
-    useState = _wp$element.useState;
-var _wp$components = wp.components,
-    Button = _wp$components.Button,
-    Modal = _wp$components.Modal;
-var useDispatch = wp.data.useDispatch;
+
+
+
+
 
 function LayoutModal(props) {
   //   const [currentTab, setCurrentTab] = useState("gb-layout-tab-sections");
-  var _useState = useState(true),
+  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useState"])(true),
       _useState2 = _slicedToArray(_useState, 2),
       modalOpen = _useState2[0],
       setModalOpen = _useState2[1]; //   preventing to close first time
 
 
-  var _useState3 = useState(false),
+  var _useState3 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useState"])(false),
       _useState4 = _slicedToArray(_useState3, 2),
       checkFirst = _useState4[0],
       setcheckFirst = _useState4[1];
 
-  var _useDispatch = useDispatch("core/block-editor"),
+  var _useDispatch = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__["useDispatch"])("core/block-editor"),
       removeBlock = _useDispatch.removeBlock;
 
   console.log("modal inside check props", props);
-  return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(Fragment, {
+  return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], {
     key: "layout-modal-fragment-" + props.clientId
-  }, wp.element.createElement(Button, {
+  }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Button"], {
     key: "layout-modal-library-button-" + props.clientId,
     isPrimary: true,
     className: "gb-layout-modal-button",
     onClick: function onClick() {
       setModalOpen(true);
     }
-  }, __("Zita Layout Library", "zita-blocks")), modalOpen ? wp.element.createElement(Modal, {
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Zita Layout Library", "zita-blocks")), modalOpen ? wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Modal"], {
     key: "layout-modal-modal-component-" + props.clientId,
     className: "zita-blocks-layout-modal",
-    title: __("zita Layout Selector", "zita-blocks"),
+    title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Zita Blocks Templates", "zita-blocks"),
     shouldCloseOnClickOutside: true,
     onRequestClose: function onRequestClose() {
       if (checkFirst) {

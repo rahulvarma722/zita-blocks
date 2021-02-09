@@ -1,10 +1,9 @@
-const { Component } = wp.element;
-const { apiFetch } = wp;
-const { useDispatch, withSelect, withDispatch } = wp.data;
 const { compose } = wp.compose;
-const { Button } = wp.components;
 const { rawHandler } = wp.blocks;
-const { __ } = wp.i18n;
+import { __ } from "@wordpress/i18n";
+import { Component } from "@wordpress/element";
+import { Button } from "@wordpress/components";
+import { withSelect, withDispatch } from "@wordpress/data";
 
 class Layoutlist extends Component {
   constructor() {
@@ -109,7 +108,7 @@ class Layoutlist extends Component {
                   }
                 }}
               >
-                All
+                {__("All", "zita-blocks")}
               </span>
               <span
                 key={"free"}
@@ -120,7 +119,7 @@ class Layoutlist extends Component {
                   }
                 }}
               >
-                Free
+                {__("Free", "zita-blocks")}
               </span>
               <span
                 key={"premium"}
@@ -131,12 +130,12 @@ class Layoutlist extends Component {
                   }
                 }}
               >
-                Premium
+                {__("Premium", "zita-blocks")}
               </span>
             </nav>
             <div className="cate-container-">
               <div>
-                <span>CATEGORIES</span>
+                <span>{__("CATEGORIES", "zita-blocks")}</span>
                 <div className="list_">
                   {block_templates_category.length ? (
                     <>
@@ -148,7 +147,7 @@ class Layoutlist extends Component {
                           }
                         }}
                       >
-                        all
+                        {__("all", "zita-blocks")}
                       </span>
                       {block_templates_category.map((template_v) => {
                         return (
@@ -165,13 +164,22 @@ class Layoutlist extends Component {
                               }
                             }}
                           >
-                            {template_v.title}
+                            {__(template_v.title, "zita-blocks")}
                           </span>
                         );
                       })}
                     </>
                   ) : (
-                    <h1>loading</h1>
+                    <div>
+                      <div className="post-loader">
+                        <div className="active linear-bubble zita-block-loader">
+                          {__("Categories Loading...", "zita-blocks")}
+                          <div>
+                            <span></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>
@@ -195,7 +203,7 @@ class Layoutlist extends Component {
                         </div>
                       </div>
                       <div className="template-btn_">
-                        <button>Preview</button>
+                        <button>{__("Preview", "zita-blocks")}</button>
                         <Button
                           className="zita-blocks-layout-imp-btn"
                           onClick={() => {
@@ -203,7 +211,7 @@ class Layoutlist extends Component {
                           }}
                         >
                           <i className="fas fa-download"></i>
-                          <span>import</span>
+                          <span>{__("import", "zita-blocks")}</span>
                         </Button>
                       </div>
                     </div>
@@ -211,8 +219,15 @@ class Layoutlist extends Component {
                 })}
               </div>
             ) : (
-              <div>
-                <h1>Zita Loading Template........</h1>
+              <div className="template-loader">
+                <div className="post-loader">
+                  <div className="active linear-bubble zita-block-loader">
+                    {__("Templates Loading...", "zita-blocks")}
+                    <div>
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>

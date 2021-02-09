@@ -1473,6 +1473,9 @@
 .zita-blocks-layout-modal .components-modal__content {
   padding: 0;
 }
+.zita-blocks-layout-modal .components-modal__content .components-modal__header-heading-container {
+  justify-content: center;
+}
 .zita-blocks-layout-modal .components-modal__header {
   margin: 0;
 }
@@ -1521,6 +1524,11 @@
 .zita-blocks-layout-modal .zita-blocks-layout-wrapper .container_ .main-section_ {
   width: 78%;
   /* background: yellow; */
+}
+.zita-blocks-layout-modal .zita-blocks-layout-wrapper .container_ .main-section_ .template-loader {
+  min-height: 289px;
+  display: flex;
+  /* background: red; */
 }
 .zita-blocks-layout-modal .zita-blocks-layout-wrapper .container_ .main-section_ .template-itemes_ {
   display: flex;

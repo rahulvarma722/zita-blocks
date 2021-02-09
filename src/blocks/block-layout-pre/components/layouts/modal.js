@@ -5,10 +5,10 @@
  * WordPress dependencies.
  */
 import Layoutlist from "./layout-list";
-const { __ } = wp.i18n;
-const { Fragment, useState } = wp.element;
-const { Button, Modal } = wp.components;
-const { useDispatch } = wp.data;
+import { __ } from "@wordpress/i18n";
+import { Fragment, useState } from "@wordpress/element";
+import { Button, Modal } from "@wordpress/components";
+import { useDispatch } from "@wordpress/data";
 function LayoutModal(props) {
   //   const [currentTab, setCurrentTab] = useState("gb-layout-tab-sections");
   const [modalOpen, setModalOpen] = useState(true);
@@ -34,7 +34,7 @@ function LayoutModal(props) {
           <Modal
             key={"layout-modal-modal-component-" + props.clientId}
             className="zita-blocks-layout-modal"
-            title={__("zita Layout Selector", "zita-blocks")}
+            title={__("Zita Blocks Templates", "zita-blocks")}
             shouldCloseOnClickOutside={true}
             onRequestClose={() => {
               if (checkFirst) {
@@ -45,9 +45,6 @@ function LayoutModal(props) {
               }
             }}
           >
-          {/* <Modal.aria.labelledby>
-            <h1>hello</h1>
-          </Modal.aria.labelledby> */}
             <Layoutlist clientId={props.clientId} />
           </Modal>
         ) : null}

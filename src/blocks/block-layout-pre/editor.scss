@@ -26,6 +26,9 @@
   overflow: hidden;
   .components-modal__content {
     padding: 0;
+    .components-modal__header-heading-container{
+      justify-content: center;
+    }
   }
   .components-modal__header {
     margin: 0;
@@ -77,6 +80,11 @@
       .main-section_ {
         width: 78%;
         /* background: yellow; */
+        .template-loader{
+          min-height: 289px;
+          display: flex;
+          /* background: red; */
+        }
         .template-itemes_ {
           display: flex;
           flex-wrap: wrap;
