@@ -9,8 +9,9 @@ class Layoutlist extends Component {
   constructor() {
     super();
     this.state = {
-      apiUrl: "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search/",
-      // "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search/",
+      // apiUrl: "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search/",
+      apiUrl:
+        "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search/",
       templateLoading: true,
       templateCategory: "all",
       templatePrice: "all",

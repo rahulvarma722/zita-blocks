@@ -221,7 +221,7 @@
   align-items: center;
   width: 95%;
   p {
-    margin: 0!important;
+    margin: 0 !important;
   }
 }
 .block-inside {
@@ -230,4 +230,13 @@
   border-bottom: 1px solid #eaeaea;
   padding-bottom: 5px;
   color: #6f6e6e;
+}
+.zita-blocks-linkbtn {
+  .block-editor-url-input {
+    margin:0;
+    input {
+      width: 100%;
+      border: 1px solid #2a7cba;
+    }
+  }
 }

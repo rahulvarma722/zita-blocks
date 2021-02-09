@@ -412,6 +412,14 @@
   padding-bottom: 5px;
   color: #6f6e6e;
 }
+
+.zita-blocks-linkbtn .block-editor-url-input {
+  margin: 0;
+}
+.zita-blocks-linkbtn .block-editor-url-input input {
+  width: 100%;
+  border: 1px solid #2a7cba;
+}
 .thk-progress-bar-wrapper .zita-linear-progress-bar .txt-section {
   display: flex;
   align-items: center;

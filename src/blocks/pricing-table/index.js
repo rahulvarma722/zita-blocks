@@ -8,13 +8,14 @@ import {
   ColorPalette,
 } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
-
 import { useState, useRef, useEffect } from "@wordpress/element";
+import { URLInputButton, URLInput, URLPopover } from "@wordpress/block-editor";
 import {
   PanelBody,
   RangeControl,
   ColorPicker,
   ToggleControl,
+  __experimentalInputControl as InputControl,
 } from "@wordpress/components";
 const attrS = {
   headingTxt: {
@@ -958,6 +959,25 @@ registerBlockType("zita-blocks/pricing-table-table", {
             </div>
           )}
 
+          <p className="block-inside">{__("Button Link", "zita-blocks")}</p>
+          {/* URLInputButton, URLInput, URLPopover */}
+          <div className="zita-blocks-linkbtn">
+            <ToggleControl
+              label={
+                linkTarget
+                  ? __("Open New Tab", "zita-blocks")
+                  : __("Open Same Tab", "zita-blocks")
+              }
+              checked={linkTarget}
+              onChange={(e) => setAttributes({ linkTarget: e })}
+            />
+            <InputControl
+              value={linkLink}
+              onChange={(nextValue) => {
+                setAttributes({ linkLink: nextValue })
+              }}
+            />
+          </div>
           <p className="block-inside">{__("Small Text", "zita-blocks")}</p>
           <RangeControl
             label={__("Font Size", "zita-blocks")}

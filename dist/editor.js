@@ -273,8 +273,8 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this);
     _this.state = {
-      apiUrl: "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search/",
-      // "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search/",
+      // apiUrl: "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search/",
+      apiUrl: "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search/",
       templateLoading: true,
       templateCategory: "all",
       templatePrice: "all",
@@ -10980,6 +10980,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var attrS = {
   headingTxt: {
     type: "string",
@@ -11919,6 +11920,25 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])("zit
       onChange: function onChange(color) {
         return setAttributes({
           linkBorderColor: color
+        });
+      }
+    })), wp.element.createElement("p", {
+      className: "block-inside"
+    }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Button Link", "zita-blocks")), wp.element.createElement("div", {
+      className: "zita-blocks-linkbtn"
+    }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["ToggleControl"], {
+      label: linkTarget ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Open New Tab", "zita-blocks") : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Open Same Tab", "zita-blocks"),
+      checked: linkTarget,
+      onChange: function onChange(e) {
+        return setAttributes({
+          linkTarget: e
+        });
+      }
+    }), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["__experimentalInputControl"], {
+      value: linkLink,
+      onChange: function onChange(nextValue) {
+        setAttributes({
+          linkLink: nextValue
         });
       }
     })), wp.element.createElement("p", {
