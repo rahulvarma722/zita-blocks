@@ -352,7 +352,7 @@ registerBlockType("zita-blocks/slide", {
   example: () => {},
   edit: Edit,
   save: (props) => {
-    console.log("props", props);
+    // console.log("props", props);
     let { slides, sliderSetting } = props.attributes;
     sliderSetting = sliderSetting[0];
     let leftRightStyle = {

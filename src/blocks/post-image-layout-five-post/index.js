@@ -2,7 +2,7 @@ import "./editor.scss";
 import { registerBlockType } from "@wordpress/blocks";
 import Edit from "./edit";
 registerBlockType("zita-blocks/zita-post-section-five-post", {
-  title: "Post Image Layout Five Post",
+  title: "Post Image Layout Five",
   icon: "tagcloud",
   category: "zita-category",
   getEditWrapperProps(attributes) {

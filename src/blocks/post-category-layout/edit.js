@@ -14,6 +14,7 @@ import {
 } from "@wordpress/components";
 import { decodeEntities } from "@wordpress/html-entities";
 import { __ } from "@wordpress/i18n";
+const { apiFetch } = wp;
 
 class Edit extends Component {
   constructor(props) {
@@ -24,7 +25,90 @@ class Edit extends Component {
       heading: "primary",
       thumbnail: "primary",
       blockTitle: "title",
+      // pages state from post
+      posts: [],
+      category: [],
+      totalPost: null,
     };
+  }
+  postDataInit(data = {}) {
+    let sendData = data;
+    return apiFetch({
+      path: "/zita-blocks-post-api/v3/posts/",
+      method: "POST",
+      data: sendData,
+    })
+      .then((postsData) => {
+        return postsData;
+      })
+      .catch((error) => console.error(error));
+  }
+  async firstTimeInit() {
+    let { numberOfPosts, postCategories } = this.props.attributes;
+    let sendData = {
+      initialize: 1,
+      numberOfPosts: numberOfPosts,
+      featured_image: 1,
+    };
+    // choose category
+    if (postCategories) {
+      sendData["postCategories"] = postCategories.join(",");
+    }
+    console.log("sendData", sendData);
+    let postData = await this.postDataInit(sendData);
+    if (postData) {
+      // all posts
+      if ("posts" in postData && postData.posts) {
+        let posts_ = postData.posts;
+        this.setState({ posts: posts_ });
+      }
+      //all categories
+      if ("category" in postData && postData.category) {
+        let category_ = postData.category;
+        this.setState({ category: category_ });
+      }
+      //total post
+      if ("totalPost" in postData && postData.totalPost) {
+        let totalPost_ = postData.totalPost;
+        this.setState({ totalPost: totalPost_ });
+      }
+    }
+  }
+  async filterPostInit(data_ = {}) {
+    let argData = data_;
+    //number of post
+    if (!("numberOfPosts" in argData)) {
+      argData["numberOfPosts"] = this.props.attributes.numberOfPosts;
+    }
+    // choose category
+    let categoryIes =
+      "postCategories" in argData
+        ? argData.postCategories
+        : this.props.attributes.postCategories;
+    if (categoryIes) {
+      argData["postCategories"] = categoryIes.join(",");
+    }
+    // featured image
+    argData["featured_image"] = 1;
+    let postData = await this.postDataInit(argData);
+    // console.log("post data filter -> ", postData);
+    if (postData) {
+      // all posts
+      if ("posts" in postData && postData.posts) {
+        let posts_ = postData.posts;
+        this.setState({ posts: posts_ });
+      }
+      //total post
+      if ("totalPost" in postData && postData.totalPost) {
+        let totalPost_ = postData.totalPost;
+        this.setState({ totalPost: totalPost_ });
+      }
+    }
+  }
+  // rest api call
+  componentDidMount() {
+    this.firstTimeInit();
+    console.log("component call");
   }
   updateObj = (parent_key, child_key, initialValue, value_) => {
     let newNewValue = [...initialValue];
@@ -32,31 +116,6 @@ class Edit extends Component {
     let setAttr_ = {};
     setAttr_[parent_key] = newNewValue;
     this.props.setAttributes(setAttr_);
-  };
-  dateFormate = (date) => {
-    let date_ = date.split("T")[0];
-    let dateObj = new Date(date_);
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    let dateArr =
-      monthNames[dateObj.getMonth()] +
-      " " +
-      dateObj.getDate() +
-      ", " +
-      dateObj.getFullYear();
-    return <RichText.Content tag="span" value={dateArr} />;
   };
   excerptWords = (words, words_) => {
     words_ = decodeEntities(words_);
@@ -68,79 +127,31 @@ class Edit extends Component {
     return words_;
   };
   showCateFn = (categories, cate_) => {
-    let returR = [];
-    if ("category" in this.props && this.props.category && categories.length) {
-      let countCate = cate_.count;
-      let postCate_ = this.props.attributes.postCategories;
-      if (postCate_.length) {
-        postCate_.map((ev) => {
-          let MkInt = parseInt(ev);
-          if (categories.includes(MkInt)) categories.unshift(MkInt);
-        });
-      }
-      categories = [...new Set(categories)];
-      categories.forEach((cate) => {
-        if (returR.length == countCate) {
-          return;
-        }
-        this.props.category.forEach((searchCate) => {
-          if (cate == searchCate.id) {
-            returR.push(searchCate.name);
-            return;
-          }
-        });
-      });
-    }
-    if (returR.length) {
-      // let getCateStyle = this.props.attributes.showCate;
+    if (categories && categories instanceof Array && categories.length > 0) {
       let putCateStyle = { fontSize: cate_.fontSize + "px" };
       if (cate_.customColor) {
         putCateStyle["color"] = cate_.color;
         putCateStyle["backgroundColor"] = cate_.backgroundColor;
       }
-      return returR.map((returnH) => (
-        <span style={putCateStyle}>{returnH}</span>
+      let countCate = cate_.count;
+      categories.splice(countCate);
+      return categories.map((returnH) => (
+        <span style={putCateStyle}>{returnH.name}</span>
       ));
     }
   };
   showTagsFn = (tags_, tag_r) => {
-    let returR = [];
-    if ("tags" in this.props && this.props.tags && tags_.length) {
-      let countTag = tag_r.count;
-      tags_.forEach((tag) => {
-        if (returR.length == countTag) {
-          return;
-        }
-        this.props.tags.forEach((searchtag) => {
-          if (tag == searchtag.id) {
-            returR.push(searchtag.name);
-            return;
-          }
-        });
-      });
-    }
-    if (returR.length) {
+    if (tags_ && tags_ instanceof Array && tags_.length) {
       let putTagStyle = { color: tag_r.color };
       putTagStyle["color"] = tag_r.color;
       putTagStyle["backgroundColor"] = tag_r.backgroundColor;
       putTagStyle["fontSize"] = tag_r.fontSize + "px";
-      return returR.map((returnH) => (
-        <span style={putTagStyle}>{returnH}</span>
+      let countTag = tag_r.count;
+      tags_.splice(countTag);
+      return tags_.map((returnH) => (
+        <span style={putTagStyle}>{returnH.name}</span>
       ));
     }
-  };
-  // autor
-  authorFn = (author) => {
-    let retur = {};
-    if ("authors" in this.props) {
-      this.props.authors.map((authorDetail) => {
-        if (authorDetail.id == author) {
-          retur = authorDetail;
-          return;
-        }
-      });
-    }
-    return retur;
   };
   returnHtml = (
     post,
@@ -153,36 +164,30 @@ class Edit extends Component {
     excerpt_,
     showTag_
   ) => {
-    let postAuthor =
-      author_ && author_.enable && "name" in this.authorFn(post.author)
-        ? this.authorFn(post.author).name
-        : false;
+    let postAuthor = author_ && author_.enable ? post.author : false;
     return (
-      <article className="block-post-article" key={post.id}>
+      <article className="block-post-article">
         <div className="post-wrapper">
-          {"getMedia_" in post &&
-            post.getMedia_ &&
-            "guid" in post.getMedia_ &&
-            thumbnail_.enable && (
-              <div className="featured-image">
-                <img
-                  style={{
-                    borderRadius: thumbnail_.borderRadius + "px",
-                  }}
-                  src={post.getMedia_.guid.rendered}
-                />
-              </div>
-            )}
+          {post.feature_image && post.feature_image != "" && thumbnail_.enable && (
+            <div className="featured-image">
+              <img
+                style={{
+                  borderRadius: thumbnail_.borderRadius + "px",
+                }}
+                src={post.feature_image}
+              />
+            </div>
+          )}
           <div className="post-content">
             {showCate_ && showCate_.enable && (
               <p className="post-category">
-                {this.showCateFn(post.categories, showCate_)}
+                {this.showCateFn(post.post_categories, showCate_)}
               </p>
             )}
             <RichText.Content
               className="post-heading"
               tagName={heading_.tag}
-              value={post.title.rendered}
+              value={post.postTitle}
               style={{
                 fontSize: heading_.fontSize + "px",
                 color: heading_.color,
@@ -220,7 +225,7 @@ class Edit extends Component {
                     }}
                     className="post-date"
                   >
-                    {this.dateFormate(post.date)}
+                    <RichText.Content tag="span" value={post.post_date} />
                   </p>
                 </>
               )}
@@ -245,7 +250,10 @@ class Edit extends Component {
                     className="post-date-last-modified"
                   >
                     <span>{__("Modified", "zita-blocks")}: </span>
-                    {this.dateFormate(post.modified)}
+                    <RichText.Content
+                      tag="span"
+                      value={post.post_modified_date}
+                    />
                   </p>
                 </>
               )}
@@ -258,7 +266,7 @@ class Edit extends Component {
                 }}
                 className="post-excerpt"
               >
-                {this.excerptWords(excerpt_.words, post.excerpt.rendered)}
+                {this.excerptWords(excerpt_.words, post.post_excerpt)}
                 <span className="read-more">
                   ...{__("Read More", "zita-blocks")}
                 </span>
@@ -266,7 +274,7 @@ class Edit extends Component {
             )}
             {showTag_ && showTag_.enable && (
               <p style={{ color: meta_style_.color }} className="post-tags">
-                {this.showTagsFn(post.tags, showTag_)}
+                {this.showTagsFn(post.post_tag, showTag_)}
               </p>
             )}
           </div>
@@ -275,7 +283,8 @@ class Edit extends Component {
     );
   };
   navCategory = (cateTrue, title_) => {
-    let category_ = this.props.category;
+    let category_ = this.state.category;
+    // console.log("category -> state", category_);
     let makingCate = [];
     if ((category_ && category_.length) || title_.enable) {
       // choosen category only show in nav
@@ -288,7 +297,7 @@ class Edit extends Component {
         if (this.props.attributes.postCategories.length) {
           this.props.attributes.postCategories.map((choosenCate) => {
             category_.map((existCate) => {
-              if (existCate.id == choosenCate) {
+              if (existCate.term_id == choosenCate) {
                 makingCate.push(existCate);
                 return;
               }
@@ -323,7 +332,7 @@ class Edit extends Component {
               />
             </div>
           )}
-          {cateTrue.enable && makingCate.length != 0 && (
+          {/* {cateTrue.enable && makingCate.length != 0 && (
             <>
               <div class="nav-linear-items">
                 <ul>
@@ -395,20 +404,17 @@ class Edit extends Component {
                 </div>
               )}
             </>
-          )}
+          )} */}
         </div>
       );
     }
   };
   render() {
-    const {
-      posts,
-      attributes,
-      setAttributes,
-      category,
-      totalPost,
-    } = this.props;
-    // return <h1>This is Two Column Block</h1>;
+    console.log("render call");
+    const { attributes, setAttributes } = this.props;
+    console.log("category props->", this.props);
+    const { posts, category, totalPost } = this.state;
+    console.log("state props posts->", this.state);
     let {
       heading,
       author,
@@ -453,13 +459,94 @@ class Edit extends Component {
     if (category && category.length) {
       category.map((catt) => {
         cateGory.push({
-          value: catt.id,
+          value: catt.slug,
           label: catt.name,
         });
       });
     }
     return (
       <>
+        {posts && posts.length > 0 ? (
+          <div
+            className="zita-two-post-wrapper"
+            style={{ backgroundColor: meta_style_.blockBgColor }}
+          >
+            {this.navCategory(categorynav[0], title_)}
+            <div
+              className={`zita-post-two-column column-layout-${meta_style_.layoutPosition}`}
+            >
+              <div className="column-one">
+                {this.returnHtml(
+                  posts[0],
+                  heading_,
+                  author_,
+                  date_,
+                  meta_style_,
+                  thumbnail_,
+                  showCate_,
+                  excerpt_,
+                  showTag_
+                )}
+              </div>
+              <div className="column-two">
+                {posts.length > 1 &&
+                  posts.map((post, index__) => {
+                    return (
+                      index__ != 0 &&
+                      this.returnHtml(
+                        post,
+                        heading2_,
+                        author2_,
+                        date2_,
+                        meta_style2_,
+                        thumbnail_,
+                        showCate2_,
+                        excerpt2_,
+                        false
+                      )
+                    );
+                  })}
+              </div>
+            </div>
+            {posts && posts.length > 0 && posts.length < totalPost && (
+              <div className="zita-two-post-wrapper-next-prev">
+                <div
+                  style={{
+                    fontSize: meta_style_.npBgfontSize,
+                    color: meta_style_.npColor,
+                    backgroundColor: meta_style_.npBgColor,
+                  }}
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </div>
+                <div
+                  style={{
+                    fontSize: meta_style_.npBgfontSize,
+                    color: meta_style_.npColor,
+                    backgroundColor: meta_style_.npBgColor,
+                  }}
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>
+            {!posts ? (
+              __("No Post Found", "zita-blocks")
+            ) : (
+              <div className="post-loader">
+                <div className="active linear-bubble zita-block-loader">
+                  {__("Post Loading...", "zita-blocks")}
+                  <div>
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
         <InspectorControls>
           <PanelBody title="Block Title / Navigation" initialOpen={false}>
             <div class="zita-switcher-button-section">
@@ -630,6 +717,7 @@ class Edit extends Component {
               max={20}
               onChange={(e) => {
                 setAttributes({ numberOfPosts: e });
+                this.filterPostInit({ numberOfPosts: e });
               }}
             />
             <p>
@@ -958,6 +1046,7 @@ class Edit extends Component {
                   });
                   if (chooseAll.length) choosen = [];
                   setAttributes({ postCategories: choosen });
+                  this.filterPostInit({ postCategories: choosen });
                 }}
                 options={cateGory}
               />
@@ -1305,221 +1394,138 @@ class Edit extends Component {
               </>
             )}
           </PanelBody>
-          {posts &&
-            posts.length > 0 &&
-            "getMedia_" in posts[0] &&
-            totalPost > posts.length && (
-              <PanelBody title="Next / Previous Button" initialOpen={false}>
-                <p>
-                  <strong>{__("Font Size", "zita-blocks")}</strong>
-                </p>
-                <RangeControl
-                  value={meta_style_.npBgfontSize}
-                  min={1}
-                  max={30}
-                  onChange={(e) => {
-                    this.updateObj("meta_style", "npBgfontSize", meta_style, e);
-                  }}
-                />
-                <p>
-                  <strong>{__("Color", "zita-blocks")}</strong>
-                </p>
-                <ColorPalette
-                  value={meta_style_.npColor}
-                  onChange={(color) =>
-                    this.updateObj("meta_style", "npColor", meta_style, color)
-                  }
-                />
-                <p>
-                  <strong>{__("Background Color", "zita-blocks")}</strong>
-                </p>
-                <ColorPicker
-                  color={meta_style_.npBgColor}
-                  onChangeComplete={(colorBg) => {
-                    let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                    this.updateObj(
-                      "meta_style",
-                      "npBgColor",
-                      meta_style,
-                      color
-                    );
-                  }}
-                />
-              </PanelBody>
-            )}
+          {posts && posts.length > 0 && posts.length < totalPost && (
+            <PanelBody title="Next / Previous Button" initialOpen={false}>
+              <p>
+                <strong>{__("Font Size", "zita-blocks")}</strong>
+              </p>
+              <RangeControl
+                value={meta_style_.npBgfontSize}
+                min={1}
+                max={30}
+                onChange={(e) => {
+                  this.updateObj("meta_style", "npBgfontSize", meta_style, e);
+                }}
+              />
+              <p>
+                <strong>{__("Color", "zita-blocks")}</strong>
+              </p>
+              <ColorPalette
+                value={meta_style_.npColor}
+                onChange={(color) =>
+                  this.updateObj("meta_style", "npColor", meta_style, color)
+                }
+              />
+              <p>
+                <strong>{__("Background Color", "zita-blocks")}</strong>
+              </p>
+              <ColorPicker
+                color={meta_style_.npBgColor}
+                onChangeComplete={(colorBg) => {
+                  let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                  this.updateObj("meta_style", "npBgColor", meta_style, color);
+                }}
+              />
+            </PanelBody>
+          )}
         </InspectorControls>
-        {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
-          <div
-            className="zita-two-post-wrapper"
-            style={{ backgroundColor: meta_style_.blockBgColor }}
-          >
-            {(categorynav[0].enable || title_.enable) &&
-              this.navCategory(categorynav[0], title_)}
-            <div
-              className={`zita-post-two-column column-layout-${meta_style_.layoutPosition}`}
-            >
-              <div className="column-one">
-                {this.returnHtml(
-                  posts[0],
-                  heading_,
-                  author_,
-                  date_,
-                  meta_style_,
-                  thumbnail_,
-                  showCate_,
-                  excerpt_,
-                  showTag_
-                )}
-              </div>
-              <div className="column-two">
-                {posts.length > 1 &&
-                  posts.map((post, index__) => {
-                    return (
-                      index__ != 0 &&
-                      this.returnHtml(
-                        post,
-                        heading2_,
-                        author2_,
-                        date2_,
-                        meta_style2_,
-                        thumbnail_,
-                        showCate2_,
-                        excerpt2_,
-                        false
-                      )
-                    );
-                  })}
-              </div>
-            </div>
-            {posts &&
-              posts.length > 0 &&
-              "getMedia_" in posts[0] &&
-              totalPost > posts.length && (
-                <div className="zita-two-post-wrapper-next-prev">
-                  {/* npBgfontSize npColor npBgColor */}
-                  <div
-                    style={{
-                      fontSize: meta_style_.npBgfontSize,
-                      color: meta_style_.npColor,
-                      backgroundColor: meta_style_.npBgColor,
-                    }}
-                  >
-                    <i class="fas fa-chevron-left"></i>
-                  </div>
-                  <div
-                    style={{
-                      fontSize: meta_style_.npBgfontSize,
-                      color: meta_style_.npColor,
-                      backgroundColor: meta_style_.npBgColor,
-                    }}
-                  >
-                    <i class="fas fa-chevron-right"></i>
-                  </div>
-                </div>
-              )}
-          </div>
-        ) : (
-          <div>
-            {!posts ? (
-              __("No Post Found", "zita-blocks")
-            ) : (
-              <div className="post-loader">
-                <div className="active linear-bubble zita-block-loader">
-                  {__("Post Loading...", "zita-blocks")}
-                  <div>
-                    <span></span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
       </>
     );
   }
 }
-// export default Edit;
-export default withSelect((select, props) => {
-  const { attributes } = props;
-  let { numberOfPosts, postCategories, thumbnail } = attributes;
-  const query = { per_page: numberOfPosts };
-  const query2 = { per_page: -1 };
-  if (postCategories && postCategories.length) {
-    let cateCh = postCategories.join(",");
-    query["categories"] = cateCh;
-    query2["categories"] = cateCh;
-  }
-  const { getMedia, getEntityRecords, getAuthors } = select("core");
-  let getTotalPost = getEntityRecords("postType", "post", query2);
-  /////////////////////////////////////////////////////////////////////////////
-  let getAllPost = [];
-  if (thumbnail[0].enable) {
-    getAllPost =
-      getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
-    function returnPostFn(numberOfPosts, check = false) {
-      let numberOfposts_ = check ? check : numberOfPosts;
-      let new_query = {
-        per_page: numberOfposts_,
-      };
-      if (postCategories && postCategories.length) {
-        new_query["categories"] = postCategories.join(",");
-      }
-      let checkPost = select("core").getEntityRecords(
-        "postType",
-        "post",
-        new_query
-      );
-      if (checkPost && checkPost.length) {
-        let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
-        if (
-          newPostArray.length == numberOfPosts ||
-          getTotalPost.length <= numberOfposts_
-        ) {
-          return newPostArray;
-        } else {
-          if (
-            newPostArray.length < numberOfPosts &&
-            numberOfposts_ <= getTotalPost.length
-          ) {
-            return returnPostFn(numberOfPosts, numberOfposts_ + 1);
-          }
-        }
-      }
-    }
-  } else {
-    getAllPost = getEntityRecords("postType", "post", query);
-  }
-  ///////////////////////////////////////////////////////////////////////////////
-  // let getAllPost = getEntityRecords("postType", "post", query);
-  let cate_ = getEntityRecords("taxonomy", "category", {
-    per_page: -1,
-    hide_empty: true,
-  });
-  let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
-  let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
-  if (getAllPost && getAllPost.length) {
-    let returnArray = [];
-    getAllPost.map((v, index_) => {
-      if (v.featured_media) {
-        getAllPost[index_]["getMedia_"] = getMedia(v.featured_media);
-      } else {
-        getAllPost[index_]["getMedia_"] = false;
-      }
-      returnArray.push(getAllPost[index_]);
-    });
-    arrayCatePost["posts"] = returnArray;
-    arrayCatePost["totalPost"] = getTotalPost.length;
-  } else if (getAllPost instanceof Array && getAllPost.length == 0) {
-    arrayCatePost["posts"] = false;
-  }
-  // autohrs
-  let authors = getAuthors();
-  if (authors && authors.length) {
-    let authors_ = [];
-    authors.map((v) => {
-      authors_.push({ id: v.id, name: v.name });
-    });
-    arrayCatePost["authors"] = authors_;
-  }
-  return arrayCatePost;
-})(Edit);
+export default Edit;
+
+// export default withSelect((select, props) => {
+//   const { attributes } = props;
+//   let { numberOfPosts, postCategories, thumbnail } = attributes;
+//   const query = { per_page: numberOfPosts };
+//   const query2 = { per_page: -1 };
+//   if (postCategories && postCategories.length) {
+//     let cateCh = postCategories.join(",");
+//     // let cateCh = "car,clothes,one";
+//     // let cateCh = "clothes";
+//     // query["category_name"] = cateCh;
+//     // query2["category_name"] = cateCh;
+//     query["categories"] = cateCh;
+//     query2["categories"] = cateCh;
+//   }
+//   // let cateCh = "clothes";
+//   // query["category_name"] = cateCh;
+
+//   // console.log("queries", query);
+
+//   const { getMedia, getEntityRecords, getAuthors } = select("core");
+//   let getTotalPost = getEntityRecords("postType", "post", query2);
+//   /////////////////////////////////////////////////////////////////////////////
+//   let getAllPost = [];
+//   if (thumbnail[0].enable) {
+//     getAllPost =
+//       getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
+//     function returnPostFn(numberOfPosts, check = false) {
+//       let numberOfposts_ = check ? check : numberOfPosts;
+//       let new_query = {
+//         per_page: numberOfposts_,
+//       };
+//       if (postCategories && postCategories.length) {
+//         new_query["categories"] = postCategories.join(",");
+//       }
+//       let checkPost = select("core").getEntityRecords(
+//         "postType",
+//         "post",
+//         new_query
+//       );
+//       if (checkPost && checkPost.length) {
+//         let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
+//         if (
+//           newPostArray.length == numberOfPosts ||
+//           getTotalPost.length <= numberOfposts_
+//         ) {
+//           return newPostArray;
+//         } else {
+//           if (
+//             newPostArray.length < numberOfPosts &&
+//             numberOfposts_ <= getTotalPost.length
+//           ) {
+//             return returnPostFn(numberOfPosts, numberOfposts_ + 1);
+//           }
+//         }
+//       }
+//     }
+//   } else {
+//     getAllPost = getEntityRecords("postType", "post", query);
+//   }
+//   ///////////////////////////////////////////////////////////////////////////////
+//   // let getAllPost = getEntityRecords("postType", "post", query);
+//   let cate_ = getEntityRecords("taxonomy", "category", {
+//     per_page: -1,
+//     hide_empty: true,
+//   });
+//   // console.log("category->", cate_);
+//   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
+//   let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
+//   if (getAllPost && getAllPost.length) {
+//     let returnArray = [];
+//     getAllPost.map((v, index_) => {
+//       if (v.featured_media) {
+//         getAllPost[index_]["getMedia_"] = getMedia(v.featured_media);
+//       } else {
+//         getAllPost[index_]["getMedia_"] = false;
+//       }
+//       returnArray.push(getAllPost[index_]);
+//     });
+//     arrayCatePost["posts"] = returnArray;
+//     arrayCatePost["totalPost"] = getTotalPost.length;
+//   } else if (getAllPost instanceof Array && getAllPost.length == 0) {
+//     arrayCatePost["posts"] = false;
+//   }
+//   // autohrs
+//   let authors = getAuthors();
+//   if (authors && authors.length) {
+//     let authors_ = [];
+//     authors.map((v) => {
+//       authors_.push({ id: v.id, name: v.name });
+//     });
+//     arrayCatePost["authors"] = authors_;
+//   }
+//   return arrayCatePost;
+// })(Edit);

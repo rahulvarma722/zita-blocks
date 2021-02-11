@@ -749,6 +749,7 @@
   background: #a7a6a6;
   color: white;
 }
+
 .zita-block-select {
   margin-bottom: 10px;
   width: 100%;
@@ -1285,7 +1286,6 @@
     transform: rotate(360deg);
   }
 }
-
 .zita-section-post * {
   font-family: "Catamaran-Regular", sans-serif;
   box-sizing: border-box;

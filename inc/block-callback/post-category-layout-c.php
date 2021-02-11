@@ -142,7 +142,6 @@ function zita_blocks_two_column_block($attr)
             // }
             $postHtml .= '</div>';
             $postHtml .= '</div>';
-
             // echo "</pre>";
             wp_reset_postdata();
             return $postHtml;

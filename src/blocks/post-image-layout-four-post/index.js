@@ -3,7 +3,7 @@ import { registerBlockType } from "@wordpress/blocks";
 import Edit from "./edit";
 import { __ } from "@wordpress/i18n";
 registerBlockType("zita-blocks/zita-post-section-four-post", {
-  title: __("Post Image Layout Four Post", "zita-blocks"),
+  title: __("Post Image Layout Four", "zita-blocks"),
   icon: "tagcloud",
   category: "zita-category",
   getEditWrapperProps(attributes) {

@@ -4,7 +4,7 @@ import Edit from "./edit";
 import { __ } from "@wordpress/i18n";
 const attrSave = {};
 registerBlockType("zita-blocks/zita-post-section-two-post", {
-  title: __("Post Image Layout Two Post", "zita-blocks"),
+  title: __("Post Image Layout Two", "zita-blocks"),
   icon: "tagcloud",
   category: "zita-category",
   getEditWrapperProps(attributes) {
