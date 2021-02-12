@@ -13,7 +13,7 @@ function zita_blocks_post_tc()
                 'paged' => $pageNo,
             ];
             if (isset($attr["postCategories"]) && is_array($attr["postCategories"]) && !empty($attr["postCategories"])) {
-                $args['category__in'] = $attr["postCategories"];
+                $args['category_name'] = join(',', $attr["postCategories"]);
             }
             echo zita_blocks_post_tc_html($args, $attr) ? zita_blocks_post_tc_html($args, $attr) : 0;
             die();
@@ -33,7 +33,7 @@ function zita_blocks_choose_cate()
                 'paged' => 1,
             ];
             if (isset($attr["postCategories"]) && is_array($attr["postCategories"]) && !empty($attr["postCategories"])) {
-                $args['category__in'] = $attr["postCategories"];
+                $args['category_name'] = join(',', $attr["postCategories"]);
             }
             echo zita_blocks_post_tc_html($args, $attr) ? wp_json_encode(zita_blocks_post_tc_html($args, $attr, true)) : 0;
             die();

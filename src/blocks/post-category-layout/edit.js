@@ -91,7 +91,7 @@ class Edit extends Component {
     // featured image
     argData["featured_image"] = 1;
     let postData = await this.postDataInit(argData);
-    // console.log("post data filter -> ", postData);
+    console.log("post data filter -> ", postData);
     if (postData) {
       // all posts
       if ("posts" in postData && postData.posts) {
@@ -108,7 +108,6 @@ class Edit extends Component {
   // rest api call
   componentDidMount() {
     this.firstTimeInit();
-    console.log("component call");
   }
   updateObj = (parent_key, child_key, initialValue, value_) => {
     let newNewValue = [...initialValue];
@@ -128,14 +127,32 @@ class Edit extends Component {
   };
   showCateFn = (categories, cate_) => {
     if (categories && categories instanceof Array && categories.length > 0) {
+      let copiedCate = [...categories];
+      let countCate = cate_.count;
+      if (countCate < copiedCate.length) {
+        let filterChoosen = this.props.attributes.postCategories;
+        if (
+          filterChoosen.length > 0 &&
+          filterChoosen.length < copiedCate.length
+        ) {
+          filterChoosen.map((cateSlug) => {
+            let getIndex = copiedCate.findIndex(
+              (slug_) => slug_.slug == cateSlug
+            );
+            if (getIndex && getIndex + 1 > countCate) {
+              delete copiedCate[getIndex];
+              copiedCate.unshift({ name: cateSlug });
+            }
+          });
+        }
+      }
       let putCateStyle = { fontSize: cate_.fontSize + "px" };
       if (cate_.customColor) {
         putCateStyle["color"] = cate_.color;
         putCateStyle["backgroundColor"] = cate_.backgroundColor;
       }
-      let countCate = cate_.count;
-      categories.splice(countCate);
-      return categories.map((returnH) => (
+      copiedCate.splice(countCate);
+      return copiedCate.map((returnH) => (
         <span style={putCateStyle}>{returnH.name}</span>
       ));
     }
@@ -284,20 +301,19 @@ class Edit extends Component {
   };
   navCategory = (cateTrue, title_) => {
     let category_ = this.state.category;
-    // console.log("category -> state", category_);
     let makingCate = [];
     if ((category_ && category_.length) || title_.enable) {
-      // choosen category only show in nav
+      // under line
       let mUnderLine = this.props.attributes.meta_style[0];
       let mUnderLineSt = mUnderLine.underLine
         ? { borderColor: mUnderLine.underLineColor }
         : null;
-      // under line
+      // choosen category only show in nav
       if (cateTrue.enable && category_ && category_.length) {
         if (this.props.attributes.postCategories.length) {
           this.props.attributes.postCategories.map((choosenCate) => {
             category_.map((existCate) => {
-              if (existCate.term_id == choosenCate) {
+              if (existCate.slug == choosenCate) {
                 makingCate.push(existCate);
                 return;
               }
@@ -332,7 +348,7 @@ class Edit extends Component {
               />
             </div>
           )}
-          {/* {cateTrue.enable && makingCate.length != 0 && (
+          {cateTrue.enable && makingCate.length != 0 && (
             <>
               <div class="nav-linear-items">
                 <ul>
@@ -404,17 +420,16 @@ class Edit extends Component {
                 </div>
               )}
             </>
-          )} */}
+          )}
         </div>
       );
     }
   };
   render() {
-    console.log("render call");
     const { attributes, setAttributes } = this.props;
-    console.log("category props->", this.props);
+    // console.log("category props->", this.props);
     const { posts, category, totalPost } = this.state;
-    console.log("state props posts->", this.state);
+    // console.log("state props posts->", this.state);
     let {
       heading,
       author,
@@ -466,87 +481,6 @@ class Edit extends Component {
     }
     return (
       <>
-        {posts && posts.length > 0 ? (
-          <div
-            className="zita-two-post-wrapper"
-            style={{ backgroundColor: meta_style_.blockBgColor }}
-          >
-            {this.navCategory(categorynav[0], title_)}
-            <div
-              className={`zita-post-two-column column-layout-${meta_style_.layoutPosition}`}
-            >
-              <div className="column-one">
-                {this.returnHtml(
-                  posts[0],
-                  heading_,
-                  author_,
-                  date_,
-                  meta_style_,
-                  thumbnail_,
-                  showCate_,
-                  excerpt_,
-                  showTag_
-                )}
-              </div>
-              <div className="column-two">
-                {posts.length > 1 &&
-                  posts.map((post, index__) => {
-                    return (
-                      index__ != 0 &&
-                      this.returnHtml(
-                        post,
-                        heading2_,
-                        author2_,
-                        date2_,
-                        meta_style2_,
-                        thumbnail_,
-                        showCate2_,
-                        excerpt2_,
-                        false
-                      )
-                    );
-                  })}
-              </div>
-            </div>
-            {posts && posts.length > 0 && posts.length < totalPost && (
-              <div className="zita-two-post-wrapper-next-prev">
-                <div
-                  style={{
-                    fontSize: meta_style_.npBgfontSize,
-                    color: meta_style_.npColor,
-                    backgroundColor: meta_style_.npBgColor,
-                  }}
-                >
-                  <i class="fas fa-chevron-left"></i>
-                </div>
-                <div
-                  style={{
-                    fontSize: meta_style_.npBgfontSize,
-                    color: meta_style_.npColor,
-                    backgroundColor: meta_style_.npBgColor,
-                  }}
-                >
-                  <i class="fas fa-chevron-right"></i>
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div>
-            {!posts ? (
-              __("No Post Found", "zita-blocks")
-            ) : (
-              <div className="post-loader">
-                <div className="active linear-bubble zita-block-loader">
-                  {__("Post Loading...", "zita-blocks")}
-                  <div>
-                    <span></span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
         <InspectorControls>
           <PanelBody title="Block Title / Navigation" initialOpen={false}>
             <div class="zita-switcher-button-section">
@@ -1429,6 +1363,87 @@ class Edit extends Component {
             </PanelBody>
           )}
         </InspectorControls>
+        {posts && posts.length > 0 ? (
+          <div
+            className="zita-two-post-wrapper"
+            style={{ backgroundColor: meta_style_.blockBgColor }}
+          >
+            {this.navCategory(categorynav[0], title_)}
+            <div
+              className={`zita-post-two-column column-layout-${meta_style_.layoutPosition}`}
+            >
+              <div className="column-one">
+                {this.returnHtml(
+                  posts[0],
+                  heading_,
+                  author_,
+                  date_,
+                  meta_style_,
+                  thumbnail_,
+                  showCate_,
+                  excerpt_,
+                  showTag_
+                )}
+              </div>
+              <div className="column-two">
+                {posts.length > 1 &&
+                  posts.map((post, index__) => {
+                    return (
+                      index__ != 0 &&
+                      this.returnHtml(
+                        post,
+                        heading2_,
+                        author2_,
+                        date2_,
+                        meta_style2_,
+                        thumbnail_,
+                        showCate2_,
+                        excerpt2_,
+                        false
+                      )
+                    );
+                  })}
+              </div>
+            </div>
+            {posts && posts.length > 0 && posts.length < totalPost && (
+              <div className="zita-two-post-wrapper-next-prev">
+                <div
+                  style={{
+                    fontSize: meta_style_.npBgfontSize,
+                    color: meta_style_.npColor,
+                    backgroundColor: meta_style_.npBgColor,
+                  }}
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </div>
+                <div
+                  style={{
+                    fontSize: meta_style_.npBgfontSize,
+                    color: meta_style_.npColor,
+                    backgroundColor: meta_style_.npBgColor,
+                  }}
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>
+            {!posts ? (
+              __("No Post Found", "zita-blocks")
+            ) : (
+              <div className="post-loader">
+                <div className="active linear-bubble zita-block-loader">
+                  {__("Post Loading...", "zita-blocks")}
+                  <div>
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </>
     );
   }

@@ -1,8 +1,12 @@
 <?php
 // zita post callback function
 function zita_blocks_two_column_block($attr)
-{   
+{
     $attr = zita_blocks_array_sanitize($attr);
+    // echo "<pre>";
+    // print_r($attr);
+    // echo "</pre>";
+    // return;
     $args = ['post_type' => 'post'];
     if (isset($attr['numberOfPosts']) && intval($attr['numberOfPosts'])) {
         $numberOfpost = $attr['numberOfPosts'];
@@ -12,17 +16,30 @@ function zita_blocks_two_column_block($attr)
         }
         $fourAndMoreNav = [];
         if (isset($attr["postCategories"]) && is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
-            $args['category__in'] = $attr["postCategories"];
+            $args['category_name'] = join(',', $attr["postCategories"]);
             $fourAndMoreNav = $attr["postCategories"];
         } else {
-            $fourAndMoreNav = get_terms(
-                array(
-                    'taxonomy' => 'category',
-                    'fields'   => 'ids',
-                    'hide_empty' => true,
-                )
-            );
+            $cateGory = get_categories(['hide_empty' => false]);
+            if (!empty($cateGory)) {
+                foreach ($cateGory as $cate_value_) {
+                    $fourAndMoreNav[] =  $cate_value_->slug;
+                }
+            }
         }
+        // echo "<pre>";
+        // $fourAndMoreNav_ = [];
+        // $cateGory = get_categories(['hide_empty' => false]);
+        // if (!empty($cateGory)) {
+        //     foreach ($cateGory as $cate_value_) {
+        //         $fourAndMoreNav_[] =  $cate_value_->slug;
+        //     }
+        // }
+        // print_r($fourAndMoreNav);
+        // print_r($fourAndMoreNav_);
+        // print_r(get_category_by_slug('clothes')->name);
+        // echo "</pre>";
+
+
         // inner and outer making
         $innerITem = $outerItem = [];
         if (isset($attr["categorynav"][0]['enable']) && $attr["categorynav"][0]['enable'] && count($fourAndMoreNav) > 0) {
@@ -67,9 +84,9 @@ function zita_blocks_two_column_block($attr)
                 // linear items
                 $postHtml .= "<div class='zita-block-nav-items nav-linear-items'>";
                 $postHtml .= "<ul>";
-                $postHtml .= '<li class="cat-item cat-item-all"><a style="' . $navItemStyle . '" href="#">' . __('all', "zita-blocks") . '</a></li>';
+                $postHtml .= '<li class="cat-item"><a style="' . $navItemStyle . '" href="#" data-cateSlug="all">' . __('all', "zita-blocks") . '</a></li>';
                 foreach ($innerITem as $innerITem_value) {
-                    $postHtml .= '<li class="cat-item cat-item-' . $innerITem_value . '"><a style="' . $navItemStyle . '" href="#">' . get_cat_name($innerITem_value) . '</a></li>';
+                    $postHtml .= '<li class="cat-item"><a style="' . $navItemStyle . '" href="#" data-cateSlug="' . $innerITem_value . '">' . get_category_by_slug($innerITem_value)->name . '</a></li>';
                 }
                 $postHtml .= "</ul>";
                 $postHtml .= "</div>";
@@ -79,7 +96,7 @@ function zita_blocks_two_column_block($attr)
                     $postHtml .= "<span style='" . $navItemStyle . "' class='more-opener'>" . __("More", "zita-blocks") . "<i class='fas fa-chevron-down'></i></span>";
                     $postHtml .= "<ul>";
                     foreach ($outerItem as $outerItem_value) {
-                        $postHtml .= '<li class="cat-item cat-item-' . $outerItem_value . '"><a style="' . $navItemStyle . '" href="#">' . get_cat_name($outerItem_value) . '</a></li>';
+                        $postHtml .= '<li class="cat-item"><a style="' . $navItemStyle . '" href="#" data-cateSlug="' . $outerItem_value . '">' . get_category_by_slug($outerItem_value)->name . '</a></li>';
                     }
                     $postHtml .= "</ul>";
                     $postHtml .= "</div>";

@@ -71,70 +71,54 @@
       let thisButton = $(this);
       if (!thisButton.parent("li").hasClass("active")) {
         // has class active li
-        let classList = thisButton.parent("li").attr("class");
-        if (classList) {
-          let ind_dex = classList.indexOf("cat-item-");
-          let getNumVAlue = false;
-          if (classList.substr(ind_dex + 9, 1) === "a") {
-            getNumVAlue = "all";
-          } else {
-            let getSepClass = classList.split(" ");
-            getSepClass.map((v) => {
-              if (v.includes("cat-item-")) {
-                let getIddd = v.replace("cat-item-", "");
-                getNumVAlue = parseInt(getIddd);
-              }
-              return;
-            });
-          }
-          if (getNumVAlue) {
-            let getDataWrapper = thisButton
-              .closest(".zita-two-col-container")
-              .find(".zita-two-post-wrapper");
-            let getData = getDataWrapper.data("setting");
-            if (typeof getData === "object") {
-              if (getNumVAlue === "all") {
-                delete getData["postCategories"];
-              } else {
-                getData["postCategories"] = [getNumVAlue];
-              }
-              let data_ = {
-                action: "post_category_layout_choose_category",
-                attr: getData,
-              };
-              // loader and active btn
-              thisButton
-                .closest(".navigation_")
-                .find("li.cat-item")
-                .removeClass("active");
-              thisButton.parent().addClass("active");
-              let loader_ = thisButton
-                .closest(".zita-two-col-container")
-                .find(".zita-block-loader");
-              loader_.addClass("active");
-              let returnData = fns._ajaxFunction(data_, "json");
-              // replace data setting after result success
-              returnData.success(function (response) {
-                // console.log(response);
-                if (typeof response == "object" && "html" in response) {
-                  setTimeout(() => loader_.removeClass("active"), 500);
-                  getDataWrapper
-                    .find(".zita-post-two-column")
-                    .html(response.html);
-                  getDataWrapper.attr("data-currentpage", response.nextprev);
-                  getDataWrapper.attr("data-setting", JSON.stringify(getData));
-                  if (response.nextprev == null) {
-                    getDataWrapper
-                      .find(".zita-two-post-wrapper-next-prev")
-                      .addClass("disable");
-                  } else {
-                    getDataWrapper
-                      .find(".zita-two-post-wrapper-next-prev")
-                      .removeClass("disable");
-                  }
-                }
-              });
+        let getSlug = thisButton.attr("data-cateslug");
+        if (getSlug) {
+          let getDataWrapper = thisButton
+            .closest(".zita-two-col-container")
+            .find(".zita-two-post-wrapper");
+          let getData = getDataWrapper.data("setting");
+          if (typeof getData === "object") {
+            if (getSlug === "all") {
+              delete getData["postCategories"];
+            } else {
+              getData["postCategories"] = [getSlug];
             }
+            let data_ = {
+              action: "post_category_layout_choose_category",
+              attr: getData,
+            };
+            // loader and active btn
+            thisButton
+              .closest(".navigation_")
+              .find("li.cat-item")
+              .removeClass("active");
+            thisButton.parent().addClass("active");
+            let loader_ = thisButton
+              .closest(".zita-two-col-container")
+              .find(".zita-block-loader");
+            loader_.addClass("active");
+            let returnData = fns._ajaxFunction(data_, "json");
+            // replace data setting after result success
+            returnData.success(function (response) {
+              // console.log(response);
+              if (typeof response == "object" && "html" in response) {
+                setTimeout(() => loader_.removeClass("active"), 500);
+                getDataWrapper
+                  .find(".zita-post-two-column")
+                  .html(response.html);
+                getDataWrapper.attr("data-currentpage", response.nextprev);
+                getDataWrapper.attr("data-setting", JSON.stringify(getData));
+                if (response.nextprev == null) {
+                  getDataWrapper
+                    .find(".zita-two-post-wrapper-next-prev")
+                    .addClass("disable");
+                } else {
+                  getDataWrapper
+                    .find(".zita-two-post-wrapper-next-prev")
+                    .removeClass("disable");
+                }
+              }
+            });
           }
         }
         // has class active li

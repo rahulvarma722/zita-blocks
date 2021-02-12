@@ -1514,6 +1514,29 @@ var Edit = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "showCateFn", function (categories, cate_) {
       if (categories && categories instanceof Array && categories.length > 0) {
+        var copiedCate = _toConsumableArray(categories);
+
+        var countCate = cate_.count;
+
+        if (countCate < copiedCate.length) {
+          var filterChoosen = _this.props.attributes.postCategories;
+
+          if (filterChoosen.length > 0 && filterChoosen.length < copiedCate.length) {
+            filterChoosen.map(function (cateSlug) {
+              var getIndex = copiedCate.findIndex(function (slug_) {
+                return slug_.slug == cateSlug;
+              });
+
+              if (getIndex && getIndex + 1 > countCate) {
+                delete copiedCate[getIndex];
+                copiedCate.unshift({
+                  name: cateSlug
+                });
+              }
+            });
+          }
+        }
+
         var putCateStyle = {
           fontSize: cate_.fontSize + "px"
         };
@@ -1523,9 +1546,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           putCateStyle["backgroundColor"] = cate_.backgroundColor;
         }
 
-        var countCate = cate_.count;
-        categories.splice(countCate);
-        return categories.map(function (returnH) {
+        copiedCate.splice(countCate);
+        return copiedCate.map(function (returnH) {
           return wp.element.createElement("span", {
             style: putCateStyle
           }, returnH.name);
@@ -1631,22 +1653,21 @@ var Edit = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "navCategory", function (cateTrue, title_) {
-      var category_ = _this.state.category; // console.log("category -> state", category_);
-
+      var category_ = _this.state.category;
       var makingCate = [];
 
       if (category_ && category_.length || title_.enable) {
-        // choosen category only show in nav
+        // under line
         var mUnderLine = _this.props.attributes.meta_style[0];
         var mUnderLineSt = mUnderLine.underLine ? {
           borderColor: mUnderLine.underLineColor
-        } : null; // under line
+        } : null; // choosen category only show in nav
 
         if (cateTrue.enable && category_ && category_.length) {
           if (_this.props.attributes.postCategories.length) {
             _this.props.attributes.postCategories.map(function (choosenCate) {
               category_.map(function (existCate) {
-                if (existCate.term_id == choosenCate) {
+                if (existCate.slug == choosenCate) {
                   makingCate.push(existCate);
                   return;
                 }
@@ -1675,7 +1696,51 @@ var Edit = /*#__PURE__*/function (_Component) {
             color: title_.color,
             fontSize: title_.fontSize + "px"
           }
-        })));
+        })), cateTrue.enable && makingCate.length != 0 && wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("div", {
+          class: "nav-linear-items"
+        }, wp.element.createElement("ul", null, wp.element.createElement("li", {
+          class: "cat-item cat-item-all"
+        }, wp.element.createElement("a", {
+          style: {
+            fontSize: cateTrue.fontSize + "px",
+            color: cateTrue.color,
+            backgroundColor: cateTrue.backgroundColor
+          },
+          href: "#"
+        }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("all", "zita-blocks"))), makingCate.map(function (cateV, cKey) {
+          return cKey <= 3 && wp.element.createElement("li", {
+            class: "cat-item"
+          }, wp.element.createElement("a", {
+            style: {
+              fontSize: cateTrue.fontSize + "px",
+              color: cateTrue.color,
+              backgroundColor: cateTrue.backgroundColor
+            },
+            href: "#"
+          }, cateV.name));
+        }))), makingCate.length >= 5 && wp.element.createElement("div", {
+          class: "nav-drop-items"
+        }, wp.element.createElement("span", {
+          style: {
+            fontSize: cateTrue.fontSize + "px",
+            color: cateTrue.color,
+            backgroundColor: cateTrue.backgroundColor
+          },
+          class: "more-opener"
+        }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("More", "zita-blocks"), wp.element.createElement("i", {
+          class: "fas fa-chevron-down"
+        })), wp.element.createElement("ul", null, makingCate.map(function (cateV, cKey) {
+          return cKey >= 4 && wp.element.createElement("li", {
+            class: "cat-item"
+          }, wp.element.createElement("a", {
+            style: {
+              fontSize: cateTrue.fontSize + "px",
+              color: cateTrue.color,
+              backgroundColor: cateTrue.backgroundColor
+            },
+            href: "#"
+          }, cateV.name));
+        })))));
       }
     });
 
@@ -1812,8 +1877,8 @@ var Edit = /*#__PURE__*/function (_Component) {
 
               case 8:
                 postData = _context2.sent;
+                console.log("post data filter -> ", postData);
 
-                // console.log("post data filter -> ", postData);
                 if (postData) {
                   // all posts
                   if ("posts" in postData && postData.posts) {
@@ -1832,7 +1897,7 @@ var Edit = /*#__PURE__*/function (_Component) {
                   }
                 }
 
-              case 10:
+              case 11:
               case "end":
                 return _context2.stop();
             }
@@ -1851,23 +1916,21 @@ var Edit = /*#__PURE__*/function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.firstTimeInit();
-      console.log("component call");
     }
   }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
-      console.log("render call");
       var _this$props = this.props,
           attributes = _this$props.attributes,
-          setAttributes = _this$props.setAttributes;
-      console.log("category props->", this.props);
+          setAttributes = _this$props.setAttributes; // console.log("category props->", this.props);
+
       var _this$state = this.state,
           posts = _this$state.posts,
           category = _this$state.category,
-          totalPost = _this$state.totalPost;
-      console.log("state props posts->", this.state);
+          totalPost = _this$state.totalPost; // console.log("state props posts->", this.state);
+
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
@@ -1919,42 +1982,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         });
       }
 
-      return wp.element.createElement(wp.element.Fragment, null, posts && posts.length > 0 ? wp.element.createElement("div", {
-        className: "zita-two-post-wrapper",
-        style: {
-          backgroundColor: meta_style_.blockBgColor
-        }
-      }, this.navCategory(categorynav[0], title_), wp.element.createElement("div", {
-        className: "zita-post-two-column column-layout-".concat(meta_style_.layoutPosition)
-      }, wp.element.createElement("div", {
-        className: "column-one"
-      }, this.returnHtml(posts[0], heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_)), wp.element.createElement("div", {
-        className: "column-two"
-      }, posts.length > 1 && posts.map(function (post, index__) {
-        return index__ != 0 && _this2.returnHtml(post, heading2_, author2_, date2_, meta_style2_, thumbnail_, showCate2_, excerpt2_, false);
-      }))), posts && posts.length > 0 && posts.length < totalPost && wp.element.createElement("div", {
-        className: "zita-two-post-wrapper-next-prev"
-      }, wp.element.createElement("div", {
-        style: {
-          fontSize: meta_style_.npBgfontSize,
-          color: meta_style_.npColor,
-          backgroundColor: meta_style_.npBgColor
-        }
-      }, wp.element.createElement("i", {
-        class: "fas fa-chevron-left"
-      })), wp.element.createElement("div", {
-        style: {
-          fontSize: meta_style_.npBgfontSize,
-          color: meta_style_.npColor,
-          backgroundColor: meta_style_.npBgColor
-        }
-      }, wp.element.createElement("i", {
-        class: "fas fa-chevron-right"
-      })))) : wp.element.createElement("div", null, !posts ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("No Post Found", "zita-blocks") : wp.element.createElement("div", {
-        className: "post-loader"
-      }, wp.element.createElement("div", {
-        className: "active linear-bubble zita-block-loader"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Post Loading...", "zita-blocks"), wp.element.createElement("div", null, wp.element.createElement("span", null))))), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+      return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Block Title / Navigation",
         initialOpen: false
       }, wp.element.createElement("div", {
@@ -2485,7 +2513,42 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           _this2.updateObj("meta_style", "npBgColor", meta_style, color);
         }
-      }))));
+      }))), posts && posts.length > 0 ? wp.element.createElement("div", {
+        className: "zita-two-post-wrapper",
+        style: {
+          backgroundColor: meta_style_.blockBgColor
+        }
+      }, this.navCategory(categorynav[0], title_), wp.element.createElement("div", {
+        className: "zita-post-two-column column-layout-".concat(meta_style_.layoutPosition)
+      }, wp.element.createElement("div", {
+        className: "column-one"
+      }, this.returnHtml(posts[0], heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_)), wp.element.createElement("div", {
+        className: "column-two"
+      }, posts.length > 1 && posts.map(function (post, index__) {
+        return index__ != 0 && _this2.returnHtml(post, heading2_, author2_, date2_, meta_style2_, thumbnail_, showCate2_, excerpt2_, false);
+      }))), posts && posts.length > 0 && posts.length < totalPost && wp.element.createElement("div", {
+        className: "zita-two-post-wrapper-next-prev"
+      }, wp.element.createElement("div", {
+        style: {
+          fontSize: meta_style_.npBgfontSize,
+          color: meta_style_.npColor,
+          backgroundColor: meta_style_.npBgColor
+        }
+      }, wp.element.createElement("i", {
+        class: "fas fa-chevron-left"
+      })), wp.element.createElement("div", {
+        style: {
+          fontSize: meta_style_.npBgfontSize,
+          color: meta_style_.npColor,
+          backgroundColor: meta_style_.npBgColor
+        }
+      }, wp.element.createElement("i", {
+        class: "fas fa-chevron-right"
+      })))) : wp.element.createElement("div", null, !posts ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("No Post Found", "zita-blocks") : wp.element.createElement("div", {
+        className: "post-loader"
+      }, wp.element.createElement("div", {
+        className: "active linear-bubble zita-block-loader"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Post Loading...", "zita-blocks"), wp.element.createElement("div", null, wp.element.createElement("span", null))))));
     }
   }]);
 
@@ -2662,6 +2725,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/html-entities */ "@wordpress/html-entities");
 /* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_5__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -2843,21 +2910,183 @@ var Edit = /*#__PURE__*/function (_Component) {
       return retur;
     });
 
-    _this.state = {};
+    _this.state = {
+      posts: [],
+      category: [],
+      totalPost: null
+    };
     return _this;
   }
 
   _createClass(Edit, [{
+    key: "postDataInit",
+    value: function postDataInit() {
+      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var sendData = data;
+      return apiFetch({
+        path: "/zita-blocks-post-api/v3/posts/",
+        method: "POST",
+        data: sendData
+      }).then(function (postsData) {
+        return postsData;
+      }).catch(function (error) {
+        return console.error(error);
+      });
+    }
+  }, {
+    key: "firstTimeInit",
+    value: function () {
+      var _firstTimeInit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _this$props$attribute, numberOfPosts, postCategories, sendData, postData, posts_, category_, totalPost_;
+
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this$props$attribute = this.props.attributes, numberOfPosts = _this$props$attribute.numberOfPosts, postCategories = _this$props$attribute.postCategories;
+                sendData = {
+                  initialize: 1,
+                  numberOfPosts: numberOfPosts,
+                  featured_image: 1
+                }; // choose category
+
+                if (postCategories) {
+                  sendData["postCategories"] = postCategories.join(",");
+                }
+
+                _context.next = 5;
+                return this.postDataInit(sendData);
+
+              case 5:
+                postData = _context.sent;
+
+                if (postData) {
+                  // all posts
+                  if ("posts" in postData && postData.posts) {
+                    posts_ = postData.posts;
+                    this.setState({
+                      posts: posts_
+                    });
+                  } //all categories
+
+
+                  if ("category" in postData && postData.category) {
+                    category_ = postData.category;
+                    this.setState({
+                      category: category_
+                    });
+                  } //total post
+
+
+                  if ("totalPost" in postData && postData.totalPost) {
+                    totalPost_ = postData.totalPost;
+                    this.setState({
+                      totalPost: totalPost_
+                    });
+                  }
+                }
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function firstTimeInit() {
+        return _firstTimeInit.apply(this, arguments);
+      }
+
+      return firstTimeInit;
+    }()
+  }, {
+    key: "filterPostInit",
+    value: function () {
+      var _filterPostInit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var data_,
+            argData,
+            categoryIes,
+            postData,
+            posts_,
+            totalPost_,
+            _args2 = arguments;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                data_ = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : {};
+                argData = data_; //number of post
+
+                if (!("numberOfPosts" in argData)) {
+                  argData["numberOfPosts"] = this.props.attributes.numberOfPosts;
+                } // choose category
+
+
+                categoryIes = "postCategories" in argData ? argData.postCategories : this.props.attributes.postCategories;
+
+                if (categoryIes) {
+                  argData["postCategories"] = categoryIes.join(",");
+                } // featured image
+
+
+                argData["featured_image"] = 1;
+                _context2.next = 8;
+                return this.postDataInit(argData);
+
+              case 8:
+                postData = _context2.sent;
+
+                if (postData) {
+                  // all posts
+                  if ("posts" in postData && postData.posts) {
+                    posts_ = postData.posts;
+                    this.setState({
+                      posts: posts_
+                    });
+                  } //total post
+
+
+                  if ("totalPost" in postData && postData.totalPost) {
+                    totalPost_ = postData.totalPost;
+                    this.setState({
+                      totalPost: totalPost_
+                    });
+                  }
+                }
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function filterPostInit() {
+        return _filterPostInit.apply(this, arguments);
+      }
+
+      return filterPostInit;
+    }() // rest api call
+
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.firstTimeInit();
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
       var _this$props = this.props,
-          posts = _this$props.posts,
           attributes = _this$props.attributes,
-          setAttributes = _this$props.setAttributes,
-          category = _this$props.category,
-          totalPosts = _this$props.totalPosts;
+          setAttributes = _this$props.setAttributes;
+      var _this$state = this.state,
+          posts = _this$state.posts,
+          category = _this$state.category,
+          totalPost = _this$state.totalPost;
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
@@ -2888,7 +3117,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       if (category && category.length) {
         category.map(function (catt) {
           cateGory.push({
-            value: catt.id,
+            value: catt.slug,
             label: catt.name
           });
         });
@@ -2978,6 +3207,10 @@ var Edit = /*#__PURE__*/function (_Component) {
         max: 24,
         onChange: function onChange(e) {
           setAttributes({
+            numberOfPosts: e
+          });
+
+          _this2.filterPostInit({
             numberOfPosts: e
           });
         }
@@ -3096,6 +3329,10 @@ var Edit = /*#__PURE__*/function (_Component) {
           });
           if (chooseAll.length) choosen = [];
           setAttributes({
+            postCategories: choosen
+          });
+
+          _this2.filterPostInit({
             postCategories: choosen
           });
         },

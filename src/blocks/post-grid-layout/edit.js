@@ -18,7 +18,87 @@ import { decodeEntities } from "@wordpress/html-entities";
 class Edit extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      posts: [],
+      category: [],
+      totalPost: null,
+    };
+  }
+  postDataInit(data = {}) {
+    let sendData = data;
+    return apiFetch({
+      path: "/zita-blocks-post-api/v3/posts/",
+      method: "POST",
+      data: sendData,
+    })
+      .then((postsData) => {
+        return postsData;
+      })
+      .catch((error) => console.error(error));
+  }
+  async firstTimeInit() {
+    let { numberOfPosts, postCategories } = this.props.attributes;
+    let sendData = {
+      initialize: 1,
+      numberOfPosts: numberOfPosts,
+      featured_image: 1,
+    };
+    // choose category
+    if (postCategories) {
+      sendData["postCategories"] = postCategories.join(",");
+    }
+    let postData = await this.postDataInit(sendData);
+    if (postData) {
+      // all posts
+      if ("posts" in postData && postData.posts) {
+        let posts_ = postData.posts;
+        this.setState({ posts: posts_ });
+      }
+      //all categories
+      if ("category" in postData && postData.category) {
+        let category_ = postData.category;
+        this.setState({ category: category_ });
+      }
+      //total post
+      if ("totalPost" in postData && postData.totalPost) {
+        let totalPost_ = postData.totalPost;
+        this.setState({ totalPost: totalPost_ });
+      }
+    }
+  }
+  async filterPostInit(data_ = {}) {
+    let argData = data_;
+    //number of post
+    if (!("numberOfPosts" in argData)) {
+      argData["numberOfPosts"] = this.props.attributes.numberOfPosts;
+    }
+    // choose category
+    let categoryIes =
+      "postCategories" in argData
+        ? argData.postCategories
+        : this.props.attributes.postCategories;
+    if (categoryIes) {
+      argData["postCategories"] = categoryIes.join(",");
+    }
+    // featured image
+    argData["featured_image"] = 1;
+    let postData = await this.postDataInit(argData);
+    if (postData) {
+      // all posts
+      if ("posts" in postData && postData.posts) {
+        let posts_ = postData.posts;
+        this.setState({ posts: posts_ });
+      }
+      //total post
+      if ("totalPost" in postData && postData.totalPost) {
+        let totalPost_ = postData.totalPost;
+        this.setState({ totalPost: totalPost_ });
+      }
+    }
+  }
+  // rest api call
+  componentDidMount() {
+    this.firstTimeInit();
   }
   updateObj = (parent_key, child_key, initialValue, value_) => {
     let newNewValue = [...initialValue];
@@ -136,13 +216,9 @@ class Edit extends Component {
     return retur;
   };
   render() {
-    const {
-      posts,
-      attributes,
-      setAttributes,
-      category,
-      totalPosts,
-    } = this.props;
+    const { attributes, setAttributes } = this.props;
+    const { posts, category, totalPost } = this.state;
+
     let {
       heading,
       author,
@@ -171,7 +247,7 @@ class Edit extends Component {
     if (category && category.length) {
       category.map((catt) => {
         cateGory.push({
-          value: catt.id,
+          value: catt.slug,
           label: catt.name,
         });
       });
@@ -316,6 +392,7 @@ class Edit extends Component {
               max={24}
               onChange={(e) => {
                 setAttributes({ numberOfPosts: e });
+                this.filterPostInit({ numberOfPosts: e });
               }}
             />
             <ToggleControl
@@ -486,6 +563,7 @@ class Edit extends Component {
                   });
                   if (chooseAll.length) choosen = [];
                   setAttributes({ postCategories: choosen });
+                  this.filterPostInit({ postCategories: choosen });
                 }}
                 options={cateGory}
               />
