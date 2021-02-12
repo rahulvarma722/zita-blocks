@@ -9,7 +9,7 @@ function zita_blocks_post_grid_block($attr)
         $numberOfpost = $attr['numberOfPosts'];
         $args['posts_per_page'] = $numberOfpost;
         if (isset($attr["postCategories"]) && is_array($attr["postCategories"]) && !empty($attr["postCategories"])) {
-            $args['category__in'] = $attr["postCategories"];
+            $args['category_name'] = join(',', $attr["postCategories"]);
         }
         $postThumbnail = isset($attr['thumbnail'][0]['typeShow']) ? $attr['thumbnail'][0]['typeShow'] : '';
         if ($postThumbnail == "1") {

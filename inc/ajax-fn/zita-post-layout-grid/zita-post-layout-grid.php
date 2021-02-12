@@ -17,7 +17,7 @@ function zita_blocks_layout_grid()
                 'paged' => $pageNo,
             ];
             if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
-                $args['category__in'] = $attr["postCategories"];
+                $args['category_name'] = join(',', $attr["postCategories"]);
             }
             echo zita_blocks_layout_grid_html($args, $attr) ? zita_blocks_layout_grid_html($args, $attr) : 0;
             die();

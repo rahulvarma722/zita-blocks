@@ -54,7 +54,6 @@ class Edit extends Component {
     if (postCategories) {
       sendData["postCategories"] = postCategories.join(",");
     }
-    console.log("sendData", sendData);
     let postData = await this.postDataInit(sendData);
     if (postData) {
       // all posts
@@ -91,7 +90,6 @@ class Edit extends Component {
     // featured image
     argData["featured_image"] = 1;
     let postData = await this.postDataInit(argData);
-    console.log("post data filter -> ", postData);
     if (postData) {
       // all posts
       if ("posts" in postData && postData.posts) {
@@ -164,8 +162,9 @@ class Edit extends Component {
       putTagStyle["backgroundColor"] = tag_r.backgroundColor;
       putTagStyle["fontSize"] = tag_r.fontSize + "px";
       let countTag = tag_r.count;
-      tags_.splice(countTag);
-      return tags_.map((returnH) => (
+      let tagCopied = [...tags_];
+      tagCopied.splice(countTag);
+      return tagCopied.map((returnH) => (
         <span style={putTagStyle}>{returnH.name}</span>
       ));
     }
@@ -242,7 +241,7 @@ class Edit extends Component {
                     }}
                     className="post-date"
                   >
-                    <RichText.Content tag="span" value={post.post_date} />
+                    <span>{post.post_date}</span>
                   </p>
                 </>
               )}
@@ -267,10 +266,7 @@ class Edit extends Component {
                     className="post-date-last-modified"
                   >
                     <span>{__("Modified", "zita-blocks")}: </span>
-                    <RichText.Content
-                      tag="span"
-                      value={post.post_modified_date}
-                    />
+                    <span>{post.post_modified_date}</span>
                   </p>
                 </>
               )}

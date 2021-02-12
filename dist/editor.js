@@ -1564,8 +1564,11 @@ var Edit = /*#__PURE__*/function (_Component) {
         putTagStyle["backgroundColor"] = tag_r.backgroundColor;
         putTagStyle["fontSize"] = tag_r.fontSize + "px";
         var countTag = tag_r.count;
-        tags_.splice(countTag);
-        return tags_.map(function (returnH) {
+
+        var tagCopied = _toConsumableArray(tags_);
+
+        tagCopied.splice(countTag);
+        return tagCopied.map(function (returnH) {
           return wp.element.createElement("span", {
             style: putTagStyle
           }, returnH.name);
@@ -1618,10 +1621,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           fontSize: meta_style_.fontSize + "px"
         },
         className: "post-date"
-      }, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
-        tag: "span",
-        value: post.post_date
-      }))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (date_.enable || postAuthor) && wp.element.createElement("span", {
+      }, wp.element.createElement("span", null, post.post_date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (date_.enable || postAuthor) && wp.element.createElement("span", {
         style: {
           color: meta_style_.color,
           fontSize: meta_style_.fontSize + "px"
@@ -1633,10 +1633,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           fontSize: meta_style_.fontSize + "px"
         },
         className: "post-date-last-modified"
-      }, wp.element.createElement("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Modified", "zita-blocks"), ": "), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
-        tag: "span",
-        value: post.post_modified_date
-      })))), excerpt_ && excerpt_.enable && wp.element.createElement("p", {
+      }, wp.element.createElement("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Modified", "zita-blocks"), ": "), wp.element.createElement("span", null, post.post_modified_date)))), excerpt_ && excerpt_.enable && wp.element.createElement("p", {
         style: {
           color: excerpt_.color,
           fontSize: excerpt_.fontSize + "px"
@@ -1794,11 +1791,10 @@ var Edit = /*#__PURE__*/function (_Component) {
                   sendData["postCategories"] = postCategories.join(",");
                 }
 
-                console.log("sendData", sendData);
-                _context.next = 6;
+                _context.next = 5;
                 return this.postDataInit(sendData);
 
-              case 6:
+              case 5:
                 postData = _context.sent;
 
                 if (postData) {
@@ -1827,7 +1823,7 @@ var Edit = /*#__PURE__*/function (_Component) {
                   }
                 }
 
-              case 8:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -1877,7 +1873,6 @@ var Edit = /*#__PURE__*/function (_Component) {
 
               case 8:
                 postData = _context2.sent;
-                console.log("post data filter -> ", postData);
 
                 if (postData) {
                   // all posts
@@ -1897,7 +1892,7 @@ var Edit = /*#__PURE__*/function (_Component) {
                   }
                 }
 
-              case 11:
+              case 10:
               case "end":
                 return _context2.stop();
             }
@@ -2769,7 +2764,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
- // let blankImage = plugin_url.url + "assets/img/blank-img.png";
+
+var _wp = wp,
+    apiFetch = _wp.apiFetch;
 
 var Edit = /*#__PURE__*/function (_Component) {
   _inherits(Edit, _Component);
@@ -2793,17 +2790,6 @@ var Edit = /*#__PURE__*/function (_Component) {
       _this.props.setAttributes(setAttr_);
     });
 
-    _defineProperty(_assertThisInitialized(_this), "dateFormate", function (date) {
-      var date_ = date.split("T")[0];
-      var dateObj = new Date(date_);
-      var monthNames = [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("January", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("February", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("March", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("April", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("May", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("June", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("July", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("August", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("September", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("October", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("November", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("December", "zita-blocks")];
-      var dateArr = monthNames[dateObj.getMonth()] + " " + dateObj.getDate() + ", " + dateObj.getFullYear();
-      return wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
-        tag: "span",
-        value: dateArr
-      });
-    });
-
     _defineProperty(_assertThisInitialized(_this), "excerptWords", function (words, words_) {
       words_ = Object(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_5__["decodeEntities"])(words_);
       words_ = words_.replace(/<\/?[^>]+(>|$)/g, "");
@@ -2812,102 +2798,68 @@ var Edit = /*#__PURE__*/function (_Component) {
       return words_.join(" ");
     });
 
-    _defineProperty(_assertThisInitialized(_this), "showCateFn", function (categories) {
-      var returR = [];
+    _defineProperty(_assertThisInitialized(_this), "showCateFn", function (categories, cate_) {
+      if (categories && categories instanceof Array && categories.length > 0) {
+        var copiedCate = _toConsumableArray(categories);
 
-      if ("category" in _this.props && _this.props.category && categories.length) {
-        var countCate = _this.props.attributes.showCate[0].count;
-        var postCate_ = _this.props.attributes.postCategories;
+        var countCate = cate_.count;
 
-        if (postCate_.length) {
-          postCate_.map(function (ev) {
-            var MkInt = parseInt(ev);
-            if (categories.includes(MkInt)) categories.unshift(MkInt);
-          });
+        if (countCate < copiedCate.length) {
+          var filterChoosen = _this.props.attributes.postCategories;
+
+          if (filterChoosen.length > 0 && filterChoosen.length < copiedCate.length) {
+            filterChoosen.map(function (cateSlug) {
+              var getIndex = copiedCate.findIndex(function (slug_) {
+                return slug_.slug == cateSlug;
+              });
+
+              if (getIndex && getIndex + 1 > countCate) {
+                delete copiedCate[getIndex];
+                copiedCate.unshift({
+                  name: cateSlug
+                });
+              }
+            });
+          }
         }
 
-        categories = _toConsumableArray(new Set(categories));
-        categories.forEach(function (cate) {
-          if (returR.length == countCate) {
-            return;
-          }
-
-          _this.props.category.forEach(function (searchCate) {
-            if (cate == searchCate.id) {
-              returR.push(searchCate.name);
-              return;
-            }
-          });
-        });
-      }
-
-      if (returR.length) {
-        var getCateStyle = _this.props.attributes.showCate;
         var putCateStyle = {
-          fontSize: getCateStyle[0].fontSize + "px"
+          fontSize: cate_.fontSize + "px"
         };
 
-        if (getCateStyle[0].customColor) {
-          putCateStyle["color"] = getCateStyle[0].color;
-          putCateStyle["backgroundColor"] = getCateStyle[0].backgroundColor;
+        if (cate_.customColor) {
+          putCateStyle["color"] = cate_.color;
+          putCateStyle["backgroundColor"] = cate_.backgroundColor;
         }
 
-        return returR.map(function (returnH) {
+        copiedCate.splice(countCate);
+        return copiedCate.map(function (returnH) {
           return wp.element.createElement("span", {
             style: putCateStyle
-          }, returnH);
+          }, returnH.name);
         });
       }
     });
 
-    _defineProperty(_assertThisInitialized(_this), "showTagsFn", function (tags_) {
-      var returR = [];
-
-      if ("tags" in _this.props && _this.props.tags && tags_.length) {
-        var countTag = _this.props.attributes.showTag[0].count;
-        tags_.forEach(function (tag) {
-          if (returR.length == countTag) {
-            return;
-          }
-
-          _this.props.tags.forEach(function (searchtag) {
-            if (tag == searchtag.id) {
-              returR.push(searchtag.name);
-              return;
-            }
-          });
-        });
-      }
-
-      if (returR.length) {
-        var getTagStyle = _this.props.attributes.showTag;
+    _defineProperty(_assertThisInitialized(_this), "showTagsFn", function (tags_, tag_r) {
+      if (tags_ && tags_ instanceof Array && tags_.length) {
         var putTagStyle = {
-          color: getTagStyle[0].color
+          color: tag_r.color
         };
-        putTagStyle["color"] = getTagStyle[0].color;
-        putTagStyle["backgroundColor"] = getTagStyle[0].backgroundColor;
-        putTagStyle["fontSize"] = getTagStyle[0].fontSize;
-        return returR.map(function (returnH) {
+        putTagStyle["color"] = tag_r.color;
+        putTagStyle["backgroundColor"] = tag_r.backgroundColor;
+        putTagStyle["fontSize"] = tag_r.fontSize + "px";
+        var countTag = tag_r.count;
+
+        var tagCopied = _toConsumableArray(tags_);
+
+        tagCopied.splice(countTag);
+        return tagCopied.map(function (returnH) {
           return wp.element.createElement("span", {
             style: putTagStyle
-          }, returnH);
+          }, returnH.name);
         });
       }
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "authorFn", function (author) {
-      var retur = {};
-
-      if ("authors" in _this.props) {
-        _this.props.authors.map(function (authorDetail) {
-          if (authorDetail.id == author) {
-            retur = authorDetail;
-            return;
-          }
-        });
-      }
-
-      return retur;
     });
 
     _this.state = {
@@ -2937,27 +2889,31 @@ var Edit = /*#__PURE__*/function (_Component) {
     key: "firstTimeInit",
     value: function () {
       var _firstTimeInit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var _this$props$attribute, numberOfPosts, postCategories, sendData, postData, posts_, category_, totalPost_;
+        var _this$props$attribute, numberOfPosts, postCategories, thumbnail, sendData, postData, posts_, category_, totalPost_;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this$props$attribute = this.props.attributes, numberOfPosts = _this$props$attribute.numberOfPosts, postCategories = _this$props$attribute.postCategories;
+                _this$props$attribute = this.props.attributes, numberOfPosts = _this$props$attribute.numberOfPosts, postCategories = _this$props$attribute.postCategories, thumbnail = _this$props$attribute.thumbnail;
                 sendData = {
                   initialize: 1,
-                  numberOfPosts: numberOfPosts,
-                  featured_image: 1
+                  numberOfPosts: numberOfPosts
                 }; // choose category
 
                 if (postCategories) {
                   sendData["postCategories"] = postCategories.join(",");
+                } // featured image
+
+
+                if (thumbnail[0].typeShow == "1") {
+                  sendData["featured_image"] = 1;
                 }
 
-                _context.next = 5;
+                _context.next = 6;
                 return this.postDataInit(sendData);
 
-              case 5:
+              case 6:
                 postData = _context.sent;
 
                 if (postData) {
@@ -2986,7 +2942,7 @@ var Edit = /*#__PURE__*/function (_Component) {
                   }
                 }
 
-              case 7:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -3030,7 +2986,15 @@ var Edit = /*#__PURE__*/function (_Component) {
                 } // featured image
 
 
-                argData["featured_image"] = 1;
+                if ("featured_image" in argData) {
+                  argData["featured_image"] = 1;
+                } else {
+                  // featured image
+                  if (this.props.attributes.thumbnail[0].typeShow == "1") {
+                    argData["featured_image"] = 1;
+                  }
+                }
+
                 _context2.next = 8;
                 return this.postDataInit(argData);
 
@@ -3303,6 +3267,10 @@ var Edit = /*#__PURE__*/function (_Component) {
           var value_ = e.target.value;
 
           _this2.updateObj("thumbnail", "typeShow", thumbnail, value_);
+
+          if (value_ == "1") _this2.filterPostInit({
+            featured_image: 1
+          });
         }
       }, wp.element.createElement("option", {
         value: "all"
@@ -3443,7 +3411,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           _this2.updateObj("showTag", "backgroundColor", showTag, color);
         }
-      }))), totalPosts && totalPosts > numberOfPosts && wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+      }))), totalPost && totalPost > posts.length && wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Next / Previous Button", "zita-blocks"),
         initialOpen: false
       }, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
@@ -3477,7 +3445,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           _this2.updateObj("meta_style", "npBgColor", meta_style, color);
         }
-      })))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
+      })))), posts && posts.length > 0 ? wp.element.createElement("div", {
         className: "zita-block-post",
         style: {
           backgroundColor: meta_style_.blockBgColor
@@ -3506,10 +3474,9 @@ var Edit = /*#__PURE__*/function (_Component) {
       })), wp.element.createElement("div", {
         className: "column-count column-count-".concat(numberOfColumn, " ").concat(meta_style_.left_border && "left-border")
       }, posts.map(function (post) {
-        var postAuthor = author_.enable && "name" in _this2.authorFn(post.author) ? _this2.authorFn(post.author).name : false;
-        return thumbnail_.typeShow == "1" && "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ ? wp.element.createElement("article", {
-          className: "block-post-article",
-          key: post.id
+        var postAuthor = author_ && author_.enable ? post.author : false;
+        return thumbnail_.typeShow == "1" && post.feature_image != "" ? wp.element.createElement("article", {
+          className: "block-post-article"
         }, wp.element.createElement("div", {
           className: "post-wrapper"
         }, wp.element.createElement("div", {
@@ -3518,15 +3485,15 @@ var Edit = /*#__PURE__*/function (_Component) {
           style: {
             borderRadius: thumbnail_.borderRadius + "px"
           },
-          src: post.getMedia_.guid.rendered
+          src: post.feature_image
         })), wp.element.createElement("div", {
           className: "post-content"
         }, showCate_.enable && wp.element.createElement("p", {
           className: "post-category"
-        }, _this2.showCateFn(post.categories)), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
+        }, _this2.showCateFn(post.post_categories, showCate_)), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
           className: "post-heading",
           tagName: heading_.tag,
-          value: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])(post.title.rendered, "zita-blocks"),
+          value: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])(post.postTitle, "zita-blocks"),
           style: {
             fontSize: heading_.fontSize,
             color: heading_.color
@@ -3551,7 +3518,7 @@ var Edit = /*#__PURE__*/function (_Component) {
             fontSize: meta_style_.fontSize + "px"
           },
           className: "post-date"
-        }, _this2.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (postAuthor || date_.enable) && wp.element.createElement("span", {
+        }, wp.element.createElement("span", null, post.post_date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (postAuthor || date_.enable) && wp.element.createElement("span", {
           style: {
             color: meta_style_.color,
             fontSize: meta_style_.fontSize
@@ -3563,34 +3530,33 @@ var Edit = /*#__PURE__*/function (_Component) {
             fontSize: meta_style_.fontSize + "px"
           },
           className: "post-date-last-modified"
-        }, wp.element.createElement("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Modified:", "zita-blocks"), " "), _this2.dateFormate(post.modified)))), excerpt_.enable && wp.element.createElement("p", {
+        }, wp.element.createElement("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Modified:", "zita-blocks"), " "), wp.element.createElement("span", null, post.post_modified_date)))), excerpt_.enable && wp.element.createElement("p", {
           style: {
             color: excerpt_.color,
             fontSize: excerpt_.fontSize + "px"
           },
           className: "post-excerpt"
-        }, _this2.excerptWords(excerpt_.words, post.excerpt.rendered)), showTag_.enable && wp.element.createElement("p", {
+        }, _this2.excerptWords(excerpt_.words, post.post_excerpt)), showTag_.enable && wp.element.createElement("p", {
           className: "post-tags"
-        }, _this2.showTagsFn(post.tags))))) : thumbnail_.typeShow != "1" ? wp.element.createElement("article", {
-          className: "block-post-article",
-          key: post.id
+        }, _this2.showTagsFn(post.post_tag, showTag_))))) : thumbnail_.typeShow != "1" ? wp.element.createElement("article", {
+          className: "block-post-article"
         }, wp.element.createElement("div", {
           className: "post-wrapper"
-        }, "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && thumbnail_.typeShow == "all" && wp.element.createElement("div", {
+        }, post.feature_image && post.feature_image != "" && thumbnail_.typeShow == "all" && wp.element.createElement("div", {
           className: "featured-image"
         }, wp.element.createElement("img", {
           style: {
             borderRadius: thumbnail_.borderRadius + "px"
           },
-          src: post.getMedia_.guid.rendered
+          src: post.feature_image
         })), wp.element.createElement("div", {
           className: "post-content"
         }, showCate_.enable && wp.element.createElement("p", {
           className: "post-category"
-        }, _this2.showCateFn(post.categories)), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
+        }, _this2.showCateFn(post.post_categories, showCate_)), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
           className: "post-heading",
           tagName: heading_.tag,
-          value: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])(post.title.rendered, "zita-blocks"),
+          value: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])(post.postTitle, "zita-blocks"),
           style: {
             fontSize: heading_.fontSize,
             color: heading_.color
@@ -3615,7 +3581,7 @@ var Edit = /*#__PURE__*/function (_Component) {
             fontSize: meta_style_.fontSize
           },
           className: "post-date"
-        }, _this2.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (postAuthor || date_.enable) && wp.element.createElement("span", {
+        }, wp.element.createElement("span", null, post.post_date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (postAuthor || date_.enable) && wp.element.createElement("span", {
           style: {
             color: meta_style_.color,
             fontSize: meta_style_.fontSize
@@ -3627,15 +3593,15 @@ var Edit = /*#__PURE__*/function (_Component) {
             fontSize: meta_style_.fontSize
           },
           className: "post-date-last-modified"
-        }, wp.element.createElement("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Modified:", "zita-blocks"), " "), _this2.dateFormate(post.modified)))), excerpt_.enable && wp.element.createElement("p", {
+        }, wp.element.createElement("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])("Modified:", "zita-blocks"), " "), wp.element.createElement("span", null, post.post_modified_date)))), excerpt_.enable && wp.element.createElement("p", {
           style: {
             color: excerpt_.color
           },
           className: "post-excerpt"
-        }, _this2.excerptWords(excerpt_.words, post.excerpt.rendered)), showTag_.enable && wp.element.createElement("p", {
+        }, _this2.excerptWords(excerpt_.words, post.post_excerpt)), showTag_.enable && wp.element.createElement("p", {
           className: "post-tags"
-        }, _this2.showTagsFn(post.tags))))) : "";
-      })), totalPosts && totalPosts > numberOfPosts && meta_style_.npEnable ? wp.element.createElement("div", {
+        }, _this2.showTagsFn(post.post_tag, showTag_))))) : "";
+      })), meta_style_.npEnable && totalPost && totalPost > posts.length ? wp.element.createElement("div", {
         className: "zita-two-post-wrapper-next-prev"
       }, wp.element.createElement("div", {
         style: {
@@ -3682,117 +3648,9 @@ var Edit = /*#__PURE__*/function (_Component) {
   }]);
 
   return Edit;
-}(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Component"]); // export default Edit;
+}(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["withSelect"])(function (select, props) {
-  var attributes = props.attributes;
-  var numberOfPosts = attributes.numberOfPosts,
-      postCategories = attributes.postCategories,
-      thumbnail = attributes.thumbnail;
-  var query = {
-    per_page: numberOfPosts
-  };
-  var query2 = {
-    per_page: -1
-  };
-
-  if (postCategories && postCategories.length) {
-    var cateCh = postCategories.join(",");
-    query["categories"] = cateCh;
-    query2["categories"] = cateCh;
-  }
-
-  var _select = select("core"),
-      getMedia = _select.getMedia,
-      getEntityRecords = _select.getEntityRecords,
-      getAuthors = _select.getAuthors;
-
-  var getTotalPost = getEntityRecords("postType", "post", query2); /////////////////////////////////////////////////////////////////////////////
-
-  var getAllPost = [];
-
-  if (thumbnail[0].typeShow == "1") {
-    getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
-
-    function returnPostFn(numberOfPosts) {
-      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      var numberOfposts_ = check ? check : numberOfPosts;
-      var new_query = {
-        per_page: numberOfposts_
-      };
-
-      if (postCategories && postCategories.length) {
-        new_query["categories"] = postCategories.join(",");
-      }
-
-      var checkPost = select("core").getEntityRecords("postType", "post", new_query);
-
-      if (checkPost && checkPost.length) {
-        var newPostArray = checkPost.filter(function (chv) {
-          return chv.featured_media > 0;
-        });
-
-        if (newPostArray.length == numberOfPosts || getTotalPost.length <= numberOfposts_) {
-          return newPostArray;
-        } else {
-          if (newPostArray.length < numberOfPosts && numberOfposts_ <= getTotalPost.length) {
-            return returnPostFn(numberOfPosts, numberOfposts_ + 1);
-          }
-        }
-      }
-    }
-  } else {
-    getAllPost = getEntityRecords("postType", "post", query);
-  } // let getAllPost = getEntityRecords("postType", "post", query);
-  ///////////////////////////////////////////////////////////////////////////////
-
-
-  var cate_ = getEntityRecords("taxonomy", "category", {
-    per_page: -1
-  });
-  var tags_ = getEntityRecords("taxonomy", "post_tag", {
-    per_page: -1
-  });
-  var arrayCatePost = {
-    posts: true,
-    category: cate_,
-    tags: tags_,
-    totalPosts: getTotalPost && getTotalPost instanceof Array && getTotalPost.length
-  };
-
-  if (getAllPost && getAllPost.length) {
-    var returnArray = [];
-    getAllPost.map(function (v, index_) {
-      if (v.featured_media) {
-        getAllPost[index_]["getMedia_"] = getMedia(v.featured_media);
-      } else {
-        getAllPost[index_]["getMedia_"] = false;
-      }
-
-      returnArray.push(getAllPost[index_]);
-    });
-    arrayCatePost["posts"] = returnArray;
-  } else if (getAllPost instanceof Array && getAllPost.length == 0) {
-    arrayCatePost["posts"] = false;
-  } // autohrs
-
-
-  var authors = getAuthors();
-
-  if (authors && authors.length) {
-    var authors_ = [];
-    authors.map(function (v) {
-      authors_.push({
-        id: v.id,
-        name: v.name
-      });
-    });
-    arrayCatePost["authors"] = authors_;
-  }
-
-  return arrayCatePost;
-})(Edit));
+/* harmony default export */ __webpack_exports__["default"] = (Edit);
 
 /***/ }),
 
@@ -9165,6 +9023,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_5__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -9205,6 +9067,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+var _wp = wp,
+    apiFetch = _wp.apiFetch;
 
 var Edit = /*#__PURE__*/function (_Component) {
   _inherits(Edit, _Component);
@@ -9228,17 +9092,6 @@ var Edit = /*#__PURE__*/function (_Component) {
       _this.props.setAttributes(setAttr_);
     });
 
-    _defineProperty(_assertThisInitialized(_this), "dateFormate", function (date) {
-      var date_ = date.split("T")[0];
-      var dateObj = new Date(date_);
-      var monthNames = [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("January", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("February", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("March", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("April", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("May", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("June", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("July", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("August", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("September", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("October", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("November", "zita-blocks"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("December", "zita-blocks")];
-      var dateArr = monthNames[dateObj.getMonth()] + " " + dateObj.getDate() + ", " + dateObj.getFullYear();
-      return wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["RichText"].Content, {
-        tag: "span",
-        value: dateArr
-      });
-    });
-
     _defineProperty(_assertThisInitialized(_this), "excerptWords", function (words, words_) {
       words_ = Object(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_5__["decodeEntities"])(words_);
       words_ = words_.replace(/<\/?[^>]+(>|$)/g, "");
@@ -9248,35 +9101,30 @@ var Edit = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "showCateFn", function (categories, cate_) {
-      var returR = [];
+      if (categories && categories instanceof Array && categories.length > 0) {
+        var copiedCate = _toConsumableArray(categories);
 
-      if ("category" in _this.props && _this.props.category && categories.length) {
         var countCate = cate_.count;
-        var postCate_ = _this.props.attributes.postCategories;
 
-        if (postCate_.length) {
-          postCate_.map(function (ev) {
-            var MkInt = parseInt(ev);
-            if (categories.includes(MkInt)) categories.unshift(MkInt);
-          });
+        if (countCate < copiedCate.length) {
+          var filterChoosen = _this.props.attributes.postCategories;
+
+          if (filterChoosen.length > 0 && filterChoosen.length < copiedCate.length) {
+            filterChoosen.map(function (cateSlug) {
+              var getIndex = copiedCate.findIndex(function (slug_) {
+                return slug_.slug == cateSlug;
+              });
+
+              if (getIndex && getIndex + 1 > countCate) {
+                delete copiedCate[getIndex];
+                copiedCate.unshift({
+                  name: cateSlug
+                });
+              }
+            });
+          }
         }
 
-        categories = _toConsumableArray(new Set(categories));
-        categories.forEach(function (cate) {
-          if (returR.length == countCate) {
-            return;
-          }
-
-          _this.props.category.forEach(function (searchCate) {
-            if (cate == searchCate.id) {
-              returR.push(searchCate.name);
-              return;
-            }
-          });
-        });
-      }
-
-      if (returR.length) {
         var putCateStyle = {
           fontSize: cate_.fontSize + "px"
         };
@@ -9286,84 +9134,59 @@ var Edit = /*#__PURE__*/function (_Component) {
           putCateStyle["backgroundColor"] = cate_.backgroundColor;
         }
 
-        return returR.map(function (returnH) {
+        copiedCate.splice(countCate);
+        return copiedCate.map(function (returnH) {
           return wp.element.createElement("span", {
             style: putCateStyle
-          }, returnH);
+          }, returnH.name);
         });
       }
     });
 
     _defineProperty(_assertThisInitialized(_this), "showTagsFn", function (tags_, tag_r) {
-      var returR = [];
-
-      if ("tags" in _this.props && _this.props.tags && tags_.length) {
-        var countTag = tag_r.count;
-        tags_.forEach(function (tag) {
-          if (returR.length == countTag) {
-            return;
-          }
-
-          _this.props.tags.forEach(function (searchtag) {
-            if (tag == searchtag.id) {
-              returR.push(searchtag.name);
-              return;
-            }
-          });
-        });
-      }
-
-      if (returR.length) {
+      if (tags_ && tags_ instanceof Array && tags_.length) {
         var putTagStyle = {
           color: tag_r.color
         };
         putTagStyle["color"] = tag_r.color;
         putTagStyle["backgroundColor"] = tag_r.backgroundColor;
         putTagStyle["fontSize"] = tag_r.fontSize + "px";
-        return returR.map(function (returnH) {
+        var countTag = tag_r.count;
+
+        var tagCopied = _toConsumableArray(tags_);
+
+        tagCopied.splice(countTag);
+        return tagCopied.map(function (returnH) {
           return wp.element.createElement("span", {
             style: putTagStyle
-          }, returnH);
+          }, returnH.name);
         });
       }
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "authorFn", function (author) {
-      var retur = {};
-
-      if ("authors" in _this.props) {
-        _this.props.authors.map(function (authorDetail) {
-          if (authorDetail.id == author) {
-            retur = authorDetail;
-            return;
-          }
-        });
-      }
-
-      return retur;
     });
 
     _defineProperty(_assertThisInitialized(_this), "returnHtml", function (post, heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_) {
-      var postAuthor = author_ && author_.enable && "name" in _this.authorFn(post.author) ? _this.authorFn(post.author).name : false;
+      var postAuthor = author_ && author_.enable ? post.author : false;
       return wp.element.createElement("article", {
-        className: "block-post-article",
-        key: post.id
+        className: "block-post-article"
       }, wp.element.createElement("div", {
         className: "post-wrapper"
       }, wp.element.createElement("div", {
         className: "featured-image"
       }, wp.element.createElement("img", {
-        src: post.getMedia_.guid.rendered
+        style: {
+          borderRadius: thumbnail_.borderRadius + "px"
+        },
+        src: post.feature_image
       })), wp.element.createElement("div", {
         className: "post-content"
       }, showCate_ && showCate_.enable && wp.element.createElement("p", {
         className: "post-category"
-      }, _this.showCateFn(post.categories, showCate_)), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["RichText"].Content, {
+      }, _this.showCateFn(post.post_categories, showCate_)), wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["RichText"].Content, {
         className: "post-heading",
         tagName: heading_.tag,
-        value: post.title.rendered,
+        value: post.postTitle,
         style: {
-          fontSize: heading_.fontSize,
+          fontSize: heading_.fontSize + "px",
           color: heading_.color
         }
       }), wp.element.createElement("div", {
@@ -9386,7 +9209,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           fontSize: meta_style_.fontSize + "px"
         },
         className: "post-date"
-      }, _this.dateFormate(post.date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (date_.enable || postAuthor) && wp.element.createElement("span", {
+      }, wp.element.createElement("span", null, post.post_date))), date_.last_modified && wp.element.createElement(wp.element.Fragment, null, (date_.enable || postAuthor) && wp.element.createElement("span", {
         style: {
           color: meta_style_.color,
           fontSize: meta_style_.fontSize + "px"
@@ -9398,41 +9221,205 @@ var Edit = /*#__PURE__*/function (_Component) {
           fontSize: meta_style_.fontSize + "px"
         },
         className: "post-date-last-modified"
-      }, wp.element.createElement("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Modified:", "zita-blocks"), " "), _this.dateFormate(post.modified)))), excerpt_ && excerpt_.enable && wp.element.createElement("p", {
+      }, wp.element.createElement("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Modified", "zita-blocks"), ": "), wp.element.createElement("span", null, post.post_modified_date)))), excerpt_ && excerpt_.enable && wp.element.createElement("p", {
         style: {
           color: excerpt_.color,
           fontSize: excerpt_.fontSize + "px"
         },
         className: "post-excerpt"
-      }, _this.excerptWords(excerpt_.words, post.excerpt.rendered), wp.element.createElement("span", {
+      }, _this.excerptWords(excerpt_.words, post.post_excerpt), wp.element.createElement("span", {
         className: "read-more"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("...Read More", "zita-blocks"))), showTag_ && showTag_.enable && wp.element.createElement("p", {
+      }, "...", Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Read More", "zita-blocks"))), showTag_ && showTag_.enable && wp.element.createElement("p", {
         style: {
           color: meta_style_.color
         },
         className: "post-tags"
-      }, _this.showTagsFn(post.tags, showTag_)))));
+      }, _this.showTagsFn(post.post_tag, showTag_)))));
     });
 
     _this.state = {
       metaChoose: "primary",
       excerpt: "primary",
-      heading: "primary"
+      heading: "primary",
+      // pages state from post
+      posts: [],
+      category: [],
+      totalPost: null
     };
     return _this;
   }
 
   _createClass(Edit, [{
+    key: "postDataInit",
+    value: function postDataInit() {
+      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var sendData = data;
+      return apiFetch({
+        path: "/zita-blocks-post-api/v3/posts/",
+        method: "POST",
+        data: sendData
+      }).then(function (postsData) {
+        return postsData;
+      }).catch(function (error) {
+        return console.error(error);
+      });
+    }
+  }, {
+    key: "firstTimeInit",
+    value: function () {
+      var _firstTimeInit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _this$props$attribute, numberOfPosts, postCategories, sendData, postData, posts_, category_, totalPost_;
+
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this$props$attribute = this.props.attributes, numberOfPosts = _this$props$attribute.numberOfPosts, postCategories = _this$props$attribute.postCategories;
+                sendData = {
+                  initialize: 1,
+                  numberOfPosts: numberOfPosts,
+                  featured_image: 1
+                }; // choose category
+
+                if (postCategories) {
+                  sendData["postCategories"] = postCategories.join(",");
+                }
+
+                _context.next = 5;
+                return this.postDataInit(sendData);
+
+              case 5:
+                postData = _context.sent;
+
+                if (postData) {
+                  // all posts
+                  if ("posts" in postData && postData.posts) {
+                    posts_ = postData.posts;
+                    this.setState({
+                      posts: posts_
+                    });
+                  } //all categories
+
+
+                  if ("category" in postData && postData.category) {
+                    category_ = postData.category;
+                    this.setState({
+                      category: category_
+                    });
+                  } //total post
+
+
+                  if ("totalPost" in postData && postData.totalPost) {
+                    totalPost_ = postData.totalPost;
+                    this.setState({
+                      totalPost: totalPost_
+                    });
+                  }
+                }
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function firstTimeInit() {
+        return _firstTimeInit.apply(this, arguments);
+      }
+
+      return firstTimeInit;
+    }()
+  }, {
+    key: "filterPostInit",
+    value: function () {
+      var _filterPostInit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var data_,
+            argData,
+            categoryIes,
+            postData,
+            posts_,
+            totalPost_,
+            _args2 = arguments;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                data_ = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : {};
+                argData = data_; //number of post
+
+                if (!("numberOfPosts" in argData)) {
+                  argData["numberOfPosts"] = this.props.attributes.numberOfPosts;
+                } // choose category
+
+
+                categoryIes = "postCategories" in argData ? argData.postCategories : this.props.attributes.postCategories;
+
+                if (categoryIes) {
+                  argData["postCategories"] = categoryIes.join(",");
+                } // featured image
+
+
+                argData["featured_image"] = 1;
+                _context2.next = 8;
+                return this.postDataInit(argData);
+
+              case 8:
+                postData = _context2.sent;
+
+                if (postData) {
+                  // all posts
+                  if ("posts" in postData && postData.posts) {
+                    posts_ = postData.posts;
+                    this.setState({
+                      posts: posts_
+                    });
+                  } //total post
+
+
+                  if ("totalPost" in postData && postData.totalPost) {
+                    totalPost_ = postData.totalPost;
+                    this.setState({
+                      totalPost: totalPost_
+                    });
+                  }
+                }
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function filterPostInit() {
+        return _filterPostInit.apply(this, arguments);
+      }
+
+      return filterPostInit;
+    }() // rest api call
+
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.firstTimeInit();
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
       // ++++++++++++++===============
       var _this$props = this.props,
-          posts = _this$props.posts,
           attributes = _this$props.attributes,
-          setAttributes = _this$props.setAttributes,
-          category = _this$props.category; // if number of post sum
+          setAttributes = _this$props.setAttributes; // if number of post sum
+
+      var _this$state = this.state,
+          posts = _this$state.posts,
+          category = _this$state.category,
+          totalPost = _this$state.totalPost;
 
       if (numberOfPosts == 3 || numberOfPosts == 5) {
         this.setState({
@@ -9487,7 +9474,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       if (category && category.length) {
         category.map(function (catt) {
           cateGory.push({
-            value: catt.id,
+            value: catt.slug,
             label: catt.name
           });
         });
@@ -9568,6 +9555,10 @@ var Edit = /*#__PURE__*/function (_Component) {
         max: 6,
         onChange: function onChange(e) {
           setAttributes({
+            numberOfPosts: e
+          });
+
+          _this2.filterPostInit({
             numberOfPosts: e
           });
         }
@@ -9743,6 +9734,10 @@ var Edit = /*#__PURE__*/function (_Component) {
           });
           if (chooseAll.length) choosen = [];
           setAttributes({
+            postCategories: choosen
+          });
+
+          _this2.filterPostInit({
             postCategories: choosen
           });
         },
@@ -9980,7 +9975,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         onChange: function onChange(color) {
           return _this2.updateObj("meta_style", "color", meta_style, color);
         }
-      }))), posts && posts.length > 0 && "getMedia_" in posts[0] ? wp.element.createElement("div", {
+      }))), posts && posts.length > 0 ? wp.element.createElement("div", {
         className: "zita-section-post"
       }, title_.enable && wp.element.createElement("div", {
         className: "zita-block-post-title",
@@ -10006,15 +10001,15 @@ var Edit = /*#__PURE__*/function (_Component) {
       })), (posts.length == 1 || posts.length == 2 || posts.length == 4 || posts.length == 6) && wp.element.createElement("div", {
         className: "column-count column-count-".concat(posts.length == 2 || posts.length == 4 ? 2 : posts.length == 6 ? 3 : 1)
       }, posts.map(function (post) {
-        return "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_);
+        return _this2.returnHtml(post, heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_);
       })), (posts.length == 3 || posts.length == 5) && wp.element.createElement("div", {
         className: "parent-column-two count-".concat(posts.length == 3 ? 3 : 5)
       }, wp.element.createElement("div", null, wp.element.createElement("div", {
         className: "column-count column-count-1"
-      }, "getMedia_" in posts[0] && posts[0].getMedia_ && "guid" in posts[0].getMedia_ && this.returnHtml(posts[0], heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_))), wp.element.createElement("div", null, wp.element.createElement("div", {
+      }, this.returnHtml(posts[0], heading_, author_, date_, meta_style_, thumbnail_, showCate_, excerpt_, showTag_))), wp.element.createElement("div", null, wp.element.createElement("div", {
         className: "column-count column-count-".concat(posts.length == 3 ? 1 : 2)
       }, posts.map(function (post, in_) {
-        return in_ != 0 && "getMedia_" in post && post.getMedia_ && "guid" in post.getMedia_ && _this2.returnHtml(post, heading2_, author2_, date2_, meta_style2_, thumbnail_, showCate2_, excerpt2_, showTag2_);
+        return in_ != 0 && _this2.returnHtml(post, heading2_, author2_, date2_, meta_style2_, thumbnail_, showCate2_, excerpt2_, showTag2_);
       }))))) : wp.element.createElement("div", null, !posts ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("No Post Found", "zita-blocks") : wp.element.createElement("div", {
         className: "post-loader"
       }, wp.element.createElement("div", {
@@ -10024,111 +10019,85 @@ var Edit = /*#__PURE__*/function (_Component) {
   }]);
 
   return Edit;
-}(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Component"]); // export default Edit;
+}(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["withSelect"])(function (select, props) {
-  var attributes = props.attributes;
-  var numberOfPosts = attributes.numberOfPosts,
-      postCategories = attributes.postCategories;
-  var query = {
-    per_page: numberOfPosts
-  };
-  var query2 = {
-    per_page: -1
-  };
-
-  if (postCategories && postCategories.length) {
-    var cateCh = postCategories.join(",");
-    query["categories"] = cateCh;
-    query2["categories"] = cateCh;
-  }
-
-  var _select = select("core"),
-      getMedia = _select.getMedia,
-      getEntityRecords = _select.getEntityRecords,
-      getAuthors = _select.getAuthors; ////////////////////////////////////////////////////////////////////////////////////////////
-
-
-  var getTotalPost = getEntityRecords("postType", "post", query2);
-  var getAllPost = getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
-
-  function returnPostFn(numberOfPosts) {
-    var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    var numberOfposts_ = check ? check : numberOfPosts;
-    var new_query = {
-      per_page: numberOfposts_
-    };
-
-    if (postCategories && postCategories.length) {
-      new_query["categories"] = postCategories.join(",");
-    }
-
-    var checkPost = select("core").getEntityRecords("postType", "post", new_query);
-
-    if (checkPost && checkPost instanceof Array && checkPost.length > 0) {
-      var newPostArray = checkPost.filter(function (chv) {
-        return chv.featured_media > 0;
-      });
-
-      if (newPostArray.length == numberOfPosts || getTotalPost.length <= numberOfposts_) {
-        return newPostArray;
-      } else {
-        if (newPostArray.length < numberOfPosts && numberOfposts_ <= getTotalPost.length) {
-          return returnPostFn(numberOfPosts, numberOfposts_ + 1);
-        }
-      }
-    } else {
-      return false;
-    }
-  } ///////////////////////////////////////////////////////////////////////////////////////////
-  // let getAllPost = getEntityRecords("postType", "post", query);
-
-
-  var cate_ = getEntityRecords("taxonomy", "category", {
-    per_page: -1
-  });
-  var tags_ = getEntityRecords("taxonomy", "post_tag", {
-    per_page: -1
-  });
-  var arrayCatePost = {
-    posts: true,
-    category: cate_,
-    tags: tags_
-  };
-
-  if (getAllPost && getAllPost.length) {
-    var returnArray = [];
-    getAllPost.map(function (v, index_) {
-      if (v.featured_media) {
-        getAllPost[index_]["getMedia_"] = getMedia(v.featured_media);
-      } else {
-        getAllPost[index_]["getMedia_"] = false;
-      }
-
-      returnArray.push(getAllPost[index_]);
-    });
-    arrayCatePost["posts"] = returnArray;
-  } else if (getAllPost instanceof Array && getAllPost.length == 0) {
-    arrayCatePost["posts"] = false;
-  } // autohrs
-
-
-  var authors = getAuthors();
-
-  if (authors && authors.length) {
-    var authors_ = [];
-    authors.map(function (v) {
-      authors_.push({
-        id: v.id,
-        name: v.name
-      });
-    });
-    arrayCatePost["authors"] = authors_;
-  }
-
-  return arrayCatePost;
-})(Edit));
+/* harmony default export */ __webpack_exports__["default"] = (Edit); // export default withSelect((select, props) => {
+//   const { attributes } = props;
+//   let { numberOfPosts, postCategories } = attributes;
+//   const query = { per_page: numberOfPosts };
+//   const query2 = { per_page: -1 };
+//   if (postCategories && postCategories.length) {
+//     let cateCh = postCategories.join(",");
+//     query["categories"] = cateCh;
+//     query2["categories"] = cateCh;
+//   }
+//   const { getMedia, getEntityRecords, getAuthors } = select("core");
+//   ////////////////////////////////////////////////////////////////////////////////////////////
+//   let getTotalPost = getEntityRecords("postType", "post", query2);
+//   let getAllPost =
+//     getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
+//   function returnPostFn(numberOfPosts, check = false) {
+//     let numberOfposts_ = check ? check : numberOfPosts;
+//     let new_query = {
+//       per_page: numberOfposts_,
+//     };
+//     if (postCategories && postCategories.length) {
+//       new_query["categories"] = postCategories.join(",");
+//     }
+//     let checkPost = select("core").getEntityRecords(
+//       "postType",
+//       "post",
+//       new_query
+//     );
+//     if (checkPost && checkPost instanceof Array && checkPost.length > 0) {
+//       let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
+//       if (
+//         newPostArray.length == numberOfPosts ||
+//         getTotalPost.length <= numberOfposts_
+//       ) {
+//         return newPostArray;
+//       } else {
+//         if (
+//           newPostArray.length < numberOfPosts &&
+//           numberOfposts_ <= getTotalPost.length
+//         ) {
+//           return returnPostFn(numberOfPosts, numberOfposts_ + 1);
+//         }
+//       }
+//     } else {
+//       return false;
+//     }
+//   }
+//   ///////////////////////////////////////////////////////////////////////////////////////////
+//   // let getAllPost = getEntityRecords("postType", "post", query);
+//   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
+//   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
+//   let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
+//   if (getAllPost && getAllPost.length) {
+//     let returnArray = [];
+//     getAllPost.map((v, index_) => {
+//       if (v.featured_media) {
+//         getAllPost[index_]["getMedia_"] = getMedia(v.featured_media);
+//       } else {
+//         getAllPost[index_]["getMedia_"] = false;
+//       }
+//       returnArray.push(getAllPost[index_]);
+//     });
+//     arrayCatePost["posts"] = returnArray;
+//   } else if (getAllPost instanceof Array && getAllPost.length == 0) {
+//     arrayCatePost["posts"] = false;
+//   }
+//   // autohrs
+//   let authors = getAuthors();
+//   if (authors && authors.length) {
+//     let authors_ = [];
+//     authors.map((v) => {
+//       authors_.push({ id: v.id, name: v.name });
+//     });
+//     arrayCatePost["authors"] = authors_;
+//   }
+//   return arrayCatePost;
+// })(Edit);
 
 /***/ }),
 
