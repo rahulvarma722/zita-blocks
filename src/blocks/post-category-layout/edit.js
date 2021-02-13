@@ -481,11 +481,10 @@ class Edit extends Component {
           label: catt.name,
         });
       });
-    } else if (category instanceof Array && !category.length) {
-      console.log("loading");
-    } else {
-      console.log("category not found");
     }
+
+    console.log("final category ->", cateGory);
+
     return (
       <>
         <InspectorControls>

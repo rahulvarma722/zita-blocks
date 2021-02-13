@@ -1980,12 +1980,9 @@ var Edit = /*#__PURE__*/function (_Component) {
             label: catt.name
           });
         });
-      } else if (category instanceof Array && !category.length) {
-        console.log("loading");
-      } else {
-        console.log("category not found");
       }
 
+      console.log("final category ->", cateGory);
       return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
         title: "Block Title / Navigation",
         initialOpen: false
