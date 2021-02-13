@@ -33,12 +33,14 @@ class Edit extends Component {
   }
   postDataInit(data = {}) {
     let sendData = data;
+    console.log("sendData ", sendData);
     return apiFetch({
       path: "/zita-blocks-post-api/v3/posts/",
       method: "POST",
       data: sendData,
     })
       .then((postsData) => {
+        console.log("post Data PPPo", postsData);
         return postsData;
       })
       .catch((error) => console.error(error));
@@ -55,6 +57,9 @@ class Edit extends Component {
       sendData["postCategories"] = postCategories.join(",");
     }
     let postData = await this.postDataInit(sendData);
+
+    console.log("return data", postData);
+
     if (postData) {
       // all posts
       if ("posts" in postData && postData.posts) {
@@ -63,9 +68,13 @@ class Edit extends Component {
       }
       //all categories
       if ("category" in postData && postData.category) {
-        let category_ = postData.category;
-        this.setState({ category: category_ });
+        // let category_ = postData.category;
+        this.setState({ category: null });
       }
+      // if ("category" in postData && postData.category) {
+      //   let category_ = postData.category;
+      //   this.setState({ category: category_ });
+      // }
       //total post
       if ("totalPost" in postData && postData.totalPost) {
         let totalPost_ = postData.totalPost;
@@ -467,13 +476,19 @@ class Edit extends Component {
     let author2_ = author2[0];
     // category init
     let cateGory = [{ value: "all", label: "All" }];
+    console.log("outer category", category);
     if (category && category.length) {
+      console.log("inside category", category);
       category.map((catt) => {
         cateGory.push({
           value: catt.slug,
           label: catt.name,
         });
       });
+    } else if (category instanceof Array && !category.length) {
+      console.log("loading");
+    } else {
+      console.log("category not found");
     }
     return (
       <>

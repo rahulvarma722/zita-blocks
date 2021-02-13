@@ -1760,11 +1760,13 @@ var Edit = /*#__PURE__*/function (_Component) {
     value: function postDataInit() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var sendData = data;
+      console.log("sendData ", sendData);
       return apiFetch({
         path: "/zita-blocks-post-api/v3/posts/",
         method: "POST",
         data: sendData
       }).then(function (postsData) {
+        console.log("post Data PPPo", postsData);
         return postsData;
       }).catch(function (error) {
         return console.error(error);
@@ -1774,7 +1776,7 @@ var Edit = /*#__PURE__*/function (_Component) {
     key: "firstTimeInit",
     value: function () {
       var _firstTimeInit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var _this$props$attribute, numberOfPosts, postCategories, sendData, postData, posts_, category_, totalPost_;
+        var _this$props$attribute, numberOfPosts, postCategories, sendData, postData, posts_, totalPost_;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
@@ -1796,6 +1798,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
               case 5:
                 postData = _context.sent;
+                console.log("return data", postData);
 
                 if (postData) {
                   // all posts
@@ -1808,11 +1811,15 @@ var Edit = /*#__PURE__*/function (_Component) {
 
 
                   if ("category" in postData && postData.category) {
-                    category_ = postData.category;
+                    // let category_ = postData.category;
                     this.setState({
-                      category: category_
+                      category: null
                     });
-                  } //total post
+                  } // if ("category" in postData && postData.category) {
+                  //   let category_ = postData.category;
+                  //   this.setState({ category: category_ });
+                  // }
+                  //total post
 
 
                   if ("totalPost" in postData && postData.totalPost) {
@@ -1823,7 +1830,7 @@ var Edit = /*#__PURE__*/function (_Component) {
                   }
                 }
 
-              case 7:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -1967,14 +1974,20 @@ var Edit = /*#__PURE__*/function (_Component) {
         value: "all",
         label: "All"
       }];
+      console.log("outer category", category);
 
       if (category && category.length) {
+        console.log("inside category", category);
         category.map(function (catt) {
           cateGory.push({
             value: catt.slug,
             label: catt.name
           });
         });
+      } else if (category instanceof Array && !category.length) {
+        console.log("loading");
+      } else {
+        console.log("category not found");
       }
 
       return wp.element.createElement(wp.element.Fragment, null, wp.element.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
