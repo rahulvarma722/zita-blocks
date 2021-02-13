@@ -1776,7 +1776,7 @@ var Edit = /*#__PURE__*/function (_Component) {
     key: "firstTimeInit",
     value: function () {
       var _firstTimeInit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var _this$props$attribute, numberOfPosts, postCategories, sendData, postData, posts_, totalPost_;
+        var _this$props$attribute, numberOfPosts, postCategories, sendData, postData, posts_, category_, totalPost_;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
@@ -1811,15 +1811,11 @@ var Edit = /*#__PURE__*/function (_Component) {
 
 
                   if ("category" in postData && postData.category) {
-                    // let category_ = postData.category;
+                    category_ = postData.category;
                     this.setState({
-                      category: null
+                      category: category_
                     });
-                  } // if ("category" in postData && postData.category) {
-                  //   let category_ = postData.category;
-                  //   this.setState({ category: category_ });
-                  // }
-                  //total post
+                  } //total post
 
 
                   if ("totalPost" in postData && postData.totalPost) {

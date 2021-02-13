@@ -68,13 +68,9 @@ class Edit extends Component {
       }
       //all categories
       if ("category" in postData && postData.category) {
-        // let category_ = postData.category;
-        this.setState({ category: null });
+        let category_ = postData.category;
+        this.setState({ category: category_ });
       }
-      // if ("category" in postData && postData.category) {
-      //   let category_ = postData.category;
-      //   this.setState({ category: category_ });
-      // }
       //total post
       if ("totalPost" in postData && postData.totalPost) {
         let totalPost_ = postData.totalPost;
