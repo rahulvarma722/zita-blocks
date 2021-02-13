@@ -1973,7 +1973,6 @@ var Edit = /*#__PURE__*/function (_Component) {
       console.log("outer category", category);
 
       if (category && category.length) {
-        console.log("inside category", category);
         category.map(function (catt) {
           var cate_Items = {
             value: catt.slug,
@@ -1981,6 +1980,14 @@ var Edit = /*#__PURE__*/function (_Component) {
           };
           cateGory.push(cate_Items);
         });
+      } else if (category instanceof Object && Object.keys(category).length) {
+        for (var keys_ in category) {
+          var cate_Items = {
+            value: category[keys_].slug,
+            label: category[keys_].name
+          };
+          cateGory.push(cate_Items);
+        }
       }
 
       console.log("final category ->", cateGory);

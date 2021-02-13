@@ -474,7 +474,6 @@ class Edit extends Component {
     let cateGory = [{ value: "all", label: "All" }];
     console.log("outer category", category);
     if (category && category.length) {
-      console.log("inside category", category);
       category.map((catt) => {
         let cate_Items = {
           value: catt.slug,
@@ -482,6 +481,14 @@ class Edit extends Component {
         };
         cateGory.push(cate_Items);
       });
+    } else if (category instanceof Object && Object.keys(category).length) {
+      for (let keys_ in category) {
+        let cate_Items = {
+          value: category[keys_].slug,
+          label: category[keys_].name,
+        };
+        cateGory.push(cate_Items);
+      }
     }
 
     console.log("final category ->", cateGory);
