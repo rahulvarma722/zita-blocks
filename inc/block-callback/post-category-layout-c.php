@@ -4,7 +4,7 @@ function zita_blocks_two_column_block($attr)
 {
     $attr = zita_blocks_array_sanitize($attr);
     // echo "<pre>";
-    // print_r($attr);
+    // print_r($allCategory);
     // echo "</pre>";
     // return;
     $args = ['post_type' => 'post'];

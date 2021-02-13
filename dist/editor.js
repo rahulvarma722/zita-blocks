@@ -1975,10 +1975,11 @@ var Edit = /*#__PURE__*/function (_Component) {
       if (category && category.length) {
         console.log("inside category", category);
         category.map(function (catt) {
-          cateGory.push({
+          var cate_Items = {
             value: catt.slug,
             label: catt.name
-          });
+          };
+          cateGory.push(cate_Items);
         });
       }
 

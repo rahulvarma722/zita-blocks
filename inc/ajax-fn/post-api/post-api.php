@@ -81,6 +81,8 @@ function Zita_blocks_Post_Api_firstTimeIntilize($sendArgument)
                 'hide_empty' => true,
             )
         );
+        $allCategory = wp_json_encode($allCategory);
+        $allCategory = json_decode($allCategory, true);
         $returnPostData = [
             'posts' => [],
             "totalPost" => $query->found_posts,

@@ -476,10 +476,11 @@ class Edit extends Component {
     if (category && category.length) {
       console.log("inside category", category);
       category.map((catt) => {
-        cateGory.push({
+        let cate_Items = {
           value: catt.slug,
           label: catt.name,
-        });
+        };
+        cateGory.push(cate_Items);
       });
     }
 
