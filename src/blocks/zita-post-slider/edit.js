@@ -15,38 +15,97 @@ import { Component } from "@wordpress/element";
 import { withSelect } from "@wordpress/data";
 import { decodeEntities } from "@wordpress/html-entities";
 import { __ } from "@wordpress/i18n";
+const { apiFetch } = wp;
 
 let bgImageWrapper = plugin_url.url + "assets/img/image2.jpg";
 class Edit extends Component {
   constructor(props) {
     super(props);
-    this.state = { slideIndex: 0, trigger: "linear" };
+    this.state = {
+      slideIndex: 0,
+      trigger: "linear",
+      posts: [],
+      category: [],
+      totalPost: null,
+    };
   }
-  dateFormate = (date, style_) => {
-    let date_ = date.split("T")[0];
-    let dateObj = new Date(date_);
-    const monthNames = [
-      __("January", "zita-blocks"),
-      __("February", "zita-blocks"),
-      __("March", "zita-blocks"),
-      __("April", "zita-blocks"),
-      __("May", "zita-blocks"),
-      __("June", "zita-blocks"),
-      __("July", "zita-blocks"),
-      __("August", "zita-blocks"),
-      __("September", "zita-blocks"),
-      __("October", "zita-blocks"),
-      __("November", "zita-blocks"),
-      __("December", "zita-blocks"),
-    ];
-    let dateArr =
-      monthNames[dateObj.getMonth()] +
-      " " +
-      dateObj.getDate() +
-      ", " +
-      dateObj.getFullYear();
-    return <RichText.Content style={style_} tag="span" value={dateArr} />;
-  };
+  postDataInit(data = {}) {
+    let sendData = data;
+    return apiFetch({
+      path: "/zita-blocks-post-api/v3/posts/",
+      method: "POST",
+      data: sendData,
+    })
+      .then((postsData) => {
+        return postsData;
+      })
+      .catch((error) => console.error(error));
+  }
+  async firstTimeInit() {
+    let { numberOfPosts, postCategories } = this.props.attributes;
+    let sendData = {
+      initialize: 1,
+      numberOfPosts: numberOfPosts,
+    };
+    // featured image
+    sendData["featured_image"] = 1;
+    // choose category
+    if (postCategories) {
+      sendData["postCategories"] = postCategories.join(",");
+    }
+    let postData = await this.postDataInit(sendData);
+    if (postData) {
+      // all posts
+      if ("posts" in postData && postData.posts) {
+        let posts_ = postData.posts;
+        this.setState({ posts: posts_ });
+      }
+      //all categories
+      if ("category" in postData && postData.category) {
+        let category_ = postData.category;
+        this.setState({ category: category_ });
+      }
+      //total post
+      if ("totalPost" in postData && postData.totalPost) {
+        let totalPost_ = postData.totalPost;
+        this.setState({ totalPost: totalPost_ });
+      }
+    }
+  }
+  async filterPostInit(data_ = {}) {
+    let argData = data_;
+    //number of post
+    if (!("numberOfPosts" in argData)) {
+      argData["numberOfPosts"] = this.props.attributes.numberOfPosts;
+    }
+    // choose category
+    let categoryIes =
+      "postCategories" in argData
+        ? argData.postCategories
+        : this.props.attributes.postCategories;
+    if (categoryIes) {
+      argData["postCategories"] = categoryIes.join(",");
+    }
+    // featured image
+    argData["featured_image"] = 1;
+    let postData = await this.postDataInit(argData);
+    if (postData) {
+      // all posts
+      if ("posts" in postData && postData.posts) {
+        let posts_ = postData.posts;
+        this.setState({ posts: posts_ });
+      }
+      //total post
+      if ("totalPost" in postData && postData.totalPost) {
+        let totalPost_ = postData.totalPost;
+        this.setState({ totalPost: totalPost_ });
+      }
+    }
+  }
+  // rest api call
+  componentDidMount() {
+    this.firstTimeInit();
+  }
   excerptWords = (words, words_) => {
     words_ = decodeEntities(words_);
     words_ = words_.replace(/<\/?[^>]+(>|$)/g, "");
@@ -54,81 +113,53 @@ class Edit extends Component {
     words_ = words_.slice(0, words);
     return words_.join(" ");
   };
-  showCateFn = (categories) => {
-    let returR = [];
-    if ("category" in this.props && this.props.category && categories.length) {
-      let countCate = this.props.attributes.showCate[0].count;
-      let postCate_ = this.props.attributes.postCategories;
-      if (postCate_.length) {
-        postCate_.map((ev) => {
-          let MkInt = parseInt(ev);
-          if (categories.includes(MkInt)) categories.unshift(MkInt);
-        });
-      }
-      categories = [...new Set(categories)];
-      categories.forEach((cate) => {
-        if (returR.length == countCate) {
-          return;
+  showCateFn = (categories, cate_) => {
+    if (categories && categories instanceof Array && categories.length > 0) {
+      let copiedCate = [...categories];
+      let countCate = cate_.count;
+      if (countCate < copiedCate.length) {
+        let filterChoosen = this.props.attributes.postCategories;
+        if (
+          filterChoosen.length > 0 &&
+          filterChoosen.length < copiedCate.length
+        ) {
+          filterChoosen.map((cateSlug) => {
+            let getIndex = copiedCate.findIndex((slug_) => {
+              if (slug_ && "slug" in slug_) {
+                return slug_.slug == cateSlug;
+              }
+            });
+            if (getIndex && getIndex + 1 > countCate) {
+              delete copiedCate[getIndex];
+              copiedCate.unshift({ name: cateSlug });
+            }
+          });
         }
-        this.props.category.forEach((searchCate) => {
-          if (cate == searchCate.id) {
-            returR.push(searchCate.name);
-            return;
-          }
-        });
-      });
-    }
-    if (returR.length) {
-      let getCateStyle = this.props.attributes.showCate;
-      let putCateStyle = { fontSize: getCateStyle[0].fontSize + "px" };
-      if (getCateStyle[0].customColor) {
-        putCateStyle["color"] = getCateStyle[0].color;
-        putCateStyle["backgroundColor"] = getCateStyle[0].backgroundColor;
       }
-      return returR.map((returnH) => (
-        <span style={putCateStyle && putCateStyle}>{returnH}</span>
+      let putCateStyle = { fontSize: cate_.fontSize + "px" };
+      if (cate_.customColor) {
+        putCateStyle["color"] = cate_.color;
+        putCateStyle["backgroundColor"] = cate_.backgroundColor;
+      }
+      copiedCate.splice(countCate);
+      return copiedCate.map((returnH) => (
+        <span style={putCateStyle}>{returnH.name}</span>
       ));
     }
   };
-
-  showTagsFn = (tags_) => {
-    let returR = [];
-    if ("tags" in this.props && this.props.tags && tags_.length) {
-      let countTag = this.props.attributes.showTag[0].count;
-      tags_.forEach((tag) => {
-        if (returR.length == countTag) {
-          return;
-        }
-        this.props.tags.forEach((searchtag) => {
-          if (tag == searchtag.id) {
-            returR.push(searchtag.name);
-            return;
-          }
-        });
-      });
-    }
-    if (returR.length) {
-      let getTagStyle = this.props.attributes.showTag;
-      let putTagStyle = { color: getTagStyle[0].color };
-      putTagStyle["color"] = getTagStyle[0].color;
-      putTagStyle["backgroundColor"] = getTagStyle[0].backgroundColor;
-      return returR.map((returnH) => (
-        <span style={putTagStyle && putTagStyle}>{returnH}</span>
+  showTagsFn = (tags_, tag_r) => {
+    if (tags_ && tags_ instanceof Array && tags_.length) {
+      let putTagStyle = { color: tag_r.color };
+      putTagStyle["color"] = tag_r.color;
+      putTagStyle["backgroundColor"] = tag_r.backgroundColor;
+      putTagStyle["fontSize"] = tag_r.fontSize + "px";
+      let countTag = tag_r.count;
+      let tagCopied = [...tags_];
+      tagCopied.splice(countTag);
+      return tagCopied.map((returnH) => (
+        <span style={putTagStyle}>{returnH.name}</span>
       ));
     }
-  };
-  // autor
-  authorFn = (author) => {
-    let retur = {};
-    if ("authors" in this.props) {
-      this.props.authors.map((authorDetail) => {
-        if (authorDetail.id == author) {
-          retur = authorDetail;
-          return;
-        }
-      });
-    }
-    return retur;
   };
   updateObj = (parent_key, child_key, initialValue, value_) => {
     let newNewValue = [...initialValue];
@@ -148,8 +179,8 @@ class Edit extends Component {
     this.props.setAttributes({ sliderSetting: newSetting });
   };
   render() {
-    let { attributes, setAttributes, posts, category } = this.props;
-    let { slideIndex } = this.state;
+    const { attributes, setAttributes } = this.props;
+    const { posts, category, totalPost, slideIndex } = this.state;
     let {
       heading,
       author,
@@ -171,14 +202,24 @@ class Edit extends Component {
     let title_ = title[0];
     let showTag_ = showTag[0];
     let showCate_ = showCate[0];
+    // category init
     let cateGory = [{ value: "all", label: "All" }];
     if (category && category.length) {
       category.map((catt) => {
-        cateGory.push({
-          value: catt.id,
+        let cate_Items = {
+          value: catt.slug,
           label: catt.name,
-        });
+        };
+        cateGory.push(cate_Items);
       });
+    } else if (category instanceof Object && Object.keys(category).length) {
+      for (let keys_ in category) {
+        let cate_Items = {
+          value: category[keys_].slug,
+          label: category[keys_].name,
+        };
+        cateGory.push(cate_Items);
+      }
     }
     sliderSetting = sliderSetting[0];
     let SlideulStyle = null;
@@ -321,6 +362,7 @@ class Edit extends Component {
             max={20}
             onChange={(e) => {
               setAttributes({ numberOfPosts: e });
+              this.filterPostInit({ numberOfPosts: e });
             }}
           />
           <p>
@@ -772,6 +814,7 @@ class Edit extends Component {
                 });
                 if (chooseAll.length) choosen = [];
                 setAttributes({ postCategories: choosen });
+                this.filterPostInit({ postCategories: choosen });
               }}
               options={cateGory}
             />
@@ -972,23 +1015,18 @@ class Edit extends Component {
           <ul className="zita-slider-ul-bullet">
             {posts &&
               posts.length > 0 &&
-              "getMedia_" in posts[0] &&
               posts.map((val, index_) => {
                 return (
-                  "getMedia_" in val &&
-                  val.getMedia_ &&
-                  "guid" in val.getMedia_ && (
-                    <li
-                      key={index_}
-                      className={slideIndex == index_ ? "selected_" : null}
-                    >
-                      <span
-                        onClick={(e) => {
-                          this.setState({ slideIndex: index_ });
-                        }}
-                      ></span>
-                    </li>
-                  )
+                  <li
+                    key={index_}
+                    className={slideIndex == index_ ? "selected_" : null}
+                  >
+                    <span
+                      onClick={(e) => {
+                        this.setState({ slideIndex: index_ });
+                      }}
+                    ></span>
+                  </li>
                 );
               })}
           </ul>
@@ -1011,161 +1049,147 @@ class Edit extends Component {
           )}
           {/* next prev btn */}
           <ul className="zita-slider-ul-slides" style={SlideulStyle}>
-            {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
+            {posts && posts.length > 0 ? (
               posts.map((post, slideIndexCu) => {
                 let postAuthor =
-                  author_.enable && "name" in this.authorFn(post.author)
-                    ? this.authorFn(post.author).name
-                    : false;
+                  author_ && author_.enable ? post.author : false;
+
                 return (
-                  "getMedia_" in post &&
-                  post.getMedia_ &&
-                  "guid" in post.getMedia_ && (
-                    <li
-                      key={post.id}
-                      className={slideIndex == slideIndexCu && "selected_"}
-                    >
-                      <div class="zita-slider-wrapper">
-                        <div class="zita-slider-container">
-                          <div class="zita-slider-content-wrapper">
-                            <div
-                              class="zita-slider-image-container"
-                              style={{
-                                backgroundImage:
-                                  "url(" + post.getMedia_.guid.rendered + ")",
-                              }}
-                            ></div>
-                            <div
-                              class="zita-slider-text"
-                              style={{
-                                backgroundColor: sliderSetting.overlayColor,
-                              }}
-                            >
-                              <div className="slider-post-content">
-                                <div
-                                  className={`post-wrapper content-align-${sliderSetting.contentAlign}`}
-                                >
-                                  <div className="post-content">
-                                    <RichText.Content
-                                      className="post-heading"
-                                      tagName={heading_.tag}
-                                      value={post.title.rendered}
-                                      style={{
-                                        fontSize: heading_.fontSize,
-                                        color: heading_.color,
-                                      }}
-                                    />
-                                    {showCate_.enable && (
-                                      <p className="post-category">
-                                        {this.showCateFn(post.categories)}
+                  <li className={slideIndex == slideIndexCu && "selected_"}>
+                    <div class="zita-slider-wrapper">
+                      <div class="zita-slider-container">
+                        <div class="zita-slider-content-wrapper">
+                          <div
+                            class="zita-slider-image-container"
+                            style={{
+                              backgroundImage:
+                                "url(" + post.feature_image + ")",
+                            }}
+                          ></div>
+                          <div
+                            class="zita-slider-text"
+                            style={{
+                              backgroundColor: sliderSetting.overlayColor,
+                            }}
+                          >
+                            <div className="slider-post-content">
+                              <div
+                                className={`post-wrapper content-align-${sliderSetting.contentAlign}`}
+                              >
+                                <div className="post-content">
+                                  <RichText.Content
+                                    className="post-heading"
+                                    tagName={heading_.tag}
+                                    value={post.postTitle}
+                                    style={{
+                                      fontSize: heading_.fontSize,
+                                      color: heading_.color,
+                                    }}
+                                  />
+                                  {showCate_.enable && (
+                                    <p className="post-category">
+                                      {this.showCateFn(
+                                        post.post_categories,
+                                        showCate_
+                                      )}
+                                    </p>
+                                  )}
+                                  <div className="post-meta-all">
+                                    {postAuthor && (
+                                      <p
+                                        style={{
+                                          color: meta_style_.color,
+                                          fontSize: meta_style_.fontSize + "px",
+                                        }}
+                                        className="post-author"
+                                      >
+                                        {postAuthor}
                                       </p>
                                     )}
-                                    <div className="post-meta-all">
-                                      {postAuthor && (
+                                    {date_.enable && (
+                                      <>
+                                        {postAuthor && (
+                                          <span
+                                            style={{
+                                              color: meta_style_.color,
+                                              fontSize:
+                                                meta_style_.fontSize + "px",
+                                            }}
+                                            className="slash"
+                                          >
+                                            /
+                                          </span>
+                                        )}
                                         <p
                                           style={{
                                             color: meta_style_.color,
                                             fontSize:
                                               meta_style_.fontSize + "px",
                                           }}
-                                          className="post-author"
+                                          className="post-date"
                                         >
-                                          {postAuthor}
+                                          <span>{post.post_date}</span>
                                         </p>
-                                      )}
-                                      {date_.enable && (
-                                        <>
-                                          {postAuthor && (
-                                            <span
-                                              style={{
-                                                color: meta_style_.color,
-                                                fontSize:
-                                                  meta_style_.fontSize + "px",
-                                              }}
-                                              className="slash"
-                                            >
-                                              /
-                                            </span>
-                                          )}
-                                          <p
-                                            style={{
-                                              color: meta_style_.color,
-                                              fontSize:
-                                                meta_style_.fontSize + "px",
-                                            }}
-                                            className="post-date"
-                                          >
-                                            {this.dateFormate(post.date, {
-                                              color: meta_style_.color,
-                                              fontSize:
-                                                meta_style_.fontSize + "px",
-                                            })}
-                                          </p>
-                                        </>
-                                      )}
-                                      {date_.last_modified && (
-                                        <>
-                                          {(postAuthor || date_.enable) && (
-                                            <span
-                                              style={{
-                                                color: meta_style_.color,
-                                                fontSize:
-                                                  meta_style_.fontSize + "px",
-                                              }}
-                                              className="slash"
-                                            >
-                                              /
-                                            </span>
-                                          )}
-                                          <p
-                                            style={{
-                                              color: meta_style_.color,
-                                              fontSize:
-                                                meta_style_.fontSize + "px",
-                                            }}
-                                            className="post-date-last-modified"
-                                          >
-                                            <span>Modified: </span>
-                                            {this.dateFormate(post.modified, {
-                                              color: meta_style_.color,
-                                              fontSize:
-                                                meta_style_.fontSize + "px",
-                                            })}
-                                          </p>
-                                        </>
-                                      )}
-                                    </div>
-                                    {excerpt_.enable && (
-                                      <p
-                                        style={{
-                                          color: excerpt_.color,
-                                          fontSize: excerpt_.fontSize + "px",
-                                        }}
-                                        className="post-excerpt"
-                                      >
-                                        {this.excerptWords(
-                                          excerpt_.words,
-                                          post.excerpt.rendered
-                                        )}
-                                      </p>
+                                      </>
                                     )}
-                                    {showTag_.enable && (
-                                      <p
-                                        style={{ color: meta_style_.color }}
-                                        className="post-tags"
-                                      >
-                                        {this.showTagsFn(post.tags)}
-                                      </p>
+                                    {date_.last_modified && (
+                                      <>
+                                        {(postAuthor || date_.enable) && (
+                                          <span
+                                            style={{
+                                              color: meta_style_.color,
+                                              fontSize:
+                                                meta_style_.fontSize + "px",
+                                            }}
+                                            className="slash"
+                                          >
+                                            /
+                                          </span>
+                                        )}
+                                        <p
+                                          style={{
+                                            color: meta_style_.color,
+                                            fontSize:
+                                              meta_style_.fontSize + "px",
+                                          }}
+                                          className="post-date-last-modified"
+                                        >
+                                          <span>Modified: </span>
+                                          <span>{post.post_modified_date}</span>
+                                        </p>
+                                      </>
                                     )}
                                   </div>
+                                  {excerpt_.enable && (
+                                    <p
+                                      style={{
+                                        color: excerpt_.color,
+                                        fontSize: excerpt_.fontSize + "px",
+                                      }}
+                                      className="post-excerpt"
+                                    >
+                                      {this.excerptWords(
+                                        excerpt_.words,
+                                        post.post_excerpt
+                                      )}
+                                    </p>
+                                  )}
+                                  {showTag_.enable && (
+                                    <p
+                                      style={{ color: meta_style_.color }}
+                                      className="post-tags"
+                                    >
+                                      {this.showTagsFn(post.post_tag, showTag_)}
+                                    </p>
+                                  )}
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </li>
-                  )
+                    </div>
+                  </li>
                 );
               })
             ) : !posts ? (
@@ -1175,132 +1199,123 @@ class Edit extends Component {
             )}
           </ul>
           {/* slider trigger */}
-          {sliderSetting.linearTrigger.enable &&
-            posts &&
-            posts.length > 0 &&
-            "getMedia_" in posts[0] && (
-              <ul
-                className={`zita-slider-bullet-trigger thumbnail-image trigger_${sliderSetting.linearTrigger.place}`}
-              >
-                {posts.map((post, index_) => {
-                  trigStyle =
-                    index_ != slideIndex
-                      ? {
-                          ...trigStyle,
-                          ...{
-                            backgroundColor: sliderSetting.linearTrigger.color,
-                          },
-                        }
-                      : {
-                          ...trigStyle,
-                          ...{
-                            backgroundColor:
-                              sliderSetting.linearTrigger.activeColor,
-                          },
-                        };
-                  return (
-                    "getMedia_" in post &&
-                    post.getMedia_ &&
-                    "guid" in post.getMedia_ &&
-                    (sliderSetting.linearTrigger.trigger == "thumbnail" ? (
-                      <li>
-                        <div>
-                          <img src={post.getMedia_.guid.rendered} />
-                        </div>
-                      </li>
-                    ) : (
-                      <li
-                        className={`${index_ == slideIndex ? "selected_" : ""}`}
-                      >
-                        <span style={trigStyle}></span>
-                      </li>
-                    ))
-                  );
-                })}
-              </ul>
-            )}
+          {sliderSetting.linearTrigger.enable && posts && posts.length > 0 && (
+            <ul
+              className={`zita-slider-bullet-trigger thumbnail-image trigger_${sliderSetting.linearTrigger.place}`}
+            >
+              {posts.map((post, index_) => {
+                trigStyle =
+                  index_ != slideIndex
+                    ? {
+                        ...trigStyle,
+                        ...{
+                          backgroundColor: sliderSetting.linearTrigger.color,
+                        },
+                      }
+                    : {
+                        ...trigStyle,
+                        ...{
+                          backgroundColor:
+                            sliderSetting.linearTrigger.activeColor,
+                        },
+                      };
+                return sliderSetting.linearTrigger.trigger == "thumbnail" ? (
+                  <li>
+                    <div>
+                      <img src={post.getMedia_.guid.rendered} />
+                    </div>
+                  </li>
+                ) : (
+                  <li className={`${index_ == slideIndex ? "selected_" : ""}`}>
+                    <span style={trigStyle}></span>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
       </div>,
     ];
   }
 }
-export default withSelect((select, props) => {
-  const { attributes } = props;
-  let { numberOfPosts, postCategories } = attributes;
-  const query = { per_page: numberOfPosts };
-  const query2 = { per_page: -1 };
-  if (postCategories && postCategories.length) {
-    let cateCh = postCategories.join(",");
-    query["categories"] = cateCh;
-    query2["categories"] = cateCh;
-  }
+export default Edit;
+// export default withSelect((select, props) => {
+//   const { attributes } = props;
+//   let { numberOfPosts, postCategories } = attributes;
+//   const query = { per_page: numberOfPosts };
+//   const query2 = { per_page: -1 };
+//   if (postCategories && postCategories.length) {
+//     let cateCh = postCategories.join(",");
+//     query["categories"] = cateCh;
+//     query2["categories"] = cateCh;
+//   }
 
-  const { getMedia, getEntityRecords, getAuthors } = select("core");
-  /////////////////////////////////////////////////////////////////////////////
-  let getTotalPost = getEntityRecords("postType", "post", query2);
-  // return;
-  let getAllPost =
-    getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
-  function returnPostFn(numberOfPosts, check = false) {
-    let numberOfposts_ = check ? check : numberOfPosts;
-    let new_query = {
-      per_page: numberOfposts_,
-    };
-    if (postCategories && postCategories.length) {
-      new_query["categories"] = postCategories.join(",");
-    }
-    let checkPost = select("core").getEntityRecords(
-      "postType",
-      "post",
-      new_query
-    );
-    if (checkPost && checkPost instanceof Array && checkPost.length > 0) {
-      let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
-      if (
-        newPostArray.length == numberOfPosts ||
-        getTotalPost.length <= numberOfposts_
-      ) {
-        return newPostArray;
-      } else {
-        if (
-          newPostArray.length < numberOfPosts &&
-          numberOfposts_ <= getTotalPost.length
-        ) {
-          return returnPostFn(numberOfPosts, numberOfposts_ + 1);
-        }
-      }
-    } else {
-      return false;
-    }
-  }
-  ///////////////////////////////////////////////////////////////////////////////
-  // let getAllPost = getEntityRecords("postType", "post", query);
+//   const { getMedia, getEntityRecords, getAuthors } = select("core");
+//   /////////////////////////////////////////////////////////////////////////////
+//   let getTotalPost = getEntityRecords("postType", "post", query2);
+//   // return;
+//   let getAllPost =
+//     getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
+//   function returnPostFn(numberOfPosts, check = false) {
+//     let numberOfposts_ = check ? check : numberOfPosts;
+//     let new_query = {
+//       per_page: numberOfposts_,
+//     };
+//     if (postCategories && postCategories.length) {
+//       new_query["categories"] = postCategories.join(",");
+//     }
+//     let checkPost = select("core").getEntityRecords(
+//       "postType",
+//       "post",
+//       new_query
+//     );
+//     if (checkPost && checkPost instanceof Array && checkPost.length > 0) {
+//       let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
+//       if (
+//         newPostArray.length == numberOfPosts ||
+//         getTotalPost.length <= numberOfposts_
+//       ) {
+//         return newPostArray;
+//       } else {
+//         if (
+//           newPostArray.length < numberOfPosts &&
+//           numberOfposts_ <= getTotalPost.length
+//         ) {
+//           return returnPostFn(numberOfPosts, numberOfposts_ + 1);
+//         }
+//       }
+//     } else {
+//       return false;
+//     }
+//   }
+//   ///////////////////////////////////////////////////////////////////////////////
+//   // let getAllPost = getEntityRecords("postType", "post", query);
 
-  let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
-  let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
-  let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
-  if (getAllPost && getAllPost.length) {
-    let returnArray = [];
-    getAllPost.map((v, index_) => {
-      if (v.featured_media) {
-        getAllPost[index_]["getMedia_"] = getMedia(v.featured_media);
-      } else {
-        getAllPost[index_]["getMedia_"] = false;
-      }
-      returnArray.push(getAllPost[index_]);
-    });
-    arrayCatePost["posts"] = returnArray;
-  } else if (getAllPost instanceof Array && getAllPost.length == 0) {
-    arrayCatePost["posts"] = false;
-  }
-  // autohrs
-  let authors = getAuthors();
-  if (authors && authors.length) {
-    let authors_ = [];
-    authors.map((v) => {
-      authors_.push({ id: v.id, name: v.name });
-    });
-    arrayCatePost["authors"] = authors_;
-  }
-  return arrayCatePost;
-})(Edit);
+//   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
+//   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
+//   let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
+//   if (getAllPost && getAllPost.length) {
+//     let returnArray = [];
+//     getAllPost.map((v, index_) => {
+//       if (v.featured_media) {
+//         getAllPost[index_]["getMedia_"] = getMedia(v.featured_media);
+//       } else {
+//         getAllPost[index_]["getMedia_"] = false;
+//       }
+//       returnArray.push(getAllPost[index_]);
+//     });
+//     arrayCatePost["posts"] = returnArray;
+//   } else if (getAllPost instanceof Array && getAllPost.length == 0) {
+//     arrayCatePost["posts"] = false;
+//   }
+//   // autohrs
+//   let authors = getAuthors();
+//   if (authors && authors.length) {
+//     let authors_ = [];
+//     authors.map((v) => {
+//       authors_.push({ id: v.id, name: v.name });
+//     });
+//     arrayCatePost["authors"] = authors_;
+//   }
+//   return arrayCatePost;
+// })(Edit);

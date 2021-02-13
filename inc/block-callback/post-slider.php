@@ -11,7 +11,7 @@ function zita_blocks_render_post_slider($attr)
         $numberOfpost = $attr['numberOfPosts'];
         $args['posts_per_page'] = $numberOfpost;
         if (isset($attr["postCategories"]) && is_array($attr["postCategories"]) && !empty($attr["postCategories"])) {
-            $args['category__in'] = $attr["postCategories"];
+            $args['category_name'] = join(',', $attr["postCategories"]);
         }
         $query = new WP_Query($args);
         $postHtml = '';
@@ -107,13 +107,6 @@ function zita_blocks_render_post_slider($attr)
                             }
                             // 
                             if (isset($args['category__in']) && is_array($args['category__in']) && !empty($args['category__in'])) {
-                                // foreach ($args['category__in'] as $newArraycate) {
-                                //     foreach ($category_ as $cateValue_) {
-                                //         if ($newArraycate == $cateValue_['term_id']) {
-                                //             array_unshift($category_, ['name' => $cateValue_['name'], 'term_id' => $cateValue_['term_id']]);
-                                //         }
-                                //     }
-                                // }
                                 $category__in = $args['category__in'];
                                 foreach ($category__in as $newArraycate) {
                                     foreach ($category_ as $cateKKey => $cateValue_) {

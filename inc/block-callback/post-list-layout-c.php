@@ -9,7 +9,7 @@ function zita_blocks_render_latest_post_block($attr)
         $numberOfpost = $attr['numberOfPosts'];
         $args['posts_per_page'] = $numberOfpost;
         if (is_array($attr["postCategories"])  && !empty($attr["postCategories"])) {
-            $args['category__in'] = $attr["postCategories"];
+            $args['category_name'] = join(',', $attr["postCategories"]);
         }
         if (isset($attr['thumbnail'][0]['typeShow']) && $attr['thumbnail'][0]['typeShow'] == "1") {
             $args['meta_key'] = '_thumbnail_id';

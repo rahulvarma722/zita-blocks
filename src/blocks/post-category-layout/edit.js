@@ -33,14 +33,14 @@ class Edit extends Component {
   }
   postDataInit(data = {}) {
     let sendData = data;
-    console.log("sendData ", sendData);
+    // console.log("sendData ", sendData);
     return apiFetch({
       path: "/zita-blocks-post-api/v3/posts/",
       method: "POST",
       data: sendData,
     })
       .then((postsData) => {
-        console.log("post Data PPPo", postsData);
+        // console.log("post Data PPPo", postsData);
         return postsData;
       })
       .catch((error) => console.error(error));
@@ -57,9 +57,7 @@ class Edit extends Component {
       sendData["postCategories"] = postCategories.join(",");
     }
     let postData = await this.postDataInit(sendData);
-
-    console.log("return data", postData);
-
+    // console.log("return data", postData);
     if (postData) {
       // all posts
       if ("posts" in postData && postData.posts) {
@@ -139,9 +137,11 @@ class Edit extends Component {
           filterChoosen.length < copiedCate.length
         ) {
           filterChoosen.map((cateSlug) => {
-            let getIndex = copiedCate.findIndex(
-              (slug_) => slug_.slug == cateSlug
-            );
+            let getIndex = copiedCate.findIndex((slug_) => {
+              if (slug_ && "slug" in slug_) {
+                return slug_.slug == cateSlug;
+              }
+            });
             if (getIndex && getIndex + 1 > countCate) {
               delete copiedCate[getIndex];
               copiedCate.unshift({ name: cateSlug });
@@ -428,9 +428,9 @@ class Edit extends Component {
   };
   render() {
     const { attributes, setAttributes } = this.props;
-    console.log("category props->", this.props);
+    // console.log("category props->", this.props);
     const { posts, category, totalPost } = this.state;
-    console.log("state props posts->", this.state);
+    // console.log("state props posts->", this.state);
     let {
       heading,
       author,
@@ -472,7 +472,6 @@ class Edit extends Component {
     let author2_ = author2[0];
     // category init
     let cateGory = [{ value: "all", label: "All" }];
-    console.log("outer category", category);
     if (category && category.length) {
       category.map((catt) => {
         let cate_Items = {
@@ -490,9 +489,6 @@ class Edit extends Component {
         cateGory.push(cate_Items);
       }
     }
-
-    console.log("final category ->", cateGory);
-
     return (
       <>
         <InspectorControls>

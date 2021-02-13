@@ -131,9 +131,11 @@ class Edit extends Component {
           filterChoosen.length < copiedCate.length
         ) {
           filterChoosen.map((cateSlug) => {
-            let getIndex = copiedCate.findIndex(
-              (slug_) => slug_.slug == cateSlug
-            );
+            let getIndex = copiedCate.findIndex((slug_) => {
+              if (slug_ && "slug" in slug_) {
+                return slug_.slug == cateSlug;
+              }
+            });
             if (getIndex && getIndex + 1 > countCate) {
               delete copiedCate[getIndex];
               copiedCate.unshift({ name: cateSlug });
@@ -172,14 +174,6 @@ class Edit extends Component {
     const { attributes, setAttributes } = this.props;
     // if number of post sum
     const { posts, category, totalPost } = this.state;
-    if (numberOfPosts == 3 || numberOfPosts == 5) {
-      this.setState({
-        metaChoose: "primary",
-        excerpt: "primary",
-        heading: "primary",
-      });
-    }
-    // if number of post sum
 
     let {
       heading,
@@ -219,15 +213,37 @@ class Edit extends Component {
     let showTag2_ = showTag2[0];
     let date2_ = date2[0];
     let author2_ = author2[0];
+    // if number of post sum
+    if (
+      (numberOfPosts == 3 || numberOfPosts == 5) &&
+      (this.state.metaChoose == "secondary" ||
+        this.state.excerpt == "secondary" ||
+        this.state.heading == "secondary")
+    ) {
+      this.setState({
+        metaChoose: "primary",
+        excerpt: "primary",
+        heading: "primary",
+      });
+    }
     // category init
     let cateGory = [{ value: "all", label: "All" }];
     if (category && category.length) {
       category.map((catt) => {
-        cateGory.push({
+        let cate_Items = {
           value: catt.slug,
           label: catt.name,
-        });
+        };
+        cateGory.push(cate_Items);
       });
+    } else if (category instanceof Object && Object.keys(category).length) {
+      for (let keys_ in category) {
+        let cate_Items = {
+          value: category[keys_].slug,
+          label: category[keys_].name,
+        };
+        cateGory.push(cate_Items);
+      }
     }
     return (
       <>
@@ -1093,7 +1109,6 @@ class Edit extends Component {
                     author_,
                     date_,
                     meta_style_,
-                    thumbnail_,
                     showCate_,
                     excerpt_,
                     showTag_
@@ -1115,7 +1130,6 @@ class Edit extends Component {
                       author_,
                       date_,
                       meta_style_,
-                      thumbnail_,
                       showCate_,
                       excerpt_,
                       showTag_
@@ -1137,7 +1151,6 @@ class Edit extends Component {
                           author2_,
                           date2_,
                           meta_style2_,
-                          thumbnail_,
                           showCate2_,
                           excerpt2_,
                           showTag2_
@@ -1175,7 +1188,6 @@ class Edit extends Component {
     author_,
     date_,
     meta_style_,
-    thumbnail_,
     showCate_,
     excerpt_,
     showTag_
@@ -1185,12 +1197,7 @@ class Edit extends Component {
       <article className="block-post-article">
         <div className="post-wrapper">
           <div className="featured-image">
-            <img
-              style={{
-                borderRadius: thumbnail_.borderRadius + "px",
-              }}
-              src={post.feature_image}
-            />
+            <img src={post.feature_image} />
           </div>
           <div className="post-content">
             {showCate_ && showCate_.enable && (

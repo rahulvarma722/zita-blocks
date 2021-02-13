@@ -135,9 +135,11 @@ class Edit extends Component {
           filterChoosen.length < copiedCate.length
         ) {
           filterChoosen.map((cateSlug) => {
-            let getIndex = copiedCate.findIndex(
-              (slug_) => slug_.slug == cateSlug
-            );
+            let getIndex = copiedCate.findIndex((slug_) => {
+              if (slug_ && "slug" in slug_) {
+                return slug_.slug == cateSlug;
+              }
+            });
             if (getIndex && getIndex + 1 > countCate) {
               delete copiedCate[getIndex];
               copiedCate.unshift({ name: cateSlug });
@@ -200,11 +202,20 @@ class Edit extends Component {
     let cateGory = [{ value: "all", label: "All" }];
     if (category && category.length) {
       category.map((catt) => {
-        cateGory.push({
+        let cate_Items = {
           value: catt.slug,
           label: catt.name,
-        });
+        };
+        cateGory.push(cate_Items);
       });
+    } else if (category instanceof Object && Object.keys(category).length) {
+      for (let keys_ in category) {
+        let cate_Items = {
+          value: category[keys_].slug,
+          label: category[keys_].name,
+        };
+        cateGory.push(cate_Items);
+      }
     }
     return (
       <>

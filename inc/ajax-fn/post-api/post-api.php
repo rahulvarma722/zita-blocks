@@ -91,9 +91,7 @@ function Zita_blocks_Post_Api_firstTimeIntilize($sendArgument)
             $singlePost = [];
             $singlePost['author'] = get_the_author();
             $singlePost['postTitle'] = get_the_title();
-            if (get_the_permalink()) {
-                $singlePost['feature_image'] = get_the_post_thumbnail_url();
-            }
+            $singlePost['feature_image'] = get_the_post_thumbnail_url() ? get_the_post_thumbnail_url() : false;
             $singlePost['post_categories'] = get_the_category();
             $singlePost['post_date'] = get_the_date();
             $singlePost['post_modified_date'] = get_the_modified_date();

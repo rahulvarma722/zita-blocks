@@ -11,7 +11,7 @@ function zita_blocks_section_five_post($attr)
         $numberOfpost = $attr['numberOfPosts'];
         $args['posts_per_page'] = $numberOfpost;
         if (isset($attr["postCategories"]) && is_array($attr["postCategories"]) && !empty($attr["postCategories"])) {
-            $args['category__in'] = $attr["postCategories"];
+            $args['category_name'] = join(',', $attr["postCategories"]);
         }
         $query = new WP_Query($args);
 

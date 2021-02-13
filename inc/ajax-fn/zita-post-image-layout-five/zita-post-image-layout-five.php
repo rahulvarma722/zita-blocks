@@ -14,7 +14,7 @@ function zita_blocks_post_image_five_post()
                 "meta_key" => '_thumbnail_id'
             ];
             if (isset($attr["postCategories"]) && is_array($attr["postCategories"]) && !empty($attr["postCategories"])) {
-                $args['category__in'] = $attr["postCategories"];
+                $args['category_name'] = join(',', $attr["postCategories"]);
             }
             echo zita_blocks_post_image_five_post_html($args, $attr) ? zita_blocks_post_image_five_post_html($args, $attr) : 0;
             die();

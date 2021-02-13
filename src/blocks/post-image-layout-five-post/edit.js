@@ -14,6 +14,7 @@ import {
   ColorPicker,
 } from "@wordpress/components";
 import { decodeEntities } from "@wordpress/html-entities";
+const { apiFetch } = wp;
 
 class Edit extends Component {
   constructor(props) {
@@ -22,7 +23,86 @@ class Edit extends Component {
       metaChoose: "primary",
       excerpt: "primary",
       heading: "primary",
+      // pages state from post
+      posts: [],
+      category: [],
+      totalPost: null,
     };
+  }
+
+  postDataInit(data = {}) {
+    let sendData = data;
+    return apiFetch({
+      path: "/zita-blocks-post-api/v3/posts/",
+      method: "POST",
+      data: sendData,
+    })
+      .then((postsData) => {
+        return postsData;
+      })
+      .catch((error) => console.error(error));
+  }
+  async firstTimeInit() {
+    let { postCategories } = this.props.attributes;
+    let sendData = {
+      initialize: 1,
+      numberOfPosts: 5,
+      featured_image: 1,
+    };
+    // choose category
+    if (postCategories) {
+      sendData["postCategories"] = postCategories.join(",");
+    }
+    let postData = await this.postDataInit(sendData);
+    if (postData) {
+      // all posts
+      if ("posts" in postData && postData.posts) {
+        let posts_ = postData.posts;
+        this.setState({ posts: posts_ });
+      }
+      //all categories
+      if ("category" in postData && postData.category) {
+        let category_ = postData.category;
+        this.setState({ category: category_ });
+      }
+      //total post
+      if ("totalPost" in postData && postData.totalPost) {
+        let totalPost_ = postData.totalPost;
+        this.setState({ totalPost: totalPost_ });
+      }
+    }
+  }
+  async filterPostInit(data_ = {}) {
+    let argData = data_;
+    // //number of post
+    argData["numberOfPosts"] = 5;
+    // choose category
+    let categoryIes =
+      "postCategories" in argData
+        ? argData.postCategories
+        : this.props.attributes.postCategories;
+    if (categoryIes) {
+      argData["postCategories"] = categoryIes.join(",");
+    }
+    // featured image
+    argData["featured_image"] = 1;
+    let postData = await this.postDataInit(argData);
+    if (postData) {
+      // all posts
+      if ("posts" in postData && postData.posts) {
+        let posts_ = postData.posts;
+        this.setState({ posts: posts_ });
+      }
+      //total post
+      if ("totalPost" in postData && postData.totalPost) {
+        let totalPost_ = postData.totalPost;
+        this.setState({ totalPost: totalPost_ });
+      }
+    }
+  }
+  // rest api call
+  componentDidMount() {
+    this.firstTimeInit();
   }
   updateObj = (parent_key, child_key, initialValue, value_) => {
     let newNewValue = [...initialValue];
@@ -30,31 +110,6 @@ class Edit extends Component {
     let setAttr_ = {};
     setAttr_[parent_key] = newNewValue;
     this.props.setAttributes(setAttr_);
-  };
-  dateFormate = (date) => {
-    let date_ = date.split("T")[0];
-    let dateObj = new Date(date_);
-    const monthNames = [
-      __("January", "zita-blocks"),
-      __("February", "zita-blocks"),
-      __("March", "zita-blocks"),
-      __("April", "zita-blocks"),
-      __("May", "zita-blocks"),
-      __("June", "zita-blocks"),
-      __("July", "zita-blocks"),
-      __("August", "zita-blocks"),
-      __("September", "zita-blocks"),
-      __("October", "zita-blocks"),
-      __("November", "zita-blocks"),
-      __("December", "zita-blocks"),
-    ];
-    let dateArr =
-      monthNames[dateObj.getMonth()] +
-      " " +
-      dateObj.getDate() +
-      ", " +
-      dateObj.getFullYear();
-    return <RichText.Content tag="span" value={dateArr} />;
   };
   excerptWords = (words, words_) => {
     words_ = decodeEntities(words_);
@@ -64,93 +119,57 @@ class Edit extends Component {
     return words_.join(" ");
   };
   showCateFn = (categories, cate_) => {
-    let returR = [];
-    if ("category" in this.props && this.props.category && categories.length) {
+    if (categories && categories instanceof Array && categories.length > 0) {
+      let copiedCate = [...categories];
       let countCate = cate_.count;
-      let postCate_ = this.props.attributes.postCategories;
-      if (postCate_.length) {
-        postCate_.map((ev) => {
-          let MkInt = parseInt(ev);
-          if (categories.includes(MkInt)) categories.unshift(MkInt);
-        });
-      }
-      categories = [...new Set(categories)];
-      categories.forEach((cate) => {
-        if (returR.length == countCate) {
-          return;
+      if (countCate < copiedCate.length) {
+        let filterChoosen = this.props.attributes.postCategories;
+        if (
+          filterChoosen.length > 0 &&
+          filterChoosen.length < copiedCate.length
+        ) {
+          filterChoosen.map((cateSlug) => {
+            let getIndex = copiedCate.findIndex((slug_) => {
+              if (slug_ && "slug" in slug_) {
+                return slug_.slug == cateSlug;
+              }
+            });
+            if (getIndex && getIndex + 1 > countCate) {
+              delete copiedCate[getIndex];
+              copiedCate.unshift({ name: cateSlug });
+            }
+          });
         }
-        this.props.category.forEach((searchCate) => {
-          if (cate == searchCate.id) {
-            returR.push(searchCate.name);
-            return;
-          }
-        });
-      });
-    }
-    if (returR.length) {
+      }
       let putCateStyle = { fontSize: cate_.fontSize + "px" };
       if (cate_.customColor) {
         putCateStyle["color"] = cate_.color;
         putCateStyle["backgroundColor"] = cate_.backgroundColor;
       }
-      return returR.map((returnH) => (
-        <span style={putCateStyle}>{returnH}</span>
+      copiedCate.splice(countCate);
+      return copiedCate.map((returnH) => (
+        <span style={putCateStyle}>{returnH.name}</span>
       ));
     }
   };
   showTagsFn = (tags_, tag_r) => {
-    let returR = [];
-    if ("tags" in this.props && this.props.tags && tags_.length) {
-      let countTag = tag_r.count;
-      tags_.forEach((tag) => {
-        if (returR.length == countTag) {
-          return;
-        }
-        this.props.tags.forEach((searchtag) => {
-          if (tag == searchtag.id) {
-            returR.push(searchtag.name);
-            return;
-          }
-        });
-      });
-    }
-    if (returR.length) {
+    if (tags_ && tags_ instanceof Array && tags_.length) {
       let putTagStyle = { color: tag_r.color };
       putTagStyle["color"] = tag_r.color;
       putTagStyle["backgroundColor"] = tag_r.backgroundColor;
       putTagStyle["fontSize"] = tag_r.fontSize + "px";
-      return returR.map((returnH) => (
-        <span style={putTagStyle}>{returnH}</span>
+      let countTag = tag_r.count;
+      let tagCopied = [...tags_];
+      tagCopied.splice(countTag);
+      return tagCopied.map((returnH) => (
+        <span style={putTagStyle}>{returnH.name}</span>
       ));
     }
   };
-  // autor
-  authorFn = (author) => {
-    let retur = {};
-    if ("authors" in this.props) {
-      this.props.authors.map((authorDetail) => {
-        if (authorDetail.id == author) {
-          retur = authorDetail;
-          return;
-        }
-      });
-    }
-    return retur;
-  };
   render() {
     // ++++++++++++++===============
-
-    const { posts, attributes, setAttributes, category } = this.props;
-    // if number of post sum
-    if (numberOfPosts == 3 || numberOfPosts == 5) {
-      this.setState({
-        metaChoose: "primary",
-        excerpt: "primary",
-        heading: "primary",
-      });
-    }
-    // if number of post sum
-
+    const { attributes, setAttributes } = this.props;
+    const { posts, category, totalPost } = this.state;
     let {
       heading,
       author,
@@ -189,28 +208,36 @@ class Edit extends Component {
     let showTag2_ = showTag2[0];
     let date2_ = date2[0];
     let author2_ = author2[0];
+    // if number of post sum
+    if (
+      (numberOfPosts == 3 || numberOfPosts == 5 || layout_.type == 3) &&
+      (this.state.metaChoose == "secondary" ||
+        this.state.excerpt == "secondary" ||
+        this.state.heading == "secondary")
+    ) {
+      this.setState({
+        metaChoose: "primary",
+        excerpt: "primary",
+        heading: "primary",
+      });
+    }
     // category init
     let cateGory = [{ value: "all", label: "All" }];
     if (category && category.length) {
       category.map((catt) => {
-        cateGory.push({
-          value: catt.id,
+        let cate_Items = {
+          value: catt.slug,
           label: catt.name,
-        });
+        };
+        cateGory.push(cate_Items);
       });
-    }
-    // if number of post sum
-    if (layout_.type == 3) {
-      if (
-        this.state.metaChoose == "secondary" ||
-        this.state.excerpt == "secondary" ||
-        this.state.heading == "secondary"
-      ) {
-        this.setState({
-          metaChoose: "primary",
-          excerpt: "primary",
-          heading: "primary",
-        });
+    } else if (category instanceof Object && Object.keys(category).length) {
+      for (let keys_ in category) {
+        let cate_Items = {
+          value: category[keys_].slug,
+          label: category[keys_].name,
+        };
+        cateGory.push(cate_Items);
       }
     }
     return (
@@ -681,6 +708,7 @@ class Edit extends Component {
                   });
                   if (chooseAll.length) choosen = [];
                   setAttributes({ postCategories: choosen });
+                  this.filterPostInit({ postCategories: choosen });
                 }}
                 options={cateGory}
               />
@@ -1104,56 +1132,63 @@ class Edit extends Component {
               }
             />
           </PanelBody>
-          <PanelBody title="Next / Previous Button" initialOpen={false}>
-            <ToggleControl
-              label={__("Enable", "zita-blocks")}
-              checked={meta_style_.npEnable}
-              onChange={(e) =>
-                this.updateObj("meta_style", "npEnable", meta_style, e)
-              }
-            />
-            {meta_style_.npEnable && (
-              <>
-                <p>
-                  <strong>{__("Font Size", "zita-blocks")}</strong>
-                </p>
-                <RangeControl
-                  value={meta_style_.npBgfontSize}
-                  min={1}
-                  max={30}
-                  onChange={(e) => {
-                    this.updateObj("meta_style", "npBgfontSize", meta_style, e);
-                  }}
-                />
-                <p>
-                  <strong>{__("Color", "zita-blocks")}</strong>
-                </p>
-                <ColorPalette
-                  value={meta_style_.npColor}
-                  onChange={(color) =>
-                    this.updateObj("meta_style", "npColor", meta_style, color)
-                  }
-                />
-                <p>
-                  <strong>{__("Background Color", "zita-blocks")}</strong>
-                </p>
-                <ColorPicker
-                  color={meta_style_.npBgColor}
-                  onChangeComplete={(colorBg) => {
-                    let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
-                    this.updateObj(
-                      "meta_style",
-                      "npBgColor",
-                      meta_style,
-                      color
-                    );
-                  }}
-                />
-              </>
-            )}
-          </PanelBody>
+          {posts && posts.length > 0 && posts.length < totalPost && (
+            <PanelBody title="Next / Previous Button" initialOpen={false}>
+              <ToggleControl
+                label={__("Enable", "zita-blocks")}
+                checked={meta_style_.npEnable}
+                onChange={(e) =>
+                  this.updateObj("meta_style", "npEnable", meta_style, e)
+                }
+              />
+              {meta_style_.npEnable && (
+                <>
+                  <p>
+                    <strong>{__("Font Size", "zita-blocks")}</strong>
+                  </p>
+                  <RangeControl
+                    value={meta_style_.npBgfontSize}
+                    min={1}
+                    max={30}
+                    onChange={(e) => {
+                      this.updateObj(
+                        "meta_style",
+                        "npBgfontSize",
+                        meta_style,
+                        e
+                      );
+                    }}
+                  />
+                  <p>
+                    <strong>{__("Color", "zita-blocks")}</strong>
+                  </p>
+                  <ColorPalette
+                    value={meta_style_.npColor}
+                    onChange={(color) =>
+                      this.updateObj("meta_style", "npColor", meta_style, color)
+                    }
+                  />
+                  <p>
+                    <strong>{__("Background Color", "zita-blocks")}</strong>
+                  </p>
+                  <ColorPicker
+                    color={meta_style_.npBgColor}
+                    onChangeComplete={(colorBg) => {
+                      let color = `rgba(${colorBg.rgb.r},${colorBg.rgb.g},${colorBg.rgb.b},${colorBg.rgb.a})`;
+                      this.updateObj(
+                        "meta_style",
+                        "npBgColor",
+                        meta_style,
+                        color
+                      );
+                    }}
+                  />
+                </>
+              )}
+            </PanelBody>
+          )}
         </InspectorControls>
-        {posts && posts.length > 0 && "getMedia_" in posts[0] ? (
+        {posts && posts.length > 0 ? (
           <div className="zita-section-post zita-post-five-post">
             {title_.enable && (
               <div
@@ -1189,9 +1224,6 @@ class Edit extends Component {
                       {posts.map((post, in_) => {
                         return (
                           in_ < 4 &&
-                          "getMedia_" in post &&
-                          post.getMedia_ &&
-                          "guid" in post.getMedia_ &&
                           this.returnHtml(
                             post,
                             heading2_,
@@ -1210,9 +1242,6 @@ class Edit extends Component {
                   <div>
                     <div className="column-count column-count-1">
                       {posts.length > 4 &&
-                        "getMedia_" in posts[4] &&
-                        posts[4].getMedia_ &&
-                        "guid" in posts[4].getMedia_ &&
                         this.returnHtml(
                           posts[4],
                           heading_,
@@ -1229,41 +1258,33 @@ class Edit extends Component {
                 </>
               ) : layout_.type == 3 ? (
                 posts.map((post, in_) => {
-                  return (
-                    "getMedia_" in post &&
-                    post.getMedia_ &&
-                    "guid" in post.getMedia_ &&
-                    this.returnHtml(
-                      post,
-                      heading_,
-                      author_,
-                      date_,
-                      meta_style_,
-                      showCate_,
-                      excerpt_,
-                      showTag_,
-                      layout_
-                    )
+                  return this.returnHtml(
+                    post,
+                    heading_,
+                    author_,
+                    date_,
+                    meta_style_,
+                    showCate_,
+                    excerpt_,
+                    showTag_,
+                    layout_
                   );
                 })
               ) : (
                 <>
                   <div>
                     <div className="column-count column-count-1">
-                      {"getMedia_" in posts[0] &&
-                        posts[0].getMedia_ &&
-                        "guid" in posts[0].getMedia_ &&
-                        this.returnHtml(
-                          posts[0],
-                          heading_,
-                          author_,
-                          date_,
-                          meta_style_,
-                          showCate_,
-                          excerpt_,
-                          showTag_,
-                          layout_
-                        )}
+                      {this.returnHtml(
+                        posts[0],
+                        heading_,
+                        author_,
+                        date_,
+                        meta_style_,
+                        showCate_,
+                        excerpt_,
+                        showTag_,
+                        layout_
+                      )}
                     </div>
                   </div>
                   <div>
@@ -1271,9 +1292,6 @@ class Edit extends Component {
                       {posts.map((post, in_) => {
                         return (
                           in_ != 0 &&
-                          "getMedia_" in post &&
-                          post.getMedia_ &&
-                          "guid" in post.getMedia_ &&
                           this.returnHtml(
                             post,
                             heading2_,
@@ -1292,7 +1310,7 @@ class Edit extends Component {
                 </>
               )}
             </div>
-            {meta_style_.npEnable && (
+            {meta_style_.npEnable && posts.length < totalPost && (
               <div className="zita-two-post-wrapper-next-prev">
                 <div
                   style={{
@@ -1346,15 +1364,12 @@ class Edit extends Component {
     showTag_,
     layout_
   ) => {
-    let postAuthor =
-      author_ && author_.enable && "name" in this.authorFn(post.author)
-        ? this.authorFn(post.author).name
-        : false;
+    let postAuthor = author_ && author_.enable ? post.author : false;
     return (
-      <article className="block-post-article" key={post.id}>
+      <article className="block-post-article">
         <div className="post-wrapper">
           <div className="featured-image">
-            <img src={post.getMedia_.guid.rendered} />
+            <img src={post.feature_image} />
           </div>
           <div
             className="post-content"
@@ -1362,15 +1377,15 @@ class Edit extends Component {
           >
             {showCate_ && showCate_.enable && (
               <p className="post-category">
-                {this.showCateFn(post.categories, showCate_)}
+                {this.showCateFn(post.post_categories, showCate_)}
               </p>
             )}
             <RichText.Content
               className="post-heading"
               tagName={heading_.tag}
-              value={post.title.rendered}
+              value={post.postTitle}
               style={{
-                fontSize: heading_.fontSize,
+                fontSize: heading_.fontSize + "px",
                 color: heading_.color,
               }}
             />
@@ -1406,7 +1421,7 @@ class Edit extends Component {
                     }}
                     className="post-date"
                   >
-                    {this.dateFormate(post.date)}
+                    <span>{post.post_date}</span>
                   </p>
                 </>
               )}
@@ -1430,8 +1445,8 @@ class Edit extends Component {
                     }}
                     className="post-date-last-modified"
                   >
-                    <span>{__("Modified:", "zita-blocks")} </span>
-                    {this.dateFormate(post.modified)}
+                    <span>{__("Modified", "zita-blocks")}: </span>
+                    <span>{post.post_modified_date}</span>
                   </p>
                 </>
               )}
@@ -1444,15 +1459,15 @@ class Edit extends Component {
                 }}
                 className="post-excerpt"
               >
-                {this.excerptWords(excerpt_.words, post.excerpt.rendered)}
+                {this.excerptWords(excerpt_.words, post.post_excerpt)}
                 <span className="read-more">
-                  {__("...Read More", "zita-blocks")}
+                  ...{__("Read More", "zita-blocks")}
                 </span>
               </p>
             )}
             {showTag_ && showTag_.enable && (
               <p style={{ color: meta_style_.color }} className="post-tags">
-                {this.showTagsFn(post.tags, showTag_)}
+                {this.showTagsFn(post.post_tag, showTag_)}
               </p>
             )}
           </div>
@@ -1461,81 +1476,81 @@ class Edit extends Component {
     );
   };
 }
-// export default Edit;
-export default withSelect((select, props) => {
-  const { attributes } = props;
-  let { numberOfPosts, postCategories } = attributes;
-  const query = { per_page: numberOfPosts };
-  const query2 = { per_page: -1 };
-  if (postCategories && postCategories.length) {
-    let cateCh = postCategories.join(",");
-    query["categories"] = cateCh;
-    query2["categories"] = cateCh;
-  }
-  const { getMedia, getEntityRecords, getAuthors } = select("core");
-  ////////////////////////////////////////////////////////////////////////////////////////////
-  let getTotalPost = getEntityRecords("postType", "post", query2);
-  let getAllPost =
-    getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
-  function returnPostFn(numberOfPosts, check = false) {
-    let numberOfposts_ = check ? check : numberOfPosts;
-    let new_query = {
-      per_page: numberOfposts_,
-    };
-    if (postCategories && postCategories.length) {
-      new_query["categories"] = postCategories.join(",");
-    }
-    let checkPost = select("core").getEntityRecords(
-      "postType",
-      "post",
-      new_query
-    );
-    if (checkPost && checkPost instanceof Array && checkPost.length > 0) {
-      let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
-      if (
-        newPostArray.length == numberOfPosts ||
-        getTotalPost.length <= numberOfposts_
-      ) {
-        return newPostArray;
-      } else {
-        if (
-          newPostArray.length < numberOfPosts &&
-          numberOfposts_ <= getTotalPost.length
-        ) {
-          return returnPostFn(numberOfPosts, numberOfposts_ + 1);
-        }
-      }
-    } else {
-      return false;
-    }
-  }
-  ///////////////////////////////////////////////////////////////////////////////////////////
-  // let getAllPost = getEntityRecords("postType", "post", query);
-  let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
-  let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
-  let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
-  if (getAllPost && getAllPost.length) {
-    let returnArray = [];
-    getAllPost.map((v, index_) => {
-      if (v.featured_media) {
-        getAllPost[index_]["getMedia_"] = getMedia(v.featured_media);
-      } else {
-        getAllPost[index_]["getMedia_"] = false;
-      }
-      returnArray.push(getAllPost[index_]);
-    });
-    arrayCatePost["posts"] = returnArray;
-  } else if (getAllPost instanceof Array && getAllPost.length == 0) {
-    arrayCatePost["posts"] = false;
-  }
-  // autohrs
-  let authors = getAuthors();
-  if (authors && authors.length) {
-    let authors_ = [];
-    authors.map((v) => {
-      authors_.push({ id: v.id, name: v.name });
-    });
-    arrayCatePost["authors"] = authors_;
-  }
-  return arrayCatePost;
-})(Edit);
+export default Edit;
+// export default withSelect((select, props) => {
+//   const { attributes } = props;
+//   let { numberOfPosts, postCategories } = attributes;
+//   const query = { per_page: numberOfPosts };
+//   const query2 = { per_page: -1 };
+//   if (postCategories && postCategories.length) {
+//     let cateCh = postCategories.join(",");
+//     query["categories"] = cateCh;
+//     query2["categories"] = cateCh;
+//   }
+//   const { getMedia, getEntityRecords, getAuthors } = select("core");
+//   ////////////////////////////////////////////////////////////////////////////////////////////
+//   let getTotalPost = getEntityRecords("postType", "post", query2);
+//   let getAllPost =
+//     getTotalPost && getTotalPost.length ? returnPostFn(numberOfPosts) : false;
+//   function returnPostFn(numberOfPosts, check = false) {
+//     let numberOfposts_ = check ? check : numberOfPosts;
+//     let new_query = {
+//       per_page: numberOfposts_,
+//     };
+//     if (postCategories && postCategories.length) {
+//       new_query["categories"] = postCategories.join(",");
+//     }
+//     let checkPost = select("core").getEntityRecords(
+//       "postType",
+//       "post",
+//       new_query
+//     );
+//     if (checkPost && checkPost instanceof Array && checkPost.length > 0) {
+//       let newPostArray = checkPost.filter((chv) => chv.featured_media > 0);
+//       if (
+//         newPostArray.length == numberOfPosts ||
+//         getTotalPost.length <= numberOfposts_
+//       ) {
+//         return newPostArray;
+//       } else {
+//         if (
+//           newPostArray.length < numberOfPosts &&
+//           numberOfposts_ <= getTotalPost.length
+//         ) {
+//           return returnPostFn(numberOfPosts, numberOfposts_ + 1);
+//         }
+//       }
+//     } else {
+//       return false;
+//     }
+//   }
+//   ///////////////////////////////////////////////////////////////////////////////////////////
+//   // let getAllPost = getEntityRecords("postType", "post", query);
+//   let cate_ = getEntityRecords("taxonomy", "category", { per_page: -1 });
+//   let tags_ = getEntityRecords("taxonomy", "post_tag", { per_page: -1 });
+//   let arrayCatePost = { posts: true, category: cate_, tags: tags_ };
+//   if (getAllPost && getAllPost.length) {
+//     let returnArray = [];
+//     getAllPost.map((v, index_) => {
+//       if (v.featured_media) {
+//         getAllPost[index_]["getMedia_"] = getMedia(v.featured_media);
+//       } else {
+//         getAllPost[index_]["getMedia_"] = false;
+//       }
+//       returnArray.push(getAllPost[index_]);
+//     });
+//     arrayCatePost["posts"] = returnArray;
+//   } else if (getAllPost instanceof Array && getAllPost.length == 0) {
+//     arrayCatePost["posts"] = false;
+//   }
+//   // autohrs
+//   let authors = getAuthors();
+//   if (authors && authors.length) {
+//     let authors_ = [];
+//     authors.map((v) => {
+//       authors_.push({ id: v.id, name: v.name });
+//     });
+//     arrayCatePost["authors"] = authors_;
+//   }
+//   return arrayCatePost;
+// })(Edit);
