@@ -428,9 +428,9 @@ class Edit extends Component {
   };
   render() {
     const { attributes, setAttributes } = this.props;
-    // console.log("category props->", this.props);
+    console.log("category props->", this.props);
     const { posts, category, totalPost } = this.state;
-    // console.log("state props posts->", this.state);
+    console.log("state props posts->", this.state);
     let {
       heading,
       author,

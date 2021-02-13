@@ -1922,13 +1922,13 @@ var Edit = /*#__PURE__*/function (_Component) {
 
       var _this$props = this.props,
           attributes = _this$props.attributes,
-          setAttributes = _this$props.setAttributes; // console.log("category props->", this.props);
-
+          setAttributes = _this$props.setAttributes;
+      console.log("category props->", this.props);
       var _this$state = this.state,
           posts = _this$state.posts,
           category = _this$state.category,
-          totalPost = _this$state.totalPost; // console.log("state props posts->", this.state);
-
+          totalPost = _this$state.totalPost;
+      console.log("state props posts->", this.state);
       var heading = attributes.heading,
           author = attributes.author,
           numberOfPosts = attributes.numberOfPosts,
