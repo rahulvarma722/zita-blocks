@@ -44,11 +44,12 @@ function Zita_blocks_Post_Filter($sendArgument)
     $args = array('post_type' => 'post');
     $args = array_merge($args, $sendArgument);
     $query = new WP_Query($args);
+    $returnPostData = [
+        'posts' => [],
+        "totalPost" => '',
+    ];
     if ($query->have_posts()) {
-        $returnPostData = [
-            'posts' => [],
-            "totalPost" => $query->found_posts,
-        ];
+        $returnPostData['totalPost'] = $query->found_posts;
         while ($query->have_posts()) {
             $query->the_post();
             $singlePost = [];
@@ -64,28 +65,34 @@ function Zita_blocks_Post_Filter($sendArgument)
             $singlePost['post_tag'] = get_the_tags(get_the_ID());
             $returnPostData['posts'][] = $singlePost;
         }
+    } else {
+        $returnPostData['posts'] = '';
     }
-    return isset($returnPostData) && !empty($returnPostData) ? $returnPostData : false;
+    return $returnPostData;
 }
 // first time init function 
 function Zita_blocks_Post_Api_firstTimeIntilize($sendArgument)
 {
+    $returnPostData = array(
+        'posts' => [],
+        "totalPost" => '',
+        "category" => ''
+    );
+    // for category 
+    $allCategory = get_terms(
+        array(
+            'taxonomy' => 'category',
+            'fields'   => 'all',
+            'hide_empty' => true,
+        )
+    );
+    $returnPostData['category'] = $allCategory && !empty($allCategory) ? $allCategory : '';
+    //    for post and total post 
     $args = array('post_type' => 'post');
     $args = array_merge($args, $sendArgument);
     $query = new WP_Query($args);
     if ($query->have_posts()) {
-        $allCategory = get_terms(
-            array(
-                'taxonomy' => 'category',
-                'fields'   => 'all',
-                'hide_empty' => true,
-            )
-        );
-        $returnPostData = [
-            'posts' => [],
-            "totalPost" => $query->found_posts,
-            "category" => $allCategory
-        ];
+        $returnPostData['totalPost'] = $query->found_posts;
         while ($query->have_posts()) {
             $query->the_post();
             $singlePost = [];
@@ -99,6 +106,44 @@ function Zita_blocks_Post_Api_firstTimeIntilize($sendArgument)
             $singlePost['post_tag'] = get_the_tags(get_the_ID());
             $returnPostData['posts'][] = $singlePost;
         }
+    } else {
+        $returnPostData['posts'] = '';
+        $returnPostData['totalPost'] = '';
     }
-    return isset($returnPostData) && !empty($returnPostData) ? $returnPostData : false;
+    return $returnPostData;
 }
+// // first time init function 
+// function Zita_blocks_Post_Api_firstTimeIntilize($sendArgument)
+// {
+//     $args = array('post_type' => 'post');
+//     $args = array_merge($args, $sendArgument);
+//     $query = new WP_Query($args);
+//     if ($query->have_posts()) {
+//         $allCategory = get_terms(
+//             array(
+//                 'taxonomy' => 'category',
+//                 'fields'   => 'all',
+//                 'hide_empty' => true,
+//             )
+//         );
+//         $returnPostData = [
+//             'posts' => [],
+//             "totalPost" => $query->found_posts,
+//             "category" => $allCategory
+//         ];
+//         while ($query->have_posts()) {
+//             $query->the_post();
+//             $singlePost = [];
+//             $singlePost['author'] = get_the_author();
+//             $singlePost['postTitle'] = get_the_title();
+//             $singlePost['feature_image'] = get_the_post_thumbnail_url() ? get_the_post_thumbnail_url() : false;
+//             $singlePost['post_categories'] = get_the_category();
+//             $singlePost['post_date'] = get_the_date();
+//             $singlePost['post_modified_date'] = get_the_modified_date();
+//             $singlePost['post_excerpt'] = get_the_excerpt();
+//             $singlePost['post_tag'] = get_the_tags(get_the_ID());
+//             $returnPostData['posts'][] = $singlePost;
+//         }
+//     }
+//     return isset($returnPostData) && !empty($returnPostData) ? $returnPostData : false;
+// }

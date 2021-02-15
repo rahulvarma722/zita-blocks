@@ -13,8 +13,16 @@ import {
   ColorPicker,
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { decodeEntities } from "@wordpress/html-entities";
-const { apiFetch } = wp;
+import {
+  showCateFn,
+  showTagsFn,
+  excerptWords,
+  filterPostInit,
+  firstTimeInit,
+  categoryList,
+  PostLoader,
+  PostNotfound,
+} from "../block-assets/post-functions";
 class Edit extends Component {
   constructor(props) {
     super(props);
@@ -24,91 +32,13 @@ class Edit extends Component {
       totalPost: null,
     };
   }
-  postDataInit(data = {}) {
-    let sendData = data;
-    return apiFetch({
-      path: "/zita-blocks-post-api/v3/posts/",
-      method: "POST",
-      data: sendData,
-    })
-      .then((postsData) => {
-        return postsData;
-      })
-      .catch((error) => console.error(error));
-  }
-  async firstTimeInit() {
-    let { numberOfPosts, postCategories, thumbnail } = this.props.attributes;
-    let sendData = {
-      initialize: 1,
-      numberOfPosts: numberOfPosts,
-    };
-    // choose category
-    if (postCategories) {
-      sendData["postCategories"] = postCategories.join(",");
-    }
-    // featured image
+  componentDidMount() {
+    let { thumbnail } = this.props.attributes;
+    let sendData = {};
     if (thumbnail[0].typeShow == "1") {
       sendData["featured_image"] = 1;
     }
-    let postData = await this.postDataInit(sendData);
-    if (postData) {
-      // all posts
-      if ("posts" in postData && postData.posts) {
-        let posts_ = postData.posts;
-        this.setState({ posts: posts_ });
-      }
-      //all categories
-      if ("category" in postData && postData.category) {
-        let category_ = postData.category;
-        this.setState({ category: category_ });
-      }
-      //total post
-      if ("totalPost" in postData && postData.totalPost) {
-        let totalPost_ = postData.totalPost;
-        this.setState({ totalPost: totalPost_ });
-      }
-    }
-  }
-  async filterPostInit(data_ = {}) {
-    let argData = data_;
-    //number of post
-    if (!("numberOfPosts" in argData)) {
-      argData["numberOfPosts"] = this.props.attributes.numberOfPosts;
-    }
-    // choose category
-    let categoryIes =
-      "postCategories" in argData
-        ? argData.postCategories
-        : this.props.attributes.postCategories;
-    if (categoryIes) {
-      argData["postCategories"] = categoryIes.join(",");
-    }
-    // featured image
-    if ("featured_image" in argData) {
-      argData["featured_image"] = 1;
-    } else {
-      // featured image
-      if (this.props.attributes.thumbnail[0].typeShow == "1") {
-        argData["featured_image"] = 1;
-      }
-    }
-    let postData = await this.postDataInit(argData);
-    if (postData) {
-      // all posts
-      if ("posts" in postData && postData.posts) {
-        let posts_ = postData.posts;
-        this.setState({ posts: posts_ });
-      }
-      //total post
-      if ("totalPost" in postData && postData.totalPost) {
-        let totalPost_ = postData.totalPost;
-        this.setState({ totalPost: totalPost_ });
-      }
-    }
-  }
-  // rest api call
-  componentDidMount() {
-    this.firstTimeInit();
+    firstTimeInit(this, sendData);
   }
   updateObj = (parent_key, child_key, initialValue, value_) => {
     let newNewValue = [...initialValue];
@@ -116,61 +46,6 @@ class Edit extends Component {
     let setAttr_ = {};
     setAttr_[parent_key] = newNewValue;
     this.props.setAttributes(setAttr_);
-  };
-  excerptWords = (words, words_) => {
-    words_ = decodeEntities(words_);
-    words_ = words_.replace(/<\/?[^>]+(>|$)/g, "");
-    words_ = words_.split(" ");
-    words_ = words_.slice(0, words);
-    return words_.join(" ");
-  };
-  showCateFn = (categories, cate_) => {
-    if (categories && categories instanceof Array && categories.length > 0) {
-      let copiedCate = [...categories];
-      let countCate = cate_.count;
-      if (countCate < copiedCate.length) {
-        let filterChoosen = this.props.attributes.postCategories;
-        if (
-          filterChoosen.length > 0 &&
-          filterChoosen.length < copiedCate.length
-        ) {
-          filterChoosen.map((cateSlug) => {
-            let getIndex = copiedCate.findIndex((slug_) => {
-              if (slug_ && "slug" in slug_) {
-                return slug_.slug == cateSlug;
-              }
-            });
-            if (getIndex && getIndex + 1 > countCate) {
-              delete copiedCate[getIndex];
-              copiedCate.unshift({ name: cateSlug });
-            }
-          });
-        }
-      }
-      let putCateStyle = { fontSize: cate_.fontSize + "px" };
-      if (cate_.customColor) {
-        putCateStyle["color"] = cate_.color;
-        putCateStyle["backgroundColor"] = cate_.backgroundColor;
-      }
-      copiedCate.splice(countCate);
-      return copiedCate.map((returnH) => (
-        <span style={putCateStyle}>{returnH.name}</span>
-      ));
-    }
-  };
-  showTagsFn = (tags_, tag_r) => {
-    if (tags_ && tags_ instanceof Array && tags_.length) {
-      let putTagStyle = { color: tag_r.color };
-      putTagStyle["color"] = tag_r.color;
-      putTagStyle["backgroundColor"] = tag_r.backgroundColor;
-      putTagStyle["fontSize"] = tag_r.fontSize + "px";
-      let countTag = tag_r.count;
-      let tagCopied = [...tags_];
-      tagCopied.splice(countTag);
-      return tagCopied.map((returnH) => (
-        <span style={putTagStyle}>{returnH.name}</span>
-      ));
-    }
   };
   render() {
     const { attributes, setAttributes } = this.props;
@@ -199,23 +74,11 @@ class Edit extends Component {
     let showTag_ = showTag[0];
     let showCate_ = showCate[0];
     // category init
-    let cateGory = [{ value: "all", label: "All" }];
-    if (category && category.length) {
-      category.map((catt) => {
-        let cate_Items = {
-          value: catt.slug,
-          label: catt.name,
-        };
-        cateGory.push(cate_Items);
-      });
-    } else if (category instanceof Object && Object.keys(category).length) {
-      for (let keys_ in category) {
-        let cate_Items = {
-          value: category[keys_].slug,
-          label: category[keys_].name,
-        };
-        cateGory.push(cate_Items);
-      }
+    let cateGory = [];
+    if (!category) {
+      cateGory = false;
+    } else {
+      cateGory = categoryList(category);
     }
     return (
       <>
@@ -357,7 +220,10 @@ class Edit extends Component {
               max={24}
               onChange={(e) => {
                 setAttributes({ numberOfPosts: e });
-                this.filterPostInit({ numberOfPosts: e });
+                filterPostInit({
+                  numberOfPosts: e,
+                  featured_image: this.props.attributes.thumbnail[0].typeShow,
+                });
               }}
             />
             <ToggleControl
@@ -489,7 +355,9 @@ class Edit extends Component {
               onChange={(e) => {
                 let value_ = e.target.value;
                 this.updateObj("thumbnail", "typeShow", thumbnail, value_);
-                if (value_ == "1") this.filterPostInit({ featured_image: 1 });
+                filterPostInit({
+                  featured_image: value_,
+                });
               }}
             >
               <option value="all">{__("All Post", "zita-blocks")}</option>
@@ -519,21 +387,32 @@ class Edit extends Component {
             <p>
               <strong>{__("Choose Category", "zita-blocks")}</strong>
             </p>
-            <div className="zita-multiple-select">
-              <SelectControl
-                multiple
-                value={postCategories.length ? postCategories : ["all"]}
-                onChange={(choosen) => {
-                  let chooseAll = choosen.filter((choose) => {
-                    if (choose == "all") return true;
-                  });
-                  if (chooseAll.length) choosen = [];
-                  setAttributes({ postCategories: choosen });
-                  this.filterPostInit({ postCategories: choosen });
-                }}
-                options={cateGory}
-              />
-            </div>
+            {cateGory && cateGory.length > 0 ? (
+              <div className="zita-multiple-select">
+                <SelectControl
+                  multiple
+                  value={postCategories.length ? postCategories : ["all"]}
+                  onChange={(choosen) => {
+                    let chooseAll = choosen.filter((choose) => {
+                      if (choose == "all") return true;
+                    });
+                    if (chooseAll.length) choosen = [];
+                    setAttributes({ postCategories: choosen });
+                    filterPostInit({
+                      postCategories: choosen,
+                      featured_image: this.props.attributes.thumbnail[0]
+                        .typeShow,
+                    });
+                  }}
+                  options={cateGory}
+                />
+              </div>
+            ) : (
+              <p className="category-blank">
+                {__("No Categories Found", "zita-blocks")}
+              </p>
+            )}
+
             {/* category */}
             {/* show author */}
             <ToggleControl
@@ -841,7 +720,11 @@ class Edit extends Component {
                       <div className="post-content">
                         {showCate_.enable && (
                           <p className="post-category">
-                            {this.showCateFn(post.post_categories, showCate_)}
+                            {showCateFn(
+                              this.props,
+                              post.post_categories,
+                              showCate_
+                            )}
                           </p>
                         )}
                         <RichText.Content
@@ -923,15 +806,12 @@ class Edit extends Component {
                             }}
                             className="post-excerpt"
                           >
-                            {this.excerptWords(
-                              excerpt_.words,
-                              post.post_excerpt
-                            )}
+                            {excerptWords(excerpt_.words, post.post_excerpt)}
                           </p>
                         )}
                         {showTag_.enable && (
                           <p className="post-tags">
-                            {this.showTagsFn(post.post_tag, showTag_)}
+                            {showTagsFn(post.post_tag, showTag_)}
                           </p>
                         )}
                       </div>
@@ -955,7 +835,11 @@ class Edit extends Component {
                       <div className="post-content">
                         {showCate_.enable && (
                           <p className="post-category">
-                            {this.showCateFn(post.post_categories, showCate_)}
+                            {showCateFn(
+                              this.props,
+                              post.post_categories,
+                              showCate_
+                            )}
                           </p>
                         )}
                         <RichText.Content
@@ -1034,15 +918,12 @@ class Edit extends Component {
                             style={{ color: excerpt_.color }}
                             className="post-excerpt"
                           >
-                            {this.excerptWords(
-                              excerpt_.words,
-                              post.post_excerpt
-                            )}
+                            {excerptWords(excerpt_.words, post.post_excerpt)}
                           </p>
                         )}
                         {showTag_.enable && (
                           <p className="post-tags">
-                            {this.showTagsFn(post.post_tag, showTag_)}
+                            {showTagsFn(post.post_tag, showTag_)}
                           </p>
                         )}
                       </div>
@@ -1111,20 +992,7 @@ class Edit extends Component {
             )}
           </div>
         ) : (
-          <div>
-            {!posts ? (
-              __("No Post Found", "zita-blocks")
-            ) : (
-              <div className="post-loader">
-                <div className="active linear-bubble zita-block-loader">
-                  {__("Post Loading...", "zita-blocks")}
-                  <div>
-                    <span></span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+          <div>{!posts ? <PostNotfound /> : <PostLoader />}</div>
         )}
       </>
     );
