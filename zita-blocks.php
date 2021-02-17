@@ -1,10 +1,10 @@
 <?php
 /*
-*Plugin Name: A zita-blocks
+*Plugin Name: zita-blocks pro
 *slug: zita-blocks
 * Text Domain: zita-blocks
 */
-define('ZITA_BLOCKS_PLUGIN_URL', plugins_url('zita-blocks') . '/');
+define('ZITA_BLOCKS_PLUGIN_URL', plugins_url('zita-blocks-pro') . '/');
 define('ZITA_BLOCKS_PLUGIN_PATH', plugin_dir_path(__FILE__));
 include "inc/inc.php";
 include "inc/fn.php";
