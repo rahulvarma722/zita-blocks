@@ -296,7 +296,7 @@ class Edit extends Component {
               max={20}
               onChange={(e) => {
                 setAttributes({ numberOfPosts: e });
-                filterPostInit({
+                filterPostInit(this, {
                   numberOfPosts: e,
                   featured_image: this.props.attributes.thumbnail[0].typeShow,
                 });
@@ -424,7 +424,7 @@ class Edit extends Component {
               onChange={(e) => {
                 let value_ = e.target.value;
                 this.updateObj("thumbnail", "typeShow", thumbnail, value_);
-                filterPostInit({ featured_image: value_ });
+                filterPostInit(this, { featured_image: value_ });
               }}
             >
               <option value="all">{__("All Post", "zita-blocks")}</option>
@@ -468,7 +468,7 @@ class Edit extends Component {
                     });
                     if (chooseAll.length) choosen = [];
                     setAttributes({ postCategories: choosen });
-                    filterPostInit({
+                    filterPostInit(this, {
                       postCategories: choosen,
                       featured_image: this.props.attributes.thumbnail[0]
                         .typeShow,

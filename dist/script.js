@@ -490,165 +490,171 @@ var stateCheck = setInterval(function () {
       if (getAllslideSlide[sliderSlide].nodeName == "UL") {
         (function () {
           var slider = getAllslideSlide[sliderSlide];
-          var firstElement_ = slider.firstElementChild.cloneNode(true);
-          firstElement_.classList.add("first-element");
-          var lastElement_ = slider.lastElementChild.cloneNode(true);
-          lastElement_.classList.add("last-element");
-          slider.append(firstElement_);
-          slider.prepend(lastElement_);
-          slider.children[1].classList.add("selected_"); // return;
 
-          var sliderINIT = slider.getAttribute("slidersetting");
-          sliderINIT = JSON.parse(sliderINIT);
-          var containerClosest = slider.closest(".zita-block-slide-wrapper");
-          var getPArentWidthSlide = containerClosest.parentNode.getBoundingClientRect().width; // overWirting Width and height
+          if (slider.children.length && slider.children.length > 1) {
+            (function () {
+              var firstElement_ = slider.firstElementChild.cloneNode(true);
+              firstElement_.classList.add("first-element");
+              var lastElement_ = slider.lastElementChild.cloneNode(true);
+              lastElement_.classList.add("last-element");
+              slider.append(firstElement_);
+              slider.prepend(lastElement_);
+              slider.children[1].classList.add("selected_"); // return;
 
-          if ("width" in sliderINIT && sliderINIT.width && getPArentWidthSlide > sliderINIT.width) {
-            // overwriting width
-            getPArentWidthSlide = sliderINIT.width;
-            containerClosest.style.width = getPArentWidthSlide + "px";
-          }
+              var sliderINIT = slider.getAttribute("slidersetting");
+              sliderINIT = JSON.parse(sliderINIT);
+              var containerClosest = slider.closest(".zita-block-slide-wrapper");
+              var getPArentWidthSlide = containerClosest.parentNode.getBoundingClientRect().width; // overWirting Width and height
 
-          if ("height" in sliderINIT && sliderINIT.height) {
-            // overwriting height
-            slider.style.height = sliderINIT.height + "px";
-          } // overWirting Width and height
+              if ("width" in sliderINIT && sliderINIT.width && getPArentWidthSlide > sliderINIT.width) {
+                // overwriting width
+                getPArentWidthSlide = sliderINIT.width;
+                containerClosest.style.width = getPArentWidthSlide + "px";
+              }
+
+              if ("height" in sliderINIT && sliderINIT.height) {
+                // overwriting height
+                slider.style.height = sliderINIT.height + "px";
+              } // overWirting Width and height
 
 
-          var countChildern = slider.children.length;
-          slider.style.width = countChildern * getPArentWidthSlide + "px";
-          slider.style.marginLeft = -getPArentWidthSlide + "px";
-          containerClosest.style.opacity = 1;
-          var tranSitionDuration = 1;
-          var transitionDuClone = tranSitionDuration;
-          var sliderDelay = containerClosest.querySelector(".zita-slider-container").getAttribute("sliderDelay");
-          var prev = containerClosest.querySelector(".zita-slider-bullet-next-prev.prev");
-          var next = containerClosest.querySelector(".zita-slider-bullet-next-prev.next");
-          var indicator = containerClosest.querySelector(".zita-slider-bullet-trigger");
-          var indicatorActive = void 0,
-              indiCatorStyle = void 0;
+              var countChildern = slider.children.length;
+              slider.style.width = countChildern * getPArentWidthSlide + "px";
+              slider.style.marginLeft = -getPArentWidthSlide + "px";
+              containerClosest.style.opacity = 1;
+              var tranSitionDuration = 1;
+              var transitionDuClone = tranSitionDuration;
+              var sliderDelay = containerClosest.querySelector(".zita-slider-container").getAttribute("sliderDelay");
+              var prev = containerClosest.querySelector(".zita-slider-bullet-next-prev.prev");
+              var next = containerClosest.querySelector(".zita-slider-bullet-next-prev.next");
+              var indicator = containerClosest.querySelector(".zita-slider-bullet-trigger");
+              var indicatorActive, indiCatorStyle;
 
-          if (indicator) {
-            indicatorActive = indicator.getAttribute("active-color");
-            indiCatorStyle = indicator.getAttribute("childStyle");
-            indicator = indicator.children;
+              if (indicator) {
+                indicatorActive = indicator.getAttribute("active-color");
+                indiCatorStyle = indicator.getAttribute("childStyle");
+                indicator = indicator.children;
 
-            if (indicator[0].querySelector("span")) {
-              indicator[0].querySelector("span").style.backgroundColor = indicatorActive;
-            }
-          }
-
-          var slideIndex = 1;
-
-          if (prev && next) {
-            prev.addEventListener("click", function () {
-              prevSlideSl();
-              resetTimerSl();
-            });
-            next.addEventListener("click", function () {
-              nextSlideSl();
-              resetTimerSl();
-            });
-          }
-
-          var _loop = function _loop(x) {
-            if (indicator[x].nodeName == "LI") {
-              indicator[x].addEventListener("click", function () {
-                slideIndex = parseInt(x) + 1;
-                changesSlideSl();
-                resetTimerSl();
-              });
-            }
-          };
-
-          for (var x in indicator) {
-            _loop(x);
-          }
-
-          function nextSlideSl() {
-            if (slideIndex == countChildern - 2) {
-              // next opt perform
-              slideIndex++;
-              setTimeout(function () {
-                slideIndex = 1;
-                transitionDuClone = 0;
-                changesSlideSl();
-                transitionDuClone = tranSitionDuration;
-              }, transitionDuClone * 1000); // next opt perform
-            } else if (slideIndex < countChildern - 2) {
-              slideIndex++;
-            }
-
-            changesSlideSl();
-          }
-
-          function prevSlideSl() {
-            if (slideIndex == 1) {
-              // prev opt perform
-              slideIndex--;
-              setTimeout(function () {
-                slideIndex = countChildern - 2;
-                transitionDuClone = 0;
-                changesSlideSl();
-                transitionDuClone = tranSitionDuration;
-              }, transitionDuClone * 1000); // prev opt perform
-            } else if (slideIndex > 1) {
-              slideIndex--;
-            }
-
-            changesSlideSl();
-          }
-
-          function changesSlideSl() {
-            var moveSlide = slideIndex > 0 ? -(slideIndex * getPArentWidthSlide) : 0;
-            slider.style.marginLeft = moveSlide + "px";
-            slider.style.transitionDuration = transitionDuClone + "s";
-
-            for (var i = 0; i < countChildern; i++) {
-              slider.children[i].classList.remove("selected_");
-
-              if (indicator && indicator[i]) {
-                indicator[i].classList.remove("selected_");
-
-                if (indicator[i].querySelector("span")) {
-                  indicator[i].querySelector("span").setAttribute("style", indiCatorStyle);
+                if (indicator[0].querySelector("span")) {
+                  indicator[0].querySelector("span").style.backgroundColor = indicatorActive;
                 }
               }
-            }
 
-            slider.children[slideIndex].classList.add("selected_");
+              var slideIndex = 1;
 
-            if (indicator) {
-              var indicatorIndex = countChildern - 1 == slideIndex ? 0 : slideIndex == 0 ? indicator.length - 1 : slideIndex - 1;
-              indicator[indicatorIndex].classList.add("selected_");
-
-              if (indicator[indicatorIndex].querySelector("span")) {
-                indicator[indicatorIndex].querySelector("span").style.backgroundColor = indicatorActive;
+              if (prev && next) {
+                prev.addEventListener("click", function () {
+                  prevSlideSl();
+                  resetTimerSl();
+                });
+                next.addEventListener("click", function () {
+                  nextSlideSl();
+                  resetTimerSl();
+                });
               }
-            }
-          }
 
-          sliderDelay = parseInt(sliderDelay);
+              var _loop = function _loop(x) {
+                if (indicator[x].nodeName == "LI") {
+                  indicator[x].addEventListener("click", function () {
+                    slideIndex = parseInt(x) + 1;
+                    changesSlideSl();
+                    resetTimerSl();
+                  });
+                }
+              };
 
-          if (sliderDelay > 0) {
-            sliderDelay = sliderDelay * 1000;
-          }
+              for (var x in indicator) {
+                _loop(x);
+              }
 
-          function resetTimerSl() {
-            if (sliderDelay > 0) {
-              clearInterval(timer);
-              timer = setInterval(autoPlaySl, sliderDelay);
-            }
-          }
+              function nextSlideSl() {
+                if (slideIndex == countChildern - 2) {
+                  // next opt perform
+                  slideIndex++;
+                  setTimeout(function () {
+                    slideIndex = 1;
+                    transitionDuClone = 0;
+                    changesSlideSl();
+                    transitionDuClone = tranSitionDuration;
+                  }, transitionDuClone * 1000); // next opt perform
+                } else if (slideIndex < countChildern - 2) {
+                  slideIndex++;
+                }
 
-          function autoPlaySl() {
-            nextSlideSl();
-          }
+                changesSlideSl();
+              }
 
-          var timer = void 0;
+              function prevSlideSl() {
+                if (slideIndex == 1) {
+                  // prev opt perform
+                  slideIndex--;
+                  setTimeout(function () {
+                    slideIndex = countChildern - 2;
+                    transitionDuClone = 0;
+                    changesSlideSl();
+                    transitionDuClone = tranSitionDuration;
+                  }, transitionDuClone * 1000); // prev opt perform
+                } else if (slideIndex > 1) {
+                  slideIndex--;
+                }
 
-          if (sliderDelay > 0) {
-            timer = setInterval(autoPlaySl, sliderDelay);
+                changesSlideSl();
+              }
+
+              function changesSlideSl() {
+                var moveSlide = slideIndex > 0 ? -(slideIndex * getPArentWidthSlide) : 0;
+                slider.style.marginLeft = moveSlide + "px";
+                slider.style.transitionDuration = transitionDuClone + "s";
+
+                for (var i = 0; i < countChildern; i++) {
+                  slider.children[i].classList.remove("selected_");
+
+                  if (indicator && indicator[i]) {
+                    indicator[i].classList.remove("selected_");
+
+                    if (indicator[i].querySelector("span")) {
+                      indicator[i].querySelector("span").setAttribute("style", indiCatorStyle);
+                    }
+                  }
+                }
+
+                slider.children[slideIndex].classList.add("selected_");
+
+                if (indicator) {
+                  var indicatorIndex = countChildern - 1 == slideIndex ? 0 : slideIndex == 0 ? indicator.length - 1 : slideIndex - 1;
+                  indicator[indicatorIndex].classList.add("selected_");
+
+                  if (indicator[indicatorIndex].querySelector("span")) {
+                    indicator[indicatorIndex].querySelector("span").style.backgroundColor = indicatorActive;
+                  }
+                }
+              }
+
+              sliderDelay = parseInt(sliderDelay);
+
+              if (sliderDelay > 0) {
+                sliderDelay = sliderDelay * 1000;
+              }
+
+              function resetTimerSl() {
+                if (sliderDelay > 0) {
+                  clearInterval(timer);
+                  timer = setInterval(autoPlaySl, sliderDelay);
+                }
+              }
+
+              function autoPlaySl() {
+                nextSlideSl();
+              }
+
+              var timer;
+
+              if (sliderDelay > 0) {
+                timer = setInterval(autoPlaySl, sliderDelay);
+              }
+            })();
+          } else {
+            slider.closest(".zita-block-slide-wrapper").style.opacity = 1;
           }
         })();
       }

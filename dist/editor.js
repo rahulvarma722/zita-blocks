@@ -599,6 +599,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var compose = wp.compose.compose;
 var rawHandler = wp.blocks.rawHandler;
 
@@ -617,10 +619,28 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
     _classCallCheck(this, Layoutlist);
 
     _this = _super.call(this);
+
+    _defineProperty(_assertThisInitialized(_this), "PostLoading", function (props) {
+      var msg = props.data;
+      return wp.element.createElement("div", null, wp.element.createElement("div", {
+        className: "post-loader"
+      }, wp.element.createElement("div", {
+        className: "active linear-bubble zita-block-loader"
+      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])(msg, "zita-blocks"), wp.element.createElement("div", null, wp.element.createElement("span", null)))));
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "PostNotFound", function (props) {
+      var msg = props.data;
+      return wp.element.createElement("div", {
+        className: "template-not-found"
+      }, wp.element.createElement("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])(msg, "zita-blocks")));
+    });
+
     _this.state = {
       // apiUrl: "http://localhost:8888/one/wp-json/zita-blocks-layout/v2/search/",
       apiUrl: "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search/",
       templateLoading: true,
+      categoryLoading: true,
       templateCategory: "all",
       templatePrice: "all",
       block_templates_category: [],
@@ -667,7 +687,9 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
       }).then(function (json) {
         _this2.setState({
           block_templates: json.demos,
-          block_templates_category: json.categories
+          block_templates_category: json.categories,
+          templateLoading: false,
+          categoryLoading: false
         });
       });
     } // get all blocks with argument
@@ -685,13 +707,19 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
         return response.json();
       }).then(function (json) {
         if ("price_send" in object_parem && json && "categories" in json && "demos" in json) {
+          var blockTemplate = json.demos.length > 0 ? json.demos : false;
+          var blockTemplateCate = json.categories.length > 0 ? json.categories : false;
+
           _this3.setState({
-            block_templates: json.demos,
-            block_templates_category: json.categories
+            block_templates: blockTemplate,
+            block_templates_category: blockTemplateCate,
+            templateLoading: false,
+            categoryLoading: false
           });
         } else if (json) {
           _this3.setState({
-            block_templates: json
+            block_templates: json,
+            templateLoading: false
           });
         } else {// console.lo("no json data found json -> ", json);
         }
@@ -707,7 +735,8 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 this.setState({
-                  templateCategory: category
+                  templateCategory: category,
+                  templateLoading: true
                 });
                 _context2.next = 3;
                 return this.getDemosByFilter({
@@ -740,7 +769,9 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
               case 0:
                 this.setState({
                   templateCategory: "all",
-                  templatePrice: price
+                  templatePrice: price,
+                  categoryLoading: true,
+                  templateLoading: true
                 });
                 _context3.next = 3;
                 return this.getDemosByFilter({
@@ -762,10 +793,11 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
       }
 
       return getDemosFilterPrice;
-    }() //show all data from
+    }() // category loading
 
   }, {
     key: "render",
+    //show all data from
     value: function render() {
       var _this4 = this;
 
@@ -773,7 +805,9 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
           block_templates = _this$state.block_templates,
           block_templates_category = _this$state.block_templates_category,
           templateCategory = _this$state.templateCategory,
-          templatePrice = _this$state.templatePrice;
+          templatePrice = _this$state.templatePrice,
+          templateLoading = _this$state.templateLoading,
+          categoryLoading = _this$state.categoryLoading;
       var clientId = this.props.clientId;
       return wp.element.createElement("div", {
         className: "zita-blocks-layout-wrapper"
@@ -809,7 +843,7 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
         className: "cate-container-"
       }, wp.element.createElement("div", null, wp.element.createElement("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("CATEGORIES", "zita-blocks")), wp.element.createElement("div", {
         className: "list_"
-      }, block_templates_category.length ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("span", {
+      }, block_templates_category && block_templates_category.length > 0 && categoryLoading == false ? wp.element.createElement(wp.element.Fragment, null, wp.element.createElement("span", {
         className: templateCategory == "all" ? "active" : null,
         onClick: function onClick() {
           if (templateCategory != "all") {
@@ -826,16 +860,15 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
             }
           }
         }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])(template_v.title, "zita-blocks"));
-      })) : wp.element.createElement("div", null, wp.element.createElement("div", {
-        className: "post-loader"
-      }, wp.element.createElement("div", {
-        className: "active linear-bubble zita-block-loader"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Categories Loading...", "zita-blocks"), wp.element.createElement("div", null, wp.element.createElement("span", null))))))))), wp.element.createElement("div", {
+      })) : !block_templates_category ? wp.element.createElement(this.PostNotFound, {
+        data: "Category Not Found."
+      }) : wp.element.createElement(this.PostLoading, {
+        data: "Categories Loading..."
+      }))))), wp.element.createElement("div", {
         className: "main-section_"
-      }, block_templates && block_templates.length ? wp.element.createElement("div", {
+      }, block_templates && block_templates.length > 0 && templateLoading == false ? wp.element.createElement("div", {
         className: "template-itemes_"
       }, block_templates.map(function (template) {
-        {}
         return wp.element.createElement("div", null, wp.element.createElement("div", {
           className: "template-content"
         }, wp.element.createElement("div", {
@@ -854,13 +887,11 @@ var Layoutlist = /*#__PURE__*/function (_Component) {
         }, wp.element.createElement("i", {
           className: "fas fa-download"
         }), wp.element.createElement("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("import", "zita-blocks")))));
-      })) : wp.element.createElement("div", {
-        className: "template-loader"
-      }, wp.element.createElement("div", {
-        className: "post-loader"
-      }, wp.element.createElement("div", {
-        className: "active linear-bubble zita-block-loader"
-      }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Templates Loading...", "zita-blocks"), wp.element.createElement("div", null, wp.element.createElement("span", null))))))));
+      })) : !block_templates_category ? wp.element.createElement(this.PostNotFound, {
+        data: "Template Not Found."
+      }) : wp.element.createElement(this.PostLoading, {
+        data: "Template Loading..."
+      }))));
     }
   }]);
 
@@ -2947,7 +2978,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes({
             numberOfPosts: e
           });
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])({
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])(_this2, {
             numberOfPosts: e,
             featured_image: _this2.props.attributes.thumbnail[0].typeShow
           });
@@ -3042,7 +3073,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           _this2.updateObj("thumbnail", "typeShow", thumbnail, value_);
 
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])({
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])(_this2, {
             featured_image: value_
           });
         }
@@ -3073,7 +3104,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes({
             postCategories: choosen
           });
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])({
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])(_this2, {
             postCategories: choosen,
             featured_image: _this2.props.attributes.thumbnail[0].typeShow
           });
@@ -4011,7 +4042,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes({
             postCategories: choosen
           });
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])({
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])(_this2, {
             postCategories: choosen,
             featured_image: 1
           });
@@ -4933,7 +4964,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes({
             postCategories: choosen
           });
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])({
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])(_this2, {
             postCategories: choosen,
             featured_image: 1
           });
@@ -5688,7 +5719,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes({
             postCategories: choosen
           });
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])({
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])(_this2, {
             postCategories: choosen,
             featured_image: 1
           });
@@ -6433,7 +6464,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes({
             postCategories: choosen
           });
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])({
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])(_this2, {
             postCategories: choosen,
             featured_image: 1
           });
@@ -7238,7 +7269,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes({
             postCategories: choosen
           });
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])({
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])(_this2, {
             postCategories: choosen,
             featured_image: 1
           });
@@ -7945,7 +7976,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes({
             postCategories: choosen
           });
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])({
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])(_this2, {
             postCategories: choosen,
             featured_image: 1
           });
@@ -8553,7 +8584,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes({
             numberOfPosts: e
           });
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])({
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])(_this2, {
             numberOfPosts: e,
             featured_image: _this2.props.attributes.thumbnail[0].typeShow
           });
@@ -8642,7 +8673,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           _this2.updateObj("thumbnail", "typeShow", thumbnail, value_);
 
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])({
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])(_this2, {
             featured_image: value_
           });
         }
@@ -8675,7 +8706,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes({
             postCategories: choosen
           });
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])({
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_5__["filterPostInit"])(_this2, {
             postCategories: choosen,
             featured_image: _this2.props.attributes.thumbnail[0].typeShow
           });
@@ -13631,13 +13662,14 @@ var Edit = /*#__PURE__*/function (_Component) {
         initialOpen: false
       }, wp.element.createElement("p", null, wp.element.createElement("strong", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Number Of Post Display", "zita-blocks"))), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RangeControl"], {
         value: numberOfPosts,
-        min: 1,
+        min: 2,
         max: 20,
         onChange: function onChange(e) {
           setAttributes({
             numberOfPosts: e
           });
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_4__["filterPostInit"])({
+          console.log("ee", e);
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_4__["filterPostInit"])(_this2, {
             numberOfPosts: e,
             featured_image: 1
           });
@@ -13907,7 +13939,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes({
             postCategories: choosen
           });
-          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_4__["filterPostInit"])({
+          Object(_block_assets_post_functions__WEBPACK_IMPORTED_MODULE_4__["filterPostInit"])(_this2, {
             postCategories: choosen,
             featured_image: 1
           });

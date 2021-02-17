@@ -13,6 +13,7 @@ class Layoutlist extends Component {
       apiUrl:
         "https://wpzita.com/zitademo/zita-blocks/wp-json/zita-blocks-layout/v2/search/",
       templateLoading: true,
+      categoryLoading: true,
       templateCategory: "all",
       templatePrice: "all",
       block_templates_category: [],
@@ -34,6 +35,8 @@ class Layoutlist extends Component {
         this.setState({
           block_templates: json.demos,
           block_templates_category: json.categories,
+          templateLoading: false,
+          categoryLoading: false,
         });
       });
   }
@@ -53,12 +56,17 @@ class Layoutlist extends Component {
           "categories" in json &&
           "demos" in json
         ) {
+          let blockTemplate = json.demos.length > 0 ? json.demos : false;
+          let blockTemplateCate =
+            json.categories.length > 0 ? json.categories : false;
           this.setState({
-            block_templates: json.demos,
-            block_templates_category: json.categories,
+            block_templates: blockTemplate,
+            block_templates_category: blockTemplateCate,
+            templateLoading: false,
+            categoryLoading: false,
           });
         } else if (json) {
-          this.setState({ block_templates: json });
+          this.setState({ block_templates: json, templateLoading: false });
         } else {
           // console.lo("no json data found json -> ", json);
         }
@@ -66,7 +74,7 @@ class Layoutlist extends Component {
   }
   //choose category,
   async getDemosFilterCategory(category) {
-    this.setState({ templateCategory: category });
+    this.setState({ templateCategory: category, templateLoading: true });
     await this.getDemosByFilter({
       category: category,
       price: this.state.templatePrice,
@@ -74,14 +82,42 @@ class Layoutlist extends Component {
   }
   //choose price,
   async getDemosFilterPrice(price) {
-    this.setState({ templateCategory: "all", templatePrice: price });
+    this.setState({
+      templateCategory: "all",
+      templatePrice: price,
+      categoryLoading: true,
+      templateLoading: true,
+    });
     await this.getDemosByFilter({
       category: "all",
       price: price,
       price_send: "1",
     });
   }
-
+  // category loading
+  PostLoading = (props) => {
+    let msg = props.data;
+    return (
+      <div>
+        <div className="post-loader">
+          <div className="active linear-bubble zita-block-loader">
+            {__(msg, "zita-blocks")}
+            <div>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  PostNotFound = (props) => {
+    let msg = props.data;
+    return (
+      <div className="template-not-found">
+        <h2>{__(msg, "zita-blocks")}</h2>
+      </div>
+    );
+  };
   //show all data from
   render() {
     const {
@@ -89,6 +125,8 @@ class Layoutlist extends Component {
       block_templates_category,
       templateCategory,
       templatePrice,
+      templateLoading,
+      categoryLoading,
     } = this.state;
     const { clientId } = this.props;
     return (
@@ -134,7 +172,9 @@ class Layoutlist extends Component {
               <div>
                 <span>{__("CATEGORIES", "zita-blocks")}</span>
                 <div className="list_">
-                  {block_templates_category.length ? (
+                  {block_templates_category &&
+                  block_templates_category.length > 0 &&
+                  categoryLoading == false ? (
                     <>
                       <span
                         className={templateCategory == "all" ? "active" : null}
@@ -166,28 +206,21 @@ class Layoutlist extends Component {
                         );
                       })}
                     </>
+                  ) : !block_templates_category ? (
+                    <this.PostNotFound data={"Category Not Found."} />
                   ) : (
-                    <div>
-                      <div className="post-loader">
-                        <div className="active linear-bubble zita-block-loader">
-                          {__("Categories Loading...", "zita-blocks")}
-                          <div>
-                            <span></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <this.PostLoading data={"Categories Loading..."} />
                   )}
                 </div>
               </div>
             </div>
           </div>
           <div className="main-section_">
-            {block_templates && block_templates.length ? (
+            {block_templates &&
+            block_templates.length > 0 &&
+            templateLoading == false ? (
               <div className="template-itemes_">
                 {block_templates.map((template) => {
-                  {
-                  }
                   return (
                     <div>
                       <div className="template-content">
@@ -214,17 +247,10 @@ class Layoutlist extends Component {
                   );
                 })}
               </div>
+            ) : !block_templates_category ? (
+              <this.PostNotFound data={"Template Not Found."} />
             ) : (
-              <div className="template-loader">
-                <div className="post-loader">
-                  <div className="active linear-bubble zita-block-loader">
-                    {__("Templates Loading...", "zita-blocks")}
-                    <div>
-                      <span></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <this.PostLoading data={"Template Loading..."} />
             )}
           </div>
         </div>

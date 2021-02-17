@@ -230,11 +230,12 @@ class Edit extends Component {
             </p>
             <RangeControl
               value={numberOfPosts}
-              min={1}
+              min={2}
               max={20}
               onChange={(e) => {
                 setAttributes({ numberOfPosts: e });
-                filterPostInit({ numberOfPosts: e, featured_image: 1 });
+                console.log("ee", e);
+                filterPostInit(this, { numberOfPosts: e, featured_image: 1 });
               }}
             />
             <p>
@@ -710,7 +711,7 @@ class Edit extends Component {
                     });
                     if (chooseAll.length) choosen = [];
                     setAttributes({ postCategories: choosen });
-                    filterPostInit({
+                    filterPostInit(this, {
                       postCategories: choosen,
                       featured_image: 1,
                     });

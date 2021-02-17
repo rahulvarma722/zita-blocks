@@ -388,7 +388,7 @@ class Edit extends Component {
                     });
                     if (chooseAll.length) choosen = [];
                     setAttributes({ postCategories: choosen });
-                    filterPostInit({
+                    filterPostInit(this,{
                       postCategories: choosen,
                       featured_image: 1,
                     });
