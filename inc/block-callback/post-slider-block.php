@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) exit;
 // zita block post slider
 zita_blocks_register_block_fn('zita-post-slider',  [
     "render_callback" => "zita_blocks_render_post_slider",

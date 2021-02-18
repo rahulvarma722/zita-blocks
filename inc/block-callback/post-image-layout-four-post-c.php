@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) exit;
 // zita post section callback function
 function zita_blocks_section_four_post($attr)
 {

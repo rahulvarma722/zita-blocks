@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) exit;
 // Register your block
 // zita_blocks_register_block_fn('test-block', $extraFeature = []);
 zita_blocks_register_block_fn('icon-image-content');

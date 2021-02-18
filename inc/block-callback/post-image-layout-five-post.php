@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) exit;
 zita_blocks_register_block_fn('zita-post-section-five-post',  [
     "render_callback" => "zita_blocks_section_five_post",
     'attributes' => [

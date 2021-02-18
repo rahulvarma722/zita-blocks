@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) exit;
 zita_blocks_register_block_fn('zita-post-tc',  [
     "render_callback" => "zita_blocks_two_column_block",
     'attributes' => [
